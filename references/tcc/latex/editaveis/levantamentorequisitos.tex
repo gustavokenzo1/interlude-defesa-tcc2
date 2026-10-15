@@ -1,0 +1,55 @@
+\chapter[Levantamento de Requisitos]{Levantamento de Requisitos}
+\label{cap:requisitos}
+
+As dificuldades descritas na introdução orientaram a definição do que o Interlude deveria oferecer ao viajante: escolher atrações, organizar os dias e rever a agenda quando necessário. Esta seção apresenta a origem dessas necessidades, o escopo adotado e os comportamentos esperados do aplicativo. Os critérios de aceite acompanham as funcionalidades a que se referem, enquanto a Seção~\ref{cap:solucao} descreve a implementação e a verificação realizada.
+
+\section{Origem das necessidades}
+\label{sec:origem-requisitos}
+
+O levantamento partiu das experiências dos autores ao planejar viagens e da vivência profissional de um deles em uma empresa do setor, que proporcionou contato com diferentes demandas de viajantes. Esse conhecimento ajudou a identificar situações que o aplicativo precisaria considerar. Uma permanência curta exige escolher prioridades. Visitas a museus e outras atividades culturais precisam ser conciliadas com horários e durações. A necessidade de ajustar uma visita depois de gerar o roteiro também surgiu desses percursos de planejamento.
+
+Essas situações orientaram a definição das funcionalidades e foram revistas durante a evolução da prova de conceito para o aplicativo móvel. Ao persistir o roteiro, tornou-se necessário oferecer uma lista de viagens salvas para que o viajante pudesse reabrir a agenda, consultar o progresso e fazer alterações. Essa persistência mantém os dados do roteiro e do acompanhamento. A experiência dos autores forneceu a base para essas decisões, e a avaliação com participantes da Seção~\ref{sec:avaliacao-participantes} acrescentou a perspectiva de outros viajantes.
+
+O viajante é o principal usuário desse fluxo. A administração da aplicação precisa, por sua vez, controlar o acesso às funcionalidades e acompanhar falhas e consumo dos serviços externos. Essas necessidades operacionais são consideradas junto aos requisitos de qualidade, por sustentarem o funcionamento da experiência de planejamento.
+
+\section{Escopo do planejamento}
+
+O núcleo do trabalho abrange a preparação, a geração e a edição de roteiros por destino. O viajante informa datas ou apenas a quantidade de dias, escolhe ritmo e modo de transporte, revisa as atrações e declara suas prioridades. Hospedagem e horários de chegada e partida são opcionais. Quando presentes, delimitam a base e o período disponível para as visitas. Viagens com vários destinos são organizadas em até oito trechos, cada um com seu próprio planejamento. A ordem das cidades e os horários de transição são definidos pelo usuário.
+
+A agenda deve conciliar deslocamentos, duração das visitas e horários de funcionamento conhecidos. Cada dia começa e termina na hospedagem ou no ponto-base adotado, e pausas para refeição podem ocupar intervalos próprios. Quando nem todas as atrações cabem, a seleção considera as prioridades do viajante e apresenta os lugares que ficaram de fora. O ritmo orienta a quantidade e a duração das atividades. O orçamento monetário permanece como referência de gasto. A formulação dessas regras é detalhada na Seção~\ref{sec:modelagem-matematica}.
+
+O estudo examina o fluxo de planejamento individual disponível no aplicativo móvel, incluindo a exportação da agenda para o calendário do aparelho. Não abrange compra de ingressos, reservas de hospedagem ou otimização do transporte entre cidades. Mudanças durante a viagem dependem de solicitação do usuário, sem replanejamento automático motivado por trânsito ou indisponibilidades em tempo real.
+
+\section{Funcionalidades e critérios de aceite}
+\label{sec:requisitos-funcionais}
+
+As funcionalidades a seguir, identificadas como requisitos funcionais (RF), acompanham o percurso de uso do aplicativo. Cada item reúne o comportamento necessário e a condição que permite examiná-lo, evitando separar a mesma ação em descrições independentes. Os critérios expressam o que se espera da solução. As evidências obtidas são apresentadas na Seção~\ref{cap:solucao}.
+
+\begin{description}
+  \item[RF-01, Preparar a viagem.] Informar destino, período, hospedagem e horários opcionais, ritmo, interesses e modo de transporte. As escolhas devem permanecer no rascunho e chegar à geração com as datas e os horários no fuso do destino. Uma viagem criada apenas por quantidade de dias deve permitir definir as datas posteriormente.
+
+  \item[RF-02, Escolher as atrações.] Apresentar candidatos com informações dos lugares e estimativas complementares, permitindo incluir, remover e ordenar as atrações por preferência. Horários do provedor e estimativas do modelo de linguagem devem permanecer identificáveis, e a seleção confirmada deve ser preservada no planejamento.
+
+  \item[RF-03, Gerar a agenda.] Distribuir as atrações selecionadas em dias, sequências e horários, considerando as janelas e durações fornecidas, os deslocamentos e as prioridades. A resposta deve respeitar as restrições rígidas da instância e informar horários previstos, deslocamentos e atrações não alocadas. Aproximações e falhas identificadas na preparação dos dados devem acompanhar o resultado como avisos.
+
+  \item[RF-04, Consultar e acompanhar.] Apresentar a agenda em lista e mapa, com navegação entre dias e paradas, imagem do local e horários estimados. O viajante deve poder marcar visitas concluídas ou puladas e reencontrar esse progresso ao reabrir a viagem. A lista de atrações não alocadas deve continuar acessível após dispensar seu aviso.
+
+  \item[RF-05, Editar o planejamento.] Permitir alterar datas, reordenar visitas e mover atrações entre dias. Mudanças de datas devem informar o recálculo e mostrar seu progresso. Ajustes locais incompatíveis devem preservar a viagem salva. Quando o usuário solicitar uma reorganização, deve poder examinar mudanças e exclusões antes de aplicar a proposta.
+
+  \item[RF-06, Persistir e exportar.] Salvar os dados do planejamento para reabrir a viagem no aplicativo. Quando houver datas exatas e permissão do usuário, criar ou atualizar os eventos da agenda no calendário do aparelho.
+\end{description}
+
+\section{Requisitos de qualidade e operação}
+\label{sec:requisitos-qualidade}
+
+Além de oferecer essas funções, a aplicação precisa comunicar o processamento e os conflitos, proteger os dados da viagem e permitir investigar falhas. Esses requisitos não funcionais e operacionais foram concentrados nos aspectos que influenciam o fluxo implementado:
+
+\begin{itemize}
+  \item \textbf{Uso no aparelho.} A interface deve respeitar áreas seguras e diferentes dimensões de tela, permitir navegação no mapa por gestos e indicar quando a geração está em andamento. Conflitos de agenda e falhas recuperáveis devem orientar a próxima ação do viajante.
+  \item \textbf{Proteção e permissões.} A leitura e a alteração das viagens devem respeitar a identidade do proprietário. Chaves de servidor devem permanecer fora do aplicativo, e o acesso ao calendário deve depender de permissão.
+  \item \textbf{Tempo de resposta e recuperação.} A busca deve ter limite de tempo configurável e duração registrada. A indisponibilidade do \textit{cache} deve permitir consultar a origem, e falhas dos provedores devem ser tratadas por novas tentativas ou aproximações previstas, comunicando quando uma ação manual for necessária.
+  \item \textbf{Consistência dos dados.} Entradas devem ser validadas antes da otimização, e os contratos entre interface, orquestração e busca devem permanecer compatíveis. A separação desses componentes deve permitir verificar as regras do modelo sem depender da interface ou dos serviços externos.
+  \item \textbf{Operação e consumo.} A administração deve controlar usuários e perfis de funcionalidades e consultar registros de erros e execução sem expor informações sensíveis. O acompanhamento de custos deve distinguir consultas externas de respostas reutilizadas. A política de armazenamento e apresentação dos dados deve observar as condições dos provedores, discutidas também na Seção~\ref{sec:custos-geracao}.
+\end{itemize}
+
+Esses requisitos conectam a necessidade do viajante às decisões apresentadas na próxima seção. A interface mostra como as funções são acessadas. O modelo explicita as regras de geração. Por fim, a verificação do núcleo, na Seção~\ref{sec:verificacao-nucleo}, complementa as execuções integradas ao examinar situações controladas de horários, prioridades e distribuição das visitas.

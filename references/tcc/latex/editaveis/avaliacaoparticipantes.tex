@@ -1,0 +1,303 @@
+\section{Avaliação com participantes}
+\label{sec:avaliacao-participantes}
+
+A avaliação reuniu seis participantes: Gustavo Henrique, Leonardo Lago, Vitória Lemgruber, Ana Clara, Cauã Matheus e Júlio César. Cada participante realizou cinco casos de teste no aplicativo e respondeu a um formulário sobre a experiência de uso. Os dados apresentados nesta seção foram coletados durante essa avaliação e incluem os resultados das tarefas, as respostas às afirmações do formulário e os comentários sobre dificuldades e recursos desejados.
+
+O instrumento aplicado reúne perguntas próprias, relacionadas ao fluxo e aos requisitos do Interlude. Seus resultados permitem analisar a experiência relatada pelos participantes nos cenários examinados.
+
+\subsection{Procedimento}
+
+Os participantes utilizaram seis aparelhos e avaliaram sete cenários de geração de roteiro: Lisboa e Porto, em uma viagem com dois trechos, Gramado e Canela, Rio de Janeiro, Buenos Aires, São Paulo e Salvador. Os cenários combinam os três ritmos e os três modos de deslocamento, viagens com e sem datas exatas, horários de chegada e partida, atrações fechadas em determinados dias da semana, uma atividade de dia inteiro e uma reserva de restaurante.
+
+A análise técnica é acompanhada por um programa que reproduz os cenários com as regras de preparação do \textit{backend}. Ele aplica o almoço automático entre 12h e 14h, com alternativas nas atrações e na hospedagem, e janelas por dia da semana que descontam a duração da visita. A chegada e a partida limitam o primeiro e o último dia, e o ritmo define o piso, o teto e o tempo de serviço da Equação~\ref{eq:servico}. Nessa reprodução, os deslocamentos usam a matriz aproximada que o \textit{backend} aplica aos roteiros prontos do catálogo, calculada sobre a distância em linha reta: 4,8~km/h a pé, 18~km/h em transporte público e 28~km/h de carro. Ela difere da geração feita pelos usuários, que consulta a Routes API e recorre à estimativa de 40~km/h apenas para pares sem rota (Seção~\ref{sec:dados-ausentes}). O programa utiliza coordenadas, horários de funcionamento e durações definidos para essas instâncias, sem consultar os provedores, e atribui a mesma popularidade às atrações para examinar o efeito da ordem declarada nas exclusões. As instâncias são resolvidas com a configuração publicada do \textit{solver}. O programa e seus registros estão disponíveis no repositório do trabalho \cite{interlude2026repositorio} e apoiam a interpretação dos roteiros.
+
+Os aparelhos utilizados cobrem iOS e Android, de modelos de entrada a modelos recentes. No Android, o mapa usa a base do Google, os seletores de data e hora abrem diálogos sucessivos e a exportação grava no calendário principal gravável da conta. No iOS, o mapa usa a base da Apple, os seletores aparecem em roda e a exportação grava no calendário padrão do aparelho. Essas diferenças foram consideradas na análise das dificuldades de entrada de dados e de consulta dos roteiros.
+
+Cada participante executou cinco casos de teste, totalizando 30, escolhidos para exercitar funcionalidades diferentes. Cada caso recebeu um resultado: \textbf{atende}, quando o aplicativo se comportou como o participante esperava; \textbf{ressalva}, quando a tarefa foi concluída com hesitação ou com um efeito inesperado; e \textbf{não atende}, quando a expectativa não foi cumprida ou o participante precisou de ajuda.
+
+\FloatBarrier
+\Needspace{8\baselineskip}
+\subsection{Formulário de avaliação}
+
+O formulário foi aplicado como um questionário on-line, respondido pelos seis participantes ao final dos casos de teste. A primeira parte reúne campos de caracterização, como faixa etária, frequência de viagens de lazer, ferramentas usadas no planejamento, aparelho e familiaridade com aplicativos, de 1 a 5. A subseção seguinte apresenta os perfis dos participantes e os aparelhos utilizados.
+
+A segunda parte contém nove afirmações e quatro perguntas abertas. As afirmações são respondidas em uma escala de 1, discordo totalmente, a 5, concordo totalmente, e acompanham as etapas do fluxo e os requisitos da Seção~\ref{sec:requisitos-funcionais}. Q6 admite ``não se aplica'' quando nenhuma atração fica fora do roteiro. Na Seção~\ref{sec:respostas-formulario}, cada afirmação é apresentada junto às notas dos seis participantes, e cada pergunta aberta é seguida das respostas de todos.
+
+\Needspace{28\baselineskip}
+\subsection{Participantes, aparelhos e cenários}
+
+Os participantes são identificados pelos nomes e pelos códigos P1 a P6, mantidos nas tabelas e nos casos de teste para relacionar as respostas aos respectivos cenários. Gustavo Henrique avaliou uma viagem com dois trechos, Lisboa e Porto; Leonardo Lago, Gramado e Canela; Vitória Lemgruber, Rio de Janeiro; Ana Clara, Buenos Aires; Cauã Matheus, São Paulo; e Júlio César, Salvador.
+
+A Tabela~\ref{tab:participantes} reúne a identificação, os perfis acadêmicos ou profissionais, a frequência de viagens e os aparelhos utilizados. Gustavo Henrique viaja com baixa frequência; Leonardo Lago, Ana Clara, Cauã Matheus e Júlio César, com frequência intermediária; e Vitória Lemgruber, com alta frequência. Os cenários permitem examinar diferentes condições de planejamento, como deslocamento a pé, chegada noturna, viagem sem datas definidas e reserva de restaurante.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Participantes, perfis, frequência de viagens e aparelhos}
+\label{tab:participantes}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{3.2cm}}
+\hline
+\textbf{Participante} & \textbf{Perfil} & \textbf{Frequência de viagens} & \textbf{Aparelho} \\
+\hline
+P1, Gustavo Henrique & Estudante de Engenharia de Software & Baixa & Apple iPhone 17 Pro \\
+P2, Leonardo Lago & Estudante de Engenharia de Software & Intermediária & Samsung Galaxy S9 \\
+P3, Vitória Lemgruber & Graduada em Administração & Alta & Samsung Galaxy A15 \\
+P4, Ana Clara & Estudante de Design & Intermediária & Apple iPhone SE \\
+P5, Cauã Matheus & Desenvolvedor \textit{backend} na Caixa Econômica Federal & Intermediária & Apple iPhone 13 \\
+P6, Júlio César & Estudante de Engenharia de Software & Intermediária & Samsung Galaxy S24 \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base na avaliação com os seis participantes.}
+\end{table}
+
+\Needspace{26\baselineskip}
+\subsection{Roteiros gerados nos cenários dos participantes}
+
+A Tabela~\ref{tab:participantes-roteiros} resume os sete cenários associados à avaliação. A viagem de Gustavo Henrique aparece em duas linhas porque Lisboa e Porto são resolvidos como trechos distintos. A coluna ``Nós'' inclui os elementos auxiliares da modelagem, enquanto ``Atrações'' compara a quantidade alocada com a quantidade selecionada. ``Maior dia'' registra a maior duração diária, e ``Almoços'' relaciona as pausas alocadas aos dias em que a janela de almoço era possível.
+
+As instâncias ficaram na faixa intermediária do indicador $|V|+2|D|$, entre 31 e 50, e utilizaram o limite de 5 segundos de busca dessa faixa. Esse limite corresponde à otimização no servidor. A percepção dos participantes sobre a espera é registrada em Q4; as respostas a essa afirmação não representam uma medição de latência ponta a ponta.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Soluções do \textit{solver} nos cenários dos participantes}
+\label{tab:participantes-roteiros}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.2cm}rcrc}
+\hline
+\textbf{Cenário} & \textbf{Configuração} & \textbf{Nós} & \textbf{Atrações} & \textbf{Maior dia} & \textbf{Almoços} \\
+\hline
+P1, Lisboa & 3 dias, intenso, transporte & 44 & 10/10 & 8,8 h & 2 de 3 \\
+P1, Porto & 2 dias, intenso, transporte & 27 & 8/8 & 6,4 h & 2 de 2 \\
+P2, Gramado e Canela & 4 dias, tranquilo, carro & 40 & 7/7 & 5,9 h & 4 de 4 \\
+P3, Rio de Janeiro & 4 dias, tranquilo, carro & 41 & 9/9 & 7,1 h & 3 de 3 e reserva \\
+P4, Buenos Aires & 2 dias, equilibrado, a pé & 39 & 8/12 & 7,7 h & 2 de 2 \\
+P5, São Paulo & 3 dias, equilibrado, transporte & 27 & 8/8 & 8,2 h & 2 de 2 \\
+P6, Salvador & 3 dias, equilibrado, carro & 40 & 9/9 & 5,4 h & 3 de 3 \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base nos registros dos cenários no arquivo \texttt{resultados.json}. A reserva de restaurante é indicada separadamente das pausas automáticas.}
+\end{table}
+
+Foram alocadas 59 das 63 atrações selecionadas nos sete cenários. Os fechamentos semanais foram respeitados em todos eles. Em Lisboa, o Mosteiro dos Jerónimos e a Torre de Belém, fechados na segunda, foram alocados na terça, e o Museu Calouste Gulbenkian, fechado na terça, na quarta. Em São Paulo, as quatro atrações fechadas na segunda ficaram para terça. Em Buenos Aires, a Feira de San Telmo, aberta apenas aos domingos, entrou no segundo dia. Só houve exclusões onde a capacidade era insuficiente: em Buenos Aires, a pé, com teto de quatro atrações por dia, ficaram de fora as posições 9 a 12 da lista de prioridades.
+
+Três resultados merecem atenção. Em Lisboa, a visita de dia inteiro a Sintra foi alocada no dia da chegada, das 10h18 às 15h36, seguida de outras duas atrações e sem almoço. Para chegar a Sintra nesse horário, a saída da hospedagem ocorre antes das 10h, horário informado para a chegada, porque a janela da base não é limitada pela chegada, como no registro de Nova Iorque da Seção~\ref{sec:execucao-ny}. No Rio de Janeiro, o almoço reservado para as 12h30 foi agendado às 13h56. A preparação soma a duração da refeição ao fim da janela da reserva, e o \textit{solver} interpreta essa janela como intervalo para o início do atendimento, de modo que a reserva admite começar até as 14h. Em São Paulo, o domingo da chegada às 20h ficou sem visitas, mesmo com atrações abertas à noite. Uma execução de controle mostrou que o piso suave de visitas não é cobrado de um dia sem nenhuma visita: com o dia vazio, o objetivo foi 78.302; ao forçar uma visita nesse dia, subiu para 570.516. A Seção~\ref{sec:modelagem-matematica} registra esse comportamento.
+
+\Needspace{26\baselineskip}
+\subsection{Respostas ao formulário}
+\label{sec:respostas-formulario}
+
+As afirmações da Tabela~\ref{tab:participantes-escala} são acompanhadas pelas notas de P1 a P6, identificados na Tabela~\ref{tab:participantes}. Os valores registram a percepção relatada após os casos de teste. Como os cenários e as tarefas variam entre participantes, cada resposta deve ser interpretada em conjunto com o respectivo percurso de uso.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Afirmações do formulário e respostas dos participantes}
+\label{tab:participantes-escala}
+\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xcccccc}
+\hline
+\textbf{Item} & \textbf{Afirmação} & \textbf{P1} & \textbf{P2} & \textbf{P3} & \textbf{P4} & \textbf{P5} & \textbf{P6} \\
+\hline
+Q1 & Foi fácil informar destino, período, hospedagem e preferências. & 4 & 3 & 5 & 5 & 4 & 4 \\
+Q2 & As informações das atrações foram suficientes para decidir quais incluir. & 4 & 4 & 3 & 4 & 4 & 2 \\
+Q3 & Entendi como a ordem de prioridade influencia o roteiro. & 5 & 2 & 4 & 5 & 4 & 4 \\
+Q4 & O tempo de espera pela geração do roteiro foi aceitável. & 5 & 4 & 5 & 5 & 4 & 4 \\
+Q5 & A agenda gerada parece realizável, considerando horários, deslocamentos e pausas. & 3 & 4 & 3 & 4 & 4 & 3 \\
+Q6 & Entendi por que algumas atrações ficaram fora do roteiro. & -- & -- & -- & 5 & -- & -- \\
+Q7 & Foi fácil ajustar o roteiro depois de gerado. & 4 & 2 & 4 & 5 & 3 & 3 \\
+Q8 & Confio nas durações e nos horários apresentados. & 3 & 4 & 2 & 3 & 4 & 3 \\
+Q9 & Usaria o Interlude para planejar uma próxima viagem. & 4 & 3 & 3 & 5 & 4 & 3 \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria. Escala de 1, discordo totalmente, a 5, concordo totalmente. O traço indica ``não se aplica'', quando não houve atrações fora do roteiro.}
+\end{table}
+
+As quatro perguntas abertas são apresentadas a seguir, cada uma acompanhada das respostas dos seis participantes.
+
+\Needspace{18\baselineskip}
+\subsubsection{A1: O que mais ajudou no planejamento?}
+
+\begin{itemize}
+  \item \textbf{P1: Gustavo Henrique.} ``Ver os museus fechados indo para outro dia sem eu precisar conferir.''
+  \item \textbf{P2: Leonardo Lago.} ``O mapa com os números e mandar tudo para a agenda do celular.''
+  \item \textbf{P3: Vitória Lemgruber.} ``Ver a hora de sair e de voltar ao hotel. Assim encaixo melhor os descansos.''
+  \item \textbf{P4: Ana Clara.} ``Ver o que saiu e testar a troca antes de aplicar.''
+  \item \textbf{P5: Cauã Matheus.} ``Salvar no calendário e ver o roteiro junto com os meus compromissos.''
+  \item \textbf{P6: Júlio César.} ``A agenda com o mapa. Dá para ver o dia inteiro e onde cada parada fica.''
+\end{itemize}
+
+\Needspace{18\baselineskip}
+\subsubsection{A2: Em que momento houve dúvida ou dificuldade?}
+
+\begin{itemize}
+  \item \textbf{P1: Gustavo Henrique.} ``Na configuração da segunda cidade, porque o topo da tela não diz em que etapa estou.''
+  \item \textbf{P2: Leonardo Lago.} ``Na lista de preferência, eu não sabia que dava para arrastar.''
+  \item \textbf{P3: Vitória Lemgruber.} ``Quando a reserva apareceu em outro horário.''
+  \item \textbf{P4: Ana Clara.} ``O preço do ingresso aparece como estimado, mas não diz de onde veio.''
+  \item \textbf{P5: Cauã Matheus.} ``Ao mudar as datas, o roteiro mudou sem eu ver antes o que seria alterado.''
+  \item \textbf{P6: Júlio César.} ``Não saber se os lugares e os trajetos são acessíveis.''
+\end{itemize}
+
+\Needspace{18\baselineskip}
+\subsubsection{A3: O que você mudaria no roteiro antes de viajar?}
+
+\begin{itemize}
+  \item \textbf{P1: Gustavo Henrique.} ``Passaria Sintra para um dia só dela e deixaria o dia da chegada mais leve.''
+  \item \textbf{P2: Leonardo Lago.} ``Deixaria uma tarde livre para descansar na pousada.''
+  \item \textbf{P3: Vitória Lemgruber.} ``Colocaria o almoço no horário reservado e terminaria os dias mais cedo.''
+  \item \textbf{P4: Ana Clara.} ``Trocaria uma atração paga por outra gratuita perto da rota.''
+  \item \textbf{P5: Cauã Matheus.} ``Deixaria livre a manhã da reunião.''
+  \item \textbf{P6: Júlio César.} ``Aumentaria o tempo das visitas no centro histórico.''
+\end{itemize}
+
+\Needspace{18\baselineskip}
+\subsubsection{A4: Que recurso fez falta?}
+
+\begin{itemize}
+  \item \textbf{P1: Gustavo Henrique.} ``Marcar uma atração para ocupar o dia sozinha.''
+  \item \textbf{P2: Leonardo Lago.} ``Botões para subir e descer na lista e letra maior nas durações.''
+  \item \textbf{P3: Vitória Lemgruber.} ``Definir o horário máximo de volta.''
+  \item \textbf{P4: Ana Clara.} ``Filtrar atrações gratuitas e ver o custo total do dia.''
+  \item \textbf{P5: Cauã Matheus.} ``Cadastrar compromissos com horário fixo antes de gerar o roteiro.''
+  \item \textbf{P6: Júlio César.} ``Informações de acessibilidade e um aviso quando aumentar uma visita afetar outra.''
+\end{itemize}
+
+\Needspace{10\baselineskip}
+\subsection{Casos de teste por cenário}
+
+Os registros a seguir descrevem as tarefas realizadas e o comportamento observado em cada cenário. Cada participante executou cinco casos de teste, identificados por CT01 a CT30. As respostas ao formulário estão agrupadas por pergunta na Seção~\ref{sec:respostas-formulario}.
+
+\subsubsection{P1: Gustavo Henrique, dois destinos em Portugal}
+
+Gustavo Henrique é estudante de Engenharia de Software e viaja com baixa frequência. Utilizou um Apple iPhone 17 Pro e avaliou o planejamento de uma viagem com trechos em Lisboa e Porto.
+
+\begin{itemize}
+  \item \textbf{CT01, destino por país (atende).} Ao buscar ``Portugal'', recebeu a tela ``Quais cidades de Portugal?'', com a nota ``Cidades e dias sugeridos por IA'', e manteve Lisboa e Porto.
+  \item \textbf{CT02, chegada e transição entre cidades (ressalva).} Informou o voo às 10h e a ida de trem ao Porto. Com dois destinos, parte das etapas se repete por cidade, e o cabeçalho mostra apenas a barra de progresso, sem o nome da etapa. Gustavo Henrique perdeu a referência de qual cidade estava configurando.
+  \item \textbf{CT03, atividade de dia inteiro (não atende).} Esperava Sintra em um dia dedicado. O roteiro a colocou no dia da chegada, seguida do Elevador de Santa Justa e da Praça do Comércio, sem almoço e com saída da hospedagem antes do horário de chegada.
+  \item \textbf{CT04, fechamentos semanais (atende).} Confirmou que Jerónimos e Torre de Belém ficaram na terça e o Gulbenkian, na quarta.
+  \item \textbf{CT05, grafo da otimização (atende).} Entendeu a distribuição por dia, embora termos como ``VRPTW'', ``nós'' e ``arestas'' sejam técnicos para outros viajantes.
+\end{itemize}
+
+\subsubsection{P2: Leonardo Lago, viagem sem datas definidas}
+
+Leonardo Lago é estudante de Engenharia de Software e viaja com frequência intermediária. Utilizou um Samsung Galaxy S9 e avaliou uma viagem de quatro dias em Gramado e Canela, sem datas inicialmente definidas.
+
+\begin{itemize}
+  \item \textbf{CT06, viagem sem datas (atende).} Escolheu quatro dias em ``Quantos dias você tem?''. A tela informa que a semana que começa daqui a sete dias será usada como referência para os horários.
+  \item \textbf{CT07, hospedagem no mapa (ressalva).} Ajustou o marcador da pousada em ``Escolha sua hospedagem'' depois de algumas tentativas, pois a fonte ampliada reduz a área livre do mapa.
+  \item \textbf{CT08, ordenar prioridades (não atende).} Não descobriu que era preciso pressionar e arrastar as linhas e pediu ajuda. A tela não oferece outra forma de ordenar.
+  \item \textbf{CT09, leitura da agenda (ressalva).} O primeiro dia tinha apenas a Cascata do Caracol, embora o ritmo tranquilo anuncie ``2 a 3 atrações por dia''. Com sete atrações em quatro dias, o piso efetivo é uma por dia, e o aviso ``Poucas escolhas podem deixar dias livres'' só aparece na etapa de preferências.
+  \item \textbf{CT10, salvar no calendário (ressalva).} Recebeu ``Confirme as datas exatas da viagem antes de salvar no Calendário''. Definiu as datas no calendário de ``Datas e horários'', e o roteiro foi recalculado sem prévia das mudanças. Os eventos foram gravados no calendário principal da conta Google.
+\end{itemize}
+
+\subsubsection{P3: Vitória Lemgruber, reserva de restaurante}
+
+Vitória Lemgruber é graduada em Administração e viaja com alta frequência. Utilizou um Samsung Galaxy A15 e avaliou um roteiro de quatro dias no Rio de Janeiro, com reserva de restaurante e pausas para almoço.
+
+\begin{itemize}
+  \item \textbf{CT11, interesses da família (atende).} Marcou ``Família'' e encontrou o AquaRio entre as sugestões.
+  \item \textbf{CT12, reserva de restaurante (ressalva).} Escolheu a Confeitaria Colombo para o sábado e usou ``Reservar horário''. No Android, data e hora são escolhidas em dois diálogos sucessivos, e ela voltou ao primeiro para conferir o dia.
+  \item \textbf{CT13, reserva na agenda (não atende).} A agenda mostrou o almoço na Confeitaria das 13h56 às 15h11, e não às 12h30. Vitória Lemgruber chegaria atrasada à reserva.
+  \item \textbf{CT14, pausas automáticas (atende).} Os outros três dias tinham ``Pausa para almoço'', com a indicação de decidir o local na hora.
+  \item \textbf{CT15, mover atração (atende).} Tentou passar o Museu do Amanhã para segunda. A validação informou que não havia horário de funcionamento compatível, e a agenda foi preservada.
+\end{itemize}
+
+\subsubsection{P4: Ana Clara, dois dias a pé}
+
+Ana Clara é estudante de Design e viaja com frequência intermediária. Utilizou um Apple iPhone SE e avaliou um roteiro de dois dias em Buenos Aires, com deslocamento a pé.
+
+\begin{itemize}
+  \item \textbf{CT16, atração própria (atende).} Adicionou La Bombonera pelo botão ``+'', que a selecionou automaticamente.
+  \item \textbf{CT17, aviso de capacidade (ressalva).} Ao passar de oito atrações, recebeu ``Já dá pra um bom roteiro''. O botão ``Gerar roteiro agora'' levou à priorização, e não à geração.
+  \item \textbf{CT18, priorização em tela pequena (ressalva).} O aviso ``Podem não caber no roteiro'', abaixo da 8ª posição, só apareceu depois de rolar a lista. Poucas linhas ficam visíveis acima do botão fixo.
+  \item \textbf{CT19, atrações fora do roteiro (atende).} O aviso ``Fora do roteiro · 4'' listou Teatro Colón, Obelisco, Jardim Japonês e Rosedal, as quatro últimas da lista, com o motivo ``Não coube no tempo disponível''.
+  \item \textbf{CT20, reorganização (atende).} Pediu para encaixar o Obelisco no sábado. A proposta, resolvida pelo \textit{solver}, incluía o Obelisco e indicava que o MALBA ficaria de fora. Ana Clara comparou as duas opções e aplicou a proposta.
+\end{itemize}
+
+\subsubsection{P5: Cauã Matheus, chegada noturna e compromissos}
+
+Cauã Matheus é desenvolvedor \textit{backend} na Caixa Econômica Federal e viaja com frequência intermediária. Utilizou um Apple iPhone 13 e avaliou um roteiro em São Paulo, com chegada às 20h, partida às 18h e necessidade de conciliar visitas com um compromisso fixo.
+
+\begin{itemize}
+  \item \textbf{CT21, chegada às 20h (atende).} O domingo apareceu sem atrações, com o texto de disponibilidade informando a chegada e a mensagem ``Nenhuma atração programada no período disponível''.
+  \item \textbf{CT22, atrações fechadas na segunda (atende).} MASP, Museu do Ipiranga, Museu do Futebol e Theatro Municipal ficaram na terça, cujas visitas terminaram às 16h54, antes da partida.
+  \item \textbf{CT23, alterar datas (ressalva).} Adiou a viagem em um dia. A tela avisou que a distribuição poderia mudar, mas aplicou o recálculo sem prévia. O segundo dia, que reunia Sé, Mercado, Beco do Batman e Ibirapuera, passou a ter Sé, Mercado, Theatro e MASP, e o Beco e o Ibirapuera foram para o último dia.
+  \item \textbf{CT24, salvar no calendário (atende).} Os eventos foram gravados no calendário padrão do iOS, com o horário de São Paulo.
+  \item \textbf{CT25, compromisso fixo (não atende).} Não conseguiu reservar a manhã de terça para uma reunião antes de gerar o roteiro e precisou mover as atrações depois.
+\end{itemize}
+
+\subsubsection{P6: Júlio César, acessibilidade e edição do roteiro}
+
+Júlio César é estudante de Engenharia de Software e viaja com frequência intermediária. Utilizou um Samsung Galaxy S24 e avaliou um roteiro em Salvador, incluindo consulta de acessibilidade e alteração das visitas.
+
+\begin{itemize}
+  \item \textbf{CT26, acessibilidade das atrações (não atende).} Os cartões e o detalhe não informam acessibilidade. O Pelourinho, com ladeiras e calçamento irregular, aparece como qualquer outra visita.
+  \item \textbf{CT27, mapa do dia (atende).} Com a base do Google, conseguiu enquadrar toda a rota e navegar pelas paradas com as setas do cartão.
+  \item \textbf{CT28, tempo da visita (ressalva).} Aumentou a visita ao Pelourinho de duas para três horas. A agenda foi recalculada sem conflito nesse dia, mas a alteração não é validada contra o funcionamento das paradas seguintes, ao contrário da mudança de dia.
+  \item \textbf{CT29, local no Maps (atende).} No detalhe do Elevador Lacerda, ``Abrir no Maps'' abriu o lugar no Google Maps, onde Júlio César consultou o acesso.
+  \item \textbf{CT30, mudar de dia (atende).} Passou o Farol da Barra para domingo. A validação local, que mantém a ordem das demais visitas, encontrou espaço: a programação de domingo, incluindo o almoço, terminava às 13h15, e o farol funciona até as 18h.
+\end{itemize}
+
+\Needspace{19\baselineskip}
+\subsection{Resultados consolidados}
+
+Dos 30 casos de teste, 16 atenderam à expectativa, 9 foram concluídos com ressalva e 5 não atenderam, conforme a Tabela~\ref{tab:participantes-casos}. Os casos que não atenderam concentram-se em capacidades ausentes, como compromissos fixos e informações de acessibilidade, e em resultados que contrariam o que o participante informou, como a reserva deslocada e o dia de Sintra.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Resultado dos casos de teste por participante}
+\label{tab:participantes-casos}
+\begin{tabular}{llccc}
+\hline
+\textbf{Participante} & \textbf{Aparelho} & \textbf{Atende} & \textbf{Ressalva} & \textbf{Não atende} \\
+\hline
+P1, Gustavo Henrique & Apple iPhone 17 Pro & 3 & 1 & 1 \\
+P2, Leonardo Lago & Samsung Galaxy S9 & 1 & 3 & 1 \\
+P3, Vitória Lemgruber & Samsung Galaxy A15 & 3 & 1 & 1 \\
+P4, Ana Clara & Apple iPhone SE & 3 & 2 & 0 \\
+P5, Cauã Matheus & Apple iPhone 13 & 3 & 1 & 1 \\
+P6, Júlio César & Samsung Galaxy S24 & 3 & 1 & 1 \\
+\hline
+\textbf{Total} & & \textbf{16} & \textbf{9} & \textbf{5} \\
+\hline
+\end{tabular}
+\fonte{Elaboração própria. Casos CT01 a CT30, descritos nesta seção.}
+\end{table}
+
+Os participantes valorizaram a apresentação conjunta de agenda e mapa, o tratamento dos fechamentos semanais, a explicação das atrações não alocadas e a possibilidade de examinar uma proposta de reorganização antes de aplicá-la. As notas mais baixas concentram-se na confiança nos horários e na viabilidade percebida da agenda, afetadas pela reserva deslocada, pelo dia de Sintra e pela falta de informações de acessibilidade. A Tabela~\ref{tab:participantes-problemas} organiza os problemas identificados.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Problemas identificados na avaliação com participantes}
+\label{tab:participantes-problemas}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X l >{\raggedright\arraybackslash}X}
+\hline
+\textbf{Problema} & \textbf{Casos} & \textbf{Encaminhamento} \\
+\hline
+A reserva de restaurante pode começar até o fim da janela acrescido da duração, longe do horário reservado & CT13 & Usar como início a reserva com a tolerância, sem somar a duração \\
+A ordem de prioridade só pode ser alterada arrastando os itens & CT08 & Oferecer botões para subir e descer e rótulos de acessibilidade \\
+No dia da chegada, a saída da base antecede a chegada, e uma atividade de dia inteiro divide o dia com outras visitas, sem almoço & CT03 & Limitar a janela da base pelos horários logísticos e sinalizar dias sem pausa \\
+Alterar o tempo da visita não verifica o funcionamento das paradas seguintes & CT28 & Aplicar a mesma validação usada ao mover atrações \\
+Duração e preço estimados pelo modelo de linguagem não indicam sua origem & P3, P4 & Identificar a origem das estimativas nos cartões e no detalhe \\
+Salvar no calendário exige datas exatas, e alterar datas recalcula o roteiro sem prévia & CT10, CT23 & Explicar a exigência na criação e mostrar as mudanças antes de aplicar \\
+Não é possível registrar compromissos fixos nem horário máximo de retorno & CT25, P3 & Avaliar como funcionalidade futura \\
+Não há informações de acessibilidade das atrações e dos trajetos & CT26 & Avaliar atributos de acessibilidade disponíveis nos provedores \\
+O cabeçalho das etapas não mostra o nome da etapa nem a cidade em configuração & CT02 & Exibir o nome da etapa e o destino atual \\
+Em telas pequenas, o aviso ``Podem não caber'' fica fora da área visível & CT18 & Antecipar o aviso ou mostrar o limite junto ao título \\
+A descrição do ritmo não indica que dias podem ter menos atrações que o anunciado & CT09 & Repetir a observação sobre poucas escolhas na agenda \\
+O botão ``Gerar roteiro agora'' leva à priorização & CT17 & Ajustar o rótulo do botão \\
+O grafo da otimização usa termos técnicos & CT05 & Explicar nós e arestas na própria tela \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base nos casos de teste e nas respostas ao formulário. P3 e P4 indicam respostas abertas desses participantes.}
+\end{table}
+
+Todos os participantes obtiveram e consultaram um roteiro. Os problemas relacionados ao horário da reserva, à ordenação de prioridades e à saída da hospedagem no dia da chegada afetam a confiança na agenda ou a conclusão de uma tarefa. Dois deles decorrem da preparação dos dados: a janela da base, já registrada na Seção~\ref{sec:execucao-ny}, e a janela da reserva, identificada nesta avaliação. Os aparelhos influenciaram sobretudo a entrada de dados e a leitura das listas: diálogos sucessivos no Android, menos linhas visíveis no iPhone SE e menor área de mapa com fonte ampliada. A geração ocorre no servidor e não depende do aparelho.
+
+\subsection{Alcance da avaliação com participantes}
+
+A avaliação registra o uso do aplicativo por seis participantes, com 30 casos de teste e respostas coletadas por um formulário próprio. Esse conjunto permite identificar dificuldades concretas e relacionar a percepção de uso aos resultados dos roteiros. A quantidade de participantes e a diversidade de tarefas delimitam a interpretação: os resultados descrevem os percursos examinados e não permitem generalizar a usabilidade para todos os viajantes.
+
+Os registros computacionais de apoio utilizam dados definidos para os cenários e uma matriz aproximada; por isso, sua análise não equivale a aferir os deslocamentos e as durações em uma viagem realizada. Os achados orientam correções, com atenção à ordenação de prioridades, aos horários reservados e à disponibilidade no dia da chegada.

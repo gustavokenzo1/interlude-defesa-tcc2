@@ -1,0 +1,53 @@
+{
+  "currency": "USD",
+  "access_date": "2026-09-22",
+  "cache_policy_note": "B, C e D representam reutilização técnica do código. O TTL de 90 dias não é uma autorização do Google; a adequação do cache de conteúdo do Maps permanece pendente. E reutiliza apenas a resposta da IA.",
+  "luna_same_tokens": {
+    "input": 12000,
+    "output": 9000,
+    "llm_cost": "0.0057",
+    "A_total": "1.28400",
+    "llm_reduction_percent": "94.24242424242424242424242424",
+    "A_reduction_percent": "6.774123284687431932040949684"
+  },
+  "type": "analytical_scenarios_not_measured_billing",
+  "unit_prices": {
+    "autocomplete": "0.00283",
+    "details_pro": "0.017",
+    "details_enterprise": "0.020",
+    "nearby": "0.035",
+    "text": "0.035",
+    "photo": "0.007",
+    "matrix": "0.005"
+  },
+  "cold_lines": {
+    "autocomplete": "0.02830",
+    "details_pro": "0.034",
+    "nearby": "0.210",
+    "text": "0.070",
+    "photos": "0.091",
+    "matrix": "0.845",
+    "gemini": "0.099"
+  },
+  "scenarios": {
+    "A_miss_total": "1.37730",
+    "B_dados_hit_fotos_novas": "0.091",
+    "C_dados_hit_matriz_miss": "0.936",
+    "D_dados_hit_sem_fotos_novas": "0",
+    "E_apenas_cache_IA": "1.27830",
+    "F_adicionar_atracao": "0.260"
+  },
+  "B_reduction_percent": "93.39287010818267625063530095",
+  "1000_A_before_allowances": "1377.30000",
+  "1000_A_monthly_by_service": {
+    "autocomplete": "0",
+    "details_pro": "0",
+    "nearby": "175.000",
+    "text": "35.000",
+    "photos": "84.000",
+    "matrix": "726.000",
+    "gemini": "99.000"
+  },
+  "1000_A_after_allowances": "1119.000",
+  "redis_50_commands": "0.0001"
+}

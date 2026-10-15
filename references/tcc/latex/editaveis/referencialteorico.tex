@@ -1,0 +1,198 @@
+\chapter[Referencial Teórico]{Referencial Teórico}
+\label{cap:teoria}
+
+Para organizar as visitas de uma viagem, é necessário resolver duas decisões relacionadas: quais atrações incluir e em que ordem percorrê-las. Esta seção apresenta os conceitos usados para tratar essas decisões, começando pelos problemas de sequenciamento e roteamento e chegando às formulações voltadas ao turismo. Em seguida, relaciona essa base aos serviços geoespaciais e aos modelos de linguagem, que fornecem os dados utilizados na construção do roteiro.
+
+\section{Problema do Caixeiro Viajante (PCV)}
+
+O Problema do Caixeiro Viajante (PCV), do inglês \textit{Traveling Salesperson Problem} (TSP), consiste em encontrar um ciclo de custo mínimo que visite cada cidade de um conjunto exatamente uma vez e retorne à origem. Os custos podem representar distâncias ou tempos entre cidades \cite{applegate2006}.
+
+\subsection{Complexidade e métodos de solução}
+
+A dificuldade computacional do PCV decorre do crescimento das combinações de percursos à medida que novos pontos são incluídos. O problema é NP-difícil, e sua versão de decisão, que pergunta se existe um ciclo com custo de no máximo $K$, é NP-completa \cite{applegate2006,karp1972}. Essa classificação ajuda a compreender por que a escolha do método de solução importa: embora métodos exatos consigam resolver determinadas instâncias e provar sua otimalidade, não se conhece um algoritmo exato de tempo polinomial para instâncias arbitrárias.
+
+Métodos como \textit{branch-and-bound} e \textit{branch-and-cut} combinam a exploração de soluções com limites que permitem eliminar partes da busca. O Concorde é uma implementação de referência de métodos exatos para o PCV \cite{applegate2006}. Heurísticas, por sua vez, buscam soluções sem assegurar a otimalidade. A escolha entre abordagens depende da estrutura da instância, dos recursos disponíveis e da necessidade de um certificado de solução ótima.
+
+\subsection{Modelagens e variações relevantes}
+
+O PCV pode ser representado por um grafo $G=(V,E)$. O conjunto $V$ contém os locais, chamados vértices, e $E$ contém as ligações entre eles. A cada ligação de $i$ para $j$ se associa um custo $c_{ij}$, como os minutos necessários para o deslocamento. A variável $x_{ij}$ vale 1 quando essa ligação é usada e 0 quando não é. Dessa forma, a expressão
+\[
+\min \sum_{(i,j)\in E} c_{ij}x_{ij}
+\]
+significa escolher o percurso cuja soma dos custos das ligações utilizadas seja a menor possível. O símbolo $\sum$ indica essa soma, e $\min$ indica a busca do menor valor. A formulação precisa também exigir as visitas e impedir que a solução contenha ciclos separados, sem um percurso que conecte todos os locais \cite{combinatorial_opt_tsp_chapter}.
+
+As variações do PCV permitem representar características diferentes dos deslocamentos. No caso assimétrico, o custo de ir de um ponto a outro pode ser diferente do custo de retornar, como ocorre em redes com sentidos de circulação. No caso métrico, os custos satisfazem a desigualdade triangular, propriedade que permite construir algoritmos com garantias de aproximação. A aplicação dessas garantias exige verificar as hipóteses do algoritmo escolhido.
+
+Quando os locais só podem ser visitados em determinados horários, o PCV com janelas de tempo acrescenta um intervalo permitido para o atendimento de cada ponto. Por exemplo, chegar a um museu antes da abertura exige esperar, enquanto iniciar a visita depois do limite permitido torna o percurso incompatível com a janela. Essa relação entre a ordem das paradas e o relógio da rota também aparece nos problemas com múltiplos percursos \cite{google_vrptw}.
+
+\section{Problema de Roteamento de Veículos (VRP)}
+
+O Problema de Roteamento de Veículos, ou \textit{Vehicle Routing Problem} (VRP), organiza o atendimento de clientes por veículos que partem de depósitos. Na formulação clássica, todos os clientes devem ser atendidos, e as rotas minimizam um custo sujeito às restrições operacionais.
+
+Uma variante é o Problema de Roteamento de Veículos Capacitado, do inglês \textit{Capacitated Vehicle Routing Problem} (CVRP), que limita a carga transportada por veículo. Outra é o Problema de Roteamento de Veículos com Janelas de Tempo, ou \textit{Vehicle Routing Problem with Time Windows} (VRPTW), no qual cada cliente deve ser atendido em um intervalo permitido. Também há formulações com vários depósitos. No Interlude, as janelas interessam porque as atrações têm horários de funcionamento.
+
+\citeonline{solomon1987} estudou heurísticas para o roteamento com janelas de tempo usando conjuntos de problemas que variam a distribuição dos clientes e as condições de atendimento. Essas instâncias permitem comparar métodos sob entradas comuns, em vez de avaliar cada algoritmo com um conjunto diferente de dados. A referência fundamenta esse modo de avaliação, mas suas instâncias não foram utilizadas nos testes relatados neste trabalho.
+
+Em uma viagem de vários dias, essa representação pode ser adaptada associando uma rota a cada dia, que ocupa o papel de um veículo no modelo. Os limites de capacidade passam a expressar, por exemplo, a quantidade de atividades que se deseja realizar diariamente. Há, entretanto, uma diferença em relação ao atendimento obrigatório do VRP clássico: o viajante pode selecionar mais atrações do que o período comporta. Permitir que algumas visitas fiquem de fora aproxima o planejamento turístico dos problemas de orientação, discutidos na Seção~\ref{sec:trabalhos-relacionados}.
+
+\section{Heurísticas e meta-heurísticas}
+
+Uma heurística orienta a construção ou a melhoria de soluções sem garantir a obtenção do ótimo. Nas buscas locais, a vizinhança é o conjunto de alterações que se permite examinar a partir de um percurso. O movimento 2-opt remove duas ligações e reconecta os trechos da rota. O 3-opt considera a remoção de três ligações. A heurística Lin--Kernighan explora sequências de trocas para o PCV \cite{applegate2006}.
+
+A aplicação repetida de movimentos locais pode chegar a um percurso que não melhora com as alterações examinadas, embora existam alternativas melhores. As meta-heurísticas oferecem estratégias para continuar a exploração. O método \textit{simulated annealing}, por exemplo, admite algumas mudanças que aumentam o custo, segundo uma probabilidade que diminui ao longo da busca. Isso permite sair de soluções nas quais uma melhoria exigiria primeiro aceitar uma piora. A busca local guiada (GLS, do inglês \textit{Guided Local Search}) utiliza penalidades temporárias para desestimular características recorrentes e explorar outros percursos. Essas estratégias estão entre as opções de busca do OR-Tools \cite{google_routing_options}.
+
+No Interlude, uma estratégia de inserção constrói a solução inicial, que é então refinada pela busca local guiada. Como o viajante aguarda o resultado no aplicativo, a execução recebe um limite de tempo para procurar melhorias e devolver a solução encontrada. Esse uso das heurísticas permite controlar o esforço computacional por requisição, sem exigir a prova de que o roteiro retornado seja o ótimo global \cite{google_routing_options}.
+
+\section{Planejamento turístico e critérios de otimização}
+
+Pontos de interesse, ou \textit{Points of Interest} (POIs), são locais candidatos à visita, como museus, parques e restaurantes. O planejamento turístico precisa selecionar pontos, atribuí-los a dias e ordenar os deslocamentos. Horários de funcionamento, duração de visita e disponibilidade diária condicionam essa seleção \cite{gavalas2014survey}.
+
+Além de respeitar horários, o planejamento precisa considerar o valor que o viajante atribui às visitas. Prêmios ou penalidades permitem expressar essas preferências numericamente: deixar de visitar uma atração prioritária pode receber um custo maior do que omitir outra de menor interesse. No Interlude, essas penalidades são combinadas ao tempo de deslocamento para orientar a seleção e a ordem das paradas. A função objetivo representa, assim, critérios de organização da agenda. A satisfação com a viagem envolve também aspectos que não são capturados por esses valores. O orçamento monetário é utilizado na interface como referência de gasto.
+
+\section{Trabalhos relacionados}
+\label{sec:trabalhos-relacionados}
+
+A comparação considera duas frentes: estudos acadêmicos sobre seleção e sequenciamento de atrações e ferramentas comerciais de planejamento de viagens. O objetivo é situar as decisões de engenharia do Interlude, distinguindo recursos de interface, restrições do modelo e evidências de avaliação.
+
+\subsection{Do Problema de Orientação ao planejamento turístico}
+
+A literatura de pesquisa operacional trata o planejamento de roteiros turísticos sob o nome \textit{Tourist Trip Design Problem} (TTDP). \citeonline{vansteenwegen2007mobile} discutem o planejamento de percursos em guias turísticos móveis. A revisão de \citeonline{gavalas2014survey} reúne abordagens algorítmicas para o TTDP e relaciona a seleção de atrações aos problemas de orientação.
+
+Nas formulações clássicas do VRP e do VRPTW, todos os clientes precisam ser atendidos. No planejamento turístico, o tempo pode não comportar todas as atrações desejadas, e escolher quais visitar faz parte da solução. O \textbf{Problema de Orientação}, ou \textit{Orienteering Problem} (OP), representa essa escolha: cada ponto possui um prêmio, que expressa seu interesse, e o percurso deve maximizar a soma dos prêmios coletados sem exceder um limite de duração. \citeonline{tsiligirides1984} apresenta métodos heurísticos para esse tipo de problema.
+
+Quando são permitidos vários percursos, tem-se o \textit{Team Orienteering Problem} (TOP). Acrescentar janelas de atendimento leva ao \textit{Team Orienteering Problem with Time Windows} (TOPTW). Na aplicação ao turismo, cada percurso pode corresponder a um dia e cada janela aos horários em que uma atração pode ser visitada \cite{vansteenwegen2009ils}. A revisão de \citeonline{vansteenwegen2011survey} organiza essas variantes e discute métodos exatos, heurísticas e meta-heurísticas. Essa sequência de modelos acrescenta decisões e restrições relevantes para a viagem, sem significar uma mudança de classe de complexidade a cada etapa.
+
+\subsection{Modelos de linguagem combinados com planejamento}
+
+A necessidade de transformar informações de viagem em um plano sujeito a restrições também aparece no TRIP-PAL \cite{delarosa2024trippal}. Nesse trabalho, os modelos de linguagem traduzem informações para estruturas de dados, enquanto planejadores automáticos constroem os planos. O Interlude adota o mesmo princípio de separar a obtenção das informações da decisão sobre o roteiro, utilizando Places e Routes, enriquecimento pelo Gemini e roteamento com OR-Tools. A relação entre os trabalhos está nessa organização da solução. Aqui, o estudo se concentra em sua implementação e verificação no fluxo de um aplicativo móvel.
+
+\subsection{Relação entre a literatura e a formulação adotada}
+
+O OP e, sobretudo, o TOPTW descrevem mais diretamente a necessidade de selecionar atrações do que o VRP clássico, que exige atender todos os pontos. O Interlude compartilha com o TOPTW a seleção de visitas, os percursos diários e o respeito aos horários. A implementação utiliza os recursos de roteamento do OR-Tools para representar essas decisões por meio de visitas opcionais e penalidades de exclusão \cite{google_penalties}. A escolha da biblioteca é uma decisão de implementação, enquanto o TOPTW ajuda a caracterizar o problema resolvido.
+
+Para entender a relação entre prêmio e penalidade, considere o conjunto de atrações $V_A$. Para cada atração $i$, o valor fixo $\pi_i$ expressa o custo de deixá-la de fora, e $z_i$ vale 1 se ela for visitada em algum dia e 0 caso contrário. Portanto, $1-z_i$ vale 1 apenas para atrações excluídas. A identidade
+\begin{equation}
+\underbrace{\sum_{i\in V_A}\pi_i(1-z_i)}_{\text{penalidades das exclusões}}
+=\underbrace{\sum_{i\in V_A}\pi_i}_{\text{total fixo}}
+-\underbrace{\sum_{i\in V_A}\pi_i z_i}_{\text{valor das visitas realizadas}}
+\label{eq:premio-penalidade}
+\end{equation}
+mostra que o valor das atrações excluídas é o total disponível menos o valor das atrações visitadas. Por exemplo, se três atrações têm valores 10, 6 e 4, o total é 20. Visitar as duas primeiras coleta 16 e deixa uma penalidade de 4. Com esse total fixo, reduzir apenas a penalidade de exclusão produz o mesmo efeito que aumentar o prêmio coletado.
+
+No Interlude, entretanto, a função objetivo também considera deslocamentos e preferências de distribuição dos dias. A identidade da Equação~\ref{eq:premio-penalidade} explica apenas o termo de exclusão. Ela não torna o modelo completo equivalente ao TOPTW clássico, nem permite comparar diretamente seus valores de objetivo.
+
+O estudo de busca local iterada para TOPTW \cite{vansteenwegen2009ils} examina o desempenho de um algoritmo em instâncias de referência. No presente trabalho, a atenção se volta à integração que permite construir uma instância a partir das escolhas do viajante e apresentar sua solução no aplicativo. Isso exige obter e normalizar durações, horários e atributos usados nas penalidades antes de iniciar a busca. A Seção~\ref{sec:experimento-busca} compara estratégias disponíveis no OR-Tools sobre a mesma entrada do aplicativo. A comparação de estratégias com instâncias de referência da literatura e com entradas de outras cidades permanece como continuidade, retomada na Seção~\ref{cap:consideracoes}.
+
+\input{editaveis/comparativoferramentas}
+
+\section{Formalização adotada}
+
+Seja $V$ o conjunto de pontos da instância, incluindo atrações e bases logísticas. Cada dia corresponde a uma rota, cujo início e fim usam a hospedagem, quando informada, ou o ponto-base adotado. Os horários de chegada e partida informados pelo viajante podem reduzir a disponibilidade do primeiro e do último dia, conforme explicado na Seção~\ref{sec:chegada-partida}. Os dados de entrada incluem:
+\begin{itemize}
+  \item tempos de deslocamento $t_{ij}$ entre pares de pontos;
+  \item intervalos permitidos para início de atendimento $[a_i(d),b_i(d)]$, dependentes do dia $d$;
+  \item tempos de serviço $s_i$, que representam a duração de cada visita;
+  \item horizonte diário e limites de contagem de atrações;
+  \item penalidades para visitas não atendidas e para desvios de preferências suaves.
+\end{itemize}
+
+Com esses dados, o modelo calcula o tempo necessário para percorrer cada ligação e para realizar as visitas. Se a chegada ocorrer antes da abertura, a rota pode incluir espera. Quando nem todas as atrações cabem no período, as disjunções permitem omitir visitas mediante penalidades, ampliando as alternativas examinadas pela busca \cite{google_penalties}. A existência de uma solução ainda depende da compatibilidade entre as demais restrições, como as bases e as janelas de cada dia.
+
+A ordem de prioridade declarada pelo viajante aumenta a penalidade de exclusão dos pontos mais desejados. Isso favorece sua permanência, mas a escolha é feita em conjunto com os deslocamentos, os horários e os demais custos do roteiro. Por exemplo, uma atração prioritária pode não caber em nenhuma janela disponível. A prioridade é, portanto, ponderada na função objetivo, em vez de impor uma ordem rígida de atendimento. A Seção~\ref{sec:modelagem-matematica} detalha os termos e os parâmetros usados nessa decisão.
+
+\section{Serviços de dados geoespaciais}
+
+\subsection{Lugares e atributos turísticos}
+
+A Places API fornece sugestões de destinos, buscas por texto ou proximidade, detalhes dos lugares e fotografias. Entre os atributos consultados estão identificadores, coordenadas, categorias, avaliações e horários, quando disponíveis. Máscaras de campos delimitam os atributos solicitados em cada operação \cite{google_places_api}.
+
+A presença de um lugar na base não implica que todos os atributos estejam preenchidos ou atualizados para a data da viagem. Por isso, identificação e localização são distinguidas de estimativas complementares. No Interlude, as fotografias, as avaliações e os horários do provedor não são gerados pelo modelo de linguagem.
+
+\subsection{Rotas e modos de deslocamento}
+
+A Routes API oferece matrizes de distância e duração e o detalhamento de trajetos entre pontos \cite{google_routes_api}. A matriz depende do modo de transporte selecionado: condução de veículo, caminhada ou transporte público. Seus valores podem ser assimétricos, por exemplo em redes com sentidos de circulação ou conexões diferentes entre ida e volta.
+
+O otimizador consome os valores consolidados de tempo de deslocamento. Geometrias de linhas e instruções por segmento são usadas na apresentação do trajeto. No transporte público, o detalhamento pode incluir linhas, embarques e desembarques. Esses segmentos não são variáveis de decisão do modelo. A matriz de planejamento é calculada previamente, sem considerar o horário de partida específico de cada visita.
+
+\subsection{Dados ausentes e política de consulta}
+\label{sec:dados-ausentes}
+
+Nem toda consulta ao provedor retorna uma rota para todos os pares de pontos. Para continuar a preparação da instância nesses casos, o sistema pode estimar o tempo a partir da distância geodésica, calculada pela fórmula de Haversine, dividida por uma velocidade de referência. No adaptador Google utilizado na geração, essa velocidade é fixa em 40~km/h, independentemente do modo solicitado. Como a estimativa utiliza a distância entre coordenadas, sem percorrer a rede viária, pode subestimar trajetos a pé ou em transporte público e não confirma a existência de uma conexão utilizável. Por esse motivo, também não funciona como limite superior para a duração do deslocamento.
+
+Na implementação, o limiar de 120~km corresponde à distância em linha reta entre dois pontos, usada para decidir quais tempos de deslocamento serão aproveitados da Routes API. Os pontos são agrupados por conexões de até 120~km, e o sistema consulta uma submatriz para cada grupo. Um grupo pode conter pontos mais distantes entre si quando existe uma cadeia de conexões intermediárias. Mesmo nesse caso, os pares que ultrapassam 120~km mantêm a estimativa geodésica, em vez do tempo retornado pela API.
+
+Esse parâmetro busca limitar consultas para deslocamentos longos, mas não proíbe que dois lugares distantes apareçam no mesmo dia. Também não é um valor obtido por experimento de calibração. Por exemplo, para um par a 150~km em linha reta, a aproximação a 40~km/h resulta em 3,75~h de deslocamento, independentemente das condições reais do caminho. O tempo aproximado entra no modelo e pode alterar a distribuição das visitas.
+
+As falhas de rota retornadas explicitamente pelo provedor geram avisos que identificam parte dos dados aproximados. Os pares que ficam com estimativa devido ao agrupamento não aparecem necessariamente nesses registros. Antes das consultas, o processamento elimina coordenadas repetidas, inclusive posições equivalentes de pausas para refeição.
+
+O código configura 90 dias de \textit{cache} para a matriz e seus pares. Esse prazo é uma escolha da implementação, não uma exigência nem uma permissão geral do Google. Os termos específicos de Places e Routes permitem armazenar temporariamente valores de latitude e longitude por até 30 dias, enquanto identificadores de lugares possuem tratamento próprio. A exceção para coordenadas não autoriza, por si só, guardar por 30 ou 90 dias matrizes, avaliações ou horários \cite{google_maps_termos2026,google_places_politicas2026}. A política de reutilização precisa, portanto, ser ajustada ao tipo de conteúdo e às permissões aplicáveis antes de ser considerada adequada para a operação do serviço. A Seção~\ref{sec:custos-geracao} distingue essa pendência dos cálculos de economia do \textit{cache}.
+
+\subsection{Horários de chegada e partida}
+\label{sec:chegada-partida}
+
+Além de informar quantos dias terá no destino, o viajante pode indicar a que horas espera chegar e partir. Essas informações definem quando ele estará disponível para as visitas. Se uma viagem começa na segunda-feira, mas a chegada está prevista para as 20h, o aplicativo não deve tratar a manhã e a tarde como tempo livre. Da mesma forma, uma partida ao meio-dia reduz a disponibilidade do último dia.
+
+Na implementação, uma \textit{âncora} é uma referência de lugar ou horário que condiciona o planejamento. A hospedagem pode fornecer o ponto de saída e retorno, e os horários estimados de chegada e partida podem limitar as visitas nas extremidades do período. Quando um local também é informado, seu deslocamento participa da preparação da agenda. O termo não designa um serviço externo: são dados fornecidos pelo usuário e utilizados para construir as restrições.
+
+Quando esses dados não são informados, o sistema utiliza o ponto-base e a janela diária padrão. Em viagens com mais de um destino, o usuário define a ordem das cidades e os horários estimados de transição. Cada etapa gera sua própria instância de roteamento, com a disponibilidade correspondente.
+
+\section{Modelos de linguagem para enriquecimento de dados}
+
+Além dos tempos de deslocamento, a organização de um roteiro depende de informações que nem sempre constam nos serviços de mapas, como a duração esperada de uma visita. O trabalho utiliza modelos de linguagem de grande escala, ou \textit{Large Language Models} (LLMs), para estimar esses atributos a partir de descrições dos lugares. Os LLMs constituem uma classe de modelos de inteligência artificial e, nesta aplicação, atuam na preparação dos dados. A distribuição das visitas fica a cargo do modelo de otimização.
+
+\subsection{Papel do enriquecimento}
+
+A duração de uma visita e a adequação de um horário não são necessariamente fornecidas pelos serviços de mapas. A integração com Gemini solicita esses atributos como estimativas, usando os dados disponíveis do lugar e instruções de saída estruturada \cite{google_gemini_api}. O retorno é convertido para os contratos internos antes de ser utilizado.
+
+Os campos têm funções distintas:
+\begin{itemize}
+  \item \texttt{averageMinutes} fornece uma estimativa de tempo de serviço, ajustada pelo ritmo escolhido.
+  \item \texttt{recommendedVisitWindow} indica uma janela de horário acompanhada de uma força declarada. As forças forte e suave geram penalidades suaves. A força obrigatória é combinada ao horário de funcionamento e passa a restringir os horários permitidos.
+  \item \texttt{seasonality} fornece indicações de sazonalidade que podem afetar a adequação e a disponibilidade considerada na preparação da instância.
+  \item custo, descrição e orientações complementares abastecem a interface. O custo estimado não restringe a otimização.
+\end{itemize}
+
+Uma recomendação de horário tem função diferente do horário de funcionamento. Um parque pode estar aberto durante todo o dia, por exemplo, mas receber uma recomendação de visita em um intervalo mais específico. Por isso, o Interlude mantém as janelas geradas pelo modelo separadas dos horários informados pelo provedor: em geral, as primeiras orientam escolhas por penalidades suaves, enquanto os horários conhecidos restringem a agenda. A exceção é a janela declarada obrigatória, que se soma aos horários de funcionamento como restrição.
+
+\subsection{Escolha do modelo e confiança declarada}
+
+A adoção inicial do Gemini foi motivada pelo custo e pelo tempo de resposta percebidos pelos autores nas condições de desenvolvimento do TCC1. Essa decisão prática não decorreu de um experimento controlado entre provedores. A integração foi mantida na evolução para o aplicativo móvel, preservando o componente responsável pelas estimativas enquanto o restante do fluxo era ampliado. A escolha tem, assim, origem nas condições de implementação do projeto. Uma comparação entre modelos para esse uso é proposta na Seção~\ref{cap:consideracoes}. A configuração utilizada é descrita na Seção~\ref{cap:tecnologias}.
+
+O retorno inclui o atributo \texttt{confidence}, no qual o próprio modelo classifica sua confiança como alta, média ou baixa. Essa informação acompanha a estimativa, mas não foi calibrada contra erros observados e, por isso, não representa uma probabilidade de acerto. Quando um atributo não é estimado, o contrato permite um valor nulo. A validação e a normalização verificam se o retorno pode ser processado, enquanto a precisão do conteúdo exige uma avaliação específica.
+
+\subsection{Limitações e efeitos sobre o roteiro}
+
+Uma duração subestimada pode permitir visitas que não caberiam no tempo real disponível. Uma recomendação de horário ou de sazonalidade incorreta pode alterar prioridades e distribuição entre dias. Assim, a verificação das restrições do otimizador não equivale à validação factual dos dados de entrada.
+
+O enriquecimento fornece ao planejamento atributos complementares, como duração estimada de visita, janela preferencial e sazonalidade. A implementação mantém esses atributos separados dos dados do provedor, normaliza os campos recebidos e reutiliza respostas por prazo definido. A contribuição desse componente é disponibilizar estimativas estruturadas para a construção da instância de roteamento. A avaliação de sua precisão é discutida entre as perspectivas de continuidade do trabalho, na Seção~\ref{cap:consideracoes}.
+
+\section{OR-Tools e serviço de otimização}
+
+O Google OR-Tools é uma biblioteca de código aberto com componentes para programação linear, programação por restrições e roteamento. O Interlude utiliza a Routing Library para representar veículos, dimensões de tempo, limites de contagem e visitas opcionais (\citeauthor{google_ortools}, \citeyear{google_ortools}, \citeyear{google_vrptw}).
+
+A otimização é exposta por um microsserviço Python com FastAPI. O serviço de orquestração em Fastify recebe a requisição do aplicativo, prepara a instância e a envia ao microsserviço. A solução retorna ao aplicativo pela mesma camada de orquestração. O cliente realiza a persistência da viagem no Firestore, respeitando as regras de acesso. Essa gravação não é responsabilidade do otimizador.
+
+A separação permite verificar o modelo sem a interface ou os provedores externos e implantar o serviço independentemente. Mudanças internas podem preservar os demais componentes quando mantêm o contrato de entrada e saída. Alterações nesse contrato, por sua vez, exigem compatibilização entre as camadas.
+
+\section{Representação e busca no OR-Tools}
+\label{sec:representacao-busca}
+
+Para o OR-Tools, o roteiro é um conjunto de percursos entre pontos. Cada atração corresponde a um ponto, e cada dia ocupa o papel de um veículo. Essa correspondência permite usar a mesma biblioteca que organiza entregas para distribuir visitas ao longo de uma viagem. Antes de iniciar a busca, a aplicação informa os tempos de deslocamento, a duração das visitas e os horários em que cada uma pode começar.
+
+O modelo precisa acompanhar o relógio de cada dia. Se uma visita começa às 10h, dura 60 minutos e o deslocamento seguinte leva 20 minutos, a próxima parada não pode começar antes das 11h20. Se o local só abre às 12h, são necessários mais 40 minutos de espera. O OR-Tools chama esse acompanhamento de \textit{dimensão de tempo}: um valor acumulado que avança conforme o percurso e deve permanecer dentro das janelas permitidas (\citeauthor{google_dimensions}, \citeyear{google_dimensions}, \citeyear{google_vrptw}).
+
+A duração ocupada no dia e o critério usado para comparar percursos têm funções diferentes. No exemplo, os 60 minutos da visita precisam ser reservados, mas o custo da ligação até a próxima parada corresponde aos 20 minutos de deslocamento. Essa ligação orientada entre dois pontos é chamada de \textit{arco} na linguagem de grafos. A função objetivo acrescenta outros custos, como a duração total do dia e as penalidades de exclusão, detalhados na Seção~\ref{sec:modelagem-matematica}.
+
+Outro valor acumulado conta quantas atrações cada dia recebe. Ele aumenta em uma unidade a cada atração visitada, sem contar a hospedagem ou as refeições como atrações. Esse contador permite impor o máximo associado ao ritmo da viagem. Um dia abaixo da quantidade desejada pode receber uma penalidade, mas continua permitido quando a disponibilidade de horário impede mais visitas.
+
+Como nem todos os lugares selecionados precisam caber no período, cada atração pode ser deixada de fora mediante o custo de exclusão. O recurso da biblioteca que representa essa escolha é a \textit{disjunção}, configurada pelo método \texttt{AddDisjunction} \cite{google_penalties}. O algoritmo avalia a exclusão em conjunto com os demais custos e horários. Uma prioridade alta favorece uma visita, mas não permite ignorar o fechamento do local.
+
+As pausas para refeição também ocupam tempo. Para um almoço automático, por exemplo, a preparação pode oferecer posições alternativas próximas às atrações ou à hospedagem. Essas posições representam possibilidades para uma mesma pausa, e não vários almoços a realizar. O modelo reúne as alternativas em um grupo e permite escolher no máximo uma delas. Restaurantes selecionados pelo usuário recebem tratamento próprio, descrito com os parâmetros de refeição na Seção~\ref{sec:modelagem-matematica}.
+
+Com a instância preparada, a heurística \textit{Parallel Cheapest Insertion} constrói percursos iniciais inserindo pontos em posições de menor custo de deslocamento que respeitem as restrições. Depois, a GLS explora alterações na solução, como mudanças na ordem das visitas ou em sua distribuição entre dias. Suas penalidades temporárias ajudam a sair de mínimos locais e são diferentes das penalidades de exclusão definidas para representar as preferências do viajante \cite{google_routing_options}.
+
+A busca termina ao atingir o prazo configurado e devolve a melhor solução encontrada nessa execução. O limite controla o tempo de espera do usuário, sem assegurar que todas as alternativas tenham sido examinadas. Por isso, o roteiro retornado não vem acompanhado de uma prova de que seja o melhor possível. A Seção~\ref{cap:solucao} apresenta como esse processo foi integrado ao aplicativo e verificado com entradas conhecidas.
+
+\section{Síntese do referencial}
+
+Os conceitos apresentados permitem representar o planejamento como a seleção de visitas e a construção de percursos diários compatíveis com horários. Para aplicar essa representação no Interlude, os serviços geoespaciais fornecem parte das informações e o modelo de linguagem complementa atributos ausentes com estimativas. A formulação penalizada de roteamento reúne esses dados e as prioridades do viajante na construção da agenda. A próxima seção descreve as tecnologias e os procedimentos utilizados para implementar e verificar essa integração.

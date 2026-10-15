@@ -4,15 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=32" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="motion.css?v=36" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <main class="viewport">
 <div id="deck" class="deck" aria-label="Apresentação Interlude">
 
-<!-- 01 -->
 <section class="slide dark cover" id="slide-1" data-title="Interlude" data-scene="cover">
   <div class="photo"></div>
   <div class="wash"></div>
@@ -32,25 +31,24 @@
   </div>
   <div class="cover-credit">Foto: Kai Pilger / Wikimedia Commons · CC BY-SA 4.0</div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Bom dia. Somos Gustavo Takechi e Bruno Medeiros, e vamos apresentar o Interlude, um aplicativo móvel que ajuda a organizar atrações nos dias disponíveis de uma viagem.</p>
-          <p>O nome Interlude vem da ideia de um interlúdio musical: a viagem como uma pausa ou mudança de ritmo no álbum da rotina de estudos e trabalho.</p>
-          <p>O trabalho nasceu quando planejamos uma viagem de três dias a Nova Iorque. As datas e milhas disponíveis limitavam a permanência, e precisávamos conciliar muitos lugares desejados com horários e deslocamentos. A pergunta que orientou o desenvolvimento foi: como apoiar a descoberta de atrações e reunir informações sobre visitas e deslocamentos para organizar as escolhas do viajante em roteiros diários que respeitem os horários disponíveis e possam ser consultados e ajustados em um aplicativo móvel?</p>
-          <p>Ao longo da apresentação vamos usar uma execução de cinco dias em Nova Iorque como exemplo, distinta da viagem de três dias que motivou o estudo. As capturas e os dados de Nova Iorque vêm de uma execução registrada do sistema; os resultados de Brasília e Pirenópolis complementam a validação.</p>
-          <h4>Observações</h4>
-          <p class="obs">Nova Iorque é o exemplo que percorre a apresentação inteira, e é também a execução detalhada na seção de resultados da monografia. Brasília e Pirenópolis complementam com o smoke publicado e o ensaio em aparelho físico.</p>
-          <p class="obs">Não antecipar a lista de funcionalidades aqui: a abertura é sobre o problema, não sobre o produto.</p>
-          <h4>Fontes</h4>
-          <ul>
+    <h4>Fala</h4>
+    <p>Olá. Nós somos Gustavo Takechi e Bruno Medeiros, e vamos apresentar o Interlude, um aplicativo móvel para planejar e editar roteiros turísticos.</p>
+    <p>A ideia surgiu quando planejamos uma viagem de três dias a Nova Iorque. Tínhamos vários lugares que queríamos conhecer, mas precisávamos descobrir o que cabia naquele período, considerando horários de funcionamento e deslocamentos. Cada mudança na lista exigia rever a agenda.</p>
+    <p>Foi dessa dificuldade que veio a proposta: reunir a pesquisa dos lugares e a organização das visitas em um aplicativo, mantendo as prioridades do viajante. Para mostrar como isso funciona, vamos acompanhar uma execução registrada de cinco dias em Nova Iorque, diferente da viagem que motivou o trabalho.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A viagem que motivou o projeto tinha três dias. O exemplo computacional da apresentação tem cinco dias. As duas situações são distintas.</p>
+      <h4>Fontes</h4>
+      <ul>
             <li><a href="https://marca.unb.br/" target="_blank">Portal oficial da marca UnB</a></li>
             <li><a href="https://fcte.unb.br/wp-content/uploads/2025/05/Manual_Identidade_Visual_UnB.pdf" target="_blank">Manual de Identidade Visual da UnB</a></li>
             <li><a href="https://commons.wikimedia.org/wiki/File:Manhattan_Skyline_night.jpg" target="_blank">Foto de Manhattan — Kai Pilger, CC BY-SA 4.0</a></li>
-            <li><a href="../../tcc/latex/editaveis/informacoes.tex">Autoria e orientação</a></li>
+            <li><a href="references/tcc/latex/editaveis/informacoes.tex">Autoria e orientação</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 02 -->
 <section class="slide" id="slide-2" data-title="Problema de geração de roteiros" data-scene="problem">
   <h2 class="title" data-a="up">Problema de geração de roteiros turísticos</h2>
   <div class="problem">
@@ -70,23 +68,22 @@
   </div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Uma lista de lugares ainda não resolve a viagem: precisamos saber se há tempo para visitá-los e chegar à próxima parada. O problema tem três partes. O usuário informa destino, interesses e disponibilidade. O aplicativo sugere lugares, e o viajante revisa a seleção e as prioridades. Provedores e enriquecimento completam horários e estimativas de duração.</p>
-          <p>O processamento é o que o sistema decide: quais lugares entram, em que ordem e em que dia.</p>
-          <p>A saída é o roteiro dia a dia, mais a lista do que não coube.</p>
-          <p>À direita vocês veem isso concretamente. Em cima, os doze pontos que escolhemos em Nova Iorque, espalhados pela cidade, e o quadrado escuro é o hotel. Embaixo, um mapa por dia, com a ordem de visita que o sistema produziu. Reparem que ninguém informou essa divisão: ela é resultado.</p>
-          <h4>Observações</h4>
-          <p class="obs">As posições são as coordenadas reais das doze atrações. A divisão em dias é a saída real do solver nesta execução.</p>
-          <p class="obs">Se perguntarem por que alguns dias têm duas paradas e outros três, a resposta detalhada está no slide de distribuição, mais adiante.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../slides/ROTEIRO_DEFESA_TCC2.md">Roteiro original da defesa, slide 2</a></li>
-            <li><a href="../../aplicativo/backend/src/domain/itinerary.ts">Contrato de itinerário</a></li>
+    <h4>Fala</h4>
+    <p>O ponto de partida é este mapa: doze atrações que queremos visitar e a hospedagem. Saber onde ficam esses lugares ajuda, mas ainda precisamos decidir em que dia visitar cada um e se teremos tempo de chegar antes do fechamento.</p>
+    <p>O viajante informa o período, os interesses e a disponibilidade. Depois escolhe as atrações e coloca suas preferências em ordem. O sistema reúne os horários e os tempos estimados para distribuir essas visitas entre os dias.</p>
+    <p>Quando o mapa muda para o resultado, as cores passam a representar os dias e as linhas mostram a sequência das visitas. Essa divisão foi produzida pelo sistema. Se algum lugar não couber, ele aparece separadamente para que o viajante saiba o que ficou de fora.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Os mapas usam as coordenadas das atrações selecionadas. A divisão em dias é a resposta registrada do solver.</p>
+      <h4>Fontes</h4>
+      <ul>
+
+            <li><a href="references/aplicativo/backend/src/domain/itinerary.ts">Contrato de itinerário</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 03 -->
 <section class="slide" id="slide-3" data-title="Requisitos e escopo">
   <h2 class="title" data-a="up">Requisitos e escopo do aplicativo</h2>
   <p class="lead" data-a="up" style="--d:100ms">As experiências dos autores no planejamento de viagens e a vivência profissional no setor orientaram as necessidades do aplicativo.</p>
@@ -101,34 +98,32 @@
       <li data-a="left" style="--d:1050ms;--td:3.05s"><i>06</i><div><b>Persistir e exportar</b><span>viagem salva e calendário do aparelho</span></div></li>
     </ol>
     <div class="req-side">
-      <div class="card" data-a="right" style="--d:500ms"><h3><svg data-i="shield-check"></svg>Condições de funcionamento</h3><p>Feedback de processamento e conflitos; permissões e proteção de dados; recuperação de falhas; contratos consistentes; acompanhamento de consumo.</p></div>
+      <div class="card" data-a="right" style="--d:500ms"><h3><svg data-i="shield-check"></svg>Condições de funcionamento</h3><p>O app informa quando está processando, pede permissão para exportar e preserva a viagem salva se um ajuste falhar.</p></div>
       <div class="card" data-a="right" style="--d:700ms"><h3><svg data-i="pencil"></svg>Critério de aceite na edição</h3><p>Um ajuste incompatível preserva a viagem salva. Ao replanejar, o viajante examina mudanças e exclusões antes de aplicar a proposta.</p></div>
       <p class="scope-note" data-a="right" style="--d:900ms">O viajante define a ordem das cidades e informa os horários estimados de chegada e partida.</p>
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>As necessidades partiram das nossas experiências como viajantes e da vivência profissional de um de nós no setor. Elas foram revistas à medida que a prova de conceito web evoluiu para o aplicativo móvel.</p>
-          <p>Os seis requisitos acompanham o uso: preparar a viagem, escolher atrações, gerar a agenda, consultar, editar, salvar e exportar. Cada funcionalidade tem critérios de aceite no capítulo 4.</p>
-          <p>Na edição, por exemplo, mover uma atração pode afetar outra visita. Um ajuste incompatível preserva o roteiro salvo; uma reorganização mais ampla apresenta uma proposta para o viajante examinar antes de aplicar.</p>
-          <p>O núcleo organiza as visitas dentro de cada destino. O viajante define a ordem das cidades e informa os horários estimados de chegada e partida.</p>
-          <h4>Observações</h4>
-          <p class="obs">RF-01 a RF-06 correspondem ao capítulo 4 revisado. Os requisitos de qualidade abrangem uso no aparelho, proteção, recuperação, consistência e operação. A alteração de datas dispara nova geração; a prévia de mudanças é específica do replanejamento para mover ou inserir atrações.</p>
-          <p class="obs">A experiência dos autores fornece conhecimento do domínio; a avaliação com seis participantes está na seção 5.9 e será ampliada, como prevê a seção 6.3. O escopo apresentado concentra-se no planejamento individual e na edição do roteiro.</p>
-          <p class="obs">A revisão de literatura situa a proposta no TTDP e em abordagens híbridas, como TRIP-PAL. A contribuição examinada é a integração com o fluxo móvel, sem alegar exclusividade da combinação entre LLM e planejamento.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../tcc/latex/editaveis/levantamentorequisitos.tex">Monografia: capítulo 4, requisitos e critérios de aceite</a></li>
-            <li><a href="../../tcc/latex/editaveis/introducao.tex">Motivação, problema e objetivos</a></li>
-            <li><a href="../../tcc/latex/editaveis/referencialteorico.tex">Fundamentação e trabalhos relacionados</a></li>
+    <h4>Fala</h4>
+    <p>Transformamos essa necessidade em um fluxo de uso. A pessoa prepara a viagem, descobre atrações, escolhe suas prioridades e gera uma agenda. Depois precisa conseguir consultar esse roteiro no celular e alterá-lo sem perder o que já salvou.</p>
+    <p>Um exemplo é mover uma atração para outro dia. A mudança pode entrar em conflito com o horário de funcionamento ou com outra visita. Nesse caso, o aplicativo mantém a agenda salva. Se for necessário reorganizar o dia, ele apresenta uma proposta com as mudanças para a pessoa decidir se quer aplicá-la.</p>
+    <p>Também delimitamos o que o sistema decide: ele organiza as visitas dentro dos destinos. A ordem das cidades e os horários estimados de chegada e partida continuam sendo informados pelo viajante.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A prévia de mudanças pertence ao replanejamento de atrações. Alterar datas dispara uma nova geração ao salvar. O fluxo atende ao planejamento dentro dos destinos; não escolhe a ordem das cidades.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/tcc/latex/editaveis/levantamentorequisitos.tex">Monografia: capítulo 4, requisitos e critérios de aceite</a></li>
+            <li><a href="references/tcc/latex/editaveis/introducao.tex">Motivação, problema e objetivos</a></li>
+            <li><a href="references/tcc/latex/editaveis/referencialteorico.tex">Fundamentação e trabalhos relacionados</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 04 -->
 <section class="slide" id="slide-4" data-title="Problemas que orientam o planejamento" data-scene="theory">
   <h2 class="title" data-a="up">Problemas que orientam o planejamento</h2>
-  <p class="lead" data-a="up" style="--d:100ms">A cada modelo, acrescentamos uma decisão necessária para organizar a viagem.</p>
+  <p class="lead" data-a="up" style="--d:100ms">O roteiro exige ordenar as visitas, distribuí-las entre os dias e respeitar horários. Se faltar tempo, também é preciso escolher o que fica de fora.</p>
   <div class="theory">
     <article data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210"></svg><small>01</small><h3>PCV</h3><p>Em que ordem visitar <b>todos</b> os pontos?</p><em>Um percurso de menor custo</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
     <article data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210"></svg><small>02</small><h3>VRP</h3><p>Como repartir os pontos entre <b>vários percursos</b>?</p><em>No app, cada percurso pode ser um dia</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
@@ -136,10 +131,20 @@
     <article class="key" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210"></svg><small>04 · QUANDO NÃO CABE TUDO</small><h3>OP e TOPTW</h3><p>O OP escolhe quais pontos visitar dentro de um limite de tempo. O TOPTW combina essa seleção com vários percursos e janelas.</p><em>Tracejado: ponto deixado de fora</em></article>
   </div>
   <p class="interlude-line" data-build="5"><b>Interlude</b><span>seleção próxima ao TOPTW, implementada com roteamento, visitas opcionais e penalidades no OR-Tools.</span></p>
-  <template class="speaker-notes"><h4>O que falar</h4><p>O PCV ajuda a entender a sequência de um percurso. No VRP, precisamos também dividir os pontos entre percursos, que aqui representam dias. O VRPTW acrescenta o relógio: chegar a um local depois do fechamento invalida aquela sequência.</p><p>Mas o problema turístico tem outra decisão importante: nem tudo cabe. OP e TOPTW tratam explicitamente essa seleção. Eles são referências mais próximas do nosso problema. No Interlude, usamos as visitas opcionais e as penalidades do OR-Tools para construir uma variante que também pondera deslocamentos e distribuição dos dias.</p><h4>Observações</h4><p class="obs">As setas são uma progressão didática de características. Não representam cronologia das publicações nem uma hierarquia de classes de complexidade. A função objetivo do Interlude não é idêntica à do TOPTW clássico.</p><h4>Fontes</h4><ul><li><a href="https://www.math.uwaterloo.ca/tsp/book/index.html">Applegate et al. (2006)</a></li><li><a href="https://doi.org/10.1287/opre.35.2.254">Solomon (1987)</a></li><li><a href="https://doi.org/10.1016/j.ejor.2010.03.045">Vansteenwegen et al. (2011)</a></li><li><a href="https://doi.org/10.1016/j.cor.2009.03.008">TOPTW: busca local iterada (2009)</a></li></ul></template>
+  <template class="speaker-notes">
+    <h4>Fala</h4>
+    <p>Para formular esse problema, começamos pela ordem de visita. O Problema do Caixeiro Viajante procura um percurso de menor custo que passe por todos os pontos. Isso ajuda a pensar na sequência, mas uma viagem tem vários dias.</p>
+    <p>O problema de roteamento de veículos permite dividir os pontos entre percursos. Na nossa adaptação, cada percurso representa um dia. Quando acrescentamos janelas de tempo, também exigimos que cada visita ocorra em um horário permitido.</p>
+    <p>Ainda falta uma decisão: quando o tempo é insuficiente, quais lugares devemos deixar de fora? Os problemas de orientação, como OP e TOPTW, tratam dessa seleção. O Interlude combina essas ideias no OR-Tools: as visitas são opcionais, e o custo de excluí-las depende das preferências do viajante.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A sequência de modelos organiza a explicação das decisões, sem representar uma cronologia. A função objetivo implementada difere da formulação clássica do TOPTW.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="https://www.math.uwaterloo.ca/tsp/book/index.html">Applegate et al. (2006)</a></li><li><a href="https://doi.org/10.1287/opre.35.2.254">Solomon (1987)</a></li><li><a href="https://doi.org/10.1016/j.ejor.2010.03.045">Vansteenwegen et al. (2011)</a></li><li><a href="https://doi.org/10.1016/j.cor.2009.03.008">TOPTW: busca local iterada (2009)</a></li></ul>
+    </details>
+  </template>
 </section>
 
-<!-- 05 -->
 <section class="slide" id="slide-5" data-title="Arquitetura do software">
   <h2 class="title" data-a="up">Arquitetura geral do sistema</h2>
   <div class="arch">
@@ -181,31 +186,28 @@
     </svg>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Esta é a arquitetura. São quatro peças.</p>
-          <p>O aplicativo móvel e o painel administrativo conversam com o backend por HTTPS, sempre com token de autenticação.</p>
-          <p>O backend é o orquestrador: ele chama o solver, consulta o cache, fala com os provedores externos e acessa o Firebase pelo Admin SDK. A viagem é salva no Firestore pelo próprio aplicativo.</p>
-          <p>O solver é um serviço separado, em Python com OR-Tools. Ele recebe uma instância numérica independente dos provedores e da interface: recebe matrizes de tempo, janelas de horário e penalidades, e devolve rotas por dia. Ele não sabe o que é Google Maps, o que é Firebase nem o que é uma tela.</p>
-          <p>O aplicativo também acessa o Firestore diretamente, pelo SDK, sob regras de segurança — é o caminho de baixo no diagrama.</p>
-          <h4>Observações</h4>
-          <p class="obs">Essa separação é o que permite testar o solver isoladamente, sem subir nada de infraestrutura — é o que a suíte determinística faz.</p>
-          <p class="obs">Os horários estimados de chegada e partida são informados pelo usuário e limitam a disponibilidade do primeiro e do último dia. Chegar às 20h não torna a manhã desse dia disponível para visitas.</p>
-          <p class="obs">O cache Redis é operacional, não requisito de correção: se ele falhar, o adaptador consulta a origem e o sistema continua funcionando, apenas mais caro e mais lento.</p>
-          <p class="obs">A seta do cache para os serviços externos representa o comportamento read-through: em cache miss, a origem é consultada.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../README.md">Arquitetura e deploy</a></li>
-            <li><a href="../../aplicativo/backend/src/main.ts">Composição do backend</a></li>
-            <li><a href="../../aplicativo/backend/src/infrastructure/cache/with-cache.ts">Semântica read-through</a></li>
-            <li><a href="../../aplicativo/backend/src/infrastructure/solver/solver-client.ts">Cliente do solver privado</a></li>
-            <li><a href="../html/diagrams/arquitetura-geral.drawio">Diagrama editável no draw.io</a></li>
+    <h4>Fala</h4>
+    <p>Essa solução foi dividida em componentes com responsabilidades diferentes. O aplicativo móvel apresenta as telas e guarda as escolhas do viajante. O backend recebe a solicitação e reúne os dados necessários para gerar o roteiro.</p>
+    <p>É o backend que consulta os lugares, obtém estimativas do modelo de linguagem e prepara os tempos de deslocamento. Antes de consultar novamente um serviço externo, ele procura dados válidos no cache.</p>
+    <p>Com essa preparação concluída, o solver recebe uma entrada numérica: paradas, durações, horários e matrizes de deslocamento. Ele calcula as rotas e devolve o resultado ao aplicativo. Por estar separado, podemos testá-lo com uma entrada salva, sem repetir as consultas externas.</p>
+    <p>A autenticação e os dados persistidos ficam no Firebase. O caminho de baixo mostra que o próprio aplicativo salva e sincroniza as viagens no Firestore, sujeito às regras de acesso do usuário.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O Redis pode ser contornado em caso de falha: o adaptador consulta a origem. O solver não consulta provedores externos; recebe os dados preparados pelo backend.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/README.md">Arquitetura e deploy</a></li>
+            <li><a href="references/aplicativo/backend/src/main.ts">Composição do backend</a></li>
+            <li><a href="references/aplicativo/backend/src/infrastructure/cache/with-cache.ts">Semântica read-through</a></li>
+            <li><a href="references/aplicativo/backend/src/infrastructure/solver/solver-client.ts">Cliente do solver privado</a></li>
+            <li><a href="diagrams/arquitetura-geral.drawio">Diagrama editável no draw.io</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 06 -->
-<section class="slide" id="slide-6" data-title="Modelo lógico do roteiro" data-scene="er">
-  <h2 class="title" data-a="up">Entidades do roteiro salvo</h2>
+<section class="slide" id="slide-6" data-title="Dados de uma viagem salva" data-scene="er">
+  <h2 class="title" data-a="up">Dados de uma viagem salva</h2>
   <div class="er" id="er">
     <svg class="links" id="erLinks"></svg>
     <div class="col" style="left:0">
@@ -215,69 +217,69 @@
       <div class="ent root" id="en-trip" data-a="up" style="--d:300ms"><header><b>TripDraft</b><small>trips/{id}</small></header><ul><li><em>PK</em>id: string</li><li><em>REF</em>ownerId?: string</li><li>createdAt: string</li><li>updatedAt: string</li></ul></div>
     </div>
     <div class="col" style="left:600px">
-      <div class="ent" id="en-leg" data-a="up" style="--d:500ms"><header><b>TripLeg</b><small>embedded: legs[]</small></header><ul><li>destination: PlaceDetails</li><li>startDate? · endDate?</li><li>lodgings: LodgingStay[]</li><li>candidates: EnrichedPlace[]</li><li>selectedCandidateIds</li></ul></div>
-      <div class="ent" id="en-sol" data-a="up" style="--d:600ms"><header><b>ItinerarySolution</b><small>embedded: itinerary</small></header><ul><li>totalDistanceMeters</li><li>totalTimeSeconds</li><li>solverTrace?: SolverTrace</li></ul></div>
-      <div class="ent" id="en-live" data-a="up" style="--d:700ms"><header><b>LiveProgress</b><small>embedded: liveProgress</small></header><ul><li>completedStopIds: string[]</li><li>skippedStopIds: string[]</li><li>activeDayIndex?: number</li></ul></div>
+      <div class="ent" id="en-leg" data-a="up" style="--d:500ms"><header><b>TripLeg</b><small>destinos · legs[]</small></header><ul><li>destination: PlaceDetails</li><li>startDate? · endDate?</li><li>lodgings: LodgingStay[]</li><li>candidates: EnrichedPlace[]</li><li>selectedCandidateIds</li></ul></div>
+      <div class="ent" id="en-sol" data-a="up" style="--d:600ms"><header><b>ItinerarySolution</b><small>roteiro · itinerary</small></header><ul><li>totalDistanceMeters</li><li>totalTimeSeconds</li><li>solverTrace?: SolverTrace</li></ul></div>
+      <div class="ent" id="en-live" data-a="up" style="--d:700ms"><header><b>LiveProgress</b><small>progresso · liveProgress</small></header><ul><li>completedStopIds: string[]</li><li>skippedStopIds: string[]</li><li>activeDayIndex?: number</li></ul></div>
     </div>
     <div class="col" style="left:900px">
-      <div class="ent" id="en-day" data-a="up" style="--d:850ms"><header><b>DayPlan</b><small>embedded: days[]</small></header><ul><li>dayIndex: number</li><li>legId? · date?</li><li>distanceMeters: number</li><li>totalTimeSeconds: number</li></ul></div>
+      <div class="ent" id="en-day" data-a="up" style="--d:850ms"><header><b>DayPlan</b><small>dias · days[]</small></header><ul><li>dayIndex: number</li><li>legId? · date?</li><li>distanceMeters: number</li><li>totalTimeSeconds: number</li></ul></div>
     </div>
     <div class="col" style="left:1200px">
-      <div class="ent" id="en-step" data-a="up" style="--d:1000ms"><header><b>RouteStep</b><small>embedded: steps[]</small></header><ul><li>stopId · order</li><li>coordinate: Coordinate</li><li>arrivalSeconds: number</li><li>departureSeconds: number</li><li>isDepot: boolean</li></ul></div>
-      <div class="ent" id="en-rleg" data-a="up" style="--d:1100ms"><header><b>RouteLeg</b><small>embedded: legs[]</small></header><ul><li>fromStopId · toStopId</li><li>distanceMeters: number</li><li>durationSeconds: number</li></ul></div>
+      <div class="ent" id="en-step" data-a="up" style="--d:1000ms"><header><b>RouteStep</b><small>paradas · steps[]</small></header><ul><li>stopId · order</li><li>coordinate: Coordinate</li><li>arrivalSeconds: number</li><li>departureSeconds: number</li><li>isDepot: boolean</li></ul></div>
+      <div class="ent" id="en-rleg" data-a="up" style="--d:1100ms"><header><b>RouteLeg</b><small>deslocamentos · legs[]</small></header><ul><li>fromStopId · toStopId</li><li>distanceMeters: number</li><li>durationSeconds: number</li></ul></div>
     </div>
-    <div class="er-legend" data-a="fade" style="--d:1500ms"><span><i></i>estrutura embutida no documento</span><span><i class="ref"></i>referência por identificador (ownerId)</span></div>
+    <div class="er-legend" data-a="fade" style="--d:1500ms"><span><i></i>dados salvos dentro da viagem</span><span><i class="ref"></i>vínculo com o usuário pelo ownerId</span></div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>O diagrama mostra as relações lógicas do roteiro salvo. Um usuário pode ter várias viagens. Cada viagem guarda o identificador do proprietário, seus trechos, a solução vigente e o progresso.</p>
-          <p>Os trechos, dias e paradas ficam embutidos no documento da viagem no Firestore. As cardinalidades descrevem o domínio, não tabelas SQL separadas. O roteiro ainda pode guardar um solverTrace compacto para inspecionar a solução.</p>
-          <h4>Observações</h4>
-          <p class="obs">A linha tracejada representa ownerId, uma referência por identificador. As demais linhas representam estruturas embutidas. O cache de respostas externas é separado da persistência da viagem.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/domain/types.ts">Tipos TripDraft, TripLeg e ItinerarySolution</a></li>
-            <li><a href="../../aplicativo/mobile/src/application/trip-cloud-sync.ts">Persistência de viagens</a></li>
-            <li><a href="../../diagramas/tcc2/er-roteiro.drawio">Diagrama editável</a></li>
+    <h4>Fala</h4>
+    <p>Aqui mostramos o que é guardado quando uma viagem é salva. O elemento central é o TripDraft, que representa a viagem e fica em um documento do Firestore, no caminho trips seguido do identificador da viagem.</p>
+    <p>Dentro desse registro ficam os destinos, o roteiro gerado e o progresso das visitas. O roteiro contém uma lista de dias. Cada dia contém as paradas, com a ordem e os horários de chegada e saída, além dos deslocamentos entre elas. Por exemplo: para recuperar a hora de uma visita, seguimos a viagem, o roteiro, o dia e a parada.</p>
+    <p>As linhas contínuas mostram essa relação de conteúdo: esses dados são salvos como partes da própria viagem. Já a linha tracejada liga a viagem ao usuário pelo campo ownerId. Ela guarda o identificador do proprietário; o perfil do usuário fica em seu próprio registro. Assim, o mesmo usuário pode ter várias viagens salvas.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">TripDraft é salvo em trips/{id}. legs, itinerary e liveProgress são campos desse documento. itinerary contém days; cada dia contém steps e legs de deslocamento. ownerId relaciona a viagem ao proprietário. O cache de respostas externas é separado dos dados da viagem.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/domain/types.ts">Tipos TripDraft, TripLeg e ItinerarySolution</a></li>
+            <li><a href="references/aplicativo/mobile/src/application/trip-cloud-sync.ts">Persistência de viagens</a></li>
+            <li><a href="references/diagramas/tcc2/er-roteiro.drawio">Diagrama editável</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 07 -->
 <section class="slide" id="slide-7" data-title="Etapas da geração do roteiro">
   <h2 class="title" data-a="up">Etapas da geração do roteiro</h2>
   <p class="lead" data-a="up" style="--d:100ms">Sete etapas: três dependem do viajante, três são resolvidas pelo sistema e a última devolve o roteiro ao aplicativo.</p>
   <div class="pipeline">
     <div class="lanes" data-a="fade" style="--d:200ms"><div class="lane app">Aplicativo · o que o usuário informa</div><div class="lane sys">Backend e solver · o que o sistema resolve</div><div class="lane app">Aplicativo</div></div>
     <div class="stages">
-      <div class="stage" data-a="up" style="--d:250ms"><svg data-i="map-pin"></svg><div class="n">1</div><h3>Definição da viagem</h3><p>destino, período, hospedagem, ritmo e modal de deslocamento</p></div>
-      <div class="stage" data-a="up" style="--d:320ms"><svg data-i="search"></svg><div class="n">2</div><h3>Descoberta</h3><p>busca por categoria, filtro de não atrações e ordenação por score</p></div>
+      <div class="stage" data-a="up" style="--d:250ms"><svg data-i="map-pin"></svg><div class="n">1</div><h3>Definição da viagem</h3><p>destino, período, hospedagem, ritmo e meio de transporte</p></div>
+      <div class="stage" data-a="up" style="--d:320ms"><svg data-i="search"></svg><div class="n">2</div><h3>Descoberta</h3><p>busca por categoria, filtro de não atrações e ordenação por escore</p></div>
       <div class="stage" data-a="up" style="--d:390ms"><svg data-i="list-ordered"></svg><div class="n">3</div><h3>Priorização</h3><p>seleção das atrações e ordem definida pelo usuário</p></div>
-      <div class="stage sys" data-a="up" style="--d:460ms"><svg data-i="package"></svg><div class="n">4</div><h3>Instância</h3><p>enriquecimento, matriz de rotas e cache</p></div>
-      <div class="stage sys" data-a="up" style="--d:530ms"><svg data-i="sigma"></svg><div class="n">5</div><h3>Modelo VRPTW</h3><p>arcos, chegadas, janelas e penalidades</p></div>
+      <div class="stage sys" data-a="up" style="--d:460ms"><svg data-i="package"></svg><div class="n">4</div><h3>Instância</h3><p>horários, durações e matriz de deslocamentos</p></div>
+      <div class="stage sys" data-a="up" style="--d:530ms"><svg data-i="sigma"></svg><div class="n">5</div><h3>Modelo VRPTW</h3><p>limites de visitas, horários e custos de exclusão</p></div>
       <div class="stage sys" data-a="up" style="--d:600ms"><svg data-i="timer"></svg><div class="n">6</div><h3>Resolução</h3><p>inserção mais barata em paralelo e busca local guiada</p></div>
       <div class="stage" data-a="up" style="--d:670ms"><svg data-i="map"></svg><div class="n">7</div><h3>Resultado</h3><p>roteiro persistido no Firestore, exibido em mapa e agenda</p></div>
     </div>
     </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Antes de entrar no detalhe, este é o caminho completo, em sete etapas.</p>
-          <p>As três primeiras acontecem no aplicativo e dependem do usuário: definir a viagem, descobrir candidatos e priorizar.</p>
-          <p>As três seguintes são do sistema: montar a instância do problema, modelar e resolver.</p>
-          <p>A sétima devolve o resultado ao aplicativo.</p>
-          <p>Os próximos slides percorrem essas etapas uma a uma. Em cada uma vocês verão a tela real do aplicativo, o dado real que trafegou naquele passo e, quando existe fundamento no código, a formulação matemática.</p>
-          <h4>Observações</h4>
-          <p class="obs">O solver não conhece o provedor de mapas, o Firebase nem a interface: recebe matrizes, janelas e penalidades, e devolve rotas por dia.</p>
-          <p class="obs">O cache Redis é operacional, não requisito de correção — em falha, o adaptador consulta a origem.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/backend/src/application/generate-itinerary.ts">Orquestração da geração</a></li>
-            <li><a href="../html/diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
+    <h4>Fala</h4>
+    <p>Agora podemos acompanhar o caminho entre preencher a viagem e receber a agenda. Nas primeiras etapas, o viajante define o destino e o período, encontra atrações e escolhe suas prioridades.</p>
+    <p>Essas escolhas chegam ao backend, que reúne horários, durações e deslocamentos. Com os dados preparados, montamos as restrições do problema e executamos a busca. A última etapa transforma a solução em uma agenda que pode ser consultada e salva no aplicativo.</p>
+    <p>Vamos percorrer esse fluxo com os dados de Nova Iorque. Primeiro, as escolhas feitas na tela; depois, como elas se tornam uma entrada para o solver.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A preparação da instância ocorre no backend. A resolução ocorre no serviço Python com OR-Tools. A persistência da viagem é feita pelo aplicativo.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Orquestração da geração</a></li>
+            <li><a href="diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 08 -->
 <section class="slide" id="slide-8" data-title="Etapa 1 — Definição da viagem" data-stage="1">
   <h2 class="title" data-a="up">Etapa 1 — Definição da viagem</h2>
   <div class="step">
@@ -289,7 +291,7 @@
         <div class="map-row" data-a="left" style="--d:450ms"><code><span class="k">"startDate"</span>: <span class="s">"2026-09-14"</span>
 <span class="k">"endDate"</span>: <span class="s">"2026-09-18"</span></code><svg data-i="arrow-right"></svg><div><b>5 dias, 5 rotas</b><span>cada dia é um veículo do problema de roteamento</span></div></div>
         <div class="map-row" data-a="left" style="--d:600ms"><code><span class="k">"lodgings"</span>: <span class="s">"Wyndham New Yorker"</span></code><svg data-i="arrow-right"></svg><div><b>Depósito</b><span>toda rota sai do hotel e volta a ele</span></div></div>
-        <div class="map-row" data-a="left" style="--d:750ms"><code><span class="k">"checkInTime"</span>: <span class="s">"14:00"</span></code><svg data-i="arrow-right"></svg><div><b>Janelas do 1º dia a partir das 14:00</b><span>nenhuma atração começa antes da chegada</span></div></div>
+        <div class="map-row" data-a="left" style="--d:750ms"><code><span class="k">"checkInTime"</span>: <span class="s">"14:00"</span></code><svg data-i="arrow-right"></svg><div><b>Janelas do 1º dia a partir das 14:00</b><span>primeira visita só pode começar a partir das 14:00</span></div></div>
         <div class="map-row" data-a="left" style="--d:900ms"><code><span class="k">"pace"</span>: <span class="s">"moderate"</span></code><svg data-i="arrow-right"></svg><div><b>No máximo 4 atrações por dia</b><span>teto rígido do perfil moderado</span></div></div>
         <div class="map-row" data-a="left" style="--d:1050ms"><code><span class="k">"travelMode"</span>: <span class="s">"transit"</span>
 <span class="k">"travelModeSelection"</span>: <span class="s">"suggested"</span></code><svg data-i="arrow-right"></svg><div><b>Tempos por transporte público</b><span>modal sugerido pelo modelo de linguagem e aceito pelo usuário</span></div></div>
@@ -297,24 +299,23 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa um: definir a viagem. O usuário informa destino, período, hospedagem e ritmo.</p>
-          <p>Nesta execução foi Nova Iorque, de 14 a 18 de setembro, cinco dias, com hospedagem no Wyndham New Yorker.</p>
-          <p>Tudo isso é consolidado num objeto chamado TripDraft, guardado no próprio aparelho. Ele fornece as escolhas usadas para montar a requisição de geração.</p>
-          <p>Chamo atenção para dois campos. O travelModeSelection marcado como 'suggested' registra que o modal de transporte foi sugerido pelo modelo de linguagem e aceito pelo usuário, não escolhido do zero. E o horário de check-in, catorze horas.</p>
-          <h4>Observações</h4>
-          <p class="obs">O payload registrado permite visitas a partir das 14h, mas mantém a base disponível das 6h às 23h. A rota sai às 9h e espera até a primeira visita. O registro comprova o atendimento às janelas recebidas; a tradução conjunta dos horários logísticos para bases e atrações precisa de verificação. Depois de criar, Editar permite definir ou trocar datas. A contagem inclusiva substitui o número inicial de dias e dispara nova geração com animação, mesmo se a quantidade permanecer igual.</p>
-          <p class="obs">A hospedagem vira o depósito do problema de roteamento: é de onde cada dia parte e para onde volta.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/domain/types.ts">Tipo TripDraft</a></li>
-            <li><a href="../../aplicativo/mobile/src/application/trip-store.ts">Persistência local do rascunho</a></li>
-            <li><a href="../html/data/solver-request.json">Payload real desta execução</a></li>
+    <h4>Fala</h4>
+    <p>Nesta execução, a viagem foi definida de 14 a 18 de setembro, com cinco dias e hospedagem no Wyndham New Yorker. Esses campos têm um efeito direto no modelo: os cinco dias viram cinco rotas, e a hospedagem é usada como início e fim de cada uma.</p>
+    <p>O ritmo moderado estabelece o teto de quatro atrações por dia. O meio de transporte define quais tempos de deslocamento entram na matriz. Aqui usamos transporte público, sugerido pelo aplicativo e aceito pelo usuário.</p>
+    <p>O horário informado para a chegada foi catorze horas. Na entrada registrada, as atrações do primeiro dia só podem começar a partir desse horário. Mas identificamos uma diferença importante: a base ainda permite sair antes da chegada. Vou retomar esse problema ao analisar a agenda, porque limitar a primeira visita não basta para representar toda a logística corretamente.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A base temporal da instância é 06:00. As atrações do primeiro dia começam a partir de 28.800 s, mas a base tem janela de 0 a 61.200 s. A rota registrada sai às 09:00. O check-out informado ocorre em 19/09, depois do último dia do roteiro.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/domain/types.ts">Tipo TripDraft</a></li>
+            <li><a href="references/aplicativo/mobile/src/application/trip-store.ts">Persistência local do rascunho</a></li>
+            <li><a href="data/solver-request.json">Payload real desta execução</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 09 -->
 <section class="slide" id="slide-9" data-title="Etapa 2 — Descoberta de candidatos" data-stage="2">
   <h2 class="title" data-a="up">Etapa 2 — Descoberta de candidatos</h2>
   <div class="step">
@@ -337,25 +338,25 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa dois: descobrir candidatos.</p>
-          <p>Os interesses ativam buscas por categoria e influenciam a ordem do baralho. Os oito primeiros lugares seguem o escore global; depois, as categorias ativas são intercaladas com peso igual na variante TCC. Cada candidato volta com nota, número de avaliações, tipo e foto — é o que vocês veem no card, com o Central Park. Ao confirmar a seleção, o app envia a ordem da lista como prioridade ao solver; os interesses afetam essa lista indiretamente, mas não garantem visitas.</p>
-          <p>Antes de ordenar, existe um filtro. O provedor marca como atração turística muita coisa que não é: restaurante, loja, hotel, estação de ônibus. O filtro reduz esses resultados, preservando tipos que correspondam aos interesses explícitos do usuário e exceções de atrações reconhecidas.</p>
-          <h4>Observações</h4>
-          <p class="obs">Após verificar interesses explícitos, o filtro considera tipos primários e secundários. Tipos de consumo podem excluir um lugar mesmo com selo de atração. Já o selo redime tipos ambíguos: o Palácio do Planalto tem primaryType de escritório do governo e é atração legítima.</p>
-          <p class="obs">Estações de trem icônicas, como a Grand Central, são resgatadas pelo volume de avaliações, porque o provedor não as marca como atração.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/features/discover/ranking.ts">Filtro de não-atrações e ranking</a></li>
-            <li><a href="../../aplicativo/backend/src/application/discover-places.ts">Composição das buscas por categoria</a></li>
+    <h4>Fala</h4>
+    <p>Com a viagem definida, o aplicativo busca lugares associados aos interesses escolhidos. O retorno inclui nome, posição, nota, quantidade de avaliações e tipos do lugar. O Central Park é um exemplo desse retorno.</p>
+    <p>Antes de ordenar as sugestões, aplicamos um filtro. Um resultado marcado como atração turística pode ser uma loja, um hotel ou outro estabelecimento que não corresponde ao passeio procurado. O filtro considera os tipos do lugar, os interesses explícitos e as exceções de atrações reconhecidas.</p>
+    <p>O resultado é uma lista de candidatos para o viajante examinar. A nota e o número de avaliações ajudam a ordenar essa lista, mas ainda precisamos tratar a diferença entre um lugar pouco avaliado e outro com milhares de avaliações.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O filtro considera tipos primários e secundários, interesses explícitos e exceções. A variante TCC apresenta os oito primeiros candidatos pelo escore global e depois intercala as categorias ativas com peso igual.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/features/discover/ranking.ts">Filtro de não-atrações e ranking</a></li>
+            <li><a href="references/aplicativo/backend/src/application/discover-places.ts">Composição das buscas por categoria</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 10 -->
 <section class="slide" id="slide-10" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
   <h2 class="title" data-a="up">Etapa 2 — Ordenação dos candidatos</h2>
-  <p class="lead" data-a="up" style="--d:100ms">A ordenação combina três termos. Cada um corrige uma falha observada quando o anterior é usado sozinho.</p>
+  <p class="lead" data-a="up" style="--d:100ms">O escore combina a nota ajustada pelo volume de avaliações, a popularidade relativa e um desconto por distância.</p>
   <div class="formula" style="margin-top:22px">
     <span class="t" data-build="1"><span>S</span><sub>i</sub></span><span class="op" data-build="1">=</span>
     <span class="t c1" data-build="1">B<sub>i</sub></span>
@@ -363,9 +364,9 @@
     <span class="op" data-build="3">−</span><span class="t c3" data-build="3"><span style="font-style:normal">0,15</span> G<sub>i</sub></span>
   </div>
   <div class="terms">
-    <div class="term c1" data-build="1"><h3><span class="math">B<sub>i</sub></span> · média bayesiana</h3><div class="eq">B<sub>i</sub> = <span class="up">(</span>n<sub>i</sub> r<sub>i</sub> + <span class="up">500 · 4,0)</span> / <span class="up">(</span>n<sub>i</sub> + <span class="up">500)</span></div><p>Impede que um lugar com nota 5,0 e uma avaliação supere um com 4,8 e milhares.</p></div>
-    <div class="term c2" data-build="2"><h3><span class="math">I<sub>i</sub></span> · iconicidade</h3><div class="eq">u<sub>i</sub> = <span class="up">log<sub>10</sub>(1 +</span> n<sub>i</sub><span class="up">)</span><br>I<sub>i</sub> = <span class="up">(</span>u<sub>i</sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span> / <span class="up">(</span>u<sub><span class="up">máx</span></sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span></div><p>Os extremos vêm dos candidatos; se forem iguais, I<sub>i</sub> = 0.</p></div>
-    <div class="term c3" data-build="3"><h3><span class="math">G<sub>i</sub></span> · decaimento por distância</h3><div class="eq">G<sub>i</sub> = <span class="up">log<sub>2</sub>(máx(1,</span> d<sub>i</sub> / R<span class="up">))</span></div><p>Dentro do raio de descoberta R a distância é gratuita; além dele, cada duplicação custa 0,15.</p></div>
+    <div class="term c1" data-build="1"><h3><span class="math">B<sub>i</sub></span> · média bayesiana</h3><div class="eq">B<sub>i</sub> = <span class="up">(</span>n<sub>i</sub> r<sub>i</sub> + <span class="up">500 · 4,0)</span> / <span class="up">(</span>n<sub>i</sub> + <span class="up">500)</span></div><p>Aproxima notas com poucas avaliações da referência 4,0. Com muitas avaliações, preserva a nota observada.</p></div>
+    <div class="term c2" data-build="2"><h3><span class="math">I<sub>i</sub></span> · popularidade relativa</h3><div class="eq">u<sub>i</sub> = <span class="up">log<sub>10</sub>(1 +</span> n<sub>i</sub><span class="up">)</span><br>I<sub>i</sub> = <span class="up">(</span>u<sub>i</sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span> / <span class="up">(</span>u<sub><span class="up">máx</span></sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span></div><p>Usa o volume de avaliações como indicador de popularidade, em uma escala de 0 a 1 entre os candidatos.</p></div>
+    <div class="term c3" data-build="3"><h3><span class="math">G<sub>i</sub></span> · decaimento por distância</h3><div class="eq">G<sub>i</sub> = <span class="up">log<sub>2</sub>(máx(1,</span> d<sub>i</sub> / R<span class="up">))</span></div><p>Até o raio R, não há desconto no escore. Fora dele, cada duplicação da distância reduz o escore em 0,15.</p></div>
   </div>
   <div class="bayes-demo" id="bayesDemo" data-build="4">
     <h4>Exemplo: média bayesiana</h4>
@@ -377,53 +378,56 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Ainda na etapa dois: como ordenar os candidatos.</p>
-          <p>A ordenação combina três termos, e cada um existe porque o anterior falha sozinho.</p>
-          <p>O primeiro é uma média bayesiana. Ela impede que um lugar com nota cinco e uma única avaliação passe na frente de um com quatro vírgula oito e milhares de avaliações.</p>
-          <p>O segundo mede o volume relativo de avaliações. Aplicamos logaritmo para comprimir a diferença entre um lugar com centenas e outro com centenas de milhares de avaliações. Depois normalizamos entre o menor e o maior valor dos candidatos. O peso 0,6 limita esse acréscimo a 0,6 ponto; se todos tiverem o mesmo volume, o termo vale zero. Ele existe porque a média bayesiana sozinha satura, e aí a ordenação vira 'todos os quatro vírgula oito antes de todos os quatro vírgula sete'.</p>
-          <p>O terceiro penaliza distância. Dentro do raio calculado para a descoberta não há penalidade; fora dele, cada duplicação reduz o escore em 0,15. Esses pesos são parâmetros exploratórios do protótipo, não constantes provadas como ideais.</p>
-          <p>No slide seguinte mostramos o efeito do segundo termo com os dados desta execução.</p>
-          <h4>Observações</h4>
-          <p class="obs">Os pesos 0,6 e 0,15 são calibração empírica documentada no código, não constantes teóricas. Se perguntarem como foram obtidos: por inspeção exploratória de candidatos de destinos diferentes, sem experimento de preferência com viajantes.</p>
-          <p class="obs">A normalização min-max é feita dentro do conjunto candidato, então o teto se autocalibra pela densidade do destino: trezentos mil em Nova Iorque, onze mil em Puerto Natales.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/features/discover/ranking.ts">createPopularityScore, constantes e justificativas</a></li>
+    <h4>Fala</h4>
+    <p>Um lugar com nota cinco e uma única avaliação não oferece a mesma evidência que um lugar com nota quatro vírgula oito e milhares de avaliações. Por isso, o primeiro termo ajusta a nota usando uma média de referência. Quando há poucas avaliações, o valor fica mais próximo dessa referência; quando há muitas, fica próximo da nota observada.</p>
+    <p>É o que acontece no exemplo à direita: a nota cinco do lugar hipotético se aproxima de quatro, enquanto a do Central Park continua perto de quatro vírgula oito.</p>
+    <p>Depois acrescentamos um termo de popularidade baseado no volume de avaliações, comprimido por logaritmo. Por fim, descontamos a distância: dentro do raio de busca não há desconto; fora dele, cada duplicação da distância reduz o escore em zero vírgula quinze.</p>
+    <p>Esses pesos foram ajustados de forma exploratória. O próximo gráfico mostra como os critérios alteram a ordem das mesmas atrações.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Convenção de leitura</h4><p>O índice i identifica uma atração. Leia Bᵢ como “bê índice i”; os demais índices seguem a mesma regra. O logaritmo comprime diferenças grandes no número de avaliações.</p>
+      <h4>Escore Sᵢ = Bᵢ + 0,6 Iᵢ − 0,15 Gᵢ</h4><p>Leia: “esse índice i é igual a bê índice i, mais zero vírgula seis vezes i maiúsculo índice i, menos zero vírgula quinze vezes gê índice i”. É a nota ajustada, acrescida da popularidade e descontada pela distância.</p>
+      <h4>Média bayesiana Bᵢ</h4><p>Leia: “n índice i vezes erre índice i, mais quinhentos vezes quatro, tudo dividido por n índice i mais quinhentos”. nᵢ é a quantidade de avaliações e rᵢ é a nota observada. Os 500 funcionam como peso da nota de referência 4,0. Com nᵢ = 1 e rᵢ = 5, o resultado é 2005/501 ≈ 4,002; com muitas avaliações, o ajuste é pequeno.</p>
+      <h4>Popularidade uᵢ e Iᵢ</h4><p>Leia uᵢ: “logaritmo na base dez de um mais n índice i”. Leia Iᵢ: “u índice i menos u mínimo, dividido por u máximo menos u mínimo”. Os extremos são os valores entre os candidatos. Isso leva a popularidade para a faixa de zero a um; se os extremos forem iguais, o código usa zero e evita divisão por zero.</p>
+      <h4>Distância Gᵢ</h4><p>Leia: “logaritmo na base dois do maior valor entre um e d índice i dividido por erre”. dᵢ é a distância até a referência da busca; R é o raio. Se dᵢ ≤ R, Gᵢ = 0. Em 2R, Gᵢ = 1, então o escore perde 0,15; em 4R, perde 0,30.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A média de referência é 4,0, com peso de 500 avaliações. A popularidade relativa usa logaritmo e normalização entre os candidatos; se os extremos forem iguais, Iᵢ = 0. Os pesos 0,6 e 0,15 são ajustes exploratórios, sem estudo que os estabeleça como ideais.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/features/discover/ranking.ts">createPopularityScore, constantes e justificativas</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 11 -->
-<section class="slide" id="slide-11" data-title="Etapa 2 — Evolução da ordenação" data-stage="2" data-scene="bump">
-  <h2 class="title" data-a="up">Etapa 2 — Evolução da ordenação</h2>
+<section class="slide" id="slide-11" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
+  <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
   <p class="lead" data-a="up" style="--d:100ms">As mesmas doze atrações em três ordenações. Em destaque, quem mudou de posição.</p>
-  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao score completo; Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
+  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao escore completo; Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Este gráfico mostra por que a ordenação ficou como ficou. São as mesmas doze atrações, ordenadas por três critérios sucessivos.</p>
-          <p>À esquerda, o critério mais simples que alguém escreveria: multiplicar a nota pelo número de avaliações. Reparem na coluna de dados: o número de avaliações desce sem exceção, de trezentos mil até vinte e dois mil, enquanto as notas ficam alternando entre quatro vírgula sete e quatro vírgula oito. Ou seja, esse critério na prática ignora a nota e ordena por popularidade bruta.</p>
-          <p>No meio, a média bayesiana. Ela existe para impedir que um lugar com nota cinco e três avaliações passe na frente de um com quatro vírgula oito e cem mil.</p>
-          <p>Mas olhem os valores dela: quatro vírgula setenta e nove, quatro vírgula setenta e nove, e depois quatro vírgula sessenta e nove, quatro vírgula sessenta e nove. Doze atrações e praticamente dois valores. É isso que chamamos de saturação: quando o número de avaliações é grande, o score converge para a nota crua, e a ordenação vira 'todos os quatro vírgula oito antes de todos os quatro vírgula sete'.</p>
-          <p>O destaque compara a primeira e a última coluna. Em azul, Metropolitan Museum, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições cada.</p>
-          <p>Em âmbar, Empire State Building, Estátua da Liberdade e Parque Bryant descem três posições cada. São as seis atrações cuja posição final difere da ordenação pelo produto simples.</p>
-          <p>A coluna de variação também usa o produto simples como referência. Times Square, Rockefeller Center e Lincoln Center ficam em cinza: suas posições mudam na etapa intermediária, mas voltam às posições iniciais no score completo.</p>
-          <p>As mudanças destacadas mostram o efeito combinado da média bayesiana e da iconicidade em relação ao produto simples. O gráfico explica o comportamento do escore; avaliar se essa ordem atende melhor aos viajantes exige outra avaliação.</p>
-          <h4>Observações</h4>
-          <p class="obs">Ponto de honestidade: sobre estas doze atrações, o produto simples e o score completo chegam a ordens próximas nos extremos. Isso acontece porque as doze já passaram pelo filtro de atrações e têm notas quase idênticas, entre 4,7 e 4,8. A proteção da média bayesiana importa no conjunto bruto de candidatos, onde existem lugares com poucas avaliações — que não estão representados nesta seleção final.</p>
-          <p class="obs">As diferenças entre a primeira e a terceira coluna estão no miolo: o Empire State Building cai da quarta para a sétima posição e o Metropolitan sobe da sétima para a quarta.</p>
-          <p class="obs">O decaimento por distância não aparece como quarta coluna porque é nulo nesta instância: as doze atrações estão todas dentro do raio de descoberta, então esse termo vale zero para todas e a coluna sairia idêntica à terceira.</p>
-          <p class="obs">A coluna do produto simples é uma linha de base para comparação, não algo que o sistema tenha implementado em alguma versão.</p>
-          <p class="obs">As cores indicam a mudança entre produto simples e score completo: azul para subida, âmbar para descida e cinza para posição final inalterada. Pontos, nomes e variações seguem o mesmo critério. O par azul e âmbar mantém a distinção usada no deck para daltonismo.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/features/discover/ranking.ts">createPopularityScore e a justificativa do termo</a></li>
+    <h4>Fala</h4>
+    <p>Aqui mantivemos as mesmas doze atrações e comparamos três critérios. Na primeira coluna, multiplicamos nota pelo número de avaliações. Como as notas são muito próximas, o volume de avaliações praticamente determina a ordem.</p>
+    <p>Na coluna do meio usamos a média bayesiana. Como estes lugares já têm muitas avaliações, os resultados ficam muito próximos de quatro vírgula sete ou quatro vírgula oito. O ajuste é mais relevante para os candidatos com poucas avaliações, que não estão nesta seleção final.</p>
+    <p>Na última coluna, acrescentamos a popularidade relativa. O Metropolitan sobe da sétima para a quarta posição, enquanto o Empire State cai da quarta para a sétima. As cores destacam a mudança entre a primeira e a última coluna.</p>
+    <p>Neste conjunto, todas as atrações estão dentro do raio de busca, então o desconto por distância é zero. Essa comparação explica o comportamento da ordenação; a decisão final sobre quais lugares visitar continua com o viajante.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Critérios comparados</h4><p>O produto simples é nota vezes número de avaliações. A média bayesiana e o escore completo usam as fórmulas do slide anterior. Neste conjunto, todas as atrações estão dentro do raio, então o termo de distância vale zero. Posição no gráfico é uma ordenação, não o valor do escore.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O produto simples é uma referência de comparação. O desconto por distância é zero nas doze atrações exibidas. Azul indica subida, âmbar indica descida e cinza indica a mesma posição entre a primeira e a última coluna.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/features/discover/ranking.ts">createPopularityScore e a justificativa do termo</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 12 -->
 <section class="slide" id="slide-12" data-title="Etapa 3 — Seleção e priorização" data-stage="3" data-scene="prio">
   <h2 class="title" data-a="up">Etapa 3 — Seleção e priorização</h2>
   <div class="step" style="grid-template-columns:560px 1fr">
@@ -437,26 +441,29 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa três: seleção e priorização.</p>
-          <p>O usuário escolhe as atrações e define a ordem arrastando a lista. Essa ordem declara a preferência relativa entre as atrações selecionadas.</p>
-          <p>Nesta execução foram doze atrações, em dez categorias diferentes: parque, museu de arte, museu, ponte, praça, marco histórico, igreja, mirante, casa de shows e teatro.</p>
-          <p>A posição na lista vira um campo numérico no payload que vai para o solver. E ela influencia o custo de deixar cada atração de fora quando nem tudo cabe — é o assunto do próximo slide.</p>
-          <h4>Observações</h4>
-          <p class="obs">Enfatizar que a lista não é sugestão do sistema: é a ordem que o usuário arrastou. Ela tem maior amplitude de peso, mas não garante uma ordem rígida de exclusão: iconicidade, sazonalidade e restrições também influenciam.</p>
-          <p class="obs">Se perguntarem por que doze: a tela informa que cabem cerca de quinze no roteiro, e escolhemos doze para ter variedade de categorias sem forçar um corte artificial.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/mobile/src/app/trip/attractions-summary.tsx">Tela de priorização</a></li>
-            <li><a href="../html/data/solver-request.json">Campo priority no payload real</a></li>
+    <h4>Fala</h4>
+    <p>Depois de examinar as sugestões, o viajante escolhe as atrações e arrasta a lista para indicar suas prioridades. Aqui foram selecionadas doze.</p>
+    <p>Estar em primeiro nessa lista significa que aquele lugar é mais importante para a pessoa. Isso aumenta o custo de deixá-lo de fora se faltar tempo. A lista não obriga o roteiro a visitar os pontos nessa mesma sequência: os horários e os deslocamentos ainda precisam ser respeitados.</p>
+    <p>Dessa forma, conseguimos separar duas decisões. O usuário diz o que prefere preservar, e o solver procura em que dia e em que ordem encaixar cada visita. A fórmula seguinte mostra como essa preferência entra no cálculo.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Fator 1 + 4ρᵢ</h4><p>Leia: “um mais quatro vezes rô índice i”. ρᵢ = (N − ordem)/N: “ene menos a ordem, dividido por ene”. N é a quantidade de atrações e a ordem começa em zero. Com 12 atrações, a primeira recebe fator 5; a última recebe 1 + 4/12, aproximadamente 1,33. O fator aumenta o custo de exclusão, sem fixar a sequência das visitas.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A prioridade altera o custo de exclusão. Ela não fixa a ordem cronológica das visitas nem garante a inclusão de uma atração quando suas janelas são incompatíveis.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/mobile/src/app/trip/attractions-summary.tsx">Tela de priorização</a></li>
+            <li><a href="data/solver-request.json">Campo priority no payload real</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 13 -->
 <section class="slide" id="slide-13" data-title="Etapa 3 — Penalidade de exclusão" data-stage="3" data-scene="penalty">
   <h2 class="title" data-a="up">Etapa 3 — Penalidade de exclusão</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Deixar uma atração de fora é permitido, mas custa. O custo combina ordem do usuário, iconicidade e adequação à época da viagem.</p>
+  <p class="lead" data-a="up" style="--d:100ms">Excluir uma atração acrescenta uma penalidade ao objetivo. O valor combina a prioridade do viajante, a popularidade e a época da viagem.</p>
   <div class="formula penalty-formula">
     <span class="t" data-build="1">π<sub>i</sub></span><span class="op" data-build="1">=</span>
     <span class="t c1" data-build="1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
@@ -474,27 +481,31 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Deixar uma atração de fora é permitido, mas custa. Este é o preço.</p>
-          <p>A base de cinco milhões torna a exclusão cara, mas não obrigatória nem subordinada a uma ordem rígida de corte.</p>
-          <p>Esse valor é multiplicado por três fatores. O primeiro é a posição na lista do usuário: o fator de posição é cinco para o primeiro e um mais quatro sobre N para o último.</p>
-          <p>O segundo é a iconicidade. Seu fator varia de um a um e meio e pode inverter custos entre posições próximas.</p>
-          <p>O terceiro é sazonalidade: um lugar pouco adequado à época da viagem recebe fator sazonal de 0,8: sua penalidade cai 20%.</p>
-          <p>Uma ressalva importante: nesta execução não houve nenhum descarte. As doze atrações couberam nos cinco dias, e a resposta do solver traz a lista de não alocados vazia. O recorte de dois dias, apresentado nos resultados, exercita exclusões sob a mesma seleção de atrações.</p>
-          <h4>Observações</h4>
-          <p class="obs">Ser explícito com a banca sobre isso. Não apresentar corte que não aconteceu.</p>
-          <p class="obs">Se perguntarem qual instância produziria corte: uma com mais atrações do que a capacidade dos dias, por exemplo quinze atrações em três dias com ritmo tranquilo, cujo teto é três por dia.</p>
-          <p class="obs">Atração de dia inteiro não entra nessa fórmula: recebe penalidade fixa de dois bilhões. Isso favorece sua inclusão, mas ainda permite exclusão se não houver encaixe viável.</p>
-          <p class="obs">O produto é convertido para inteiro, arredondando para baixo. No OR-Tools, a disjunção cobra esse custo se a atração não for visitada. O indicador de popularidade da penalidade tem escala fixa, distinta da normalização entre candidatos usada na curadoria.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">AddDisjunction e constantes de penalidade</a></li>
-            <li><a href="../html/data/solver-response.json">Resposta real com unassigned vazio</a></li>
+    <h4>Fala</h4>
+    <p>Esta é a penalidade cobrada quando uma atração fica de fora. Ela faz parte da função de custo do solver; não representa um preço pago pelo usuário.</p>
+    <p>Partimos de cinco milhões e ajustamos esse valor pela posição na lista, pela popularidade do lugar e pela adequação à época da viagem. A posição tem a maior amplitude de peso. A popularidade também influencia e pode inverter o custo entre atrações próximas na lista.</p>
+    <p>Neste exemplo, todas as atrações têm adequação sazonal igual a um. Portanto, esse fator não muda a comparação. Atividades de dia inteiro recebem um custo de exclusão próprio, mais elevado.</p>
+    <p>Nos cinco dias de Nova Iorque, as doze atrações couberam. O efeito dessa penalidade aparece quando falta tempo: o solver compara o custo de excluir cada lugar com os demais custos da agenda, sempre respeitando as restrições obrigatórias.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Penalidade πᵢ</h4><p>Leia: “pi índice i é a parte inteira de cinco milhões, vezes um mais quatro rô índice i, vezes um mais meio iota índice i, vezes meio mais meio sigma índice i”. Os colchetes com piso ⌊ ⌋ mandam arredondar para baixo. πᵢ é um custo do objetivo, sem unidade monetária.</p>
+      <h4>Posição ρᵢ = (N − ordem)/N</h4><p>Leia: “rô índice i é ene menos a ordem, dividido por ene”. N é o total de atrações; ordem começa em zero. O primeiro fator vai de 5 até 1 + 4/N. Quanto mais alta a prioridade do viajante, mais caro excluir.</p>
+      <h4>Iconicidade ιᵢ = mín(1, log₁₀(1+n)/5)</h4><p>Leia: “iota índice i é o menor valor entre um e o logaritmo na base dez de um mais ene, dividido por cinco”. n é a quantidade de avaliações. ιᵢ fica entre zero e um e produz fator entre 1 e 1,5. Aqui há uma escala fixa; não é a normalização relativa da descoberta.</p>
+      <h4>Sazonalidade σᵢ ∈ {0,6; 1}</h4><p>Leia: “sigma índice i pertence ao conjunto zero vírgula seis e um”. O fator 0,5 + 0,5σᵢ vale 0,8 quando σᵢ = 0,6 e vale 1 quando σᵢ = 1. Assim, uma atração menos adequada à época custa 20% menos para excluir. Nesta entrada, todas usam 1.</p>
+      <h4>Exemplo de cálculo</h4><p>Para a primeira atração, com ρ = 1, ι = 1 e σ = 1: 5.000.000 × 5 × 1,5 × 1 = 37.500.000 unidades. Atrações de dia inteiro usam regra própria: penalidade fixa de dois bilhões.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A posição usa ρ = (N − ordem)/N, com ordem começando em zero. A importância turística da exclusão usa escala fixa, diferente da normalização entre candidatos da descoberta. Atividades de dia inteiro recebem penalidade fixa de dois bilhões. A resposta original de cinco dias tem unassigned vazio.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">AddDisjunction e constantes de penalidade</a></li>
+            <li><a href="data/solver-response.json">Resposta real com unassigned vazio</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 14 -->
 <section class="slide" id="slide-14" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
   <h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2>
   <p class="lead" data-a="up" style="--d:100ms">O backend traduz as escolhas em números: janelas de horário, durações e tempos de deslocamento.</p>
@@ -508,7 +519,7 @@
   </div>
   <div class="inst2">
     <div class="icard" data-a="up" style="--d:350ms">
-      <h4>Quando cada atração pode começar <span>payload real · day_time_windows</span></h4>
+      <h4>Horário disponível para iniciar a visita <span>funcionamento do local, descontada a duração da visita</span></h4>
       <svg id="winGrid" viewBox="0 0 800 436" role="img" aria-label="Janelas de início por atração e por dia da viagem"></svg>
     </div>
     <div class="icard" data-a="up" style="--d:500ms">
@@ -518,30 +529,32 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa quatro: montar a instância do problema.</p>
-          <p>O backend reúne os horários de funcionamento do provedor e estimativas de duração e preferências do modelo de linguagem. Com as datas da viagem, esses dados delimitam as janelas de cada atração.</p>
-          <p>Depois calcula a matriz de deslocamentos entre todos os pontos, no modal escolhido, e monta o payload.</p>
-          <p>A instância tem cinquenta e dois nós: a hospedagem, doze atrações e trinta e nove alternativas de almoço. As trinta e nove são o almoço em três dias, em treze locais possíveis, o hotel e cada atração. Por isso só existem treze posições distintas, e a matriz que importa é a de treze por treze; o payload apenas repete esses valores até cinquenta e dois por cinquenta e dois.</p>
-          <p>Na grade à esquerda, cada barra é o intervalo em que a visita pode começar, por dia. No primeiro dia nada começa antes das catorze horas, a chegada. O Metropolitan só tem janela nos dias 2 e 4, e a Estátua da Liberdade só do dia 2 ao 4: em outros dias a atração está fechada ou não cabe no horário disponível. À direita, a matriz de tempos entre o hotel e as doze atrações, em minutos, no transporte público. Essa janela limita as visitas, mas a base permite saída às nove. A instância preservada não comprova a tradução correta de toda a logística da viagem.</p>
-          <h4>Observações</h4>
-          <p class="obs">São três grupos de treze alternativas de almoço, nos dias 2, 3 e 4, co-localizadas nas atrações e no hotel: repetem coordenadas já presentes, então não custam elementos adicionais na matriz de rotas.</p>
-          <p class="obs">A matriz é cobrada por elemento origem–destino. A implementação deduplica coordenadas e reaproveita matrizes completas ou pares direcionais válidos. Prazos de cache não dispensam as condições de armazenamento dos provedores. Os cenários de custo são apresentados após os resultados.</p>
-          <p class="obs">A base temporal é seis da manhã: 28.800 segundos correspondem a 14:00.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/backend/src/application/generate-itinerary.ts">Montagem do payload</a></li>
-            <li><a href="../../aplicativo/backend/src/infrastructure/google/routes-adapter.ts">Matriz, deduplicação e cache</a></li>
-            <li><a href="../html/data/solver-request.json">Payload completo desta execução</a></li>
-            <li><a href="../html/diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
+    <h4>Fala</h4>
+    <p>Para montar a entrada do solver, o backend reúne os horários de funcionamento, as durações estimadas e os tempos de deslocamento. A grade à esquerda mostra quando cada visita pode começar em cada dia.</p>
+    <p>O fim da janela já desconta a duração da visita. Por exemplo, se um lugar fecha às dezessete horas e a visita dura duas horas, o início precisa ocorrer até as quinze. Assim, respeitar a janela também permite concluir a visita antes do fechamento.</p>
+    <p>À direita está a matriz de tempos por transporte público. Cada linha é uma origem e cada coluna é um destino. São treze posições distintas: a hospedagem e as doze atrações.</p>
+    <p>A instância completa tem cinquenta e dois nós porque inclui trinta e nove alternativas de almoço, distribuídas entre três dias. Essas alternativas ficam nas mesmas posições do hotel e das atrações. Por isso ampliam as escolhas do solver sem criar novas coordenadas para consultar na matriz.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Como ler as janelas e a matriz</h4><p>Cada intervalo à esquerda indica os inícios possíveis de uma visita. A extremidade final já desconta a duração: fechar às 17h com visita de 2h permite iniciar até 15h. Na matriz à direita, escolha a linha da origem e a coluna do destino; a célula é o tempo em minutos. O valor de ida pode ser diferente do de volta. Treze posições geram 13 × 13 = 169 pares origem–destino.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Há três grupos de treze alternativas de almoço, nos dias 2, 3 e 4, nas mesmas coordenadas da hospedagem e das atrações. A matriz de treze posições é expandida no payload de cinquenta e dois nós. A base continua disponível antes das 14:00 no primeiro dia.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem do payload</a></li>
+            <li><a href="references/aplicativo/backend/src/infrastructure/google/routes-adapter.ts">Matriz, deduplicação e cache</a></li>
+            <li><a href="data/solver-request.json">Payload completo desta execução</a></li>
+            <li><a href="diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 15 -->
 <section class="slide" id="slide-15" data-title="Etapa 5 — Formulação do problema" data-stage="5">
   <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Cada dia é um veículo. A notação acompanha a seção 5.5 da monografia e resume o modelo de roteamento do OR-Tools.</p>
+  <p class="lead" data-a="up" style="--d:100ms">O modelo escolhe quais paradas visitar, em que dia e em qual sequência. Cada dia corresponde a um veículo no OR-Tools.</p>
   <div class="model">
     <div class="stack">
       <div class="glass" data-build="1">
@@ -575,99 +588,100 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Cada dia corresponde a um veículo que parte de uma base e retorna a uma base. No exemplo de Nova Iorque, ambas são a hospedagem.</p>
-          <p>A notação é a mesma da monografia. O x indica um arco usado, o z indica uma visita naquele dia, e o y indica exclusão da viagem. O T guarda o início do atendimento.</p>
-          <p>Um ponto opcional recebe uma visita em um dia ou fica excluído. Se recebe uma visita, há entrada e saída no mesmo dia. A estrutura de rotas do OR-Tools mantém essas visitas conectadas às bases.</p>
-          <p>O teto de quatro atrações por dia é rígido no ritmo moderado. O piso efetivo de duas entra como custo suave, cobrado só em dias com ao menos uma visita, e foi atendido nos cinco dias deste exemplo.</p>
-          <p>O objetivo soma deslocamento, exclusões de atrações e os demais custos. Esses valores permitem comparar soluções sob a mesma entrada, mas não medem dinheiro nem satisfação do viajante.</p>
-          <h4>Observações</h4>
-          <p class="obs">As somas de arcos usam os arcos admissíveis de cada dia. As bases de saída o_d e retorno f_d são distintas na representação, mesmo quando correspondem à mesma hospedagem. As condições completas de conectividade e calendário estão na seção 5.5.</p>
-          <p class="obs">O código implementa sucessores de rota, veículos, dimensões, disjunções e custos suaves. O teto utiliza SetMax; o piso utiliza SetCumulVarSoftLowerBound com penalidade de 20 milhões. A busca devolve uma solução sem certificado de otimalidade.</p>
-          <h4>Fontes</h4>
-          <ul><li><a href="../../tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5: decisões, objetivo e condições</a></li><li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">Modelo implementado no OR-Tools</a></li></ul>
-        </template>
+    <h4>Fala</h4>
+    <p>Com os dados preparados, o modelo precisa decidir quais paradas visitar, em que dia e em qual sequência. Cada dia é representado por um veículo que sai de uma base e retorna a uma base.</p>
+    <p>Na notação, x indica um deslocamento usado, z indica que o ponto foi visitado naquele dia, y indica que ele ficou de fora e T registra o horário de início. A primeira condição diz que um ponto opcional é visitado uma vez ou excluído. A seguinte liga a visita à entrada e à saída daquele ponto na rota.</p>
+    <p>O teto de quatro atrações por dia é obrigatório neste ritmo. Já o mínimo de duas é uma preferência com penalidade, aplicada aos dias que têm visitas.</p>
+    <p>Por fim, minimizamos a soma dos deslocamentos e das penalidades. Isso permite escolher entre agendas que respeitam as restrições. O valor do objetivo compara essas soluções, mas não mede diretamente a satisfação do viajante.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Índices e símbolos</h4><p>d identifica o dia; i e j identificam pontos. D é o conjunto dos dias; U reúne os pontos opcionais, incluindo refeições; Vₐ é o subconjunto das atrações. o_d e f_d são as bases de saída e retorno. ∈ lê-se “pertence”; ⊆, “é subconjunto”; ∑, “somatório”. Os símbolos sobrescritos d indicam dia, não potência.</p>
+      <h4>Variáveis binárias e tempo</h4><p>xᵈᵢⱼ lê-se “xis de i para j no dia d”: vale 1 se aquele deslocamento é usado. zᵈᵢ lê-se “zê do ponto i no dia d”: vale 1 se há visita. yᵢ lê-se “ípsilon índice i”: vale 1 se o ponto é excluído. {0,1} indica variável binária. Tᵈᵢ lê-se “tê do ponto i no dia d”: início do atendimento, em segundos desde as 06h. T ≥ 0 lê-se “tê maior ou igual a zero”.</p>
+      <h4>Visita ou exclusão: ∑ zᵈᵢ + yᵢ = 1</h4><p>Leia: “a soma de zê do ponto i sobre todos os dias, mais ípsilon índice i, é igual a um”. Para cada ponto opcional, ou uma visita ocorre em um dia ou ele é excluído. Isso impede visitar o mesmo ponto em dois dias.</p>
+      <h4>Entrada e saída: ∑ xᵈⱼᵢ = ∑ xᵈᵢⱼ = zᵈᵢ</h4><p>Leia: “a soma dos arcos que entram em i é igual à soma dos arcos que saem de i, e ambas são iguais a zê do ponto i naquele dia”. Se o ponto é visitado, há uma entrada e uma saída; se não é, ambas são zero. A expressão resume a conservação de fluxo.</p>
+      <h4>Teto diário: ∑ zᵈᵢ ≤ 4, para i em Vₐ</h4><p>Leia: “a soma das atrações visitadas no dia d é menor ou igual a quatro”. É um limite rígido para o ritmo moderado deste exemplo. Refeições não são atrações e não entram nessa contagem. O mínimo de duas atrações é suave, cobrado apenas em dias com visita.</p>
+      <h4>Objetivo: min ∑ tᵢⱼ xᵈᵢⱼ + ∑ πᵢ yᵢ + Φ</h4><p>Leia: “minimizar a soma dos tempos dos deslocamentos utilizados, mais a soma das penalidades das atrações excluídas, mais fi”. tᵢⱼ é o tempo entre i e j; x seleciona os deslocamentos. πᵢ é a penalidade de excluir i; y seleciona exclusões. Φ, letra grega fi, reúne os demais custos: duração do dia, limites suaves, preferências de horário e refeições omitidas. O valor total é uma pontuação de custo, não dinheiro nem uma duração pura.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O teto usa SetMax. O piso usa SetCumulVarSoftLowerBound com custo de vinte milhões por visita faltante, sem cobrança em rotas vazias. As bases de saída e retorno têm índices distintos no modelo, mesmo quando representam a mesma hospedagem.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5: decisões, objetivo e condições</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Modelo implementado no OR-Tools</a></li></ul>
+    </details>
+  </template>
 </section>
 
-<!-- 16 -->
 <section class="slide" id="slide-16" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
   <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
-  <p class="lead" data-a="up" style="--d:100ms">A dimensão de tempo encadeia os inícios de atendimento. Visita e deslocamento delimitam o próximo. Exemplo real: dia 2, da Catedral de São Patrício ao Metropolitan.</p>
+  <p class="lead" data-a="up" style="--d:100ms">A próxima visita começa depois que a anterior termina e o deslocamento é concluído. Exemplo: Catedral de São Patrício → Metropolitan, no dia 2.</p>
   <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 330" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span><span class="signal" data-build="3"></span><span class="signal" data-build="4"></span><span class="signal" data-build="5"></span><span class="signal" data-build="6"></span>
   <div class="temporal-cards" data-build="7">
-    <div class="card"><h3>Dias permitidos</h3><p>Uma atração fechada às segundas não recebe janela naquele dia, e o dia sai de <code>allowed_days</code>.</p></div>
-    <div class="card"><h3>Janela preferida</h3><p>Custo por segundo de início após o fim da faixa: 500 se forte, 20 se suave. Começar antes não tem custo simétrico.</p></div>
-    <div class="card"><h3>Horizonte</h3><p>61.200 s por dia nesta execução, com origem às 06:00. A chegada 28.800 s equivale a 14:00.</p></div>
+    <div class="card"><h3>Dias permitidos</h3><p>O fechamento semanal retira aquele dia das opções de visita da atração.</p></div>
+    <div class="card"><h3>Janela preferida</h3><p>Iniciar após a faixa recomendada custa 500 unidades/s na preferência forte e 20 na suave. Antecipação não gera penalidade.</p></div>
+    <div class="card"><h3>Período de planejamento</h3><p>61.200 s por dia nesta execução, com origem às 06:00. A chegada 28.800 s equivale a 14:00.</p></div>
   </div>
-  <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início em i no dia d, em segundos desde as 06:00</span><span><span class="math">s<sub>i</sub></span>tempo de visita, o <code>service_time_seconds</code></span><span><span class="math">t<sub>ij</sub></span>deslocamento de i até j no modal escolhido</span></div>
+  <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início em i no dia d, em segundos desde as 06:00</span><span><span class="math">s<sub>i</sub></span>tempo estimado da visita</span><span><span class="math">t<sub>ij</sub></span>deslocamento de i até j no modal escolhido</span></div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Esta é a peça que encadeia o dia.</p>
-          <p>Se a rota usa o arco de i a j no dia d, o atendimento em i começa no instante T. Somamos o tempo de visita e o deslocamento até j. O atendimento em j só pode começar depois dessa soma, incluindo uma eventual espera.</p>
-          <p>É essa desigualdade que impede o roteiro de teletransportar a pessoa entre dois pontos.</p>
-          <p>Sobre isso se acumulam três restrições: os dias em que a atração pode ser visitada, a janela em que ela está aberta, e o fim da faixa de horário preferida. Começar depois dele gera custo suave: quinhentas unidades por segundo para uma recomendação forte, vinte para uma suave. Começar antes da faixa não recebe uma penalidade simétrica.</p>
-          <h4>Observações</h4>
-          <p class="obs">A correspondência com o código: isto é a dimensão de tempo do RoutingModel, com o transit callback somando tempo de serviço e deslocamento.</p>
-          <p class="obs">As janelas por dia entram como intervalos na dimensão. A janela preferida cobra por segundo de início após seu fim: 500 unidades se strong, 20 se soft. Começar antes da faixa não recebe penalidade simétrica.</p>
-          <p class="obs">Verificação possível ao vivo: na resposta do solver a Ponte do Brooklyn chega em 28.800 segundos e a tela do aplicativo mostra 14:00.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">Dimensão de tempo, janelas e custos suaves</a></li>
-            <li><a href="../html/data/solver-request.json">day_time_windows e preferred_time_window no payload real</a></li>
+    <h4>Fala</h4>
+    <p>O relógio é propagado ao longo da rota. A próxima visita só pode começar depois que a anterior terminar e depois de concluído o deslocamento.</p>
+    <p>No exemplo do segundo dia, a visita à Catedral de São Patrício dura trinta minutos. Somamos o transporte até o Metropolitan. Se chegarmos antes da janela de atendimento do museu, precisamos esperar. É por isso que a desigualdade permite que o próximo início seja maior que a soma, e não exige igualdade.</p>
+    <p>Além desse encadeamento, cada atração tem dias permitidos e horários de início. As preferências acrescentam um custo quando a visita começa depois da faixa recomendada, mas não proíbem esse atraso.</p>
+    <p>Os horários do cálculo usam seis da manhã como origem. Assim, vinte e oito mil e oitocentos segundos correspondem a catorze horas. Essa conversão será a mesma usada para exibir a agenda no aplicativo.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Implicação temporal: xᵈᵢⱼ = 1 ⇒ Tⱼ ≥ Tᵢ + sᵢ + tᵢⱼ</h4><p>Leia: “se o arco de i para j é usado no dia d, então o início em j é maior ou igual ao início em i, mais a duração da visita em i, mais o deslocamento de i para j”. A seta ⇒ lê-se “implica”. Os T da figura se referem ao mesmo dia, por isso o sobrescrito d foi omitido. sᵢ é o tempo de serviço, ou visita; tᵢⱼ é o deslocamento.</p>
+      <h4>Por que maior ou igual?</h4><p>A igualdade bastaria se a visita seguinte pudesse começar assim que a pessoa chega. O sinal ≥ admite espera, por exemplo até a abertura do museu. O modelo não permite iniciar a visita seguinte antes de terminar a anterior e o transporte.</p>
+      <h4>Como ler os valores da linha do tempo</h4><p>Todos os valores numéricos estão em segundos desde as 06h. Some o início na Catedral, os 1.800 segundos de visita e o transporte. Se a soma for menor que 14.400 segundos, o Metropolitan ainda exige espera até as 10h. A diferença entre 14.400 e essa soma é a espera mostrada no gráfico.</p>
+      <h4>Período e preferência</h4><p>61.200 segundos equivalem a 17 horas: das 06h às 23h. 28.800 segundos equivalem a 8 horas após as 06h, portanto 14h. A preferência de horário é suave: atraso após o fim da faixa custa 500 ou 20 unidades por segundo conforme a força. Ela é diferente da janela obrigatória de funcionamento.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O tempo de trânsito soma serviço e deslocamento. A espera é permitida pela dimensão de tempo. O atraso na preferência custa 500 unidades por segundo quando forte e 20 quando suave; não há custo simétrico por antecipação.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Dimensão de tempo, janelas e custos suaves</a></li>
+            <li><a href="data/solver-request.json">day_time_windows e preferred_time_window no payload real</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 17 -->
-<section class="slide" id="slide-17" data-title="Etapa 6 — Resolução" data-stage="6" data-scene="solve">
-  <h2 class="title" data-a="up">Etapa 6 — Resolução</h2>
-  <div class="solve">
-    <div>
-      <div class="budget" data-a="fade" style="--d:150ms">
-        <h4>Tempo de busca por complexidade</h4>
-        <div class="bbar" style="--h:12%;--td:.3s"><b>2 s</b><i></i><span>complexidade ≤ 30</span></div>
-        <div class="bbar" id="pickBar" style="--h:30%;--td:.45s"><b>5 s</b><i></i><span>complexidade ≤ 70</span></div>
-        <div class="bbar" style="--h:90%;--td:.6s"><b>15 s</b><i></i><span>instância maior</span></div>
-      </div>
-      <div class="cx" data-a="up" style="--d:500ms"><code>|V| + 2|D| = 52 + 2 × 5 = <b>62</b></code><div id="cxCalc" style="margin-top:6px">entre 31 e 70 → limite de <b>5 s</b></div></div>
-    </div>
-    <div>
-      <div class="sflow" data-a="up" style="--d:300ms">
-        <div class="sbox"><i>1</i><b>Parallel Cheapest Insertion</b><small>solução inicial</small></div>
-        <div class="sarrow"><svg data-i="arrow-right"></svg></div>
-        <div class="sbox hot"><i>2</i><b>Guided Local Search</b><small>melhoria até o limite</small></div>
-        <div class="sarrow"><svg data-i="arrow-right"></svg></div>
-        <div class="sbox"><i>3</i><b>Rota viável</b><small>sem certificado de ótimo</small></div>
-      </div>
-      <div class="fallback" data-a="fade" style="--d:600ms">fallback AUTOMATIC · até 30 s, se não houver solução e restar prazo</div>
-      <div class="term-win" data-a="up" style="--d:700ms">
-        <header><i></i><i></i><i></i><span style="margin-left:8px">solver · telemetria desta execução</span></header>
-        <pre id="termOut"></pre>
-      </div>
-    </div>
+<section class="slide" id="slide-17" data-title="Etapa 6 — Como a busca monta o roteiro" data-stage="6">
+  <h2 class="title" data-a="up">Etapa 6 — Como a busca monta o roteiro</h2>
+  <p class="lead" data-a="up" style="--d:100ms">O solver constrói uma agenda inicial, tenta melhorá-la e devolve a melhor solução encontrada dentro do prazo.</p>
+  <ol class="search-method">
+    <li data-a="up" style="--d:200ms"><span class="method-number">01</span><h3>Encaixar as visitas</h3><p>Insere cada parada na posição que acrescenta menos custo, entre os encaixes permitidos pelos horários.</p><small>Parallel Cheapest Insertion</small></li>
+    <li data-a="up" style="--d:350ms"><span class="method-number">02</span><h3>Testar outras combinações</h3><p>Troca a ordem das paradas e sua distribuição entre os dias para tentar reduzir deslocamentos e penalidades.</p><small>Guided Local Search (GLS)</small></li>
+    <li data-a="up" style="--d:500ms"><span class="method-number">03</span><h3>Devolver a melhor agenda</h3><p>Ao terminar o prazo, entrega a melhor solução encontrada. Não há prova de que ela seja a solução ótima.</p><small>Nesta execução: 12 atrações em 5 dias</small></li>
+  </ol>
+  <div class="search-budget" data-a="up" style="--d:650ms">
+    <div><h3>Por que buscar por 5 segundos?</h3><p>O limite cresce conforme a quantidade de pontos e de dias.</p><div class="budget-equation">52 nós + 2 × 5 dias = <b>62</b></div><small>Indicador de tamanho da instância</small></div>
+    <div class="budget-ranges"><div><b>2 s</b><span>até 30</span></div><div class="chosen"><b>5 s</b><span>31 a 70 · este caso</span></div><div><b>15 s</b><span>acima de 70</span></div><p>Tempo registrado nesta execução: <b>5,03 s</b>, incluindo o processamento do solver.</p></div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa seis: resolver.</p>
-          <p>A busca tem duas fases. Primeiro uma heurística construtiva monta uma solução inicial viável. Depois uma busca local guiada busca melhorar essa solução dentro do limite de tempo.</p>
-          <p>O orçamento de tempo é adaptativo: instâncias pequenas ganham dois segundos, médias cinco, e grandes quinze.</p>
-          <p>Nesta execução, com cinquenta e duas paradas e cinco dias, a complexidade deu sessenta e dois, que cai na faixa intermediária. O orçamento efetivo foi cinco segundos, e a busca consumiu os cinco segundos inteiros.</p>
-          <p>O resultado respeita as restrições da instância recebida. A busca procura melhorar a agenda no tempo disponível, sem certificar que encontrou a melhor solução possível.</p>
-          <h4>Observações</h4>
-          <p class="obs">Os tempos 2/5/15 s são limites padrão, não duração garantida. O prazo restante da requisição pode reduzi-los e também limitar ou impedir o fallback.</p>
-          <p class="obs">Os limiares 30 e 70 de complexidade são calibração de engenharia para controlar latência, não constantes teoricamente ótimas.</p>
-          <p class="obs">O fallback de trinta segundos não foi acionado nesta execução: ele é tentado quando a busca principal não encontra solução e ainda existe prazo disponível na requisição.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">Estratégias e orçamento adaptativo</a></li>
-            <li><a href="../../aplicativo/solver/app/main.py">Configuração de serviço: 15 s e 30 s</a></li>
-            <li><a href="../PERGUNTAS_BANCA_TCC2.md">Perguntas 17–20 e 28</a></li>
+    <h4>Fala</h4>
+    <p>Com a entrada pronta, o solver começa construindo uma agenda. Para cada parada, ele procura uma posição que respeite as restrições e acrescente pouco custo. Esse é o papel da inserção mais barata em paralelo.</p>
+    <p>A primeira agenda ainda pode ser melhorada. A busca local guiada testa mudanças na ordem das paradas e na distribuição entre os dias. Ela usa penalidades internas de busca para conseguir explorar outras combinações, além de uma melhoria imediata.</p>
+    <p>Esse processo tem um prazo. Aqui são cinquenta e dois nós e cinco dias: o indicador de tamanho resulta em sessenta e dois, então a busca recebe cinco segundos. As alternativas de almoço também contam nesses cinquenta e dois nós.</p>
+    <p>Ao final, devolvemos a melhor agenda encontrada. Nesta execução, as doze atrações foram incluídas em cinco dias. Isso não é uma prova de ótimo. A animação seguinte mostra as melhorias registradas em uma nova execução com essa mesma entrada.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Indicador de tamanho: |V| + 2|D|</h4><p>Leia: “quantidade de nós mais duas vezes a quantidade de dias”. As barras | | indicam cardinalidade, isto é, número de elementos, e não valor absoluto neste contexto. Aqui V inclui 52 nós, inclusive alternativas de almoço; D contém 5 dias. Logo, 52 + 2 × 5 = 62, na faixa de busca de 5 segundos. Esse é um indicador prático do código, não uma medida formal da complexidade computacional.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Os limites padrão são 2, 5 e 15 segundos, conforme os limiares 30 e 70. O prazo restante da requisição pode reduzi-los. A tentativa alternativa usa AUTOMATIC por até 30 segundos, condicionada ao prazo restante e à ausência de solução na busca principal.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Estratégias e orçamento adaptativo</a></li>
+            <li><a href="references/aplicativo/solver/app/main.py">Configuração de serviço: 15 s e 30 s</a></li>
+
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 18 -->
 <section class="slide" id="slide-18" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
   <h2 class="title" data-a="up" style="margin-bottom:10px">Busca das rotas em execução</h2>
   <div class="search">
@@ -680,70 +694,45 @@
       <button class="replay" type="button" id="searchReplay" data-a="fade" style="--d:500ms"><svg data-i="rotate-ccw"></svg>Repetir animação</button>
     </div>
   </div>
-  <template class="speaker-notes"><h4>O que falar</h4><p>Esta animação vem de uma nova execução do nosso solver com a instância de Nova Iorque. Cada quadro mostra a melhor solução completa observada até aquele momento. O número no ponto identifica a atração, e sua cor indica o dia.</p><p>Reparem que mudar a ordem ou o dia de uma atração pode reduzir o objetivo. O custo reúne deslocamentos e penalidades. Ele não é uma nota de satisfação nem um preço em dinheiro.</p><p>A reprodução foi desacelerada para permitir acompanhar as mudanças. A busca continua pelo prazo configurado mesmo depois da última melhoria mostrada.</p><h4>Observações</h4><p class="obs">Há 41 melhorias registradas, todas exibidas. O custo vai de 41,494,118 a 154,192. As refeições permanecem na instância e nos custos, mas foram omitidas visualmente. As ligações mostradas pulam essas paradas para deixar visível a ordem relativa das atrações.</p><p class="obs">Não é a árvore de busca, nem uma gravação de cada inserção ou candidato rejeitado. Também não é o histórico da execução original de 5,032 s. É uma nova execução local, sem novas consultas pagas, com o código e a entrada identificados por SHA-256 no JSON.</p><h4>Fontes</h4><ul><li><a href="../html/data/busca-animada.json">Registro completo das melhorias e proveniência</a></li><li><a href="../html/scripts/registrar_busca.py">Instrumentação da execução para os slides</a></li><li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação OR-Tools utilizada</a></li></ul></template>
-</section>
-
-<!-- 19 -->
-<section class="slide" id="slide-19" data-title="Etapa 7 — Resultado" data-stage="7" data-scene="gantt">
-  <h2 class="title" data-a="up">Etapa 7 — Resultado e persistência</h2>
-  <div class="result">
-    <div><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/result-map-day1.png" alt="Mapa do roteiro no aplicativo mostrando o dia 1 em Nova Iorque com duas paradas e a rota traçada" /></div></div>
-    <div><div class="phone" data-a="phone" style="--d:300ms"><img src="assets/app/result-agenda.png" alt="Lista de paradas do roteiro exibindo Ponte do Brooklyn às 14:00 e Memorial do 11 de Setembro às 15:20" /></div></div>
-    <div>
-      <div class="gantt" data-a="up" style="--d:250ms"><h4>Agenda devolvida pelo solver</h4><svg id="ganttSvg" viewBox="0 0 760 360" role="img" aria-label="Agenda dos cinco dias com visitas, almoços e deslocamentos, dos horários reais da resposta do solver"></svg><p class="g-note" id="ganttNote"></p></div>
-      <div class="facts" data-a="up" style="--d:500ms">
-        <div class="fact"><b data-count="62.4" data-dec="1" data-suffix=" km">62,4 km</b><span>deslocamento total</span></div>
-        <div class="fact"><b data-count="5">5</b><span>dias planejados</span></div>
-        <div class="fact"><b data-count="0">0</b><span>atrações não alocadas</span></div>
-      </div>
-    </div>
-  </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Etapa sete: o resultado volta para o aplicativo.</p>
-          <p>À esquerda o mapa do primeiro dia, com a rota traçada. No meio, a lista de paradas com horários.</p>
-          <p>À direita, a resposta real do solver. Sessenta e dois vírgula quatro quilômetros no total, cinco dias, e nenhuma atração não alocada.</p>
-          <p>E aqui está o fechamento do ciclo: no JSON, a Ponte do Brooklyn tem chegada em vinte e oito mil e oitocentos segundos. Na tela do aplicativo, ao lado, está escrito catorze horas. É o mesmo número.</p>
-          <p>O roteiro é então persistido no Firestore, no documento da viagem.</p>
-          <h4>Observações</h4>
-          <p class="obs">Se a banca quiser verificar a correspondência, dá para mostrar ao vivo: 28.800 segundos a partir das seis da manhã são 14:00, e 33.655 são 15:20.</p>
-          <p class="obs">O dia 1 tem duas atrações e atende ao piso efetivo de dois. As capturas preservam a execução registrada; a interface atual também oferece Editar e Configurações separados, foto no card do mapa e tratamento dedicado de não alocados.</p>
-          <p class="obs">Na edição atual, mover ou reordenar tenta um ajuste local validado. Se falhar, Replanejar gera uma proposta com a atração no dia solicitado e mostra mudanças e exclusões antes de Aplicar. Descartar preserva o roteiro original. Editar datas faz uma nova geração, com animação, ao salvar.</p>
-          <p class="obs">O aviso de não alocados pode ser dispensado de forma persistente neste aparelho; a lista continua acessível em Configurações. Calendário exige datas definidas: integração nativa com permissão no celular e arquivo ICS na web.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../html/data/solver-response.json">Resposta completa desta execução</a></li>
-            <li><a href="../../aplicativo/mobile/src/application/trip-cloud-sync.ts">Persistência no Firestore</a></li>
-          </ul>
-        </template>
+    <h4>Fala</h4>
+    <p>Esta animação foi produzida com uma nova execução do solver usando a mesma entrada de Nova Iorque. Cada quadro corresponde a uma melhoria da melhor solução completa encontrada até aquele momento.</p>
+    <p>O número identifica a atração e a cor indica o dia. Conforme a ordem e a distribuição das visitas mudam, o custo diminui. No registro, ele passa de aproximadamente quarenta e um milhões para cento e cinquenta e quatro mil unidades.</p>
+    <p>As refeições continuam participando do cálculo, mas foram ocultadas no mapa para facilitar a leitura das atrações. Também desaceleramos a reprodução: o tempo real aparece no indicador.</p>
+    <p>Ao todo foram registradas quarenta e uma melhorias. Depois da última, a busca ainda continua até o prazo terminar. Isso ajuda a entender por que gastar mais tempo nem sempre produz uma agenda diferente.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">São 41 melhorias registradas em uma nova execução local. O objetivo passa de 41.494.118 para 154.192. A animação omite os nós de refeição e não mostra todos os candidatos avaliados ou rejeitados. A proveniência e os resumos SHA-256 estão no JSON do registro.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="data/busca-animada.json">Registro completo das melhorias e proveniência</a></li><li><a href="scripts/registrar_busca.py">Instrumentação da execução para os slides</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação OR-Tools utilizada</a></li></ul>
+    </details>
+  </template>
 </section>
 
-<!-- 20 -->
-<section class="slide" id="slide-20" data-title="Distribuição entre os dias" data-scene="dist">
-  <h2 class="title" data-a="up">Distribuição entre os dias</h2>
-  <p class="lead" data-a="up" style="--d:100ms">O solver não recebe instrução de quantas atrações pôr em cada dia. A distribuição resulta das janelas, deslocamentos, teto de paradas e custos de espalhamento e duração.</p>
-  <div class="dist" id="distGrid"></div>
+<section class="slide" id="slide-19" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
+  <h2 class="title" data-a="up">Etapa 7 — As visitas distribuídas pelos cinco dias</h2>
+  <div class="route-summary" data-a="up" style="--d:100ms"><p><b>12 de 12 atrações incluídas</b> · 62,4 km de deslocamento no total</p><span>Nova Iorque · 14 a 18 de setembro</span></div>
+  <div class="daily-results" id="dailyResults"></div>
+  <p class="route-key" data-a="fade" style="--d:800ms"><b>Como ler:</b> os números ligam cada ponto à visita na lista e indicam sua ordem no dia. <span class="hotel-key"></span> Hospedagem. Linhas ligam as paradas; os trajetos reais seguem a malha de transporte.</p>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Uma pergunta natural é: por que três dias têm duas atrações e dois têm três?</p>
-          <p>O usuário não fixou essa divisão: ela foi produzida pela busca com as restrições e os custos do modelo.</p>
-          <p>Os dias dois, três e quatro ficaram entre oito e nove horas, dentro do limite de conforto.</p>
-          <p>O dia três inclui a Estátua da Liberdade e tem o maior deslocamento registrado: vinte e três quilômetros. Esse resultado não prova que seja a única divisão ou a melhor possível.</p>
-          <p>A duração do dia inclui deslocamentos, visitas e espera. No dia um, a rota começa às nove, mas a primeira visita ocorre às catorze; por isso oito vírgula nove horas não significam esse tempo inteiro visitando atrações. A base permanece disponível das seis às vinte e três horas. Assim, o atendimento às janelas recebidas não comprova a representação correta de toda a logística. No último dia, o retorno antes do meio-dia foi um resultado observado, sem esse limite imposto à base; o check-out informado está no sexto dia.</p>
-          <h4>Observações</h4>
-          <p class="obs">Este slide responde antecipadamente à pergunta sobre por que a distribuição não é uniforme.</p>
-          <p class="obs">Piso nominal 3, piso efetivo mín(3, ⌊12/5⌋) = 2. Os dias 1, 3 e 5 têm duas atrações e atendem ao piso. O conforto de nove horas é um custo suave, não uma garantia para qualquer instância.</p>
-          <p class="obs">O payload não contém alternativas de almoço nos dias 1 e 5; não foram descartadas pelo solver. Não atribuir o limite do último dia ao check-out exibido, que é em 19/09: o JSON registra as janelas resultantes, sem identificar a origem de cada limite.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../html/data/solver-response.json">Resposta real: distância e tempo por dia</a></li>
-            <li><a href="../../aplicativo/solver/app/infrastructure/ortools_solver.py">Limites suaves de espalhamento e conforto</a></li>
+    <h4>Fala</h4>
+    <p>Este é o roteiro devolvido para os cinco dias de Nova Iorque. As doze atrações foram incluídas, com sessenta e dois vírgula quatro quilômetros de deslocamento no total.</p>
+    <p>Cada coluna reúne o mapa e a agenda de um dia. Os números indicam a sequência das visitas naquele dia, e a lista abaixo traz o nome e o horário de cada uma. O quadrado marca a hospedagem. Os mapas usam a mesma escala, e as linhas mostram a ordem entre as paradas, não o desenho exato do transporte.</p>
+    <p>No segundo dia, por exemplo, a Catedral de São Patrício vem antes do Metropolitan e do Central Park, com uma pausa de almoço entre o museu e o parque. Já o terceiro dia concentra o maior deslocamento, por incluir a Estátua da Liberdade.</p>
+    <p>A resposta alimenta a agenda e o mapa do aplicativo e pode ser salva e editada. Há uma limitação visível no primeiro dia: a saída do hotel ocorre antes da chegada informada. Portanto, incluir todas as atrações não basta para garantir que a agenda inteira esteja correta.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Os horários, as distâncias e a sequência são os da resposta original de cinco dias. Cada mapa usa a mesma projeção e escala. A numeração recomeça em cada dia e representa a ordem de visita, não a prioridade. A saída da hospedagem antes da chegada informada é uma limitação conhecida da entrada e da implementação.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="data/solver-response.json">Resposta completa desta execução</a></li>
+            <li><a href="references/aplicativo/mobile/src/application/trip-cloud-sync.ts">Persistência no Firestore</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 21 -->
-<section class="slide" id="slide-21" data-title="Comparação de estratégias de busca">
+<section class="slide" id="slide-20" data-title="Comparação de estratégias de busca">
   <h2 class="title" data-a="up">Comparação de estratégias de busca</h2>
   <p class="lead" data-a="up" style="--d:100ms">Mesma entrada de Nova Iorque: 12 atrações, 5 dias e 52 nós. Variam a construção inicial, a busca local e o limite de tempo.</p>
   <div class="xp">
@@ -766,80 +755,52 @@
     </div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>A animação anterior mostrou uma execução. Aqui comparamos configurações sobre a mesma entrada, sem novas consultas aos provedores. Mantivemos pontos, matriz, durações, janelas e pesos.</p>
-          <p>Foram dezessete execuções desta entrada e quatro recortes, totalizando vinte e uma no registro original, depois reproduzidas. A tabela mostra que construir uma solução viável não basta para reduzir os custos internos: a inserção inicial atende as doze atrações, mas tem objetivo de quarenta e um milhões.</p>
-          <p>A descida gulosa terminou em cerca de onze centésimos de segundo, com objetivo zero vírgula sete por cento acima do menor observado. A GLS atingiu cento e cinquenta e quatro mil cento e noventa e dois em todos os limites testados, de dois a seiscentos segundos.</p>
-          <p>Nesta entrada, mais tempo não trouxe melhora. Isso justifica ampliar a comparação, mas não reduzir o prazo de produção com base em um único destino. O desvio do objetivo não mede diferença de satisfação do viajante.</p>
-          <h4>Observações</h4>
-          <p class="obs">A GLS foi executada com limites de 2, 5, 15, 60, 300 e 600 segundos. Os três primeiros tiveram três repetições; os demais, uma. As configurações sem GLS completam 17 execuções em cinco dias; os quatro recortes apresentados a seguir completam as 21.</p>
-          <p class="obs">A comparação substitui a configuração da busca e desativa a tentativa alternativa. A execução original usou Python 3.12.13; a reprodução de 23/09 usou Python 3.11.8 e reproduziu objetivos e agendas. Os tempos citados pertencem ao registro original. Não há limite inferior comprovado nem gap para o ótimo.</p>
-          <h4>Fontes</h4>
-          <ul><li><a href="../../tcc/fontes/qualidade-solver/resultados.md">Resultados originais e agendas</a></li><li><a href="../../tcc/fontes/qualidade-solver/verificacao-20260923/resultados.json">Reprodução das 21 execuções e proveniência</a></li><li><a href="../../tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.8.3</a></li></ul>
-        </template>
+    <h4>Fala</h4>
+    <p>Nesta comparação, mantivemos as atrações, os horários, as matrizes e os pesos. Alteramos apenas a configuração da busca e o tempo disponível.</p>
+    <p>A primeira solução obtida pela inserção paralela já inclui as doze atrações, mas ainda tem um objetivo alto. Ao aplicar a busca local, esse valor cai bastante. Portanto, conseguir uma solução viável é uma etapa; melhorar sua organização exige continuar a busca.</p>
+    <p>A descida gulosa terminou em cerca de onze centésimos de segundo, com objetivo zero vírgula sete por cento acima do menor observado. A busca local guiada encontrou o mesmo objetivo de cento e cinquenta e quatro mil cento e noventa e dois em todos os limites testados, de dois a seiscentos segundos.</p>
+    <p>Para essa entrada, ampliar o tempo não trouxe uma melhora no objetivo. Esse resultado sugere comparar mais destinos antes de alterar o prazo usado em produção. Também não podemos interpretar a diferença percentual do custo como uma diferença de satisfação do viajante.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">A GLS foi comparada com limites de 2, 5, 15, 60, 300 e 600 segundos. Os três menores tiveram três repetições. O registro reúne 17 execuções com cinco dias e quatro recortes. A reprodução confirmou objetivos e agendas; os tempos citados pertencem ao registro original. Não há limite inferior comprovado para calcular distância ao ótimo.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="references/tcc/fontes/qualidade-solver/resultados.md">Resultados originais e agendas</a></li><li><a href="references/tcc/fontes/qualidade-solver/verificacao-20260923/resultados.json">Reprodução das 21 execuções e proveniência</a></li><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.8.3</a></li></ul>
+    </details>
+  </template>
 </section>
 
-<!-- 22 -->
-<section class="slide" id="slide-22" data-title="Efeito da redução do período" data-scene="reduce">
-  <h2 class="title" data-a="up">Efeito da redução do período</h2>
-  <p class="lead" data-a="up" style="--d:100ms">As mesmas 12 atrações em derivações de 3 e 2 dias. Preservam-se os primeiros dias e os valores das matrizes, sem refazer a preparação da viagem.</p>
-  <div class="reduce">
-    <div class="rrow head" data-a="fade" style="--d:200ms"><span>Período</span><span>Atrações incluídas, por prioridade</span><span>Almoços</span><span>Maior dia · referência de 9 h</span><span>Objetivo</span></div>
-    <div class="rrow" data-a="left" style="--d:300ms"><b>5 dias<small>entrada de referência</small></b><div class="dots" data-dots="12"></div><b class="num">3</b><div class="durcell"><div class="dur" style="--ref:75%"><i style="--w:74.2%"></i><u></u></div><span>8,9 h</span></div><span class="obj">154.192</span></div>
-    <div class="rrow" data-a="left" style="--d:450ms"><b>3 dias</b><div class="dots" data-dots="12"></div><b class="num">0</b><div class="durcell"><div class="dur" style="--ref:75%"><i class="over" style="--w:84.2%;--td:.75s"></i><u></u></div><span>10,1 h</span></div><span class="obj">964.855</span></div>
-    <div class="rrow" data-a="left" style="--d:600ms"><b>2 dias</b><div class="dots" data-dots="8"></div><b class="num">0</b><div class="durcell"><div class="dur" style="--ref:75%"><i class="over" style="--w:76.7%;--td:.9s"></i><u></u></div><span>9,2 h</span></div><span class="obj">54.351.440</span></div>
-  </div>
-  <div class="r-findings">
-    <div class="card" data-a="up" style="--d:900ms"><h3>Preservar atrações tem um custo</h3><p>Em três dias, todas entram, mas os almoços automáticos ficam de fora e um dia ultrapassa dez horas. A referência de nove horas é suave.</p></div>
-    <div class="card" data-a="up" style="--d:1000ms"><h3>Capacidade e exclusões</h3><p>Em dois dias, o teto de quatro por dia exige ao menos quatro exclusões. Nesta entrada, ficaram de fora as prioridades 9 a 12.</p></div>
-  </div>
+<section class="slide" id="slide-21" data-title="Validação das regras e do fluxo">
+  <h2 class="title" data-a="up">Validação das regras e do fluxo do aplicativo</h2>
+  <p class="lead" data-a="up" style="--d:100ms">As verificações cobriram o solver, a geração integrada e a recuperação da viagem salva.</p>
+  <table class="validation-table" data-a="up" style="--d:250ms">
+    <thead><tr><th>O que foi verificado</th><th>Como foi verificado</th><th>Resultado registrado</th></tr></thead>
+    <tbody>
+      <tr><th>Regras do solver</th><td>Oito verificações em cinco cenários controlados: distribuição, prioridades, passeios de dia inteiro, horários, refeições, início do dia e limites de busca.</td><td><b>8 verificações aprovadas</b><span>Condições esperadas atendidas nesses cenários.</span></td></tr>
+      <tr><th>Geração integrada</th><td>Execuções em Nova Iorque, Brasília e Pirenópolis, reunindo preparação dos dados, otimização e retorno do resultado.</td><td><b>Roteiros gerados nas 3 cidades</b><span>As atrações selecionadas foram mantidas nessas execuções.</span></td></tr>
+      <tr><th>Consulta e persistência</th><td>Consulta do mapa e da agenda; reabertura do aplicativo e recuperação da viagem pelo Firestore após reinstalação.</td><td><b>Viagem salva recuperada</b><span>O roteiro permaneceu disponível para consulta.</span></td></tr>
+    </tbody>
+  </table>
+  <p class="validation-takeaway" data-a="up" style="--d:450ms">Esses testes verificam condições específicas. A avaliação com participantes, a seguir, revelou problemas em situações de uso.</p>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Também reduzimos o período de forma controlada, preservando as doze atrações. Esses recortes não são duas novas viagens observadas: removemos dias finais, alternativas de refeição e as partes correspondentes das matrizes.</p>
-          <p>Em três dias, cabem quatro atrações por dia. Todas permanecem, mas os almoços automáticos somem e um dia chega a dez vírgula uma horas. O modelo favoreceu preservar atrações, pagando custos suaves de conforto.</p>
-          <p>Em dois dias, quatro atrações por dia significam capacidade máxima de oito. A busca excluiu quatro, que nesta entrada são as posições nove a doze da lista. As prioridades influenciam o custo, sem estabelecer uma regra absoluta para qualquer entrada.</p>
-          <p>Esses resultados tornam explícita a escolha dos pesos: uma agenda que atende às restrições rígidas ainda pode ser cansativa. As respostas da avaliação com participantes oferecem uma primeira perspectiva sobre a viabilidade percebida; a análise de sensibilidade precisa examinar esse compromisso.</p>
-          <h4>Observações</h4>
-          <p class="obs">As janelas remanescentes preservam o começo das visitas às 14h no primeiro dia. Não se recalculou a logística de uma nova partida. Os objetivos pertencem a instâncias distintas e não devem ser comparados como notas de qualidade.</p>
-          <p class="obs">Os recortes foram executados com limites experimentais fixos de 5 e 60 segundos. Em dois dias, 26 nós e dois veículos dão indicador 30; a política adaptativa atual atribuiria dois segundos. Os cinco segundos do experimento não são o orçamento de produção desse recorte.</p>
-          <p class="obs">A pausa automática omitida custa 100 mil unidades. A exclusão da atração de menor prioridade nesta entrada custa 10 milhões. Isso ajuda a explicar a preferência por preservar atrações apesar de pausas ausentes e dias longos. As quatro exclusões foram Estátua da Liberdade, Radio City, Lincoln Center e Parque Bryant.</p>
-          <h4>Fontes</h4>
-          <ul><li><a href="../../tcc/fontes/qualidade-solver/resultados.md">Resultados dos recortes de três e dois dias</a></li><li><a href="../../tcc/fontes/qualidade-solver/rodar_experimento.py">Transformação controlada das entradas</a></li><li><a href="../../tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.8.3.1</a></li></ul>
-        </template>
-</section>
+    <h4>Fala</h4>
+    <p>A validação foi feita em três níveis. Primeiro, usamos cinco cenários controlados para verificar oito propriedades do solver. Eles exercitam situações como sobrecarga de atrações, prioridades, dias permitidos e escolhas de refeição. As oito verificações passaram.</p>
+    <p>Depois acompanhamos a geração integrada em Nova Iorque, Brasília e Pirenópolis. Nas três execuções, o fluxo produziu um roteiro e manteve as atrações selecionadas. Isso verifica a integração entre a preparação dos dados e a resposta do solver.</p>
+    <p>Também conferimos a consulta do mapa e da agenda e a recuperação da viagem salva, inclusive após reinstalar o aplicativo. A persistência permitiu recuperar o roteiro pelo Firestore.</p>
+    <p>Esses resultados se referem às condições verificadas. Para observar situações de uso, seis participantes também realizaram tarefas no aplicativo. Foi nessa etapa que encontramos os problemas que vou mostrar agora.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">As três execuções integradas preservaram as atrações. A suíte sintética e o recorte de dois dias também exercitam exclusões. Os tempos têm abrangências diferentes e não devem ser agregados em uma média.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/README.md">Validações realizadas</a></li>
 
-<!-- 23 -->
-<section class="slide" id="slide-23" data-title="Resultados da validação funcional">
-  <h2 class="title" data-a="up">Resultados da validação funcional</h2>
-  <div class="metrics">
-    <div class="metric" data-a="up" style="--d:150ms"><strong><span data-count="5.03" data-dec="2">5,03</span> s</strong><span>tempo interno do solver</span><small>Nova Iorque · 52 nós · 5 dias</small></div>
-    <div class="metric" data-a="up" style="--d:250ms"><strong><span data-count="2.95" data-dec="2">2,95</span> s</strong><span>ponta a ponta</span><small>smoke publicado · Brasília · 45 nós</small></div>
-    <div class="metric good" data-a="up" style="--d:350ms"><strong data-count="0">0</strong><span>não alocados</span><small>nas duas execuções</small></div>
-    <div class="metric minor" data-a="up" style="--d:450ms"><strong data-count="8">8</strong><span>propriedades verificadas</span><small>suíte determinística · 5 cenários</small></div>
-    <div class="metric minor" data-a="up" style="--d:550ms"><strong>S9</strong><span>Android físico</span><small>Pirenópolis · ensaio com rede e interface</small></div>
-    <div class="metric minor" data-a="up" style="--d:650ms"><strong><span data-count="13">13</span> s</strong><span>tempo percebido</span><small>Pirenópolis · inclui rede e interface</small></div>
-  </div>
-  <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Sobre validação, queremos ser precisos no que afirmamos.</p>
-          <p>Executamos o fluxo completo em três cenários registrados — Nova Iorque, Brasília e Pirenópolis — e verificamos que ele produz roteiros viáveis, respeitando janelas de funcionamento e distribuindo as atrações entre os dias.</p>
-          <p>Os tempos que aparecem aqui são de execuções específicas, medidas. Não são média, não são percentil, e não têm intervalo de confiança. E medem coisas diferentes: os cinco segundos de Nova Iorque são tempo interno de busca, os dois vírgula noventa e cinco de Brasília cobrem a requisição inteira no ambiente publicado, e os treze segundos de Pirenópolis são tempo percebido no aparelho, com rede e interface incluídas.</p>
-          <p>O que está demonstrado é viabilidade funcional nos cenários executados. Não é prova de otimalidade nem caracterização estatística de desempenho.</p>
-          <h4>Observações</h4>
-          <p class="obs">Não chamar esses números de média nem de percentil. São evidências de execuções registradas. As três execuções integradas preservaram as atrações. A suíte sintética e o recorte controlado de dois dias exercitam exclusões, com propósitos distintos. No primeiro dia de Nova Iorque, a base admite saída às 9h, antes da disponibilidade das visitas às 14h. Esse registro não comprova toda a tradução da logística.</p>
-          <p class="obs">A demonstração utiliza o perfil TCC na build <code>tcc-demo</code>, que fixa esse perfil em código e não consulta configuração remota. É por isso que o que a banca vê não depende do que escolhemos abrir.</p>
-          <p class="obs">Se a banca pressionar sobre significância estatística, concordar: seria necessário um conjunto de instâncias e repetições, o que está listado nas limitações.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../README.md">Validações realizadas</a></li>
-            <li><a href="../../CHECKLIST_TCC2_FINAL.md">Checklist final e evidências</a></li>
-            <li><a href="../PERGUNTAS_BANCA_TCC2.md">Perguntas 41–43</a></li>
+
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 24 -->
-<section class="slide" id="slide-24" data-title="Avaliação com participantes">
+<section class="slide" id="slide-22" data-title="Avaliação com participantes">
   <h2 class="title" data-a="up">Avaliação com participantes</h2>
   <p class="lead" data-a="up" style="--d:100ms">Seis participantes, cada um com seu aparelho e cenário, executaram cinco casos de teste e responderam a um formulário próprio.</p>
   <div class="eval">
@@ -851,15 +812,15 @@
           <li><b>6</b> aparelhos, iOS e Android · <b>7</b> cenários</li>
           <li><b>59 de 63</b> atrações alocadas; exclusões só em Buenos Aires, a pé</li>
           <li>Fechamentos semanais respeitados em todos os cenários</li>
-          <li>Nenhum problema impediu o uso (severidade 4)</li>
+          <li>Todos os participantes geraram e consultaram um roteiro</li>
         </ul>
       </div>
       <div class="card" data-a="up" style="--d:300ms">
-        <h3>Problemas importantes · severidade 3</h3>
+        <h3>Problemas observados nas tarefas</h3>
         <ul class="eval-probs">
           <li><b>Reserva das 12h30 agendada às 13h56</b><span>a janela da reserva soma a duração da refeição</span></li>
           <li><b>Prioridade só por arraste</b><span>sem alternativa para quem não descobre o gesto</span></li>
-          <li><b>Saída antes da chegada</b><span>no dia da chegada, com dia inteiro e sem almoço</span></li>
+          <li><b>Disponibilidade e passeios de dia inteiro</b><span>saída antes da chegada; Sintra com outras visitas e sem almoço</span></li>
         </ul>
       </div>
     </div>
@@ -883,144 +844,100 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>O que falar</h4>
-    <p>Para avaliar o uso, seis participantes testaram o aplicativo, cada um em um aparelho e um cenário diferentes: Lisboa e Porto, Gramado e Canela, Rio de Janeiro, Buenos Aires, São Paulo e Salvador. Os aparelhos cobrem iOS e Android, de modelos de entrada a recentes.</p>
-    <p>Cada participante executou cinco casos de teste, trinta no total. Dezesseis atenderam à expectativa, nove foram concluídos com ressalva e cinco não atenderam. Nos sete cenários, 59 das 63 atrações selecionadas foram alocadas, e os fechamentos semanais foram respeitados em todos.</p>
-    <p>No formulário, a espera pela geração recebeu as melhores notas. As mais baixas ficaram na confiança nas durações e na viabilidade percebida da agenda.</p>
-    <p>Três problemas foram classificados como importantes: a reserva de restaurante das 12h30 agendada às 13h56; a ordenação da prioridade, que só funciona arrastando; e, no dia da chegada, a saída da hospedagem antes da chegada, com a atividade de dia inteiro dividindo o dia sem almoço. Nenhum problema impediu o uso.</p>
-    <h4>Observações</h4>
-    <p class="obs">O formulário é próprio, com nove afirmações de 1 a 5 e quatro perguntas abertas. Por isso não se calcula escore SUS. Seis participantes e tarefas variadas não permitem generalizar a usabilidade; os resultados descrevem os percursos examinados.</p>
-    <p class="obs">A análise técnica dos roteiros usou um programa que reproduz os cenários com as regras do backend e a matriz aproximada, sem consultar os provedores. O limite de 5 s corresponde à otimização no servidor; Q4 registra percepção, não latência medida.</p>
-    <p class="obs">Achado de modelo: o piso suave de visitas não é cobrado de um dia sem nenhuma visita. Em São Paulo, o objetivo foi 78.302 com o domingo vazio e 570.516 ao forçar uma visita.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="../TCC_FGA.pdf">Monografia, seção 5.9 e Tabelas 8 a 12</a></li></ul>
+    <h4>Fala</h4>
+    <p>Seis participantes usaram o aplicativo em seus aparelhos e realizaram cinco casos de teste cada um. Foram trinta casos no total: dezesseis atenderam à expectativa, nove foram concluídos com ressalva e cinco não atenderam.</p>
+    <p>Todos conseguiram gerar e consultar um roteiro, mas apareceram dificuldades concretas. A reserva de almoço informada para doze e meia foi agendada às treze e cinquenta e seis. Na priorização, um participante precisou de ajuda para descobrir que era necessário arrastar os itens. Também houve saída da hospedagem antes da chegada informada.</p>
+    <p>Na tabela, cada coluna corresponde a um participante. Na afirmação sobre a espera pela geração, todas as notas foram quatro ou cinco. Já a confiança nas durações e nos horários recebeu notas entre dois e quatro. Isso orienta a atenção para a confiabilidade da agenda, além da velocidade.</p>
+    <p>Esses dados descrevem seis percursos de uso, com tarefas diferentes. Eles ajudam a identificar correções, mas não permitem generalizar a experiência para todos os viajantes.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O formulário contém nove afirmações de 1 a 5 e quatro perguntas abertas. A análise técnica de apoio reproduz os cenários com as regras do backend e uma matriz aproximada. Q4 registra percepção de espera, sem medir a latência. No cenário de São Paulo, forçar uma visita no dia vazio elevou o objetivo de 78.302 para 570.516.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="references/tcc/latex/editaveis/avaliacaoparticipantes.tex">Monografia, seção 5.9 e Tabelas 8 a 12</a></li></ul>
+    </details>
   </template>
 </section>
 
-<!-- 25 -->
-<section class="slide" id="slide-25" data-title="Custos de geração" data-scene="costs">
-  <h2 class="title" data-a="up">Custos de geração de um roteiro</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Cenário de referência: 5 dias, 12 atrações e 1 hospedagem. Valores estimados por roteiro, com as tarifas usadas na monografia.</p>
-  <div class="costs">
-    <div>
-      <div class="cost-rows">
-        <div class="crow" data-a="left" style="--d:250ms"><div><b>Sem cache</b><small>buscas, IA, matriz e 13 fotos</small></div><span class="usd">1,37730</span><div class="cbar"><i style="--w:100%;--td:.5s"></i></div></div>
-        <div class="crow hit" data-a="left" style="--d:350ms"><div><b>Somente IA em cache</b><small>todas as consultas Google repetidas</small></div><span class="usd">1,27830</span><div class="cbar"><i style="--w:92.8%;--td:.6s"></i></div></div>
-        <div class="crow" data-a="left" style="--d:450ms"><div><b>Dados e matriz em cache*</b><small>13 fotos solicitadas novamente</small></div><span class="usd">0,09100</span><div class="cbar"><i style="--w:6.6%;--td:.7s"></i></div></div>
-        <div class="crow" data-a="left" style="--d:550ms"><div><b>Dados e matriz em cache*</b><small>sem novas requisições de fotos</small></div><span class="usd">0,00000</span><div class="cbar"><i style="--w:0%"></i></div></div>
-      </div>
+<section class="slide" id="slide-23" data-title="Custos estimados por geração">
+  <h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2>
+  <p class="lead" data-a="up" style="--d:100ms">Estimativa das APIs por geração: 5 dias, 12 atrações e 1 hospedagem. Valores em dólares dos Estados Unidos (US$).</p>
+  <div class="cost-analysis">
+    <div class="cost-breakdown" data-a="up" style="--d:200ms"><span class="cost-label">Primeira geração, sem dados reaproveitados</span><strong class="cost-total">US$ 1,38</strong><p>A matriz de deslocamentos responde por <b>61,4% do total</b>.</p>
+      <div class="cost-stack" role="img" aria-label="Matriz: 61,4 por cento; buscas e detalhes: 24,9 por cento; modelo de linguagem: 7,2 por cento; fotos: 6,6 por cento"><span style="flex:0.845"></span><span style="flex:0.3423"></span><span style="flex:0.099"></span><span style="flex:0.091"></span></div>
+      <dl class="cost-components"><div><dt><i class="matrix"></i>Matriz de deslocamentos<small>13 origens × 13 destinos = 169 pares</small></dt><dd>US$ 0,85</dd></div><div><dt><i class="places"></i>Buscas e detalhes dos lugares<small>Preenchimento automático, localização e descoberta</small></dt><dd>US$ 0,34</dd></div><div><dt><i class="language"></i>Modelo de linguagem<small>12 mil tokens de entrada e 9 mil de saída</small></dt><dd>US$ 0,10</dd></div><div><dt><i class="photos"></i>Fotos<small>13 imagens solicitadas</small></dt><dd>US$ 0,09</dd></div></dl>
     </div>
-    <div class="cost-side">
-      <div class="mx13" data-a="right" style="--d:400ms"><div class="cells" id="mx13"></div><div><h3>A matriz concentra o custo</h3><p>13 posições distintas (slide 14), 13 × 13 = <strong>169</strong> elementos. <b>US$ 0,845</b> sem cache.</p></div></div>
-      <div class="donut-row" data-a="right" style="--d:550ms">
-        <svg viewBox="0 0 150 150" aria-label="61,4% do total de APIs do primeiro cenário"><circle cx="75" cy="75" r="58" fill="none" stroke="#E3E2DC" stroke-width="18"/><circle class="draw" cx="75" cy="75" r="58" fill="none" stroke="#2F5D50" stroke-width="18" stroke-linecap="butt" transform="rotate(-90 75 75)" style="--len:364.4;--d:900ms;stroke-dasharray:223.7 364.4;stroke-dashoffset:223.7"/><text x="75" y="82" text-anchor="middle" style="font:800 30px var(--display);fill:var(--ink)">61,4%</text></svg>
-        <p><b>61,4%</b> do total de APIs do primeiro cenário. Reutilizar apenas a IA economiza <b>US$ 0,099</b>. Com GPT-6 Luna e o mesmo consumo de tokens, a parcela de IA seria <b>US$ 0,0057</b>; troca ainda não avaliada no app.</p>
-      </div>
-    </div>
+    <div class="reuse-costs" data-a="up" style="--d:400ms"><h3>O que muda ao reaproveitar os dados?</h3><p>Cache é o uso de uma resposta já armazenada, sem consultar novamente aquele serviço.</p><dl><div><dt>Somente as estimativas da IA<small>Buscas, matriz e fotos são solicitadas novamente.</small></dt><dd>US$ 1,28</dd></div><div><dt>Dados de planejamento e matriz<small>Apenas as 13 fotos são solicitadas novamente.</small></dt><dd>US$ 0,09</dd></div><div><dt>Dados e matriz, sem novas fotos<small>Nenhuma nova chamada às APIs consideradas.</small></dt><dd>US$ 0,00</dd></div></dl><p class="reuse-note">Reutilizar conteúdo do Google depende das condições de armazenamento do provedor.</p></div>
   </div>
+  <p class="cost-caption">Estimativa de consumo, não uma fatura medida. Tarifas de setembro de 2026, antes de franquias, impostos e infraestrutura. Valores arredondados para centavos.</p>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Também calculamos o custo de gerar uma viagem. Aqui o exemplo tem cinco dias, doze atrações e uma hospedagem, mas os valores são cenários analíticos, não medições da execução de Nova Iorque.</p>
-          <p>Sem dados reutilizáveis, as APIs custam cerca de um dólar e trinta e oito centavos por roteiro. A matriz responde por sessenta e um por cento: treze coordenadas geram cento e sessenta e nove elementos cobrados.</p>
-          <p>Se apenas a IA estiver em cache e repetirmos todas as chamadas Google, o total fica em cerca de um dólar e vinte e oito centavos. Os nove centavos exigem reutilizar também os dados Google, uma política técnica do código que precisa ser adequada aos termos do provedor. Não apresentamos os 90 dias da matriz como uma permissão do Google.</p>
-          <p>Como alternativa ao Gemini, o GPT-6 Luna custaria US$ 0,0057 para os mesmos 12 mil tokens de entrada e 9 mil de saída. Isso não mostra que os modelos entregam a mesma qualidade ou latência. Se nenhum dado externo ou foto precisar ser solicitado, essas APIs não acrescentam custo. O servidor continua executando a geração. Franquias e faixas de volume também alteram o que aparece na fatura mensal.</p>
-          <h4>Observações</h4>
-          <p class="obs">Premissas: 10 Autocomplete Requests; 2 Place Details Pro; 6 Nearby Search Enterprise; 2 Text Search Enterprise; 13 fotos; matriz de 169 elementos; 12.000 tokens de entrada e 9.000 de saída, incluindo raciocínio, no Gemini 3.5 Flash Standard. As buscas fornecem os atributos das atrações, sem Details completos adicionais. Não há novas tentativas, descoberta extra de restaurantes ou detalhamento posterior de rotas.</p>
-          <p class="obs">Cenários da tabela de custos: A = US$ 1,37730; B = US$ 0,09100; C = US$ 0,93600; D = US$ 0,00000; E = US$ 1,27830 (apenas IA em cache). Em C, buscas, detalhes e estimativas estão em cache, mas a matriz completa e os pares estão ausentes. Em D, não se pressupõe cache persistente das fotos: não há nova requisição de mídia.</p>
-          <p class="obs">A leitura de fotos no adaptador Google tem TTL zero. O cache da aplicação é diferente do desconto por tokens em cache no provedor. Todo reaproveitamento pressupõe dados válidos e respeito às condições de armazenamento e atribuição.</p>
-          <p class="obs">Adicionar uma coordenada às 13 existentes, com pares válidos, exige 26 novos elementos direcionais, ao custo de US$ 0,130. Com detalhes, IA e 14 fotos nas premissas da monografia, o cenário incremental custa US$ 0,260.</p>
-          <p class="obs">Mil gerações frias no mês, sem outro consumo na conta, resultam em US$ 1.119 de APIs após as franquias e faixas assumidas, em vez de US$ 1.377,30. Cloud Run, Redis, Firestore e transferências são parcelas adicionais. OR-Tools é executado no serviço; não é a Route Optimization API paga.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../tcc/latex/editaveis/custosgeracao.tex">Monografia, seção 5.10: premissas e memória de cálculo</a></li>
-            <li><a href="../../tcc/fontes/custos/cenarios.json">Cenários calculados com Decimal</a></li>
+    <h4>Fala</h4>
+    <p>Para dimensionar o custo, calculamos um cenário de cinco dias, com doze atrações e uma hospedagem. Usando as tarifas de setembro de dois mil e vinte e seis, a primeira geração, sem reaproveitamento de dados, fica em aproximadamente um dólar e trinta e oito centavos em APIs.</p>
+    <p>A maior parcela é a matriz de deslocamentos. São treze posições distintas, e precisamos considerar cada origem com cada destino: cento e sessenta e nove pares. Essa parcela custa cerca de oitenta e cinco centavos, ou sessenta e um vírgula quatro por cento do total.</p>
+    <p>À direita, comparamos o que acontece quando parte das respostas já está armazenada. Reaproveitar apenas as estimativas da IA reduz o total para um dólar e vinte e oito. Reaproveitar os dados de planejamento e a matriz deixa nove centavos de novas fotos. Sem novas consultas nem fotos, a parcela dessas APIs é zero.</p>
+    <p>Zero aqui não significa que operar o aplicativo seja gratuito: a execução e a persistência continuam existindo. Estes são cálculos de consumo com quantidades declaradas, antes de franquias, impostos e infraestrutura. Além disso, o reaproveitamento de conteúdo Google depende das condições de armazenamento do provedor.</p>
+    <details class="notes-study">
+      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
+      <h4>Unidade, arredondamento e total</h4><p>Todos os valores são dólares dos Estados Unidos por geração, apenas APIs. O total exato do cenário é US$ 1,37730, exibido como US$ 1,38. As parcelas exatas são: matriz 0,84500; buscas e detalhes 0,34230; modelo de linguagem 0,09900; fotos 0,09100. Os valores na tela foram arredondados para centavos.</p>
+      <h4>Matriz e percentual</h4><p>Leia 13 × 13 = 169 como “treze origens vezes treze destinos, igual a cento e sessenta e nove pares”. Cada elemento custa US$ 0,005 na tarifa adotada; 169 × 0,005 = 0,845. A participação é 0,845 ÷ 1,37730 × 100 ≈ 61,4%. As coordenadas repetidas das refeições não aumentam as treze posições.</p>
+      <h4>Cenários de reaproveitamento</h4><p>Somente IA: 1,37730 − 0,09900 = US$ 1,27830. Dados e matriz, com fotos novas: US$ 0,09100. Sem novas chamadas: US$ 0,00000 em APIs consideradas, mas a execução do solver e a infraestrutura continuam existindo. São hipóteses de consumo declaradas na monografia, não valores medidos em fatura. A política de reutilização Google precisa atender às condições do provedor.</p>
+    </details>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Premissas: 10 chamadas de autocomplete, 2 detalhes Pro, 6 buscas próximas Enterprise, 2 buscas textuais Enterprise, 13 fotos, matriz de 169 elementos, 12 mil tokens de entrada e 9 mil de saída no Gemini 3.5 Flash Standard. Os cenários exibidos custam US$ 1,37730, US$ 1,27830, US$ 0,09100 e US$ 0,00000. O cálculo usa as tarifas documentadas na monografia, sem novas tentativas. O cenário sem novas chamadas não pressupõe armazenamento persistente de fotos. Cloud Run, Redis, Firestore e transferências são parcelas adicionais. O reaproveitamento depende das condições dos provedores.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/tcc/latex/editaveis/custosgeracao.tex">Monografia, seção 5.10: premissas e memória de cálculo</a></li>
+            <li><a href="references/tcc/fontes/custos/cenarios.json">Cenários calculados com Decimal</a></li>
             <li><a href="https://developers.google.com/maps/billing-and-pricing/pricing">Google Maps Platform: tarifas oficiais</a></li>
             <li><a href="https://developers.google.com/maps/documentation/routes/usage-and-billing">Routes: cobrança por elemento da matriz</a></li>
             <li><a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini: preços oficiais</a></li>
-            <li><a href="https://developers.openai.com/api/docs/pricing">OpenAI: preços oficiais</a></li>
-            <li><a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a></li>
             <li><a href="https://developers.google.com/maps/documentation/places/web-service/place-photos">Places: obtenção de fotos</a></li>
             <li><a href="https://developers.google.com/maps/documentation/places/web-service/policies">Places: condições de armazenamento e atribuição</a></li><li><a href="https://cloud.google.com/maps-platform/terms/maps-service-terms">Termos específicos de armazenamento Google</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
-<!-- 26 -->
-<section class="slide" id="slide-26" data-title="Limitações e trabalhos futuros">
-  <h2 class="title" data-a="up">Limitações e trabalhos futuros</h2>
-  <div class="limits">
-    <div class="lim">
-      <div data-a="left" style="--d:100ms"><i>01</i><p><b>Corrigir os problemas de severidade 3</b><span>horário da reserva, alternativa ao arraste e saída da hospedagem</span></p></div>
-      <div data-a="left" style="--d:150ms"><i>02</i><p><b>Sem prova de ótimo</b><span>comparar com instâncias de TOPTW da literatura</span></p></div>
-      <div data-a="left" style="--d:250ms"><i>03</i><p><b>Sem análise de sensibilidade</b><span>variar pesos e observar cortes, equilíbrio e duração</span></p></div>
-      <div data-a="left" style="--d:350ms"><i>04</i><p><b>Sem teste de carga</b><span>medir requisições simultâneas, latência, cache e custos</span></p></div>
-      <div data-a="left" style="--d:450ms"><i>05</i><p><b>Precisão das estimativas e deslocamentos</b><span>aferir durações e comparar o Gemini com um segundo modelo</span></p></div>
-      <div data-a="left" style="--d:550ms"><i>06</i><p><b>Ampliar a avaliação com participantes</b><span>6 participantes avaliados; faltam 5–8 adultos, SUS e inspeção de Nielsen</span></p></div>
-    </div>
-    <div class="cube-card" data-a="right" style="--d:300ms">
-      <small>Continuidade da comparação</small>
-      <strong>Matriz repetível de cidades × densidades × ritmos</strong>
-      <div class="today"><small>Comparação de estratégias hoje</small><span>1 cidade · Nova Iorque</span><span>1 densidade · 12 atrações</span><span>1 ritmo · moderado</span></div>
-      <small style="display:block;margin-top:22px">Medir em cada combinação</small>
-      <ul style="margin-top:10px"><li>tempo e taxa de viabilidade</li><li>distribuição de latência</li><li>objetivo, exclusões, duração e custo</li></ul>
-    </div>
+<section class="slide" id="slide-24" data-title="Limitações do trabalho">
+  <h2 class="title" data-a="up">Limitações do trabalho</h2>
+  <p class="lead" data-a="up" style="--d:100ms">Os resultados dependem das regras implementadas, das estimativas recebidas e do conjunto de casos avaliados.</p>
+  <div class="limitations-list">
+    <div data-a="up" style="--d:180ms"><h3>Confiabilidade da agenda</h3><p>Foram observados conflitos com reservas, saída antes da chegada informada e passeios de dia inteiro combinados com outras visitas.</p></div>
+    <div data-a="up" style="--d:260ms"><h3>Qualidade das estimativas</h3><p>Durações sugeridas pelo modelo de linguagem não foram validadas em visitas reais. A matriz não acompanha mudanças ao longo da viagem.</p></div>
+    <div data-a="up" style="--d:340ms"><h3>Qualidade da solução</h3><p>A busca termina por limite de tempo, sem prova de ótimo. Os pesos foram definidos de forma exploratória e podem produzir dias cansativos.</p></div>
+    <div data-a="up" style="--d:420ms"><h3>Alcance da avaliação</h3><p>Participaram seis pessoas. A comparação de estratégias usou um conjunto de atrações de Nova Iorque; não representa todos os destinos e ritmos.</p></div>
+    <div data-a="up" style="--d:500ms"><h3>Custo e escala de operação</h3><p>Os custos são estimativas de APIs, sem medição completa da infraestrutura. As execuções registradas não medem o comportamento sob carga.</p></div>
   </div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Os próximos passos aprofundam seis aspectos da avaliação.</p>
-          <p>O primeiro é corrigir os três problemas de severidade 3 da avaliação: usar o horário reservado como início da refeição, oferecer alternativa à ordenação por arraste e limitar a saída da hospedagem pelos horários de chegada e partida. Também avaliaremos se um dia sem visitas deve pagar o custo do piso.</p>
-          <p>A busca local guiada devolve a solução encontrada no prazo; uma comparação com referências permitirá avaliar sua qualidade.</p>
-          <p>Não fizemos análise de sensibilidade dos pesos e penalidades, que hoje são calibração empírica.</p>
-          <p>Não houve teste de carga nem caracterização de desempenho sob concorrência.</p>
-          <p>As durações e recomendações do modelo de linguagem precisam ser confrontadas com dados de referência. A matriz não considera a partida específica de cada visita; quando usamos a aproximação geodésica, ela também não confirma que exista um caminho praticável.</p>
-          <p>O protocolo preparado prevê cinco a oito adultos, tarefas de criação, consulta e edição, entrevista estruturada e SUS na versão brasileira. A inspeção pelas dez heurísticas de Nielsen será uma etapa separada. O piloto e a revisão do consentimento antecedem a coleta. A avaliação com seis participantes já indicou dificuldades concretas; o formulário aplicado não fornece escore SUS.</p>
-          <p>Também está preparado o procedimento para comparar Gemini com um segundo modelo sob as mesmas entradas. Conferiremos as respostas contra fontes externas, distinguindo concordância entre modelos de acerto. O experimento ainda não foi executado. A comparação de estratégias já realizada será ampliada para outras entradas.</p>
-          <h4>Observações</h4>
-          <p class="obs">Apresentar cada limitação já com o desenho experimental que a resolveria. É mais defensável do que uma lista genérica de trabalhos futuros.</p>
-          <p class="obs">Se perguntarem sobre acessibilidade, é honesto reconhecer que o aplicativo tem cobertura parcial de leitores de tela.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../tcc/fontes/teste-usuarios/README.md">Protocolo de participantes, SUS e Nielsen</a></li>
-            <li><a href="../../tcc/fontes/avaliacao-llm/README.md">Procedimento preparado de comparação dos modelos</a></li>
-            <li><a href="../PERGUNTAS_BANCA_TCC2.md">Validação, limites e estratégia de defesa</a></li>
-            <li><a href="../../tcc/latex/editaveis/consideracoesfinais.tex">Conclusão da monografia</a></li>
-          </ul>
-        </template>
+    <h4>Fala</h4>
+    <p>Esses resultados têm limites. O primeiro é a confiabilidade da agenda: encontramos conflitos com reservas e com a disponibilidade de chegada, além de um passeio de dia inteiro combinado com outras atividades.</p>
+    <p>As durações também são estimativas do modelo de linguagem e não foram conferidas em visitas reais. Os tempos da matriz são usados como valores fixos na geração; não acompanham as condições que mudam durante a viagem.</p>
+    <p>Quanto à otimização, o solver devolve a melhor solução que encontrou no prazo, sem prova de ótimo. Os pesos foram definidos de forma exploratória, e respeitar as restrições obrigatórias ainda pode resultar em dias cansativos.</p>
+    <p>Por fim, a avaliação envolveu seis pessoas e a comparação de estratégias se concentrou em um conjunto de Nova Iorque. Os custos são estimados, e não medimos a operação com várias solicitações simultâneas. Portanto, os resultados precisam ser interpretados dentro desse alcance.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">Estas são limitações do trabalho realizado. A comparação de estratégias contempla 17 execuções de cinco dias e quatro recortes de período; apenas as primeiras usam a entrada completa. Não houve ensaio sob carga nem validação de durações em visitas reais.</p>
+      <h4>Fontes</h4>
+      <ul><li><a href="references/tcc/latex/editaveis/consideracoesfinais.tex">Limitações discutidas na monografia</a></li><li><a href="references/tcc/latex/editaveis/avaliacaoparticipantes.tex">Avaliação com participantes</a></li></ul>
+    </details>
+  </template>
 </section>
 
-<!-- 27 -->
-<section class="slide dark conclusion" id="slide-27" data-title="Conclusão">
-  <div class="conclusion-body">
-    <h2 data-a="up">Conclusão</h2>
-    <p class="lead" data-a="up" style="--d:150ms">O Interlude reúne pesquisa de lugares, prioridades e organização das visitas em um aplicativo que permite salvar, consultar e editar a viagem.</p>
-    <div class="answer">
-      <span data-a="left" style="--d:400ms">Datas + base + POIs + horários</span>
-      <svg data-i="arrow-right" data-a="scale" style="--d:700ms"></svg>
-      <span class="out" data-a="right" style="--d:900ms">dias viáveis + não alocados</span>
-    </div>
-    <div class="proof">
-      <span data-a="up" style="--d:1200ms"><svg data-i="check-circle"></svg>Geração e edição</span>
-      <span data-a="up" style="--d:1300ms"><svg data-i="check-circle"></svg>Verificação funcional</span>
-      <span data-a="up" style="--d:1400ms"><svg data-i="check-circle"></svg>Experimento computacional</span>
-      <span data-a="up" style="--d:1500ms"><svg data-i="check-circle"></svg>Avaliação com participantes</span>
-    </div>
-    <div class="questions" data-a="blur" style="--d:1700ms">Perguntas<span>.</span></div>
-  </div>
+<section class="slide dark conclusion" id="slide-25" data-title="Agradecimento e perguntas">
+  <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude · Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><p data-a="up" style="--d:250ms">Agradecemos a atenção.<br>Estamos à disposição para perguntas.</p><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília · FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
-          <h4>O que falar</h4>
-          <p>Retomando a pergunta do começo: como apoiar a descoberta de atrações e reunir informações sobre visitas e deslocamentos para organizar as escolhas do viajante em roteiros diários que respeitem os horários disponíveis e possam ser consultados e ajustados em um aplicativo móvel?</p>
-          <p>O que mostramos é um caminho completo para responder isso. Os dados entram por provedores externos, passam por filtragem e ordenação, viram uma instância numérica de um problema de roteamento com janelas de tempo, são resolvidos por um solver dedicado, e voltam para a tela como um roteiro que a pessoa consegue seguir.</p>
-          <p>A contribuição é integrar essas etapas ao uso no celular, incluindo persistência e edição. As execuções registradas, os cenários sintéticos e o experimento computacional documentam seu funcionamento nas condições examinadas. A comparação de buscas e os recortes do período também mostram compromissos entre objetivo, pausas e duração dos dias. A avaliação com seis participantes mostrou que agenda, mapa, fechamentos semanais e exclusões foram compreendidos e apontou três problemas importantes a corrigir. Avaliar a redução do esforço de planejamento exige ampliar essa avaliação, aplicar o SUS e aferir os dados.</p>
-          <p>Obrigado. Estamos à disposição para as perguntas.</p>
-          <h4>Observações</h4>
-          <p class="obs">Relacionar a entrega à dificuldade de planejamento que motivou o estudo e ao objetivo de desenvolver e verificar funcionalmente o aplicativo.</p>
-          <p class="obs">Os slides de comparação de estratégias e redução do período são os principais pontos para discutir o objetivo e seus limites. O objetivo geral é desenvolver e verificar funcionalmente a geração e a edição, sem antecipar resultados de usabilidade.</p>
-          <h4>Fontes</h4>
-          <ul>
-            <li><a href="../../README.md">Síntese do projeto</a></li>
-            <li><a href="../../tcc/latex/editaveis/consideracoesfinais.tex">Conclusão da monografia</a></li>
+    <h4>Fala</h4>
+    <p>Obrigado pela atenção e pelas contribuições ao trabalho. Estamos à disposição para as perguntas.</p>
+    <details class="notes-support">
+      <summary>Apoio técnico e fontes</summary>
+      <p class="obs">O slide final é reservado ao agradecimento e à abertura das perguntas. Não há necessidade de repetir os resultados.</p>
+      <h4>Fontes</h4>
+      <ul>
+            <li><a href="references/README.md">Síntese do projeto</a></li>
+            <li><a href="references/tcc/latex/editaveis/consideracoesfinais.tex">Conclusão da monografia</a></li>
           </ul>
-        </template>
+    </details>
+  </template>
 </section>
 
 </div>
@@ -1055,8 +972,8 @@
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=32"></script>
-<script src="motion.js?v=32"></script>
-<script src="scenes.js?v=32"></script>
+<script src="data.js?v=36"></script>
+<script src="motion.js?v=36"></script>
+<script src="scenes.js?v=36"></script>
 </body>
 </html>

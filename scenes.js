@@ -178,7 +178,7 @@
       this.paths.forEach((p) => p.classList.toggle("on", out));
       colorNodes(this.nodes.els, out ? this.assignment : new Map(), false);
       slide.querySelector("#problemTag").textContent = out ? "Saída" : "Entrada";
-      slide.querySelector("#problemCaption").textContent = out ? "5 dias partindo e voltando ao hotel · nenhuma atração não alocada" : "12 atrações e a hospedagem, nas coordenadas reais";
+      slide.querySelector("#problemCaption").textContent = out ? "5 dias, com saída e retorno ao hotel · 12 atrações incluídas" : "12 atrações e a hospedagem, nas coordenadas reais";
       slide.querySelector("#problemLegend").style.opacity = level >= 2 ? 1 : 0;
     },
   };
@@ -321,8 +321,8 @@
   };
   const COLS = [
     { title: "Produto simples", sub: "nota × avaliações, em milhares", rows: [["Central Park", "1.449"], ["Times Square", "1.159"], ["Rockefeller Center", "949"], ["Empire State Building", "606"], ["Estátua da Liberdade", "530"], ["Parque Bryant", "506"], ["Metropolitan Museum", "455"], ["Memorial do 11/9", "455"], ["Ponte do Brooklyn", "448"], ["Catedral S. Patrício", "205"], ["Radio City Music Hall", "133"], ["Lincoln Center", "106"]] },
-    { title: "Média bayesiana", sub: "corrige volume baixo", rows: [["Central Park", "4,799"], ["Metropolitan Museum", "4,796"], ["Memorial do 11/9", "4,796"], ["Ponte do Brooklyn", "4,796"], ["Catedral S. Patrício", "4,791"], ["Radio City Music Hall", "4,786"], ["Lincoln Center", "4,782"], ["Times Square", "4,699"], ["Rockefeller Center", "4,698"], ["Empire State Building", "4,697"], ["Estátua da Liberdade", "4,697"], ["Parque Bryant", "4,697"]] },
-    { title: "Score completo", sub: "+ termo de iconicidade", rows: [["Central Park", "5,399"], ["Times Square", "5,252"], ["Rockefeller Center", "5,206"], ["Metropolitan Museum", "5,130"], ["Memorial do 11/9", "5,130"], ["Ponte do Brooklyn", "5,126"], ["Empire State Building", "5,102"], ["Estátua da Liberdade", "5,071"], ["Parque Bryant", "5,060"], ["Catedral S. Patrício", "4,942"], ["Radio City Music Hall", "4,837"], ["Lincoln Center", "4,782"]] },
+    { title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", rows: [["Central Park", "4,799"], ["Metropolitan Museum", "4,796"], ["Memorial do 11/9", "4,796"], ["Ponte do Brooklyn", "4,796"], ["Catedral S. Patrício", "4,791"], ["Radio City Music Hall", "4,786"], ["Lincoln Center", "4,782"], ["Times Square", "4,699"], ["Rockefeller Center", "4,698"], ["Empire State Building", "4,697"], ["Estátua da Liberdade", "4,697"], ["Parque Bryant", "4,697"]] },
+    { title: "Escore completo", sub: "+ popularidade relativa", rows: [["Central Park", "5,399"], ["Times Square", "5,252"], ["Rockefeller Center", "5,206"], ["Metropolitan Museum", "5,130"], ["Memorial do 11/9", "5,130"], ["Ponte do Brooklyn", "5,126"], ["Empire State Building", "5,102"], ["Estátua da Liberdade", "5,071"], ["Parque Bryant", "5,060"], ["Catedral S. Patrício", "4,942"], ["Radio City Music Hall", "4,837"], ["Lincoln Center", "4,782"]] },
   ];
   Scenes.bump = {
     init(slide) {
@@ -580,48 +580,6 @@
     },
   };
 
-  // ---------- 17 Resolução ----------
-  Scenes.solve = {
-    enter(slide, instant) {
-      this.stop?.();
-      const out = slide.querySelector("#termOut");
-      const pick = slide.querySelector("#pickBar");
-      const lines = [
-        ["solve start:    stops=", "52", " max_days=", "5", " horizon=", "61200", "s min/max_stops=", "3", "/", "4"],
-        ["solve search:   complexity=", "62", " primary_limit=", "5", "s configured_limit=", "15", "s"],
-        ["solve complete: elapsed=", "5.032", "s objective=", "154192"],
-      ];
-      const render = (chars) => {
-        let left = chars, html = "";
-        for (const parts of lines) {
-          if (left <= 0) break;
-          html += '<span class="ok">$ </span>';
-          parts.forEach((part, k) => {
-            if (left <= 0) return;
-            const piece = part.slice(0, left);
-            left -= part.length;
-            html += k % 2 === 1 ? `<span class="n">${piece}</span>` : piece;
-          });
-          html += "\n";
-        }
-        out.innerHTML = html.replace(/\n$/, "") + (chars < this.total ? '<span class="caret"></span>' : "");
-      };
-      this.total = lines.reduce((s, p) => s + p.join("").length, 0);
-      this.render = render;
-      pick.classList.remove("pick");
-      render(this.total); pick.classList.add("pick"); this.running = false; return;
-      render(0);
-      this.running = true;
-      const t1 = setTimeout(() => pick.classList.add("pick"), 1400);
-      const t2 = setTimeout(() => { this.stopTween = tween(this.total * 22, (p) => render(Math.floor(p * this.total)), () => { this.running = false; }); }, 1500);
-      this.stop = () => { clearTimeout(t1); clearTimeout(t2); this.stopTween?.(); };
-      this.pick = pick;
-    },
-    busy() { return this.running; },
-    finish() { this.stop?.(); this.render?.(this.total); this.pick?.classList.add("pick"); this.running = false; },
-    leave() { this.stop?.(); this.running = false; },
-  };
-
   // ---------- 18 Busca ----------
   Scenes.search = {
     init(slide) {
@@ -738,100 +696,34 @@
     leave() { this.stopAll(); },
   };
 
-  // ---------- 19 Agenda ----------
-  Scenes.gantt = {
+  // Agenda e mapa usam a mesma sequência da resposta registrada do solver.
+  Scenes.dailyResults = {
     init(slide) {
-      const svg = slide.querySelector("#ganttSvg");
-      const t0 = 10800, t1 = 43200, L = 64, R = 750, top = 10, rowH = 64;
-      const x = (t) => L + ((t - t0) / (t1 - t0)) * (R - L);
-      const defs = svgEl("defs", {}, svg);
-      const clip = svgEl("clipPath", { id: "ganttClip" }, defs);
-      this.clipRect = svgEl("rect", { x: 0, y: 0, width: 760, height: 380 }, clip);
-      const hatch = svgEl("pattern", { id: "mealHatch", width: 7, height: 7, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
-      svgEl("rect", { width: 7, height: 7, style: { fill: "#F6EBD3" } }, hatch);
-      svgEl("line", { x1: 0, y1: 0, x2: 0, y2: 7, style: { stroke: "#D9A441", strokeWidth: 2.5 } }, hatch);
-      for (let t = t0; t <= t1; t += 3600) {
-        svgEl("line", { class: "g-grid", x1: x(t), x2: x(t), y1: top, y2: top + 5 * rowH }, svg);
-        svgEl("text", { class: "g-ax", x: x(t), y: top + 5 * rowH + 20, text: hhmm(t) }, svg);
-      }
-      const body = svgEl("g", { "clip-path": "url(#ganttClip)" }, svg);
-      const abbreviated = [];
-      D.days.forEach((day, d) => {
-        const y = top + d * rowH + 14;
-        svgEl("text", { class: "g-day", x: 0, y: y + 24, text: `Dia ${d + 1}` }, svg);
-        const first = day.steps[1];
-        const leave = first.arrival - D.timeMatrix[nodes[hotel].node][nodes[byName.get(first.name)].node];
-        svgEl("line", { x1: x(leave), x2: x(day.steps[day.steps.length - 1].arrival), y1: y + 19, y2: y + 19, style: { stroke: "var(--ink-soft)", strokeWidth: 1.5, strokeDasharray: "3 4" } }, body);
-        day.steps.forEach((s, k) => {
-          if (s.depot) { svgEl("circle", { cx: x(k === 0 ? leave : s.arrival), cy: y + 19, r: 4.5, style: { fill: "var(--ink)" } }, body); return; }
-          const w = x(s.departure) - x(s.arrival);
-          const bar = svgEl("rect", { x: x(s.arrival), y, width: w, height: 38, rx: 7, style: s.meal ? { fill: "url(#mealHatch)", stroke: "#D9A441", strokeWidth: 1.2 } : { fill: DAY[d] } }, body);
-          const title = svgEl("title", { text: `${s.name} · ${hhmm(s.arrival)}–${hhmm(s.departure)}` }, bar);
-          void title;
-          const label = svgEl("text", { class: "g-name", x: x(s.arrival) + 8, y: y + 23, style: s.meal ? { fill: "var(--amber-ink)" } : {}, text: s.name }, body);
-          if (label.getComputedTextLength() > w - 14) {
-            const n = nodes.find((m) => m.name === s.name);
-            label.textContent = s.meal ? "" : String(n.priority);
-            if (!s.meal) abbreviated.push(`${n.priority} ${n.name}`);
-          }
-        });
-      });
-      this.cursor = svgEl("line", { x1: L, x2: L, y1: top - 6, y2: top + 5 * rowH, style: { stroke: "var(--amber)", strokeWidth: 2 } }, svg);
-      this.L = L; this.R = R;
-      slide.querySelector("#ganttNote").textContent = `Números = prioridade: ${abbreviated.join(" · ")}. Tracejado: deslocamento e espera; ponto: saída e retorno ao hotel.`;
-      this.set(1);
-    },
-    set(p) {
-      const xp = this.L + (this.R - this.L) * p;
-      this.clipRect.setAttribute("width", xp + 2);
-      this.cursor.setAttribute("x1", xp); this.cursor.setAttribute("x2", xp);
-      this.cursor.style.opacity = p > 0 && p < 1 ? 1 : 0;
-    },
-    enter(slide, instant) {
-      this.stop?.();
-      this.set(1);
-    },
-    leave() { this.stop?.(); },
-  };
-
-  // ---------- 20 Distribuição ----------
-  Scenes.dist = {
-    init(slide) {
-      const grid = slide.querySelector("#distGrid");
-      const maxKm = Math.max(...D.days.map((d) => d.distance));
+      const grid = slide.querySelector("#dailyResults");
+      const names = { "São Patrício": "Catedral de São Patrício", "Memorial 11/9": "Memorial do 11 de Setembro", "Rockefeller": "Rockefeller Center" };
       grid.innerHTML = D.days.map((day, d) => {
-        const attractions = day.steps.filter((s) => !s.meal && !s.depot).length;
-        const meals = day.steps.filter((s) => s.meal).length;
-        return `<div class="dcol" data-a="up" style="--d:${200 + d * 110}ms;--c:${DAY[d]}"><svg class="dmap" viewBox="0 0 260 250" data-day="${d}"></svg><div class="dbody"><div class="dh"><b>Dia ${d + 1}</b><i></i></div><div class="km"><span data-count="${(day.distance / 1000).toFixed(1)}" data-dec="1">${dec(day.distance / 1000, 1)}</span><small>km</small></div><div class="kmbar"><i style="--w:${(day.distance / maxKm) * 100}%;--td:${0.5 + d * 0.11}s"></i></div><ul><li>atrações <b>${attractions}</b></li><li>refeições <b>${meals}</b></li><li>duração do dia <b>${dec(day.time / 3600, 1)} h</b></li></ul></div></div>`;
+        let visit = 0;
+        const stops = day.steps.filter((s) => !s.depot).map((s) => {
+          const number = s.meal ? "—" : ++visit;
+          return `<li class="${s.meal ? "meal" : ""}"><b class="visit-number">${number}</b><div><strong>${names[s.name] || s.name}</strong><span>${hhmm(s.arrival)}–${hhmm(s.departure)}</span></div></li>`;
+        }).join("");
+        const first = day.steps[0], last = day.steps[day.steps.length - 1];
+        return `<article class="daily-result" data-a="up" style="--d:${150 + d * 100}ms;--c:${DAY[d]}"><header><h3>Dia ${d + 1}</h3><span>${14 + d}/09</span></header><svg class="daily-map" viewBox="0 0 260 250" data-day="${d}" role="img" aria-label="Pontos visitados no dia ${d + 1}, numerados na ordem da agenda"></svg><ol>${stops}</ol><footer><b>${dec(day.distance / 1000, 1)} km</b> de deslocamento<span>Hotel: ${hhmm(first.departure)} → ${hhmm(last.arrival)}</span></footer></article>`;
       }).join("");
-      const pos = project({ x: 0, y: 0, w: 260, h: 250 }, { pad: 22, minDist: 12 });
-      grid.querySelectorAll("svg.dmap").forEach((svg) => {
-        const d = Number(svg.dataset.day);
-        const seq = solutionRoutes[d];
-        nodes.forEach((n, i) => { if (!n.depot) svgEl("circle", { cx: pos[i].x, cy: pos[i].y, r: 3.5, style: { fill: "#C9CFCB" } }, svg); });
-        const path = svgEl("path", { class: "route draw", d: routeD(seq, pos, 0.18), style: { stroke: DAY[d], strokeWidth: 2.6 } }, svg);
-        path.style.setProperty("--d", `${700 + d * 150}ms`);
-        seq.forEach((i) => { if (i !== hotel) svgEl("circle", { cx: pos[i].x, cy: pos[i].y, r: 6.5, style: { fill: DAY[d], stroke: "#fff", strokeWidth: 2 } }, svg); });
-        svgEl("rect", { x: pos[hotel].x - 6, y: pos[hotel].y - 6, width: 12, height: 12, rx: 3, style: { fill: "var(--ink)", stroke: "#fff", strokeWidth: 2 } }, svg);
+      // A projeção é comum aos cinco dias para permitir comparar as distâncias.
+      const pos = project({ x: 0, y: 0, w: 260, h: 250 }, { pad: 24, minDist: 17 });
+      grid.querySelectorAll("svg.daily-map").forEach((svg) => {
+        const d = Number(svg.dataset.day), seq = solutionRoutes[d];
+        nodes.forEach((n, i) => { if (!n.depot) svgEl("circle", { cx: pos[i].x, cy: pos[i].y, r: 3, fill: "#CDD3CF" }, svg); });
+        svgEl("path", { class: "route draw", d: routeD(seq, pos, 0.18), style: { stroke: DAY[d], strokeWidth: 2.5 } }, svg);
+        seq.filter((i) => i !== hotel).forEach((i, order) => {
+          svgEl("circle", { cx: pos[i].x, cy: pos[i].y, r: 11, style: { fill: DAY[d], stroke: "#fff", strokeWidth: 2 } }, svg);
+          svgEl("text", { x: pos[i].x, y: pos[i].y + 4, "text-anchor": "middle", text: order + 1, style: { fill: "#fff", font: "700 12px var(--body)" } }, svg);
+        });
+        svgEl("rect", { x: pos[hotel].x - 6, y: pos[hotel].y - 6, width: 12, height: 12, rx: 2, style: { fill: "var(--ink)", stroke: "#fff", strokeWidth: 2 } }, svg);
       });
       measure(grid);
     },
   };
 
-  // ---------- 22 Redução: bolinhas por prioridade ----------
-  Scenes.reduce = {
-    init(slide) {
-      slide.querySelectorAll("[data-dots]").forEach((box) => {
-        const kept = Number(box.dataset.dots);
-        box.innerHTML = Array.from({ length: 12 }, (_, i) => `<i class="${i < kept ? "" : "out"}" style="--k:${i}">${i + 1}</i>`).join("");
-      });
-    },
-  };
-
-  // ---------- 24 Custos: 13 × 13 ----------
-  Scenes.costs = {
-    init(slide) {
-      slide.querySelector("#mx13").innerHTML = Array.from({ length: 169 }, (_, k) => `<i class="${Math.floor(k / 13) === k % 13 ? "diag" : ""}" style="--i:${(Math.floor(k / 13) + (k % 13)) * 6}"></i>`).join("");
-    },
-  };
 })();

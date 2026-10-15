@@ -1,0 +1,1396 @@
+{
+  "gerado_em": "2026-09-23 09:13",
+  "ortools": "9.10.4067",
+  "python": "3.11.8",
+  "maquina": "Darwin arm64",
+  "instancia": "slides/html/data/solver-request.json",
+  "sha256_instancia": "5801979068fcf3fe05b70891f6d17af1468af2a43d3eeb4256787f3ef591469d",
+  "sha256_solver": "8a250e57bfb4e056190c7dee193b140a738728e4c896867d63838501b097d1c6",
+  "sha256_script": "3db0e8cc134de24a215264bad90c368847f387d394c47f0f4ddb5939fbd97075",
+  "commit_base": "3b2f7845fe9c4c775de7265558dd2f9d66c85011",
+  "cenarios": [
+    {
+      "chave": "ny-5d",
+      "nome": "Nova Iorque, 5 dias (instância registrada)",
+      "descricao": "12 atrações, 5 dias, 52 nós. Entrada preservada da execução integrada descrita na monografia.",
+      "metodos": [
+        {
+          "metodo": "Vizinho mais próximo, sem busca local",
+          "limite_s": null,
+          "execucoes": [
+            {
+              "objetivo": 96495574,
+              "busca_s": 0.026,
+              "atracoes_visitadas": 10,
+              "atracoes_total": 12,
+              "excluidas": [
+                {
+                  "nome": "Metropolitan Museum of Art",
+                  "prioridade": 2
+                },
+                {
+                  "nome": "Estatua da Liberdade",
+                  "prioridade": 9
+                }
+              ],
+              "deslocamento_min": 210,
+              "distancia_km": 38.7,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [],
+                  "refeicoes": 0,
+                  "km": 0.0,
+                  "horas": 0.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [],
+                  "refeicoes": 0,
+                  "km": 0.0,
+                  "horas": 0.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Memorial & Museu Nacional do 11 de Setembro",
+                    "Ponte do Brooklyn",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 22.4,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Empire State Building",
+                    "Parque Bryant",
+                    "Lincoln Center"
+                  ],
+                  "refeicoes": 1,
+                  "km": 11.0,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Times Square",
+                    "Radio City Music Hall",
+                    "Rockefeller Center"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.3,
+                  "horas": 5.7
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção paralela, sem busca local",
+          "limite_s": null,
+          "execucoes": [
+            {
+              "objetivo": 41494118,
+              "busca_s": 0.006,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 371,
+              "distancia_km": 66.3,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Rockefeller Center",
+                    "Memorial & Museu Nacional do 11 de Setembro",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 0,
+                  "km": 16.4,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Times Square",
+                    "Central Park",
+                    "Metropolitan Museum of Art",
+                    "Radio City Music Hall"
+                  ],
+                  "refeicoes": 1,
+                  "km": 16.2,
+                  "horas": 11.7
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Estatua da Liberdade",
+                    "Parque Bryant",
+                    "Lincoln Center"
+                  ],
+                  "refeicoes": 1,
+                  "km": 33.7,
+                  "horas": 12.7
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [],
+                  "refeicoes": 0,
+                  "km": 0.0,
+                  "horas": 0.0
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [],
+                  "refeicoes": 0,
+                  "km": 0.0,
+                  "horas": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + descida gulosa",
+          "limite_s": null,
+          "execucoes": [
+            {
+              "objetivo": 155336,
+              "busca_s": 0.165,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 355,
+              "distancia_km": 62.2,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Parque Bryant",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.7,
+                  "horas": 8.5
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Catedral de São Patrício",
+                    "Radio City Music Hall"
+                  ],
+                  "refeicoes": 1,
+                  "km": 7.3,
+                  "horas": 8.2
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Times Square"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.2,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 2,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 2.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 2.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 2.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS (produção)",
+          "limite_s": 5,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 5.001,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 5.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 5.001,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 15,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 15.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 15.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            },
+            {
+              "objetivo": 154192,
+              "busca_s": 15.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 60,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 60.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + simulated annealing",
+          "limite_s": 60,
+          "execucoes": [
+            {
+              "objetivo": 155336,
+              "busca_s": 60.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 355,
+              "distancia_km": 62.2,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Parque Bryant",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.7,
+                  "horas": 8.5
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Catedral de São Patrício",
+                    "Radio City Music Hall"
+                  ],
+                  "refeicoes": 1,
+                  "km": 7.3,
+                  "horas": 8.2
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Times Square"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.2,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + busca tabu",
+          "limite_s": 60,
+          "execucoes": [
+            {
+              "objetivo": 155336,
+              "busca_s": 60.001,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 355,
+              "distancia_km": 62.2,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Parque Bryant",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.7,
+                  "horas": 8.5
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Catedral de São Patrício",
+                    "Radio City Music Hall"
+                  ],
+                  "refeicoes": 1,
+                  "km": 7.3,
+                  "horas": 8.2
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Times Square"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.2,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 300,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 300.005,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS (referência longa)",
+          "limite_s": 600,
+          "execucoes": [
+            {
+              "objetivo": 154192,
+              "busca_s": 600.004,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 345,
+              "distancia_km": 62.4,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 15.7,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Metropolitan Museum of Art",
+                    "Central Park"
+                  ],
+                  "refeicoes": 1,
+                  "km": 10.9,
+                  "horas": 8.0
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Estatua da Liberdade",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 1,
+                  "km": 23.3,
+                  "horas": 8.9
+                },
+                {
+                  "dia": 4,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 1,
+                  "km": 6.8,
+                  "horas": 8.4
+                },
+                {
+                  "dia": 5,
+                  "atracoes": [
+                    "Rockefeller Center",
+                    "Parque Bryant"
+                  ],
+                  "refeicoes": 0,
+                  "km": 5.6,
+                  "horas": 2.8
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chave": "ny-3d",
+      "nome": "Nova Iorque cortada para 3 dias",
+      "descricao": "Mesmas 12 atrações e matrizes; ficam só os dias 1 a 3 (chegada às 14h no dia 1).",
+      "metodos": [
+        {
+          "metodo": "Inserção + GLS (limite experimental)",
+          "limite_s": 5,
+          "execucoes": [
+            {
+              "objetivo": 964855,
+              "busca_s": 5.002,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 283,
+              "distancia_km": 45.5,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Rockefeller Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 0,
+                  "km": 7.1,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Central Park",
+                    "Metropolitan Museum of Art",
+                    "Parque Bryant",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 0,
+                  "km": 11.1,
+                  "horas": 9.1
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Ponte do Brooklyn",
+                    "Estatua da Liberdade",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 27.3,
+                  "horas": 10.1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 60,
+          "execucoes": [
+            {
+              "objetivo": 964855,
+              "busca_s": 60.0,
+              "atracoes_visitadas": 12,
+              "atracoes_total": 12,
+              "excluidas": [],
+              "deslocamento_min": 283,
+              "distancia_km": 45.5,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Lincoln Center",
+                    "Rockefeller Center",
+                    "Radio City Music Hall",
+                    "Times Square"
+                  ],
+                  "refeicoes": 0,
+                  "km": 7.1,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Central Park",
+                    "Metropolitan Museum of Art",
+                    "Parque Bryant",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 0,
+                  "km": 11.1,
+                  "horas": 9.1
+                },
+                {
+                  "dia": 3,
+                  "atracoes": [
+                    "Catedral de São Patrício",
+                    "Ponte do Brooklyn",
+                    "Estatua da Liberdade",
+                    "Memorial & Museu Nacional do 11 de Setembro"
+                  ],
+                  "refeicoes": 0,
+                  "km": 27.3,
+                  "horas": 10.1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chave": "ny-2d",
+      "nome": "Nova Iorque cortada para 2 dias",
+      "descricao": "Mesmas 12 atrações e matrizes; ficam só os dias 1 e 2.",
+      "metodos": [
+        {
+          "metodo": "Inserção + GLS (limite experimental)",
+          "limite_s": 5,
+          "execucoes": [
+            {
+              "objetivo": 54351440,
+              "busca_s": 5.0,
+              "atracoes_visitadas": 8,
+              "atracoes_total": 12,
+              "excluidas": [
+                {
+                  "nome": "Estatua da Liberdade",
+                  "prioridade": 9
+                },
+                {
+                  "nome": "Radio City Music Hall",
+                  "prioridade": 10
+                },
+                {
+                  "nome": "Lincoln Center",
+                  "prioridade": 11
+                },
+                {
+                  "nome": "Parque Bryant",
+                  "prioridade": 12
+                }
+              ],
+              "deslocamento_min": 173,
+              "distancia_km": 32.2,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro",
+                    "Rockefeller Center",
+                    "Catedral de São Patrício"
+                  ],
+                  "refeicoes": 0,
+                  "km": 20.4,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Times Square",
+                    "Central Park",
+                    "Metropolitan Museum of Art",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 0,
+                  "km": 11.8,
+                  "horas": 9.2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "metodo": "Inserção + GLS",
+          "limite_s": 60,
+          "execucoes": [
+            {
+              "objetivo": 54351440,
+              "busca_s": 60.0,
+              "atracoes_visitadas": 8,
+              "atracoes_total": 12,
+              "excluidas": [
+                {
+                  "nome": "Estatua da Liberdade",
+                  "prioridade": 9
+                },
+                {
+                  "nome": "Radio City Music Hall",
+                  "prioridade": 10
+                },
+                {
+                  "nome": "Lincoln Center",
+                  "prioridade": 11
+                },
+                {
+                  "nome": "Parque Bryant",
+                  "prioridade": 12
+                }
+              ],
+              "deslocamento_min": 173,
+              "distancia_km": 32.2,
+              "dias": [
+                {
+                  "dia": 1,
+                  "atracoes": [
+                    "Ponte do Brooklyn",
+                    "Memorial & Museu Nacional do 11 de Setembro",
+                    "Rockefeller Center",
+                    "Catedral de São Patrício"
+                  ],
+                  "refeicoes": 0,
+                  "km": 20.4,
+                  "horas": 9.0
+                },
+                {
+                  "dia": 2,
+                  "atracoes": [
+                    "Times Square",
+                    "Central Park",
+                    "Metropolitan Museum of Art",
+                    "Empire State Building"
+                  ],
+                  "refeicoes": 0,
+                  "km": 11.8,
+                  "horas": 9.2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

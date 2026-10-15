@@ -1,0 +1,188 @@
+<mxfile host="app.diagrams.net" scale="1" border="8">
+  <diagram name="er-roteiro" id="interlude-er-roteiro">
+    <mxGraphModel dx="1698" dy="1071" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="UserProfile&#10;documento: users/{uid}" vertex="1">
+          <mxGeometry height="122" width="330" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="user-f0" parent="user" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="PK  uid: string" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="user-f1" parent="user" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="displayName?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="user-f2" parent="user" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="interests?: Record&lt;string, boolean&gt;" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="trip" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="TripDraft&#10;documento: trips/{id}" vertex="1">
+          <mxGeometry height="144" width="330" x="430" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="trip-f0" parent="trip" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="PK  id: string" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="trip-f1" parent="trip" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="REF  ownerId?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="trip-f2" parent="trip" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="createdAt: string" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="trip-f3" parent="trip" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="updatedAt: string" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="leg" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="TripLeg&#10;embutido: legs[]" vertex="1">
+          <mxGeometry height="210" width="330" x="20" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f0" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="id: string" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f1" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="destination: PlaceDetails" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f2" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="startDate?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f3" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="endDate?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f4" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="lodgings: LodgingStay[]" vertex="1">
+          <mxGeometry height="22" width="330" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f5" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="candidates: EnrichedPlace[]" vertex="1">
+          <mxGeometry height="22" width="330" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-f6" parent="leg" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="selectedCandidateIds: string[]" vertex="1">
+          <mxGeometry height="22" width="330" y="182" as="geometry" />
+        </mxCell>
+        <mxCell id="progress" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="LiveProgress&#10;embutido: liveProgress" vertex="1">
+          <mxGeometry height="144" width="330" x="430" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="progress-f0" parent="progress" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="completedStopIds: string[]" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="progress-f1" parent="progress" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="skippedStopIds: string[]" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="progress-f2" parent="progress" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="activeDayIndex?: number" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="progress-f3" parent="progress" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="updatedAt: string" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="itinerary" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="ItinerarySolution&#10;embutido: itinerary" vertex="1">
+          <mxGeometry height="122" width="330" x="20" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="itinerary-f0" parent="itinerary" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="totalDistanceMeters: number" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="itinerary-f1" parent="itinerary" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="totalTimeSeconds: number" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="itinerary-f2" parent="itinerary" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="solverTrace?: SolverTrace" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="day" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="DayPlan&#10;embutido: days[]" vertex="1">
+          <mxGeometry height="166" width="330" x="430" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="day-f0" parent="day" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="dayIndex: number" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="day-f1" parent="day" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="legId?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="day-f2" parent="day" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="date?: string" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="day-f3" parent="day" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="distanceMeters: number" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="day-f4" parent="day" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="totalTimeSeconds: number" vertex="1">
+          <mxGeometry height="22" width="330" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="step" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="RouteStep&#10;embutido: steps[]" vertex="1">
+          <mxGeometry height="188" width="330" x="20" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f0" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="stopId: string" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f1" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="order: number" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f2" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="coordinate: Coordinate" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f3" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="arrivalSeconds: number" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f4" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="departureSeconds: number" vertex="1">
+          <mxGeometry height="22" width="330" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="step-f5" parent="step" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="isDepot: boolean" vertex="1">
+          <mxGeometry height="22" width="330" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="segment" parent="1" style="swimlane;horizontal=1;startSize=48;rounded=0;html=0;fontFamily=Helvetica;fontSize=17;fontStyle=1;fontColor=#000000;fillColor=#f2f2f2;swimlaneFillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;collapsible=0;" value="RouteLeg&#10;embutido: legs[]" vertex="1">
+          <mxGeometry height="144" width="330" x="430" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="segment-f0" parent="segment" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="fromStopId: string" vertex="1">
+          <mxGeometry height="22" width="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="segment-f1" parent="segment" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="toStopId: string" vertex="1">
+          <mxGeometry height="22" width="330" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="segment-f2" parent="segment" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="distanceMeters: number" vertex="1">
+          <mxGeometry height="22" width="330" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="segment-f3" parent="segment" style="text;html=0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=16;fontColor=#000000;spacingLeft=10;" value="durationSeconds: number" vertex="1">
+          <mxGeometry height="22" width="330" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="owns" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToMany;endFill=0;endSize=10;dashed=1;exitX=1;exitY=0.35;entryX=0;entryY=0.295;" target="trip" value="ownerId">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="trip-legs" edge="1" parent="1" source="trip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToMany;endFill=0;endSize=10;exitX=0;exitY=0.55;entryX=0.5;entryY=0;" target="leg" value="legs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="385" y="99" />
+              <mxPoint x="385" y="210" />
+              <mxPoint x="185" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="trip-itinerary" edge="1" parent="1" source="trip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToOne;endFill=0;endSize=10;exitX=0;exitY=0.9;entryX=0.5;entryY=0;" target="itinerary" value="itinerary">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="405" y="150" />
+              <mxPoint x="405" y="480" />
+              <mxPoint x="185" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="trip-progress" edge="1" parent="1" source="trip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToOne;endFill=0;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="progress" value="liveProgress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="itinerary-days" edge="1" parent="1" source="itinerary" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToMany;endFill=0;endSize=10;exitX=1;exitY=0.45;entryX=0;entryY=0.45;" target="day" value="days">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="day-steps" edge="1" parent="1" source="day" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToMany;endFill=0;endSize=10;exitX=0;exitY=0.9;entryX=0.5;entryY=0;" target="step" value="steps">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="385" y="644" />
+              <mxPoint x="385" y="695" />
+              <mxPoint x="185" y="695" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="day-legs" edge="1" parent="1" source="day" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#000000;strokeWidth=1.2;fontFamily=Helvetica;fontSize=15;fontColor=#000000;labelBackgroundColor=#ffffff;startArrow=ERmandOne;startFill=0;startSize=10;endArrow=ERzeroToMany;endFill=0;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="segment" value="legs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="text;html=0;align=left;verticalAlign=top;whiteSpace=wrap;fontFamily=Helvetica;fontSize=15;fontColor=#000000;strokeColor=none;fillColor=none;spacing=0;" value="Campos selecionados · tipos TypeScript · ? = opcional · [] = lista&#10;PK = chave do documento · REF = referência por identificador (sem chave estrangeira no Firestore)&#10;Linha tracejada = referência · linha contínua = estrutura embutida&#10;Viagens sincronizadas exigem ownerId. Objetos embutidos não têm coleção própria." vertex="1">
+          <mxGeometry height="90" width="740" x="20" y="950" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

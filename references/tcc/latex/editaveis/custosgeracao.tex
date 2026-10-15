@@ -1,0 +1,133 @@
+\section{Custos de geração de um roteiro}
+\label{sec:custos-geracao}
+
+Gerar uma viagem envolve mais do que executar o otimizador. Antes de distribuir as visitas, o aplicativo pesquisa lugares, obtém atributos, solicita estimativas e calcula deslocamentos. Parte dessas informações pode ser reutilizada em outro planejamento: duas pessoas interessadas nas mesmas atrações não precisam necessariamente provocar duas consultas externas para cada dado. Por outro lado, escolher uma cidade já pesquisada não assegura que todos os lugares, trajetos e imagens necessários estejam disponíveis no \textit{cache}. Esta seção examina como essas diferenças afetam o custo da geração.
+
+A análise utiliza as tarifas oficiais consultadas em 15 de setembro de 2026, conferidas em 20 de setembro, e o comportamento dos adaptadores da implementação. Os valores são apresentados em dólares dos Estados Unidos (US\$), sem conversão cambial, impostos ou descontos contratuais. Os cenários são cálculos com entradas declaradas, e não custos medidos nas três execuções da Seção~\ref{sec:resultados}. Primeiro se estima o consumo na primeira faixa paga. Depois se mostra como as franquias mensais alteram o valor faturado.
+
+\subsection{Serviços cobrados e unidades de consumo}
+
+Na Google Maps Platform, cada categoria de cobrança é identificada por uma SKU (\textit{Stock Keeping Unit}). O enquadramento depende da operação e dos campos solicitados. As buscas do Interlude incluem avaliações e horários de funcionamento, que as enquadram em Nearby Search Enterprise e Text Search Enterprise. A consulta de localização com nome de exibição utiliza Place Details Pro. Detalhes completos com horários utilizam Enterprise \cite{google_places_campos2026}. A Tabela~\ref{tab:tarifas-geracao} reúne as tarifas utilizadas na análise.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Tarifas de referência para geração, em US\$}
+\label{tab:tarifas-geracao}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrr}
+\hline
+\textbf{Operação e categoria} & \textbf{Por mil eventos} & \textbf{Franquia mensal} \\
+\hline
+Autocomplete Requests & 2,83 & 10.000 \\
+Place Details Pro & 17,00 & 5.000 \\
+Place Details Enterprise & 20,00 & 1.000 \\
+Nearby Search Enterprise & 35,00 & 1.000 \\
+Text Search Enterprise & 35,00 & 1.000 \\
+Place Details Photos (mídia) & 7,00 & 1.000 \\
+Compute Route Matrix Essentials & 5,00 & 10.000 \\
+Compute Routes Essentials & 5,00 & 10.000 \\
+\hline
+\end{tabularx}
+\fonte{Tarifas globais da Google Maps Platform, primeira faixa paga, consultadas em 15/09/2026 \cite{google_maps_precos2026}. A unidade da matriz é o elemento origem--destino. Nas demais linhas, a requisição.}
+\end{table}
+
+Essa distinção de unidade é relevante para a matriz. Uma chamada com 13 origens e 13 destinos corresponde a 169 elementos, e não a uma única unidade de cobrança. A API limita o tamanho de cada requisição, incluindo um máximo de 100 elementos em transporte público. Dividir uma matriz em blocos para atender ao limite preserva a quantidade total de elementos solicitados. O detalhamento de um trajeto pelo Compute Routes, por sua vez, é cobrado por requisição \cite{google_routes_cobranca2026}. As chamadas examinadas utilizam os recursos básicos, sem modificadores de trânsito que acionariam categorias superiores.
+
+Na data da consulta, o Gemini 3.5 Flash, modelo padrão descrito neste trabalho, tinha tarifa Standard de US\$~1,50 por milhão de \textit{tokens} de entrada e US\$~9,00 por milhão de \textit{tokens} de saída, incluindo os de raciocínio. Assim, o custo depende do volume total processado, mesmo quando vários lugares são enviados na mesma chamada. O desconto de \textit{context caching} do provedor reduz o preço de \textit{tokens} de entrada reutilizados, mas ainda envolve processamento de uma nova resposta. Ele é diferente do \textit{cache} da aplicação, que devolve uma estimativa já armazenada sem chamar o modelo \cite{google_gemini_precos2026}.
+
+\subsection{O que pode ser reaproveitado na implementação}
+
+As consultas de lugares usam chaves construídas a partir dos parâmetros da busca, enquanto o enriquecimento é armazenado por identificador do lugar e versão do contrato. Um acerto de \textit{cache}, ou \textit{cache hit}, permite utilizar o valor encontrado. Em uma ausência, ou \textit{cache miss}, o adaptador consulta a origem. Nas estimativas pelo modelo de linguagem, apenas os lugares ausentes são reunidos em lotes, de até cinco itens, para uma nova solicitação. Por isso, a quantidade de lugares descobertos e enriquecidos pode ser maior do que a quantidade finalmente selecionada para o roteiro.
+
+A matriz possui dois níveis de reutilização. O primeiro armazena a matriz completa, associada ao modo de transporte e às coordenadas. Quando essa chave não é encontrada, o segundo procura os pares direcionais já conhecidos, solicitando ao provedor os deslocamentos restantes. A ida e a volta são entradas distintas. Antes dessas consultas, coordenadas repetidas são deduplicadas, de modo que alternativas de refeição localizadas em atrações ou na hospedagem não multiplicam desnecessariamente o conjunto de posições.
+
+As fotografias exigem tratamento separado. No adaptador Google atual, a leitura da mídia tem prazo de \textit{cache} igual a zero: requisições simultâneas idênticas podem compartilhar uma operação em andamento, mas não há armazenamento persistente dessa resposta no servidor. Consequentemente, repetir a obtenção das fotos gera novas unidades de consumo mesmo quando os dados de planejamento estão em \textit{cache}. Os 180 dias configurados para outras fontes de mídia não se aplicam a essas fotos. A referência à fotografia recebida em uma busca também não equivale à obtenção de seus bytes. Nomes de fotos podem expirar, conforme a documentação do serviço \cite{google_places_fotos2026}.
+
+Os cenários B, C e D adiante descrevem o comportamento técnico dos adaptadores, que podem reutilizar conteúdo Google armazenado. Sua adoção depende de adequar essa política às condições do provedor. O prazo de 90 dias configurado para a matriz não decorre da documentação oficial. A permissão específica de até 30 dias refere-se a latitude e longitude, e não à matriz inteira ou aos atributos de lugares \cite{google_maps_termos2026,google_places_politicas2026}. Esses cenários são mantidos para explicar o custo do código analisado, sem considerá-los uma política de armazenamento já regularizada. O cenário E isola o reaproveitamento das estimativas do modelo de linguagem e repete as consultas Google.
+
+\subsection{Cenário de referência sem dados em \textit{cache}}
+
+Considere uma nova viagem de cinco dias, em uma única cidade, com doze atrações e uma hospedagem, totalizando treze coordenadas distintas. Para tornar o cálculo reproduzível, assume-se um percurso com dez requisições de preenchimento automático, duas consultas de localização, seis buscas por proximidade e duas buscas textuais. Essas quantidades descrevem o exemplo, pois o número efetivo varia com a digitação, os interesses e o raio de busca. O preenchimento automático é contabilizado por requisição, sem assumir desconto de sessão.
+
+Nesse percurso, os atributos retornados pelas buscas bastam para as atrações, dispensando consultas completas individuais adicionais. São obtidas treze fotos, uma por atração e uma da hospedagem. O consumo total do modelo de linguagem é fixado, como hipótese de cálculo, em 12.000 \textit{tokens} de entrada e 9.000 de saída, já incluindo instruções, respostas, raciocínio e eventual recomendação de transporte. Não se trata de uma média observada por lugar. Não há busca de cidades por país, pesquisa adicional de restaurantes, novas tentativas após falhas ou detalhamento posterior dos segmentos no mapa. Pausas que reutilizam coordenadas existentes não aumentam a matriz.
+
+Para um percurso compacto, no qual todos os pares são consultáveis e retornam com sucesso, a matriz fria solicita $13^2=169$ elementos. A diagonal participa da requisição inicial em bloco da implementação, embora o tempo de deslocamento de um ponto para si mesmo seja zero no modelo. O custo das consultas e do enriquecimento resulta em:
+\[
+ C_{\mathrm{APIs}} = \sum_k q_k p_k
+ + \frac{1{,}50\,\tau_{\text{entrada}}+9{,}00\,\tau_{\text{saída}}}{10^6},
+\]
+em que $q_k$ é a quantidade de eventos externos de cada operação, $p_k$ é sua tarifa unitária e $\tau_{\text{entrada}}$ e $\tau_{\text{saída}}$ representam os \textit{tokens} de entrada e de saída das chamadas efetivamente realizadas. Nesta conta não há desconto de \textit{tokens} em \textit{cache} no provedor.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Memória de cálculo do cenário com \textit{cache miss}}
+\label{tab:custo-miss}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrr}
+\hline
+\textbf{Componente} & \textbf{Quantidade} & \textbf{Custo (US\$)} \\
+\hline
+Autocomplete Requests & 10 & 0,02830 \\
+Place Details Pro & 2 & 0,03400 \\
+Nearby Search Enterprise & 6 & 0,21000 \\
+Text Search Enterprise & 2 & 0,07000 \\
+Fotografias & 13 & 0,09100 \\
+Elementos de matriz & 169 & 0,84500 \\
+Gemini: entrada / saída & 12.000 / 9.000 \textit{tokens} & 0,09900 \\
+\hline
+\textbf{Total de APIs, antes das franquias} & & \textbf{1,37730} \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, a partir das quantidades assumidas e das tarifas das fontes oficiais citadas nesta seção.}
+\end{table}
+
+Nesse exemplo, a matriz representa aproximadamente 61,4\% do custo das APIs. Seu crescimento depende do número de coordenadas, e não apenas dos dias de viagem: matrizes frias de 9, 13 e 21 posições, sob as mesmas condições, custariam respectivamente US\$~0,405, US\$~0,845 e US\$~2,205. Isso explica a importância de deduplicar posições e reutilizar pares. Um roteiro com 52 nós internos, como o exemplo de Nova Iorque, não deve ser automaticamente cobrado como uma matriz $52\times52$, pois vários desses nós podem representar a mesma localização.
+
+\subsection{Cenários com \textit{cache hit} e reaproveitamento parcial}
+
+A Tabela~\ref{tab:custo-hit} compara cinco situações para o mesmo conjunto de entradas. Em todas elas, o aplicativo solicita uma geração de agenda. Consultar uma viagem já salva é outra operação e pode dispensar a execução do otimizador.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Cenários técnicos de custo por disponibilidade de dados em \textit{cache}}
+\label{tab:custo-hit}
+\begin{tabularx}{\textwidth}{p{0.5cm}>{\raggedright\arraybackslash}Xr}
+\hline
+ & \textbf{Situação e chamadas externas} & \textbf{US\$ por roteiro} \\
+\hline
+A & Sem dados reutilizáveis: todas as operações da Tabela~\ref{tab:custo-miss}. & 1,37730 \\
+B & Buscas, detalhes, estimativas e matriz em \textit{cache}. Treze fotos solicitadas novamente. & 0,09100 \\
+C & Buscas, detalhes e estimativas em \textit{cache}. Matriz completa e pares ausentes. Treze fotos novas. & 0,93600 \\
+D & Dados de planejamento e matriz em \textit{cache}. Nenhuma nova requisição de fotos. & 0,00000 \\
+E & Somente estimativas do modelo de linguagem em \textit{cache}. Todas as consultas Google repetidas como em A. & 1,27830 \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria. Valores marginais das APIs na primeira faixa paga, sem infraestrutura, impostos ou franquias. B, C e D dependem da adequação da política de armazenamento Google discutida nesta seção.}
+\end{table}
+
+O cenário E economiza os US\$~0,099 do modelo de linguagem, cerca de 7,2\% do total de A, sem pressupor reutilização das respostas Google. O cenário B reduz o custo das APIs em aproximadamente 93,4\% em relação a A, mantendo o consumo de mídia. No cenário D, zero significa ausência de novas chamadas às APIs consideradas. O servidor ainda prepara a instância e executa a otimização. A gravação posterior da viagem pelo cliente também pode gerar consumo de persistência. Esse caso pode ocorrer ao recalcular a agenda com os dados já disponíveis, sem solicitar novamente as imagens. Não pressupõe um \textit{cache} persistente de fotos no adaptador Google.
+
+A reutilização também pode ser parcial dentro da matriz. Suponha que, após o cenário A, o viajante acrescente uma atração em uma nova coordenada, mantendo as treze anteriores e o modo de transporte. Se os pares existentes ainda estiverem disponíveis, serão necessários 26 novos elementos: treze ligações de ida e treze de volta. Ao preço adotado, essa consulta custa US\$~0,130, em vez dos US\$~0,980 de uma matriz fria $14\times14$. Admitindo uma consulta Enterprise de US\$~0,020 para o novo lugar, mais 2.000 \textit{tokens} de entrada e 1.000 de saída do modelo de linguagem (US\$~0,012), e a solicitação das quatorze fotos (US\$~0,098), o novo percurso custa US\$~0,260 em APIs. Esse cálculo pressupõe que nenhuma nova busca de descoberta seja necessária.
+
+Por isso, uma taxa única de acerto não descreve completamente a economia. Reutilizar uma busca evita uma requisição, enquanto encontrar uma matriz completa pode evitar centenas de elementos. Mudanças no transporte, na seleção ou nas coordenadas podem alterar as chaves e produzir um custo diferente, ainda que o destino permaneça igual.
+
+\subsection{Alternativa de modelo de linguagem}
+\label{sec:alternativa-llm}
+
+A escolha inicial do Gemini não precisa permanecer fixa durante toda a evolução do aplicativo. Em consulta de 22 de setembro de 2026, o GPT-6 Luna apresenta preço Standard de US\$~0,10 por milhão de \textit{tokens} de entrada e US\$~0,50 por milhão de saída no contexto curto \cite{openai_precos2026}. A documentação informa suporte a saídas estruturadas, recurso necessário para manter os contratos de enriquecimento utilizados no Interlude \cite{openai_luna2026}.
+
+Com os mesmos 12.000 \textit{tokens} de entrada e 9.000 de saída assumidos no cenário A, sua parcela seria $0{,}10\times0{,}012+0{,}50\times0{,}009=\text{US\$}\,0{,}0057$, contra US\$~0,099 do Gemini. Os fatores 0,012 e 0,009 expressam as quantidades em milhões de \textit{tokens}. A diferença seria de aproximadamente 94,2\% nessa parcela. Mantidas as demais chamadas, o total de APIs passaria de US\$~1,3773 para US\$~1,2840, uma redução de cerca de 6,8\%. A comparação pressupõe o mesmo consumo faturável, que pode mudar entre modelos devido à tokenização e ao raciocínio.
+
+O preço torna o Luna um candidato a avaliação, mas não demonstra que suas estimativas sejam melhores ou que responda mais rápido no fluxo do aplicativo. Uma troca deve comparar, sob as mesmas entradas, a validade das respostas estruturadas, as durações e recomendações produzidas, o tempo até a resposta completa e a necessidade de novas tentativas. Com acerto no \textit{cache} de enriquecimento, nenhum dos modelos precisa ser chamado para os dados reaproveitados. A implementação descrita neste trabalho permanece com Gemini, e os cálculos apenas dimensionam uma possível alternativa.
+
+\subsection{Franquias, infraestrutura e custo efetivamente faturado}
+
+O total por roteiro é uma referência marginal de consumo. Na fatura, a Google Maps Platform aplica franquias mensais por SKU e faixas de volume sobre o uso agregado da conta de cobrança \cite{google_maps_precos2026}. Para ilustrar essa diferença, mil gerações do cenário A, sem qualquer outro consumo na conta, produziriam 169.000 elementos de matriz: 10.000 gratuitos, 90.000 a US\$~5 por mil e 69.000 a US\$~4 por mil, totalizando US\$~726 nessa operação. Com as franquias das demais SKUs, a parcela Google Maps seria US\$~1.020. Somados US\$~99 de Gemini na modalidade paga, seriam US\$~1.119 de APIs no mês, ou US\$~1,119 por roteiro. A simples multiplicação do valor marginal daria US\$~1.377,30 e ignoraria esses abatimentos. O exemplo não inclui outras chamadas da conta ou benefícios do nível gratuito do Gemini.
+
+A operação do aplicativo acrescenta componentes que permanecem mesmo com \textit{cache hit}. No Cloud Run, a cobrança depende do modo de faturamento, da região, dos recursos alocados e do tempo de instância faturável, além das requisições e transferências aplicáveis \cite{google_cloudrun_precos2026}. O uso local da biblioteca OR-Tools não corresponde a uma chamada paga à Route Optimization API do Google: o custo da busca está na infraestrutura que executa o microsserviço. O tempo interno de 5,032 segundos registrado em Nova Iorque, isoladamente, não informa o tempo faturável de toda a geração, que inclui o serviço de orquestração e a preparação dos dados.
+
+No Upstash Redis, a modalidade \textit{Pay as You Go} cobra US\$~0,20 por 100 mil comandos. Cinquenta comandos, por exemplo, correspondem a US\$~0,0001 antes de armazenamento e transferências aplicáveis. O plano gratuito e os planos fixos têm condições próprias, e escritas replicadas podem ampliar o número de comandos faturados \cite{upstash_redis_precos2026}. O exemplo de cinquenta comandos apenas ilustra a unidade de cobrança, sem atribuí-la a todo roteiro. No Firestore, a persistência acrescenta operações de leitura, escrita e exclusão, além de armazenamento e transferência conforme a localização e as franquias do banco \cite{firebase_firestore_precos2026}.
+
+Assim, o custo de operação pode ser organizado como a soma de APIs, execução dos serviços, comandos e armazenamento de \textit{cache}, persistência e transferências, acrescida de uma parcela de despesas fixas quando existentes. Atribuir um total de infraestrutura a cada roteiro exige registrar esses consumos e definir como repartir os recursos compartilhados. O medidor implementado no aplicativo estima chamadas e \textit{tokens} das APIs. Seu valor com \textit{cache hit} não representa uma fatura completa de infraestrutura. A memória de cálculo desta seção permite atualizar as tarifas e variar as entradas, enquanto a comparação com faturamento real requer medições do mesmo período.
+\FloatBarrier

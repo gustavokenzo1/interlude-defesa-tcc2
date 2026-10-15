@@ -1,0 +1,108 @@
+<mxfile host="app.diagrams.net" modified="2026-09-02T18:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="visaogeral" name="0 - Visão geral">
+    <mxGraphModel dx="1400" dy="800" grid="0" page="1" pageWidth="1400" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v1" value="1 Definição da viagem&#10;destino, datas, hospedagem, ritmo e modal" style="rounded=1;arcSize=8;fillColor=#E8F0F8;strokeColor=#003A7A;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v2" value="2 Descoberta&#10;busca por categoria, filtro e ordenação" style="rounded=1;arcSize=8;fillColor=#E8F0F8;strokeColor=#003A7A;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v3" value="3 Priorização&#10;seleção e ordem definidas pelo usuário" style="rounded=1;arcSize=8;fillColor=#E8F0F8;strokeColor=#003A7A;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v4" value="4 Construção da instância&#10;enriquecimento, matriz de rotas e cache" style="rounded=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#D8E0E8;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v5" value="5 Modelo VRPTW&#10;RoutingModel do OR-Tools" style="rounded=1;arcSize=8;fillColor=#E8F5EC;strokeColor=#006633;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v6" value="6 Resolução&#10;PCI + busca local guiada" style="rounded=1;arcSize=8;fillColor=#E8F5EC;strokeColor=#006633;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="80" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v7" value="7 Resultado e persistência&#10;roteiro no Firestore, mapa e agenda" style="rounded=1;arcSize=8;fillColor=#E8F0F8;strokeColor=#003A7A;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="230" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v1" target="v2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v2" target="v3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v3" target="v4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v4" target="v5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v5" target="v6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v6" target="v7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#006633;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="v6" target="v7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="entrada" name="1 - Definição da viagem">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;Formulário no app&lt;/b&gt;&lt;br&gt;destino · datas · hospedagem" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="40" y="145" width="250" height="100" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;TripDraft&lt;/b&gt;&lt;br&gt;estado local tipado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#596b7d;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="375" y="145" width="220" height="100" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Próxima etapa&lt;/b&gt;&lt;br&gt;preferências e interesses" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="680" y="145" width="260" height="100" as="geometry"/></mxCell>
+      <mxCell id="e1" value="normaliza" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;fontSize=14;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" value="persiste" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;fontSize=14;" edge="1" parent="1" source="b" target="c"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+  <diagram id="poi" name="2 - Recomendação de POIs">
+    <mxGraphModel dx="1100" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;Interesses&lt;/b&gt;&lt;br&gt;pesos por categoria" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="25" y="145" width="180" height="95" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;Google Places&lt;/b&gt;&lt;br&gt;candidatos no raio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="240" y="145" width="190" height="95" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Filtro&lt;/b&gt;&lt;br&gt;remove não atrações" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="465" y="145" width="180" height="95" as="geometry"/></mxCell>
+      <mxCell id="d" value="&lt;b&gt;Score Sᵢ&lt;/b&gt;&lt;br&gt;nota · iconicidade · distância" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="680" y="145" width="200" height="95" as="geometry"/></mxCell>
+      <mxCell id="e" value="&lt;b&gt;Intercalação&lt;/b&gt;&lt;br&gt;diversidade por interesse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#006633;strokeColor=#004f28;strokeWidth=2;fontColor=#ffffff;fontSize=16;" vertex="1" parent="1"><mxGeometry x="915" y="145" width="185" height="95" as="geometry"/></mxCell>
+      <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#596b7d;strokeWidth=2;" edge="1" parent="1" source="b" target="c"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="c" target="d"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="d" target="e"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+  <diagram id="prioridade" name="3 - Priorização">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;Seleção no app&lt;/b&gt;&lt;br&gt;aceitar · rejeitar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="30" y="145" width="220" height="95" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;Lista ordenada&lt;/b&gt;&lt;br&gt;posição escolhida pelo usuário" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="300" y="145" width="250" height="95" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Atributos do POI&lt;/b&gt;&lt;br&gt;importância · sazonalidade" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="600" y="145" width="230" height="95" as="geometry"/></mxCell>
+      <mxCell id="d" value="&lt;b&gt;Penalidade de drop&lt;/b&gt;&lt;br&gt;Pᵢ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="880" y="145" width="180" height="95" as="geometry"/></mxCell>
+      <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#596b7d;strokeWidth=2;" edge="1" parent="1" source="b" target="c"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="c" target="d"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+  <diagram id="instancia" name="4 - Construção da instância">
+    <mxGraphModel dx="1100" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;POIs enriquecidos&lt;/b&gt;&lt;br&gt;janela · serviço · prioridade" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="25" y="145" width="210" height="95" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;Routes API + cache&lt;/b&gt;&lt;br&gt;tempo e distância" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="275" y="145" width="210" height="95" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Matrizes&lt;/b&gt;&lt;br&gt;τᵢⱼ e dᵢⱼ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="525" y="145" width="180" height="95" as="geometry"/></mxCell>
+      <mxCell id="d" value="&lt;b&gt;SolverPayload&lt;/b&gt;&lt;br&gt;contrato numérico" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="745" y="145" width="200" height="95" as="geometry"/></mxCell>
+      <mxCell id="e" value="&lt;b&gt;Solver privado&lt;/b&gt;&lt;br&gt;FastAPI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#006633;strokeColor=#004f28;strokeWidth=2;fontColor=#ffffff;fontSize=16;" vertex="1" parent="1"><mxGeometry x="985" y="145" width="170" height="95" as="geometry"/></mxCell>
+      <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#596b7d;strokeWidth=2;" edge="1" parent="1" source="b" target="c"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="c" target="d"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="d" target="e"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+  <diagram id="modelo" name="5 - Modelo VRPTW">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;RoutingIndexManager&lt;/b&gt;&lt;br&gt;dia = veículo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="30" y="145" width="230" height="95" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;Dimensão Time&lt;/b&gt;&lt;br&gt;janelas e propagação" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="315" y="85" width="230" height="95" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Dimensão Count&lt;/b&gt;&lt;br&gt;até 8 paradas/dia" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="315" y="220" width="230" height="95" as="geometry"/></mxCell>
+      <mxCell id="d" value="&lt;b&gt;Função objetivo&lt;/b&gt;&lt;br&gt;arcos + spans + drops" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=17;" vertex="1" parent="1"><mxGeometry x="620" y="145" width="240" height="95" as="geometry"/></mxCell>
+      <mxCell id="e" value="&lt;b&gt;Busca OR-Tools&lt;/b&gt;&lt;br&gt;PCI + GLS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#006633;strokeColor=#004f28;strokeWidth=2;fontColor=#ffffff;fontSize=17;" vertex="1" parent="1"><mxGeometry x="915" y="145" width="190" height="95" as="geometry"/></mxCell>
+      <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="a" target="c"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="b" target="d"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="c" target="d"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="d" target="e"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+  <diagram id="resultado" name="6 - Resposta e persistência">
+    <mxGraphModel dx="1100" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="430" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+      <mxCell id="a" value="&lt;b&gt;RouteSolution&lt;/b&gt;&lt;br&gt;dias · passos · unassigned" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5ec;strokeColor=#006633;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="30" y="145" width="220" height="95" as="geometry"/></mxCell>
+      <mxCell id="b" value="&lt;b&gt;Adaptador de domínio&lt;/b&gt;&lt;br&gt;ItinerarySolution" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="295" y="145" width="220" height="95" as="geometry"/></mxCell>
+      <mxCell id="c" value="&lt;b&gt;Firestore&lt;/b&gt;&lt;br&gt;roteiro persistido" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#596b7d;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="560" y="145" width="190" height="95" as="geometry"/></mxCell>
+      <mxCell id="d" value="&lt;b&gt;Mapa e agenda&lt;/b&gt;&lt;br&gt;ordem · horários · progresso" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef3f8;strokeColor=#003a7a;strokeWidth=2;fontSize=16;" vertex="1" parent="1"><mxGeometry x="795" y="145" width="230" height="95" as="geometry"/></mxCell>
+      <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#006633;strokeWidth=2;" edge="1" parent="1" source="a" target="b"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#596b7d;strokeWidth=2;" edge="1" parent="1" source="b" target="c"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#003a7a;strokeWidth=2;" edge="1" parent="1" source="c" target="d"><mxGeometry relative="1" as="geometry"/></mxCell>
+    </root></mxGraphModel>
+  </diagram>
+</mxfile>

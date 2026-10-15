@@ -1,0 +1,435 @@
+\chapter[Solução Implementada e Resultados]{Solução Implementada e Resultados}
+\label{cap:solucao}
+
+Esta seção acompanha a transformação das escolhas do viajante em uma agenda diária. A partir dos requisitos da Seção~\ref{cap:requisitos}, apresenta a arquitetura que reúne os dados, a seleção dos candidatos e o modelo que distribui as visitas. Em seguida, mostra como o resultado é consultado e editado no aplicativo móvel, analisa as execuções registradas durante a verificação e relata uma avaliação com seis participantes. Por fim, estima o custo de gerar um roteiro.
+
+\section{Visão geral da solução}
+
+No Interlude, a criação de um roteiro começa pela definição do destino e do período da viagem, que pode ser informado como datas ou apenas como quantidade de dias. O viajante escolhe ritmo, modo de transporte e interesses, revisa as atrações sugeridas e indica quais considera prioritárias. A hospedagem e os horários logísticos podem complementar essas escolhas. A partir delas, o sistema reúne dados de mapas e estimativas de duração e contexto para organizar as visitas com o modelo de roteamento. O orçamento de referência acompanha o planejamento na interface como informação auxiliar.
+
+\begin{figure}[htbp]
+  \centering
+  \caption[Visão geral da plataforma]{Visão geral da plataforma, destacando camadas cliente, \textit{backend}, \textit{solver} e provedores externos.}
+  \label{fig:visao-geral}
+  \includegraphics[width=\textwidth]{../diagramas/tcc2/arquitetura.pdf}
+  \fonte{Elaboração própria a partir da implementação.}
+\end{figure}
+
+A Figura~\ref{fig:visao-geral} apresenta os componentes envolvidos nesse percurso. O viajante utiliza o aplicativo React Native, que solicita ao \textit{backend} Fastify as consultas a Places, Routes, Gemini e ao microsserviço de otimização. Depois de receber o resultado, o aplicativo salva a viagem no Cloud Firestore associada à identidade do viajante. As respostas externas podem ser reutilizadas pelo \textit{cache}. As credenciais das integrações de servidor ficam no \textit{backend}. No cliente permanecem a configuração pública do Firebase e as chaves de mapas nativos, sujeitas a restrições de aplicativo.
+
+\FloatBarrier
+\section{Arquitetura da solução}
+
+\subsection{Organização em camadas}
+A organização em camadas de domínio, aplicação, infraestrutura e interface, mostrada na Figura~\ref{fig:componentes}, separa as regras da viagem das formas de apresentação e de acesso aos dados. O aplicativo móvel conduz as ações do viajante, enquanto o \textit{backend} autentica as requisições e prepara as informações obtidas dos provedores. O microsserviço de otimização recebe uma instância numérica e devolve as rotas, podendo ser exercitado sem iniciar a interface ou consultar os serviços externos. Firebase, \textit{cache} e painel administrativo completam a estrutura com armazenamento, reutilização de respostas e operação da plataforma.
+
+\begin{figure}[H]
+  \centering
+  \caption[Componentes da solução]{Organização interna do cliente, \textit{backend} e \textit{solver}. As setas verticais indicam dependências entre camadas. Os adaptadores dependem dos contratos do domínio.}
+  \label{fig:componentes}
+  \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{../diagramas/tcc2/componentes.pdf}
+  \fonte{Elaboração própria a partir da implementação.}
+\end{figure}
+\FloatBarrier
+
+\subsection{Responsabilidades por bloco}
+\begin{description}
+  \item[\textbf{Aplicativo móvel (React Native/Expo).}] Renderiza as interfaces de busca, seleção, mapa 2D/3D, acompanhamento, edição e exportação da agenda para o calendário do aparelho.
+  \item[\textbf{\textit{Backend} Fastify.}] Encapsula as chamadas aos \textit{endpoints} da Google Maps Platform, ao modelo Gemini e ao microsserviço de otimização, aplicando autenticação, \textit{cache} e normalização de dados. É também onde a instância do problema é preparada: enriquecimento dos candidatos, matriz de deslocamentos, janelas por dia e atributos usados no cálculo das penalidades.
+  \item[\textbf{Microsserviço de otimização.}] Implementado em FastAPI com Google OR-Tools, recebe a instância compacta do problema (matriz de tempos, tempos de serviço, janelas de visita, âncoras) e devolve rotas viáveis, horários e pontos não atendidos. Os avisos sobre aproximações da matriz são produzidos pelo \textit{backend}, que conhece a origem dos dados.
+  \item[\textbf{Persistência e identidade.}] Firebase Authentication e Cloud Firestore armazenam a identidade do viajante, as viagens e os roteiros.
+  \item[\textbf{\textit{Cache}.}] Reutiliza respostas de APIs externas por meio de uma camada compatível com Upstash Redis. Na política \textit{read-through}, o adaptador procura primeiro o dado armazenado e consulta a origem quando ele está ausente ou a leitura falha. Por isso, a geração pode operar sem essa camada, embora o número de chamadas e a latência possam aumentar.
+  \item[\textbf{Painel administrativo.}] Aplicação \textit{web} restrita a contas autorizadas, com funções para consultar usuários e viagens, administrar conteúdo, definir perfis de funcionalidades e configurar o serviço de enriquecimento. Essas funções apoiam a operação; a avaliação deste trabalho se concentra no fluxo do viajante.
+  \item[\textbf{Referências de chegada, partida e hospedagem.}] O usuário informa esses dados manualmente para indicar onde estará e em quais horários poderá realizar visitas. A preparação da instância utiliza as informações disponíveis para ajustar o primeiro e o último dia. Sem essas referências, utiliza a janela diária padrão e o ponto-base.
+\end{description}
+
+\subsection{Fluxo típico}
+\begin{enumerate}
+  \item A interface conduz a triagem inicial, identifica o destino desejado e consulta os serviços Places Autocomplete e Place Details da Google Maps Platform para alimentar o mapa e obter coordenadas de referência.
+  \item A plataforma consulta os \textit{endpoints} Places Nearby e Places Text Search para sugerir pontos de interesse, filtra os resultados que não são atrações e os ordena pelo escore de curadoria descrito na Seção~\ref{sec:curadoria}. Fotos e avaliações são obtidas do provedor de lugares, enquanto estimativas de duração, janela preferencial e sazonalidade são solicitadas ao Gemini.
+  \item O serviço Routes Compute Route Matrix gera a matriz de distâncias e tempos entre os candidatos, após deduplicar coordenadas repetidas. Os valores não obtidos do provedor mantêm estimativas geodésicas. O limiar de 120~km orienta o agrupamento das consultas, e falhas de rota registradas geram avisos para a interface.
+  \item O microsserviço procura uma solução para o modelo de roteamento com visitas opcionais da Seção~\ref{sec:modelagem-matematica}. O retorno reúne as agendas diárias e os pontos que não foram alocados. O \textit{backend} agrega os avisos de matriz à resposta encaminhada ao cliente.
+  \item A aplicação atualiza a interface com o itinerário, permite inspeção dos deslocamentos com Routes Compute Routes e registra métricas para análises posteriores.
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \caption[Sequência de interações da solução]{Sequência de descoberta, enriquecimento, geração e persistência. O cliente móvel salva a viagem no Firestore após receber a solução da API.}
+  \label{fig:sequencia}
+  \includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{../diagramas/tcc2/sequencia.pdf}
+  \fonte{Elaboração própria a partir da implementação.}
+\end{figure}
+\FloatBarrier
+
+Na sequência da Figura~\ref{fig:sequencia}, a preparação dos dados precede a busca das rotas. A matriz utiliza o modo de transporte escolhido pelo viajante para cada trecho da viagem, entre carro, caminhada e transporte público, mantendo essa escolha durante a otimização. Quando o provedor reporta falhas de rota, o \textit{backend} as encaminha como avisos para que acompanhem o resultado. Esses avisos identificam os problemas retornados pela consulta, mas podem não incluir pares que permaneceram aproximados devido à política de agrupamento.
+
+\subsection{Rotina interna do \textit{solver}}
+
+O fluxo da Figura~\ref{fig:rotina-solver} detalha o que ocorre após o recebimento de uma requisição \texttt{/solve}. O serviço em FastAPI valida o \textit{payload}, converte matrizes e tempos de serviço para inteiros e configura o modelo no OR-Tools. Erros de entrada retornam código 400 ou 422, conforme a validação que os identifica; matrizes inconsistentes retornam 422. Nos dois pontos de decisão sobre o prazo, a implementação exige pelo menos 0,01 segundo disponível para iniciar uma busca. Se nenhuma solução for obtida nas tentativas permitidas, o serviço retorna 422. Quando uma solução é encontrada, devolve distância total, tempo acumulado, rotas por dia e pontos não atendidos.
+
+\begin{figure}[htbp]
+  \centering
+  \caption[Rotina do serviço de otimização]{Etapas do serviço de otimização, incluindo validação, modelagem, orçamento de busca, tentativa alternativa e retorno.}
+  \label{fig:rotina-solver}
+  \includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]{../diagramas/tcc2/rotina_solver.pdf}
+  \fonte{Elaboração própria a partir da implementação.}
+\end{figure}
+\FloatBarrier
+
+\subsection{Heurísticas aplicadas na otimização}
+
+A geração precisa procurar uma organização das visitas enquanto o usuário aguarda no aplicativo. Para isso, o \textit{solver} constrói uma solução inicial com \textit{Parallel Cheapest Insertion} e a refina com \textit{Guided Local Search}, conforme a rotina em \texttt{aplicativo/solver/app/infrastructure/ortools\_solver.py}. O tempo reservado à busca primária é definido a partir do indicador $|V|+2|D|$, em que $|V|$ é a quantidade de nós da instância e $|D|$ a quantidade de dias. Esse indicador operacional considera tanto o número de pontos quanto a possibilidade de distribuí-los entre diferentes dias.
+
+
+O primeiro estágio insere iterativamente pontos segundo o custo de inserção, respeitando as janelas de tempo e os tempos de serviço configurados. Em seguida, a GLS explora vizinhanças do roteiro para reduzir o custo combinado de deslocamento e penalidades. Os limiares e os tempos vêm de variáveis de ambiente. Nos valores em uso, instâncias com indicador até 30 recebem 2 segundos, até 70 recebem 5 segundos e as maiores recebem os 15 segundos do limite configurado. Cada faixa aplica o \textbf{menor} entre o teto da faixa e o limite configurado, de modo que reduzir o limite global reduz todas as faixas de uma vez.
+
+Caso a busca primária não encontre solução e ainda haja orçamento na requisição, uma segunda busca usa a opção \texttt{AUTOMATIC}, por até 30 segundos. Essa opção delega ao OR-Tools a escolha da estratégia de construção da solução inicial, conforme as características do problema \cite{google_routing_options}; ela não designa uma heurística específica de inserção. O campo \texttt{max\_compute\_seconds}, enviado pelo \textit{backend}, pode reduzir ambos os limites. Os valores 2, 5, 15 e 30 segundos são tetos configurados, não tempos garantidos. Ambas as buscas utilizam a mesma rotina de resolução, parametrizada pela estratégia inicial e pelo orçamento, com busca local guiada nas duas tentativas.
+
+
+A configuração permite ajustar o esforço de busca ao prazo disponível para responder à requisição. Ao atingir esse prazo, a rotina devolve a solução encontrada, sem exigir uma prova de otimalidade. Os tempos registrados na avaliação devem ser interpretados em conjunto com esses limites, pois parte da duração corresponde à procura de melhorias após a construção da solução inicial.
+
+O indicador $|V|+2|D|$ serve para selecionar uma faixa de tempo de execução. Ele não descreve a complexidade assintótica do algoritmo. Seus valores e limiares são parâmetros da implementação, cuja adequação pode ser examinada com medições em conjuntos variados de viagens.
+
+\subsection{Decisões de arquitetura}
+
+A concentração das consultas externas no \textit{backend} permite preparar os dados e manter as credenciais de servidor fora do aplicativo. Já o contrato numérico do \textit{solver} permite verificar as regras de otimização sem depender do banco, do provedor de mapas ou da interface. Essas decisões se complementam: a orquestração conhece a origem das informações, enquanto a otimização trata os valores já convertidos para o modelo.
+
+O armazenamento temporário das respostas e os registros de execução atendem à operação dessa integração. O \textit{cache} evita repetir consultas quando há um dado válido disponível, e os \textit{logs} e o custo estimado por requisição ajudam a investigar falhas e consumo dos provedores. Se a camada de reutilização estiver indisponível, a origem pode ser consultada, preservando o caminho de geração com possíveis mudanças no tempo de resposta.
+
+\section{Curadoria e ordenação dos candidatos}
+\label{sec:curadoria}
+
+A geração começa antes da busca das rotas, na escolha dos lugares que serão apresentados ao viajante. Os interesses escolhidos pelo viajante ativam buscas por tipos de lugar correspondentes, como parques e museus. A consulta também admite descobertas adicionais. Cada categoria ativada tem peso uniforme no fluxo atual. As consultas podem retornar dezenas de resultados, incluindo estabelecimentos que não correspondem ao interesse da viagem. Para compor uma lista inicial que possa ser revisada na interface, a implementação filtra os resultados e ordena os candidatos remanescentes pelos critérios descritos a seguir.
+
+\subsection{Filtragem de não atrações}
+A categoria \texttt{tourist\_attraction} do provedor pode coexistir com classificações de comércio, hospedagem e transporte. Esses lugares podem ter interesse turístico, mas sua inclusão automática depende dos critérios de seleção do aplicativo. O filtro primeiro preserva lugares que correspondem aos interesses explicitamente selecionados. Nos demais casos, verifica tipos primários e secundários para remover comércio, hospedagem, serviço ou transporte. Um tipo de consumo, como comida, bar ou loja, exclui o lugar mesmo quando ele também é classificado como atração. Já a classificação como atração preserva tipos ambíguos, como um palácio cujo tipo primário é ``escritório do governo''. Estações de trem, metrô e transporte público com pelo menos 20 mil avaliações são preservadas por uma regra própria, mesmo sem classificação explícita como atração pelo provedor.
+
+\subsection{Escore de ordenação}
+Os candidatos remanescentes são ordenados por um escore composto de três termos, que ponderam avaliação, volume de avaliações e distância:
+
+\[
+S_i \;=\; B_i \;+\; 0{,}6\,I_i \;-\; 0{,}15\,G_i .
+\]
+
+Nessa expressão, $i$ identifica uma atração, $S_i$ é o valor usado para ordená-la, $B_i$ representa sua nota ajustada, $I_i$ representa o volume relativo de avaliações e $G_i$ representa a distância além do raio de busca. Um escore maior coloca a atração antes na sugestão inicial. Os três termos são calculados da seguinte forma:
+
+\begin{description}
+  \item[Nota ajustada ($B_i$).] A média bayesiana é $B_i = \frac{n_i}{n_i+C}r_i + \frac{C}{n_i+C}m$, em que $r_i$ é a nota observada, $n_i$ é a quantidade de avaliações, $m=4{,}0$ é a nota de referência e $C=500$ é o peso atribuído a essa referência. As duas frações somam 1. Para 500 avaliações, a nota observada e a referência têm o mesmo peso. Um lugar com nota 5 recebe, nesse caso, $B_i=4{,}5$. Quanto mais avaliações houver, maior será a influência da nota observada.
+  \item[Volume relativo ($I_i$).] Primeiro, aplica-se $u_i=\log_{10}(1+n_i)$, em que $n_i$ é o número de avaliações da atração $i$. O logaritmo comprime a diferença entre, por exemplo, centenas e centenas de milhares de avaliações. Os símbolos $u_{\min}$ e $u_{\max}$ são, respectivamente, o menor e o maior valor de $u$ entre os candidatos daquela busca. Depois, calcula-se $I_i=(u_i-u_{\min})/(u_{\max}-u_{\min})$. Assim, o candidato de menor volume recebe 0 e o de maior volume recebe 1, independentemente da escala absoluta do conjunto. Se todos tiverem o mesmo valor, utiliza-se 0 para esse termo. O resultado fica entre 0 e 1 e contribui com até 0,6 para o escore. A implementação chama esse indicador de iconicidade, mas ele mede popularidade relativa na base, não o interesse individual do viajante.
+  \item[Distância ($G_i$).] O termo $G_i=\log_2(\max(1,\delta_i/R))$ utiliza a distância em linha reta $\delta_i$ ao centro de busca e o raio de descoberta $R$, calculado a partir da área do destino. Dentro do raio, a razão é substituída por 1 e o logaritmo é zero. A duas vezes o raio, $G_i=1$, reduzindo o escore em 0,15. A quatro vezes o raio, $G_i=2$, reduzindo-o em 0,30. Assim, a distância atenua a posição de resultados textuais que aparecem fora da área de descoberta.
+\end{description}
+
+A nota de referência $m=4{,}0$ funciona como ponto de partida conservador para lugares pouco avaliados; ela não é uma média estimada por amostragem. O valor $C=500$ foi escolhido para que a nota observada e a referência tenham o mesmo peso quando um lugar tem 500 avaliações. O termo de volume acrescenta no máximo 0,6 ponto, evitando que popularidade isolada substitua a nota. A penalização de 0,15 por duplicação da distância além do raio reduz a posição de resultados muito afastados sem eliminá-los. Esses pesos foram ajustados por inspeção exploratória durante o desenvolvimento; não resultam de estimação estatística ou de experimento com viajantes. Como a posição de um lugar depende também dos demais candidatos retornados, a análise de sensibilidade proposta na Seção~\ref{cap:consideracoes} permitirá examinar o efeito desses valores em diferentes conjuntos de atrações.
+
+No baralho de recomendações, os oito primeiros candidatos vêm do escore global. Depois, as categorias ativas são intercaladas com o mesmo peso, e as descobertas adicionais recebem metade desse peso. O viajante pode rever a seleção e arrastar as atrações para mudar sua ordem. Ao avançar, o aplicativo envia essa ordem ao \textit{backend} como prioridade das atrações, mesmo que a lista não tenha sido arrastada. Ela compõe a penalidade de exclusão descrita na Seção~\ref{sec:modelagem-matematica}. Se uma chamada ao \textit{backend} omitir a lista, os tipos correspondentes aos interesses servem como prioridade substituta. Assim, marcar ``natureza'' aumenta a presença de parques entre os candidatos e pode influenciar indiretamente o que chega ao \textit{solver}, mas não obriga uma visita nem determina sozinho a posição final no roteiro.
+
+\section{Modelagem de dados}
+
+O roteiro salvo é um documento da coleção \texttt{trips} no Cloud Firestore. Ele contém os trechos da viagem, os candidatos escolhidos, a agenda gerada e o progresso das visitas. O identificador \texttt{ownerId} relaciona a viagem ao perfil da coleção \texttt{users}. A Figura~\ref{fig:modelo-er} apresenta um recorte do modelo de dados, com notação pé de galinha, nomes e tipos da implementação em TypeScript. A referência entre documentos aparece tracejada; as relações contínuas indicam estruturas embutidas na viagem.
+
+\begin{figure}[p]
+  \centering
+  \caption[Entidades lógicas do roteiro]{Modelo de dados do roteiro: documentos, estruturas embutidas, atributos selecionados e cardinalidades.}
+  \label{fig:modelo-er}
+  \includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]{../diagramas/tcc2/er-roteiro.pdf}
+  \fonte{Elaboração própria a partir dos tipos persistidos pelo aplicativo.}
+\end{figure}
+\FloatBarrier
+
+No diagrama, \texttt{PK} identifica a chave do documento e \texttt{REF} indica uma referência por identificador, sem restrição de chave estrangeira imposta pelo Firestore. O sufixo \texttt{?} marca um atributo opcional e \texttt{[]} indica uma lista. Datas permanecem representadas como \texttt{string}, conforme os tipos do aplicativo. Atributos compostos, como \texttt{PlaceDetails} e \texttt{EnrichedPlace}, mantêm os nomes dos tipos definidos no código; seus campos internos foram omitidos deste recorte.
+
+Um \texttt{UserProfile} pode estar associado a várias viagens. Cada \texttt{TripDraft} sincronizado exige um proprietário, embora \texttt{ownerId} seja opcional no tipo usado também pelos rascunhos locais. A viagem contém uma lista de \texttt{TripLeg}, que pode estar vazia durante a edição. Cada trecho reúne destino, datas, hospedagens e candidatos, além dos identificadores dos lugares selecionados. A solução \texttt{ItinerarySolution} e o progresso \texttt{LiveProgress} são opcionais. As listas embutidas admitem zero ou mais elementos; seus itens não constituem documentos independentes no Firestore.
+
+Na solução, cada \texttt{DayPlan} organiza as paradas \texttt{RouteStep} e os deslocamentos \texttt{RouteLeg}. As paradas registram ordem, coordenadas e instantes de chegada e saída; os deslocamentos registram origem, destino, distância e duração. O \texttt{LiveProgress} guarda os identificadores de paradas concluídas ou puladas. Quando disponível, um \texttt{solverTrace} compacto acompanha a solução para inspeção, sem registrar a matriz completa ou um histórico de buscas. O aplicativo conserva também uma cópia local para abertura rápida; o \textit{cache} de respostas de provedores é independente dessa persistência.
+
+As estimativas de duração e contexto dos lugares são reutilizadas por identificador no Redis/Upstash. Esse armazenamento tem prazo de expiração e evita novas chamadas ao modelo quando a resposta ainda está disponível. Ele não constitui uma coleção permanente de pontos turísticos no Firestore. O diagrama representa os dados da viagem; o armazenamento temporário de enriquecimento pertence à integração descrita na Seção~\ref{sec:estimativas-integracao}.
+
+\section{Modelagem matemática do problema}
+\label{sec:modelagem-matematica}
+
+O planejamento de um destino é representado por rotas diárias com visitas opcionais. Cada dia ocupa o papel de um veículo no OR-Tools. A formulação combina características do VRPTW, pelos horários de atendimento, e do TOPTW, pela seleção de atrações. Conforme discutido no referencial, os custos de deslocamento e de distribuição dos dias impedem tratar seu objetivo como o prêmio puro do TOPTW.
+
+\subsection*{Dados e decisões}
+
+O conjunto $V$ reúne os pontos recebidos pelo serviço. Sejam $U$ os pontos opcionais, que incluem atrações e refeições, e $V_A\subseteq U$ apenas as atrações. O conjunto $D$ contém os dias do trecho, limitado a 30. Para cada dia $d$, consideram-se cópias distintas da base de saída $o_d$ e de retorno $f_d$, mesmo quando ambas correspondem à mesma hospedagem. Assim, $V^d=U\cup\{o_d,f_d\}$ contém os pontos da rota diária. O conjunto $E^d$ admite ligações entre pontos distintos, sem entrada em $o_d$ nem saída de $f_d$. A ligação direta de $o_d$ a $f_d$ representa um dia sem visitas.
+
+Os tempos $t_{ij}$ vêm da matriz preparada pelo \textit{backend}, que combina consultas ao provedor e aproximações geodésicas. O tempo de serviço $s_i$ reserva a duração da atividade. Todos os instantes são expressos em segundos desde as 6h, com horizonte $H=61.200$ segundos, correspondente às 23h. Cada ponto possui dias permitidos $A_i$ e janelas $[a_i(d),b_i(d)]$ para início do atendimento. A preparação desconta a duração da visita do fechamento conhecido. Quando faltam horários, utiliza o intervalo operacional, o que limita a confiança na viabilidade prática da agenda.
+
+O tempo de serviço de uma atração combina a duração média estimada $v_i$, ou 75 minutos quando ausente, o fator de ritmo $\alpha$, o mínimo recomendado $v_i^{\min}$ e uma margem de planejamento $\beta_i$, limitada a 120 minutos:
+\begin{equation}
+s_i=\min\bigl\{\bar{s},\ \max(v_i^{\min},\ \alpha\,v_i)+\beta_i\bigr\}.
+\label{eq:servico}
+\end{equation}
+O fator vale $\alpha=1{,}3$ no ritmo tranquilo, $1{,}0$ no moderado, exibido como ``Equilibrado'' na interface, e $0{,}8$ no intenso. Ele alonga ou encurta a visita sem reduzi-la abaixo do mínimo recomendado, considerado zero quando não informado. A margem é somada depois e não é afetada pelo ritmo. Uma visita estimada em 2~h, com margem de 30~min, ocupa $1{,}3\times2+0{,}5=3{,}1$~h no ritmo tranquilo e $0{,}8\times2+0{,}5=2{,}1$~h no intenso. Para atrações comuns, o teto é $\bar{s}=3{,}5$~h. Se $v_i+\beta_i$, antes do fator de ritmo, atingir 70\% de nove horas (6,3~h), a atividade é tratada como de dia inteiro e o teto passa a ser o horizonte $H$. Sua duração favorece um dia dedicado, mas não existe uma restrição que proíba a presença de outra atração nesse dia.
+
+O ritmo define o piso suave $C_{\min}$ e o teto rígido $C_{\max}$ de atrações: 2--3 no tranquilo, 3--4 no moderado e 4--6 no intenso. Bases e refeições não entram nessa contagem. A família $\mathcal{G}$ reúne grupos de alternativas para uma mesma refeição. O conjunto $\mathcal{S}$ identifica café da manhã, almoço, lanche e jantar, e $V_h$ reúne os pontos de cada categoria de horário $h\in\mathcal{S}$.
+
+As decisões são representadas por $x_{ij}^d\in\{0,1\}$, que indica o uso do arco $(i,j)$ no dia $d$, e $z_i^d\in\{0,1\}$, que indica a visita ao ponto opcional $i$ nesse dia. A variável $y_i\in\{0,1\}$ indica sua exclusão da viagem. O instante de atendimento é $T_i^d$, com $0\leq T_i^d\leq H$. Essa notação descreve as decisões do modelo; o código as implementa com sucessores de rota, veículos e dimensões acumuladas da Routing Library.
+
+\subsection*{Custos usados na busca}
+
+O objetivo combina deslocamentos, exclusões de atrações e demais custos, reunidos em $\Phi$:
+\begin{equation}
+\min\quad
+\sum_{d\in D}\sum_{(i,j)\in E^d} t_{ij}x_{ij}^d
++\sum_{i\in V_A}\pi_i y_i+\Phi .
+\label{eq:objetivo-interlude}
+\end{equation}
+O custo de um arco corresponde apenas ao deslocamento. A duração da visita participa do relógio da rota e dos custos de duração do dia. Os valores somados são unidades internas de comparação, sem interpretação monetária ou equivalência direta à satisfação do viajante.
+
+Para uma atração comum, o custo de exclusão é
+\begin{equation}
+\pi_i=\left\lfloor\pi_0(1+\omega\rho_i)(1+\mu\iota_i)
+\left(\frac{1+\sigma_i}{2}\right)\right\rfloor .
+\label{eq:penalidade-interlude}
+\end{equation}
+O arredondamento para baixo corresponde à conversão para inteiro no código. Se $N=|V_A|$ e $\mathrm{ordem}_i$ é a posição da atração, começando em zero, então $\rho_i=(N-\mathrm{ordem}_i)/N$. A primeira recebe 1 e a última, $1/N$. O indicador $\iota_i=\min(1,\log_{10}(1+n_i)/5)$ utiliza o número $n_i$ de avaliações e satura próximo de cem mil. Ele difere de $I_i$, usado na curadoria: aqui a escala é fixa, enquanto na curadoria depende do conjunto retornado pela busca. A adequação sazonal $\sigma_i$ vale normalmente 1 e cai para 0,6 quando todos os meses do trecho estão entre os meses desaconselhados pelo enriquecimento. Fechamentos são tratados separadamente pelos dias permitidos.
+
+Os valores de referência são $\pi_0=5\times10^6$, $\omega=4$ e $\mu=0{,}5$. Uma atração com $\rho_i=1$, $\iota_i=0$ e $\sigma_i=1$ recebe penalidade de 25 milhões. Alterar apenas $\sigma_i$ para 0,6 reduz esse valor para 20 milhões. A prioridade influencia a seleção, mas não estabelece precedência absoluta entre atrações: popularidade, sazonalidade, horários e os demais custos também participam da decisão. Esses coeficientes foram escolhidos durante o desenvolvimento, sem calibração com participantes.
+
+Atrações de dia inteiro recebem penalidade fixa de $2\times10^9$. Para refeições, cobra-se uma única exclusão por grupo: $10^9$ para estabelecimentos escolhidos pelo usuário e $10^5$ para pausas automáticas. Uma alternativa de refeição sem grupo recebe este último valor individualmente. Penalidades altas favorecem a permanência, sem transformar a visita em uma obrigação rígida.
+
+Além das exclusões de refeições, $\Phi$ inclui os custos abaixo, somados sobre os dias e pontos aos quais se aplicam. Os coeficientes por segundo indicam unidades de custo por segundo, não valores em dinheiro:
+\begin{itemize}
+  \item \textbf{Duração e conforto.} A duração $\ell_d=T_{f_d}^d-T_{o_d}^d$ custa $\lambda\ell_d$, com $\lambda=1$. Cada segundo acima de nove horas acrescenta 40 unidades. A duração inclui deslocamentos, serviços e esperas.
+  \item \textbf{Início do dia.} A referência é 9h ou, se anterior, o limite superior da janela de saída. Cada segundo de antecipação custa 2 unidades; cada segundo de atraso, 30. Um início tardio continua possível, mediante esse custo.
+  \item \textbf{Contagem de atrações.} Cada visita acima de $\lceil N/|D|\rceil$ custa $10^4$. Cada visita faltante para atingir $\min(C_{\min},\lfloor N/|D|\rfloor)$ custa $2\times10^7$ em um dia com ao menos uma visita. A Routing Library não cobra esse custo de um dia sem nenhuma visita, comportamento examinado na Seção~\ref{sec:avaliacao-participantes}; nesse caso, são o teto suave e a duração dos dias que distribuem as atrações. O piso também pode ser descumprido quando as janelas não permitem preenchê-lo.
+  \item \textbf{Horários recomendados.} O início após o fim da janela preferencial custa 500 unidades por segundo para recomendação forte e 20 para suave. Não há custo simétrico por começar antes dessa recomendação. O custo incide quando a visita é incluída na rota.
+  \item \textbf{Estabelecimentos de refeição.} Para cada categoria, café ou restaurante, conta-se o número de estabelecimentos distintos escolhidos. O teto suave diário é a divisão desse total pelos dias, arredondada para cima. Cada parada da categoria que exceder esse teto em um dia custa $2\times10^5$, quando há mais de um estabelecimento e mais de um dia.
+\end{itemize}
+
+\subsection*{Condições das rotas}
+
+Cada ponto opcional deve ser visitado uma vez ou excluído. Quando visitado, precisa ter um arco de entrada e um de saída no mesmo dia:
+\begin{align}
+\sum_{d\in D}z_i^d+y_i&=1 && i\in U,\label{eq:visita-unica}\\
+\sum_{j:(j,i)\in E^d}x_{ji}^d
+=\sum_{j:(i,j)\in E^d}x_{ij}^d&=z_i^d && i\in U,\ d\in D.\label{eq:fluxo-visitas}
+\end{align}
+Cada rota sai uma vez de $o_d$ e chega uma vez a $f_d$. A conectividade exige ainda que um conjunto de visitas não forme um ciclo separado das bases. Essa condição pode ser expressa por
+\begin{align}
+\sum_{j:(o_d,j)\in E^d}x_{o_dj}^d
+=\sum_{i:(i,f_d)\in E^d}x_{if_d}^d&=1 && d\in D,\label{eq:bases-rota}\\
+\sum_{\substack{i\in W,\ j\in V^d\setminus W\\(i,j)\in E^d}}x_{ij}^d
+&\geq z_k^d && \emptyset\ne W\subseteq U,\ k\in W,\ d\in D.\label{eq:conectividade}
+\end{align}
+Na Equação~\ref{eq:conectividade}, qualquer subconjunto $W$ que contenha uma visita escolhida precisa ter uma ligação de saída. Em conjunto com as condições de fluxo, isso impede percursos desconectados. Na implementação, a própria estrutura de rotas do OR-Tools garante essa conectividade, sem enumerar esses subconjuntos.
+
+As condições temporais podem ser escritas como implicações:
+\begin{align}
+z_i^d=1&\ \Longrightarrow\ a_i(d)\leq T_i^d\leq b_i(d),\label{eq:janela-visita}\\
+x_{ij}^d=1&\ \Longrightarrow\ T_j^d\geq T_i^d+s_i+t_{ij}.\label{eq:tempo-rota}
+\end{align}
+A primeira vale para os pontos opcionais no dia escolhido; as bases têm suas janelas impostas diretamente. A segunda vale para os arcos de cada rota. A desigualdade admite espera antes da próxima atividade. Um museu aberto das 10h às 17h, com visita de duas horas, admite início até as 15h. Se o deslocamento permitir chegar somente às 15h10, a visita precisará mudar de posição, mudar de dia ou ser excluída.
+
+Por fim, as condições de calendário, refeições e ritmo são
+\begin{align}
+z_i^d&=0 && i\in U,\ d\notin A_i,\\
+\sum_{d\in D}\sum_{i\in g}z_i^d&\leq1 && g\in\mathcal{G},\\
+\sum_{i\in V_h}z_i^d&\leq1 && h\in\mathcal{S},\ d\in D,\\
+\sum_{i\in V_A}z_i^d&\leq C_{\max} && d\in D.
+\end{align}
+Elas impedem visitas em dias indisponíveis, repetição de uma mesma refeição, duas refeições no mesmo intervalo diário e excesso de atrações. Fixar uma visita manualmente em um dia restringe $A_i$, sem reabrir uma data fechada. O piso do ritmo e a referência de nove horas permanecem suaves, como descrito em $\Phi$.
+
+Essa apresentação explicita as decisões e as condições de viabilidade, mas não é um programa linear executado pelo sistema. O OR-Tools utiliza dimensões temporais e de contagem, disjunções e busca heurística. O retorno não inclui certificado de otimalidade. A matriz permanece fixa durante a busca e não representa o trânsito em cada horário de partida. O orçamento monetário também fica fora da função objetivo. A Seção~\ref{sec:experimento-busca} examina como diferentes estratégias se comportam sob esse mesmo modelo.
+
+\section{Engenharia de software da solução}
+
+A integração entre aplicativo, provedores e otimização exige verificar os dados que atravessam essas fronteiras e reproduzir os comportamentos do modelo durante a manutenção. As práticas a seguir apoiam essas necessidades na implementação:
+\begin{itemize}
+  \item \textbf{Validação sistemática de contratos}: o \textit{backend} utiliza esquemas Zod e tipos de domínio. O \textit{solver} expõe modelos \texttt{pydantic} que rejeitam matrizes inconsistentes e janelas inválidas antes de acionar o OR-Tools.
+  \item \textbf{Separação de responsabilidades}: \textit{mobile}, \textit{backend} e \textit{solver} possuem fronteiras explícitas e podem ser verificados e implantados independentemente.
+  \item \textbf{Ambiente reproduzível}: os Dockerfiles do \textit{backend}, do painel administrativo e do \textit{solver}, somados ao \texttt{docker-compose.yml}, padronizam os serviços usados durante o desenvolvimento e a demonstração.
+  \item \textbf{Verificação determinística do núcleo}: a suíte de regressão do \textit{solver} executa cinco cenários sintéticos e verifica oito propriedades do modelo sem depender de rede ou de provedores externos, o que permite alterar penalidades e limites suaves e verificar regressões nos comportamentos cobertos.
+\end{itemize}
+
+\subsection{Edição após a geração}
+
+Depois de criar uma viagem, o usuário pode precisar definir as datas exatas ou adaptar o período inicialmente escolhido. O botão de edição reúne essas ações. Ao selecionar um novo intervalo, a quantidade de dias passa a corresponder ao período inclusivo informado, e salvar inicia uma nova geração acompanhada por uma animação de progresso. O recálculo também é necessário quando a quantidade de dias permanece igual, pois a mudança de datas pode alterar os dias da semana e os horários de funcionamento das atrações.
+
+Uma mudança pontual, como transferir uma atração para outro dia, segue um caminho diferente. O aplicativo tenta primeiro reorganizar localmente as agendas afetadas, preservando a ordem relativa das demais visitas e as reservas. Os deslocamentos existentes são reutilizados quando o segmento permanece igual, e novos segmentos recebem estimativa geodésica. Se os horários não permitirem confirmar o encaixe, a viagem é mantida. Essa validação considera também as visitas seguintes: mover um ponto pode atrasar outro até depois de seu horário de fechamento.
+
+Quando o ajuste local não é possível, o viajante pode solicitar ao \textit{solver} uma proposta de reorganização. Nessa tentativa, a atração recebe prioridade temporária e fica restrita ao dia desejado. O aplicativo só apresenta a proposta como aplicável se ela contiver a atração exatamente nesse dia, mostrando as mudanças de dia, as inclusões, as exclusões e a agenda completa. O roteiro salvo é substituído apenas quando o usuário escolhe aplicar a proposta, permitindo que ele examine o efeito da mudança sobre o restante da viagem.
+
+As atrações que ficaram fora do roteiro podem ser consultadas em uma tela dedicada, acessível pelo aviso da agenda ou pelas configurações. Ao dispensar o aviso, a preferência é preservada localmente para aquela viagem, e o acesso pelas configurações permanece disponível. Com datas exatas e permissão do usuário, a exportação para calendário cria ou atualiza eventos no aparelho.
+
+\input{editaveis/interfaceatual}
+
+\section{Verificação funcional e análise da busca}
+\label{sec:resultados}
+
+A verificação do fluxo integrado acompanhou o percurso entre as escolhas feitas no aplicativo e a agenda devolvida ao viajante. Nesse percurso, o \textit{backend} reúne os lugares, as estimativas complementares e a matriz de deslocamentos. O \textit{solver} utiliza esses dados para construir as rotas diárias, que podem ser salvas e consultadas no mapa e na lista de visitas.
+
+Foram registradas três execuções, em Nova Iorque, Brasília e Pirenópolis. A primeira preserva dados que permitem detalhar a instância e a distribuição das paradas. As demais documentam o funcionamento no ambiente publicado e em aparelho físico. Como cada registro observa uma parte do fluxo, os tempos são apresentados com a respectiva forma de medição.
+
+\subsection{Verificação do núcleo de otimização}
+\label{sec:verificacao-nucleo}
+
+A verificação do modelo utiliza entradas sintéticas, nas quais os dados e as condições de cada cenário são conhecidos. Assim, é possível provocar situações como excesso de atrações ou fechamento em uma data e observar a resposta da otimização sem depender da disponibilidade dos provedores. A suíte determinística reúne cinco cenários e verifica as oito propriedades apresentadas na Tabela~\ref{tab:suite-solver}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Propriedades verificadas pela suíte determinística do \textit{solver}}
+\label{tab:suite-solver}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}X}
+\hline
+\textbf{Teste} & \textbf{Propriedade verificada} \\
+\hline
+Cidade compacta & Todo POI é atribuído e a carga se distribui entre os dias \\
+Sobrecarga de prioridades & Na instância de sobrecarga, os pontos priorizados permanecem em detrimento dos de menor prioridade \\
+Destaque de dia inteiro & No cenário verificado, a atividade de dia inteiro permanece e ocupa o dia sem outras atrações \\
+Janelas por data & Atrações fechadas na data não recebem visita naquele dia \\
+Alternativas de refeição & Cada grupo de alternativas é escolhido no máximo uma vez e as refeições se espalham entre os dias \\
+Âncora matinal & Dias sem janela que comece de madrugada começam próximos à âncora matinal \\
+Faixas de busca & O orçamento cresce conforme o indicador $|V|+2|D|$ da instância \\
+Prazo por requisição & O limite recebido reduz a busca sem alterar a configuração padrão do \textit{solver} \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base nos cenários sintéticos da suíte de verificação.}
+\end{table}
+
+Esses cenários permitem acompanhar regressões nos comportamentos examinados. No cenário de sobrecarga, por exemplo, verifica-se a permanência dos pontos priorizados sob aquelas entradas, enquanto o teste de atividade longa examina sua alocação em um dia dedicado. Como essas escolhas dependem dos demais custos e restrições, os resultados são interpretados em relação a cada cenário. A verificação do núcleo é complementada pelas execuções integradas apresentadas a seguir, pelos percursos manuais no aparelho e por testes dirigidos de edição, persistência, calendário e \textit{cache}. As verificações pontuais em navegador cobrem parte da interface. Os recursos nativos exigem também observação em iPhone ou Android.
+
+\subsection{Execução detalhada: Nova Iorque, cinco dias}
+\label{sec:execucao-ny}
+
+A execução com entrada, saída e registro de busca preservados cobre uma viagem de 14 a 18 de setembro de 2026 a Nova Iorque, com hospedagem informada (\textit{check-in} às 14h do primeiro dia, \textit{check-out} ao meio-dia do sexto), ritmo moderado e transporte público como modo de deslocamento. Doze atrações foram selecionadas e ordenadas pelo usuário na tela de priorização.
+
+A instância registrada reuniu \textbf{52 nós}: 12 atrações, a hospedagem como depósito e 39 alternativas de almoço, organizadas em três grupos de 13 posições nos dias 2, 3 e 4. Essas posições repetem as coordenadas de atrações e hotel, portanto não ampliam o conjunto de coordenadas enviado ao provedor de rotas. O horizonte foi de 61.200 segundos, com piso nominal 3, piso efetivo $\min(3,\lfloor12/5\rfloor)=2$ e teto 4.
+
+A telemetria do \textit{solver} registrou indicador $52 + 2\times5 = 62$, portanto na faixa intermediária, com orçamento efetivo de 5 segundos ante um limite configurado de 15. A busca consumiu $5{,}032$ segundos, próximo ao limite aplicado nessa execução, e devolveu função objetivo $154.192$, deslocamento total de $62{,}4$~km e \textbf{nenhuma atração não alocada}. A distribuição por dia consta da Tabela~\ref{tab:resultado-ny}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Distribuição do roteiro gerado para Nova Iorque}
+\label{tab:resultado-ny}
+\begin{tabularx}{\textwidth}{crccr>{\raggedright\arraybackslash}X}
+\hline
+\textbf{Dia} & \textbf{Desloc.} & \textbf{Atrações} & \textbf{Refeições} & \textbf{Duração} & \textbf{Paradas} \\
+\hline
+1 & 15,7 km & 2 & 0 & 8,9 h & Ponte do Brooklyn, Memorial do 11 de Setembro \\
+2 & 10,9 km & 3 & 1 & 8,0 h & Catedral de São Patrício, Metropolitan Museum, Central Park \\
+3 & 23,3 km & 2 & 1 & 8,9 h & Estátua da Liberdade, Empire State Building \\
+4 & \phantom{0}6,8 km & 3 & 1 & 8,4 h & Lincoln Center, Radio City Music Hall, Times Square \\
+5 & \phantom{0}5,6 km & 2 & 0 & 2,8 h & Rockefeller Center, Parque Bryant \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base na resposta e no registro da execução de Nova Iorque. Os valores diários e o total de 62,4~km foram arredondados separadamente. A soma dos valores exibidos na tabela é 62,3~km.}
+\end{table}
+
+O usuário definiu quais atrações desejava visitar e sua ordem de preferência, enquanto a atribuição de cada uma aos dias foi produzida pelo \textit{solver}, considerando as janelas e os limites de contagem da instância. A Tabela~\ref{tab:resultado-ny} permite examinar essa distribuição em relação à duração dos dias, aos limites nas extremidades da viagem e aos deslocamentos:
+
+\begin{itemize}
+  \item \textbf{Duração observada.} Os dias 1 a 4 ficaram entre 8,0 e 8,9 horas, abaixo da referência suave de 9 horas. A duração mede o intervalo entre saída e retorno e inclui deslocamentos, visitas e esperas. Não mede apenas tempo de visita.
+  \item \textbf{Janelas nas pontas.} As janelas das atrações permitem visitas a partir das 14h no primeiro dia e reservam apenas a manhã para visitas no quinto. A base registrada, porém, mantém o intervalo das 6h às 23h em todos os dias. Por isso, a saída calculada no primeiro dia é às 9h, seguida de deslocamento e espera até a primeira visita às 14h. As 8,9 horas da tabela incluem essa espera; não representam 8,9 horas disponíveis após a chegada. No último dia, o retorno ocorreu antes do meio-dia, mas esse horário não foi imposto como limite à base. A origem da redução das janelas das atrações não pode ser recuperada apenas pelo arquivo: o \textit{check-out} registrado é em 19/09, fora dos cinco dias analisados. Esse registro comprova o atendimento às janelas recebidas, sem comprovar a representação correta de toda a logística da viagem.
+  \item \textbf{Deslocamento e contagem.} O dia 3 tem o maior deslocamento, 23,3~km, e inclui a Estátua da Liberdade. Os dias 1, 3 e 5 têm duas atrações, atingindo o piso efetivo de 2. Os dias 2 e 4 têm três. Não há violação do piso efetivo nesta execução.
+\end{itemize}
+
+A distribuição das refeições também depende dos candidatos preparados antes da busca. A instância oferece alternativas de almoço apenas nos dias 2, 3 e 4, explicando a ausência dessas paradas nos dias 1 e 5. As posições equivalentes de uma refeição são alternativas para escolher uma parada. Aquelas que não são escolhidas não compõem a lista de atrações não alocadas.
+
+As doze atrações couberam nos cinco dias, de modo que essa execução permite examinar a distribuição temporal, mas não o comportamento de exclusão por falta de espaço. As exclusões são examinadas tanto pelo cenário sintético de sobrecarga da Tabela~\ref{tab:suite-solver} quanto pelas derivações controladas do período descritas a seguir.
+
+\subsection{Comparação de estratégias e limites de busca}
+\label{sec:experimento-busca}
+
+Para examinar o efeito da busca local, a entrada registrada de Nova Iorque foi executada novamente sem consultas externas. Permaneceram fixos os pontos, a matriz, as durações, as janelas e os coeficientes do modelo. Variaram a construção inicial, a estratégia de melhoria e o tempo disponível. O experimento reutiliza a classe do \textit{solver}; substitui apenas a configuração da busca e desativa a tentativa alternativa, para que uma falha não seja encoberta por outro método.
+
+O registro de 22 de setembro de 2026 contém 21 execuções, realizadas com OR-Tools 9.10.4067 e Python 3.12.13 em macOS arm64: 17 sobre a entrada de cinco dias e 4 sobre os recortes descritos na Seção~\ref{sec:reducao-periodo}. Na entrada de cinco dias, foram comparadas a construção por arco mais barato a partir do último ponto e a inserção paralela, ambas interrompidas na primeira solução, além de inserção seguida de descida gulosa, GLS, \textit{simulated annealing} ou busca tabu. A GLS recebeu limites de 2, 5, 15, 60, 300 e 600 segundos. Os limites de 2, 5 e 15 segundos tiveram três repetições cada; os demais, uma. Os arquivos de entrada, o programa e os registros estão no repositório do projeto \cite{interlude2026repositorio}, em \path{tcc/fontes/qualidade-solver/}. Uma repetição em 23 de setembro, com Python 3.11.8 e a mesma versão do OR-Tools, reproduziu os objetivos e as agendas das 21 execuções. Esse segundo registro foi preservado separadamente, com os resumos criptográficos dos arquivos utilizados; os tempos citados a seguir continuam sendo os da execução original.
+
+O menor objetivo observado no cenário, 154.192, é usado apenas como referência empírica. O desvio relativo de um resultado é a diferença para essa referência dividida por ela, em porcentagem. Esse cálculo não mede distância ao ótimo, pois não se conhece um limite que comprove a qualidade global da solução. A Tabela~\ref{tab:comparacao-busca} apresenta os objetivos obtidos.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Estratégias de busca na entrada de Nova Iorque com cinco dias}
+\label{tab:comparacao-busca}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrr}
+\hline
+\textbf{Configuração} & \textbf{Objetivo} & \textbf{Desvio} & \textbf{Atrações} \\
+\hline
+Arco mais barato, primeira solução & 96.495.574 & 62.481,4\% & 10/12 \\
+Inserção paralela, primeira solução & 41.494.118 & 26.810,7\% & 12/12 \\
+Inserção e descida gulosa & 155.336 & 0,7\% & 12/12 \\
+Inserção e GLS, 2 a 600 s & 154.192 & 0,0\% & 12/12 \\
+Inserção e \textit{simulated annealing}, 60 s & 155.336 & 0,7\% & 12/12 \\
+Inserção e busca tabu, 60 s & 155.336 & 0,7\% & 12/12 \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria a partir do registro computacional. A linha GLS resume os seis limites testados; as repetições de 2, 5 e 15 segundos também retornaram o mesmo objetivo.}
+\end{table}
+
+O objetivo elevado da construção inicial mostra que obter uma solução viável não basta para equilibrar os termos do modelo. Mesmo com as doze atrações atendidas, a primeira solução da inserção paralela teve custo muito superior ao obtido após a melhoria. Os percentuais refletem também a escala das penalidades e não devem ser lidos como percentuais de melhora da experiência de viagem. A descida gulosa terminou em aproximadamente 0,11 segundo no registro original e ficou 0,7\% acima da referência. Esse resultado expõe uma alternativa de menor esforço de busca que precisaria ser examinada em outras entradas antes de motivar uma mudança na aplicação.
+
+Não foi observada melhoria do objetivo ao ampliar o limite da GLS de 2 para 600 segundos. Portanto, as buscas mais longas deste experimento não trouxeram ganho nessa entrada. Isso não comprova convergência global nem demonstra que dois ou cinco segundos sejam suficientes para qualquer viagem. O corte depende do relógio e da máquina, e repetições iguais de um método não equivalem a uma amostra de destinos independentes. Os testes tampouco estabelecem superioridade geral da GLS sobre as outras estratégias.
+
+\subsubsection{Redução controlada do período}
+\label{sec:reducao-periodo}
+
+Também foram produzidas derivações de três e dois dias, mantendo os primeiros dias da entrada. Removeram-se os dias finais, suas alternativas de refeição e as linhas e colunas correspondentes das matrizes. As doze atrações foram preservadas. As janelas remanescentes conservaram seus valores, inclusive a disponibilidade de visitas a partir das 14h no primeiro dia. Esse procedimento não repete a preparação do \textit{backend} nem recalcula a logística para uma nova data de partida. Trata-se de uma alteração controlada da instância registrada, e não de duas novas viagens observadas.
+
+Cada derivação foi resolvida com inserção e GLS, uma vez com limite de 5 segundos e outra com 60. Ambos são limites experimentais fixos. No caso de dois dias, há 26 nós e indicador $26+2\times2=30$; a política adaptativa atual atribuiria dois segundos, de modo que a execução de cinco segundos não representa esse orçamento de produção. A Tabela~\ref{tab:reducao-periodo} reúne os resultados.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Efeito da redução do período na entrada registrada}
+\label{tab:reducao-periodo}
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Período} & \textbf{Objetivo} & \textbf{Atrações} & \textbf{Almoços} & \textbf{Maior dia} \\
+\hline
+5 dias & 154.192 & 12/12 & 3 & 8,9 h \\
+3 dias & 964.855 & 12/12 & 0 & 10,1 h \\
+2 dias & 54.351.440 & 8/12 & 0 & 9,2 h \\
+\hline
+\end{tabular}
+\fonte{Elaboração própria. Nos recortes, os limites de 5 e 60 segundos produziram os mesmos objetivos. A linha de cinco dias serve de contexto; os objetivos de instâncias distintas não formam uma escala de qualidade comparável.}
+\end{table}
+
+Em três dias, foram alocadas quatro atrações por dia, sem almoço automático, e a maior duração chegou a 10,1 horas. Em dois dias, o teto de quatro atrações por dia já obriga a excluir pelo menos quatro das doze. A solução excluiu exatamente as posições 9 a 12 da prioridade de entrada. Isso confirma o comportamento naquele conjunto, sem tornar a prioridade uma regra absoluta do modelo.
+
+Esses recortes evidenciam uma escolha da função objetivo: preservar atrações pode custar menos do que manter pausas e limitar a duração a nove horas. Uma pausa automática omitida custa 100 mil unidades, enquanto a exclusão da atração de menor prioridade nessa entrada custa 10 milhões. A busca respeita as restrições rígidas, mas pode devolver uma agenda cansativa. As respostas dos participantes na Seção~\ref{sec:avaliacao-participantes} oferecem uma primeira perspectiva sobre a viabilidade percebida da agenda. Examinar esse compromisso em outras viagens e analisar diferentes pesos permanece como continuidade do estudo.
+
+\subsection{Execuções complementares}
+
+Além da execução detalhada, duas outras foram registradas, com propósitos distintos. A Tabela~\ref{tab:execucoes} reúne as três.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Execuções de validação registradas}
+\label{tab:execucoes}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}X}
+\hline
+\textbf{Cenário} & \textbf{Instância} & \textbf{Medição} & \textbf{Propósito} \\
+\hline
+Nova Iorque & 12 atrações, 5 dias, 52 nós & 5,032 s no \textit{solver}. Objetivo 154.192 & Execução detalhada na Seção~\ref{sec:execucao-ny}. Nenhum item não alocado \\
+Brasília & 8 atrações, 4 dias, 45 nós & 2,95 s ponta a ponta, 2,07 s no \textit{solver} & \textit{Smoke test} no ambiente publicado. Nenhum item não alocado \\
+Pirenópolis & 5 atrações, 3 dias & 13 s percebidos & Ensaio em aparelho físico (Galaxy S9), incluindo rede, curadoria e interface \\
+\hline
+\end{tabularx}
+\fonte{Elaboração própria, com base nos registros das três execuções descritas nesta seção.}
+\end{table}
+
+A interpretação dos tempos exige considerar onde cada medição começa e termina. Em Nova Iorque, os $5{,}032$~s correspondem à busca interna, cujo orçamento era de 5 segundos. Em Brasília, os $2{,}95$~s cobrem a requisição completa no ambiente publicado, incluindo $2{,}07$~s de busca. Esse tempo é um registro histórico: com 45 nós e quatro dias, o indicador atual seria $45+2\times4=53$, correspondente ao teto de cinco segundos. O tempo observado, isoladamente, não permite recuperar a configuração ou o prazo efetivo daquela requisição. Já os 13~s de Pirenópolis representam o tempo percebido no aparelho, incluindo rede, enriquecimento e apresentação. Esses registros ajudam a localizar o tempo gasto no fluxo, mas suas diferentes abrangências impedem comparar diretamente a velocidade de geração entre os destinos.
+
+O ensaio no aparelho físico percorreu ainda persistência do progresso, mapa 2D/3D e reordenação do roteiro. Um cenário local adicional confirmou a fixação consecutiva de atividades de vários dias, a preservação de atividades de dia inteiro e o bloqueio de atrações fechadas na data.
+
+\subsection{Alcance e limites destes resultados}
+\label{sec:alcance-resultados}
+
+As execuções mostram que a integração produziu agendas a partir das escolhas do viajante e dos dados preparados para cada cenário. No caso detalhado de Nova Iorque, é possível acompanhar a distribuição das doze atrações, os intervalos ocupados e os deslocamentos diários. Na execução de cinco dias, as durações ficaram abaixo da referência suave de conforto de 9 horas. Como essa referência é uma preferência penalizada, outras entradas podem produzir dias mais longos, como ocorreu nos recortes da Seção~\ref{sec:reducao-periodo}.
+
+A qualidade da solução precisa ser interpretada em relação ao método de busca e às informações recebidas. A busca local guiada procura melhorias dentro de um prazo, sem calcular o desvio em relação ao ótimo, e os horários produzidos dependem das durações e dos deslocamentos fornecidos. A comparação da Seção~\ref{sec:experimento-busca} mantém a entrada sob controle e oferece uma primeira referência entre estratégias. Ela cobre uma única instância e seus recortes, sem estimar a distância ao ótimo ou o efeito isolado dos pesos. Ampliar essas comparações exige outras cidades, ritmos e conjuntos de atrações. Testes de carga permitiriam investigar outra questão, relacionada ao atendimento de requisições simultâneas.
+
+Os percursos realizados pelos autores forneceram observações sobre o funcionamento do aplicativo durante o desenvolvimento. A Seção~\ref{sec:avaliacao-participantes} acrescenta uma avaliação com seis participantes, 30 casos de teste e respostas coletadas por um formulário próprio. Os resultados documentam as tarefas e a percepção de uso nos cenários examinados e orientam as propostas de correção discutidas na Seção~\ref{cap:consideracoes}.
+
+\input{editaveis/avaliacaoparticipantes}
+
+\input{editaveis/custosgeracao}
+
+\section{Síntese dos resultados}
+
+Os resultados apresentados percorrem as etapas que o Interlude reúne em uma mesma aplicação: obter informações, organizar as visitas e disponibilizar a agenda para consulta e edição. A suíte sintética examina regras específicas da otimização, as execuções registradas mostram sua participação no fluxo móvel e o experimento computacional compara estratégias sob uma entrada comum. Os recortes do período mostram também que a preservação das atrações pode ocorrer à custa das pausas e da duração dos dias. A avaliação com seis participantes, em sete cenários de geração e seis aparelhos, indicou que agenda, mapa, fechamentos semanais e explicação das exclusões foram compreendidos nos percursos. Ela também apontou como problemas mais relevantes a reserva de restaurante agendada fora do horário, a ordenação apenas por arraste e o dia da chegada com saída antes da chegada. A análise técnica dos cenários mostrou ainda que o piso de visitas não se aplica a dias vazios. Em conjunto, essas verificações documentam o funcionamento da proposta nos cenários estudados e oferecem a base para discutir, na próxima seção, sua contribuição ao problema que motivou o trabalho e as questões que permanecem abertas.

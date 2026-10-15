@@ -1,0 +1,48 @@
+\chapter[Introdução]{Introdução}
+\label{cap:introducao}
+
+\section{Contexto}
+
+Ao planejar uma viagem, o viajante precisa decidir quais lugares visitar e como distribuir essas visitas pelo tempo disponível. Uma lista de atrações, porém, ainda não constitui um roteiro: um museu pode estar fechado no dia escolhido, uma visita pode ocupar boa parte da tarde e o deslocamento até a próxima parada pode inviabilizar o restante da programação. Organizar a viagem exige conciliar essas informações e rever as escolhas quando não é possível acomodar todas as atividades desejadas.
+
+Essa combinação de escolhas e horários é estudada na literatura como \textit{Tourist Trip Design Problem} (TTDP). As formulações desse problema relacionam a seleção de atrações aos problemas de orientação e ao roteamento com janelas de tempo \cite{gavalas2014survey,vansteenwegen2007mobile}. Elas oferecem uma base para representar computacionalmente decisões que o viajante faria ao montar sua agenda. Para utilizá-las em um aplicativo, é preciso também obter e organizar os dados dos lugares, como horários de funcionamento, duração das visitas e tempos de deslocamento.
+
+\section{Motivação e justificativa}
+
+A motivação surgiu no planejamento de uma viagem de três dias a Nova Iorque, realizado pelos autores. A quantidade de atrações pretendidas exigiu pesquisar informações em fontes distintas, definir prioridades e revisar a programação diante de incompatibilidades de horário e deslocamento. Essa experiência delimitou uma necessidade de desenvolvimento: reunir descoberta, seleção, geração e edição do roteiro em um aplicativo. A fundamentação do problema e a comparação com soluções existentes são apresentadas na Seção~\ref{cap:teoria}.
+
+O nome Interlude faz referência aos interlúdios musicais e à viagem como intervalo na rotina.
+
+Na transformação dessa necessidade em uma solução computacional, uma dificuldade está nos dados necessários para organizar a agenda. Serviços geoespaciais fornecem localização, horários de funcionamento e deslocamentos, mas nem sempre informam quanto tempo reservar para uma visita. Neste trabalho, modelos de linguagem complementam esses dados com estimativas, que são então utilizadas por um mecanismo de otimização para distribuir as atividades. Essa divisão de responsabilidades encontra apoio em trabalhos como o TRIP-PAL \cite{delarosa2024trippal}. No Interlude, ela é desenvolvida em conjunto com a interface móvel e com os recursos para salvar e editar os roteiros.
+
+Na primeira etapa do Trabalho de Conclusão de Curso (TCC1), a proposta foi explorada por meio de uma prova de conceito \textit{web}. No TCC2, o desenvolvimento passou a contemplar um aplicativo móvel, aproximando a forma de acesso do contexto de acompanhamento da viagem. Com essa mudança, gerar uma sequência de visitas passou a ser uma etapa de um fluxo mais amplo: o viajante pode salvar o planejamento, consultá-lo no mapa e solicitar ajustes posteriormente. O trabalho descreve essa evolução e identifica quais funcionalidades integram a demonstração do TCC2.
+
+\section{Problema e delimitação}
+
+O problema começa antes de o viajante ter uma lista de atrações. Conhecer as possibilidades de um destino, identificar lugares que combinam com seus interesses e decidir quais merecem o tempo disponível já exige pesquisa. Depois dessa escolha, ainda é preciso organizar as visitas: a proximidade no mapa não basta quando há horários de funcionamento, durações e deslocamentos a conciliar. Se nem tudo couber no período, o planejamento precisa preservar, tanto quanto possível, as prioridades do viajante.
+
+O Interlude acompanha essas duas etapas. Primeiro, sugere atrações a partir do destino e dos interesses informados, filtra resultados inadequados e apresenta uma lista que o usuário pode revisar. Em seguida, utiliza a seleção e a ordem de preferência declaradas pelo viajante para construir a agenda, considerando período, ritmo, deslocamentos e duração estimada das visitas. A hospedagem e os horários estimados de chegada e partida complementam o planejamento quando informados. Uma chegada às 20h, por exemplo, reduz a disponibilidade do primeiro dia, mesmo que ele faça parte do período escolhido. As atrações que não couberem são apresentadas separadamente, permitindo ao viajante rever suas escolhas.
+
+A questão que orienta o desenvolvimento é: \textit{como apoiar a descoberta de atrações e reunir informações sobre visitas e deslocamentos para organizar as escolhas do viajante em roteiros diários que respeitem os horários disponíveis e possam ser consultados e ajustados em um aplicativo móvel?} Para investigá-la, o trabalho integra dados geoespaciais, estimativas de modelos de linguagem e um modelo de roteamento com janelas de tempo. A verificação examina se essa integração produz agendas compatíveis com as informações recebidas e se o aplicativo permite criar, salvar e editar os roteiros. Um experimento computacional compara estratégias de busca sobre uma entrada registrada e derivações do seu período. Uma avaliação com seis participantes registra dificuldades de uso e percepções coletadas por um formulário próprio.
+
+O aplicativo organiza as visitas dentro de cada destino. O viajante define a ordem das cidades e informa os horários estimados de chegada e partida, enquanto o orçamento monetário aparece como referência de gasto. As alterações da agenda dependem de uma solicitação do usuário, pois o aplicativo não acompanha automaticamente mudanças de trânsito ou indisponibilidades durante a viagem. Como os horários e as durações utilizados podem conter imprecisões, o roteiro gerado constitui um planejamento sujeito a ajustes no destino. A análise dos resultados discute essa dependência dos dados e o que ainda precisa ser avaliado com outros viajantes.
+
+\section{Objetivos}
+
+\subsection{Objetivo geral}
+
+Desenvolver e verificar funcionalmente o Interlude, um aplicativo móvel para gerar e editar roteiros turísticos com seleção de atrações e restrições de horário.
+
+\subsection{Objetivos específicos}
+
+\begin{enumerate}
+  \item Analisar a literatura de planejamento turístico e os recursos documentados de ferramentas similares.
+  \item Definir os requisitos e modelar a seleção e a sequência das visitas, com suas restrições e preferências.
+  \item Projetar a arquitetura e os contratos entre interface, provedores de dados, persistência e otimização.
+  \item Implementar a geração, a consulta, a persistência e a edição de roteiros no aplicativo móvel.
+  \item Verificar o funcionamento integrado e comparar estratégias e limites de busca, explicitando o alcance dos resultados.
+\end{enumerate}
+
+\section{Estrutura do trabalho}
+
+A discussão segue do problema de planejamento até a solução implementada. A Seção~\ref{cap:teoria} apresenta os conceitos de roteamento e os trabalhos relacionados que fundamentam a proposta. A Seção~\ref{cap:tecnologias} descreve as tecnologias e os procedimentos utilizados para desenvolvê-la e verificá-la. A partir dessa base, a Seção~\ref{cap:requisitos} reúne os requisitos e sua origem, e a Seção~\ref{cap:solucao} mostra como eles foram traduzidos em arquitetura, modelo de otimização e interface móvel, acompanhados dos resultados registrados e da estimativa de custos de geração. Por fim, a Seção~\ref{cap:consideracoes} retoma os objetivos e discute as contribuições, as limitações e as possibilidades de continuidade do estudo.
