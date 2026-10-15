@@ -203,6 +203,7 @@
         vrp: { tours: [["D", 7, 0, 1, 2, "D"], ["D", 3, 4, 5, 6, "D"]], depot: true },
         vrptw: { tours: [["D", 7, 0, 1, 2, "D"], ["D", 3, 4, 5, 6, "D"]], depot: true, windows: true },
         toptw: { tours: [["D", 0, 1, 2, "D"], ["D", 3, 4, 6, "D"]], depot: true, windows: true, dropped: [5, 7] },
+        interlude: { tours: [["D", 0, 1, 2, "D"], ["D", 3, 4, 6, "D"]], depot: true, windows: true, dropped: [5, 7] },
       };
       slide.querySelectorAll("svg[data-mini]").forEach((svg) => {
         const cfg = tours[svg.dataset.mini];
@@ -436,85 +437,42 @@
     },
   };
 
-  // ---------- 14 Instância: composição, janelas por dia e matriz 13 × 13 ----------
+  // ---------- 14 Instância: uma janela de visita e um recorte da matriz real ----------
   Scenes.instance = {
     init(slide) {
-      const L = D.lunch;
-      const squares = [["h", 1], ["a", 12], ["m", D.mealCount]].flatMap(([k, n]) => Array.from({ length: n }, () => k));
-      slide.querySelector("#compBar").innerHTML = `
-        <div class="comp-eq"><b>${D.nodeCount}</b> nós = <span class="ch-h">1 hotel</span> + <span class="ch-a">12 atrações</span> + <span class="ch-m">${D.mealCount} alternativas de almoço</span></div>
-        <div class="comp-sq">${squares.map((k, i) => `<i class="${k}" style="--i:${i}"></i>`).join("")}</div>
-        `;
       this.windows(slide);
       this.matrix(slide);
     },
     windows(slide) {
       const svg = slide.querySelector("#winGrid");
-      const items = nodes.filter((n) => !n.depot).sort((a, b) => a.priority - b.priority);
-      const X0 = 200, DW = (800 - X0) / 5, GAP = 8, Y0 = 52, RH = 30, H = D.horizon;
-      const start = new Date(`${D.startDate}T12:00:00`);
-      const wd = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
-      for (let d = 0; d < 5; d++) {
-        const day = new Date(start.getTime() + d * 86400000);
-        const x = X0 + d * DW;
-        svgEl("text", { class: "wg-day", x: x + (DW - GAP) / 2, y: 16, "text-anchor": "middle", text: `Dia ${d + 1} · ${wd[day.getDay()]} ${String(day.getDate()).padStart(2, "0")}/${String(day.getMonth() + 1).padStart(2, "0")}` }, svg);
-        [0, 21600, 43200].forEach((t) => {
-          const tx = x + (t / H) * (DW - GAP);
-          svgEl("text", { class: "wg-tick", x: tx, y: 38, "text-anchor": t === 0 ? "start" : "middle", text: hhmm(t).slice(0, 2) + "h" }, svg);
-          svgEl("line", { x1: tx, x2: tx, y1: 44, y2: Y0 + items.length * RH - 6, class: "wg-grid" }, svg);
-        });
-      }
-      items.forEach((n, r) => {
-        const y = Y0 + r * RH;
-        svgEl("text", { class: "wg-name", x: 0, y: y + 13, text: `${n.priority} ${n.name}` }, svg);
-        const h = Math.floor(n.service / 3600), m = Math.round((n.service % 3600) / 60);
-        svgEl("text", { class: "wg-dur", x: X0 - 12, y: y + 13, "text-anchor": "end", text: `${h}h${String(m).padStart(2, "0")}` }, svg);
-        for (let d = 0; d < 5; d++) {
-          const x = X0 + d * DW, w = DW - GAP;
-          svgEl("rect", { x, y: y + 2, width: w, height: RH - 11, rx: 4, class: "wg-track" }, svg);
-          const win = n.windows[String(d)];
-          if (!win) { svgEl("line", { x1: x + w / 2 - 7, x2: x + w / 2 + 7, y1: y + 11, y2: y + 11, class: "wg-none" }, svg); continue; }
-          const bar = svgEl("rect", { x: x + (win[0] / H) * w, y: y + 2, width: Math.max(3, ((win[1] - win[0]) / H) * w), height: RH - 11, rx: 4, class: "wg-bar" }, svg);
-          bar.style.setProperty("--d", `${500 + d * 160 + r * 30}ms`);
-          svgEl("title", { text: `${n.name}, dia ${d + 1}: começa entre ${hhmm(win[0])} e ${hhmm(win[1])}` }, bar);
-        }
+      const met = nodes.find((n) => n.name === "Metropolitan");
+      const [first, last] = met.windows["1"];
+      const close = last + met.service;
+      const X0 = 185, X1 = 715, t0 = 3 * 3600, t1 = 12 * 3600;
+      const x = (t) => X0 + (t - t0) / (t1 - t0) * (X1 - X0);
+      [3, 6, 9, 12].forEach((h) => {
+        svgEl("line", { x1: x(h * 3600), x2: x(h * 3600), y1: 58, y2: 345, class: "instance-grid" }, svg);
+        svgEl("text", { x: x(h * 3600), y: 37, "text-anchor": "middle", class: "instance-tick", text: `${h + 6}h` }, svg);
       });
-      svgEl("text", { class: "wg-tick", x: 0, y: 432, text: "Barra: horário em que a visita pode começar · traço: sem janela no dia" }, svg);
+      const lanes = [
+        { label: "Funcionamento", a: first, b: close, y: 98, fill: "#ABB4AE" },
+        { label: "Início permitido", a: first, b: last, y: 203, fill: "var(--pine)" },
+        { label: "Último encaixe", a: last, b: close, y: 308, fill: "var(--amber)" },
+      ];
+      lanes.forEach(({ label, a, b, y, fill }) => {
+        svgEl("text", { x: X0 - 18, y: y + 7, "text-anchor": "end", class: "instance-lane", text: label }, svg);
+        svgEl("rect", { x: x(a), y: y - 15, width: x(b) - x(a), height: 30, rx: 4, style: { fill } }, svg);
+        svgEl("text", { x: x(a), y: y + 43, "text-anchor": "middle", class: "instance-tick", text: hhmm(a) }, svg);
+        svgEl("text", { x: x(b), y: y + 43, "text-anchor": "middle", class: "instance-tick", text: hhmm(b) }, svg);
+      });
+      svgEl("text", { x: (x(last) + x(close)) / 2, y: 314, "text-anchor": "middle", class: "instance-duration", text: "visita de 3h15" }, svg);
     },
     matrix(slide) {
-      const svg = slide.querySelector("#mxGrid");
-      const tip = slide.querySelector("#mxTip");
-      const order = [nodes[hotel], ...nodes.filter((n) => !n.depot).sort((a, b) => a.priority - b.priority)];
-      const label = (n) => (n.depot ? "H" : String(n.priority));
-      const M = order.map((a) => order.map((b) => D.timeMatrix[a.node][b.node] / 60));
-      const max = Math.max(...M.flat());
-      const X0 = 162, Y0 = 24, C = 30;
-      const ramp = [[238, 244, 241], [156, 195, 179], [47, 93, 80], [20, 50, 42]];
-      const color = (v) => {
-        const t = Math.pow(v / max, 0.7) * (ramp.length - 1);
-        const i = Math.min(ramp.length - 2, Math.floor(t)), f = t - i;
-        return `rgb(${ramp[i].map((c, k) => Math.round(c + (ramp[i + 1][k] - c) * f)).join(",")})`;
-      };
-      order.forEach((n, i) => {
-        svgEl("text", { class: "mx-row", x: X0 - 8, y: Y0 + i * C + C / 2 + 4, "text-anchor": "end", "data-r": i, text: n.depot ? "Hotel  H" : `${n.name}  ${label(n)}` }, svg);
-        svgEl("text", { class: "mx-col", x: X0 + i * C + C / 2, y: Y0 - 9, "text-anchor": "middle", "data-c": i, text: label(n) }, svg);
-      });
-      order.forEach((a, i) => order.forEach((b, j) => {
-        const v = M[i][j];
-        const g = svgEl("g", { class: "mx-cell", style: { animationDelay: `${450 + (i + j) * 28}ms` } }, svg);
-        svgEl("rect", { x: X0 + j * C, y: Y0 + i * C, width: C - 2, height: C - 2, rx: 4, style: { fill: i === j ? "#F2F1ED" : color(v) } }, g);
-        if (i !== j) svgEl("text", { class: "mx-v", x: X0 + j * C + (C - 2) / 2, y: Y0 + i * C + C / 2 + 3, "text-anchor": "middle", style: { fill: v / max > 0.38 ? "#fff" : "var(--ink)" }, text: Math.round(v) }, g);
-        g.addEventListener("mouseenter", () => {
-          svg.querySelectorAll(".on").forEach((el) => el.classList.remove("on"));
-          svg.querySelector(`[data-r="${i}"]`).classList.add("on");
-          svg.querySelector(`[data-c="${j}"]`).classList.add("on");
-          tip.innerHTML = `${a.depot ? "Hotel" : a.name} → ${b.depot ? "Hotel" : b.name}<br><b>${Math.round(v)} min</b>`;
-          tip.style.left = `${((X0 + j * C + C / 2) / 560) * 100}%`;
-          tip.style.top = `${((Y0 + i * C) / 436) * 100}%`;
-          tip.style.opacity = 1;
-        });
-      }));
-      svg.addEventListener("mouseleave", () => { tip.style.opacity = 0; svg.querySelectorAll(".on").forEach((el) => el.classList.remove("on")); });
+      const order = [nodes[hotel], ...["Central Park", "Metropolitan", "São Patrício"].map((name) => nodes.find((n) => n.name === name))];
+      const name = (n) => n.depot ? "Hotel" : n.name;
+      const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
+      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><caption>Linha: origem · coluna: destino</caption><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+      slide.querySelector("#matrixExample").innerHTML = `Hotel → Metropolitan: <b>${minutes(order[0], order[2])} min</b>; volta: <b>${minutes(order[2], order[0])} min</b>.`;
     },
   };
 
