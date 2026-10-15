@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=36" />
+  <link rel="stylesheet" href="motion.css?v=37" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -31,7 +31,7 @@
   </div>
   <div class="cover-credit">Foto: Kai Pilger / Wikimedia Commons · CC BY-SA 4.0</div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Olá. Nós somos Gustavo Takechi e Bruno Medeiros, e vamos apresentar o Interlude, um aplicativo móvel para planejar e editar roteiros turísticos.</p>
     <p>A ideia surgiu quando planejamos uma viagem de três dias a Nova Iorque. Tínhamos vários lugares que queríamos conhecer, mas precisávamos descobrir o que cabia naquele período, considerando horários de funcionamento e deslocamentos. Cada mudança na lista exigia rever a agenda.</p>
     <p>Foi dessa dificuldade que veio a proposta: reunir a pesquisa dos lugares e a organização das visitas em um aplicativo, mantendo as prioridades do viajante. Para mostrar como isso funciona, vamos acompanhar uma execução registrada de cinco dias em Nova Iorque, diferente da viagem que motivou o trabalho.</p>
@@ -68,7 +68,7 @@
   </div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>O ponto de partida é este mapa: doze atrações que queremos visitar e a hospedagem. Saber onde ficam esses lugares ajuda, mas ainda precisamos decidir em que dia visitar cada um e se teremos tempo de chegar antes do fechamento.</p>
     <p>O viajante informa o período, os interesses e a disponibilidade. Depois escolhe as atrações e coloca suas preferências em ordem. O sistema reúne os horários e os tempos estimados para distribuir essas visitas entre os dias.</p>
     <p>Quando o mapa muda para o resultado, as cores passam a representar os dias e as linhas mostram a sequência das visitas. Essa divisão foi produzida pelo sistema. Se algum lugar não couber, ele aparece separadamente para que o viajante saiba o que ficou de fora.</p>
@@ -104,7 +104,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Transformamos essa necessidade em um fluxo de uso. A pessoa prepara a viagem, descobre atrações, escolhe suas prioridades e gera uma agenda. Depois precisa conseguir consultar esse roteiro no celular e alterá-lo sem perder o que já salvou.</p>
     <p>Um exemplo é mover uma atração para outro dia. A mudança pode entrar em conflito com o horário de funcionamento ou com outra visita. Nesse caso, o aplicativo mantém a agenda salva. Se for necessário reorganizar o dia, ele apresenta uma proposta com as mudanças para a pessoa decidir se quer aplicá-la.</p>
     <p>Também delimitamos o que o sistema decide: ele organiza as visitas dentro dos destinos. A ordem das cidades e os horários estimados de chegada e partida continuam sendo informados pelo viajante.</p>
@@ -121,21 +121,25 @@
   </template>
 </section>
 
-<section class="slide" id="slide-4" data-title="Problemas que orientam o planejamento" data-scene="theory">
-  <h2 class="title" data-a="up">Problemas que orientam o planejamento</h2>
-  <p class="lead" data-a="up" style="--d:100ms">O roteiro exige ordenar as visitas, distribuí-las entre os dias e respeitar horários. Se faltar tempo, também é preciso escolher o que fica de fora.</p>
+<section class="slide" id="slide-4" data-title="Fundamentos de roteamento" data-scene="theory">
+<h2 class="title" data-a="up">Do menor percurso à seleção de visitas</h2>
+  <p class="lead" data-a="up">No grafo, os pontos são lugares e as ligações representam deslocamentos; a agenda também precisa considerar a duração de cada visita.</p>
   <div class="theory">
-    <article data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210"></svg><small>01</small><h3>PCV</h3><p>Em que ordem visitar <b>todos</b> os pontos?</p><em>Um percurso de menor custo</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
-    <article data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210"></svg><small>02</small><h3>VRP</h3><p>Como repartir os pontos entre <b>vários percursos</b>?</p><em>No app, cada percurso pode ser um dia</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
-    <article data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210"></svg><small>03</small><h3>VRPTW</h3><p>Como respeitar também os <b>horários</b> de visita?</p><em>Arco âmbar: janela de horário de cada ponto</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
-    <article class="key" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210"></svg><small>04 · QUANDO NÃO CABE TUDO</small><h3>OP e TOPTW</h3><p>O OP escolhe quais pontos visitar dentro de um limite de tempo. O TOPTW combina essa seleção com vários percursos e janelas.</p><em>Tracejado: ponto deixado de fora</em></article>
+    <article data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210"></svg><h3>PCV</h3><small>CAIXEIRO VIAJANTE</small><p>Visitar <b>todos os pontos</b> e retornar ao início com o menor custo de percurso.</p><em>Decisão: em que ordem visitar?</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
+    <article data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210"></svg><h3>VRP</h3><small>ROTEAMENTO DE VEÍCULOS</small><p>Distribuir as visitas entre <b>várias rotas</b>, cada uma saindo e retornando à base.</p><em>No Interlude, uma rota representa um dia.</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
+    <article data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210"></svg><h3>VRPTW</h3><small>ROTEAMENTO COM JANELAS DE TEMPO</small><p>Respeitar os <b>horários disponíveis</b>, somando visita, deslocamento e eventual espera.</p><em>Os arcos âmbar representam os horários permitidos.</em><svg class="theory-arrow" data-i="chevron-right"></svg></article>
+    <article class="key" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210"></svg><h3>OP → TOPTW</h3><small>SELEÇÃO SOB LIMITE DE TEMPO</small><p>Escolher as visitas de <b>maior valor</b> que cabem no tempo; o TOPTW reúne seleção, várias rotas e horários.</p><em>Os pontos tracejados foram deixados de fora.</em></article>
   </div>
-  <p class="interlude-line" data-build="5"><b>Interlude</b><span>seleção próxima ao TOPTW, implementada com roteamento, visitas opcionais e penalidades no OR-Tools.</span></p>
+  <p class="interlude-line" data-build="5"><b>Interlude</b><span>Visitas opcionais no OR-Tools: minimizar deslocamentos, penalidades de exclusão e desvios das preferências do viajante.</span></p>
   <template class="speaker-notes">
-    <h4>Fala</h4>
-    <p>Para formular esse problema, começamos pela ordem de visita. O Problema do Caixeiro Viajante procura um percurso de menor custo que passe por todos os pontos. Isso ajuda a pensar na sequência, mas uma viagem tem vários dias.</p>
-    <p>O problema de roteamento de veículos permite dividir os pontos entre percursos. Na nossa adaptação, cada percurso representa um dia. Quando acrescentamos janelas de tempo, também exigimos que cada visita ocorra em um horário permitido.</p>
-    <p>Ainda falta uma decisão: quando o tempo é insuficiente, quais lugares devemos deixar de fora? Os problemas de orientação, como OP e TOPTW, tratam dessa seleção. O Interlude combina essas ideias no OR-Tools: as visitas são opcionais, e o custo de excluí-las depende das preferências do viajante.</p>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
+    <p>O fundamento do projeto é representar o planejamento como um problema em um grafo. Cada ponto representa um lugar, como o hotel ou uma atração. Cada ligação representa um deslocamento, com um tempo e uma distância. Mas o dia também é consumido pela duração das visitas e, às vezes, pela espera até um lugar abrir. Por isso, encontrar o caminho mais curto entre dois lugares não resolve o planejamento inteiro.</p>
+    <p>O primeiro modelo aqui é o Problema do Caixeiro Viajante, ou PCV. Ele procura a ordem de menor custo para visitar todos os pontos e voltar ao início. Essa ideia ajuda a organizar uma sequência, mas ainda considera um único percurso. Para uma viagem de vários dias, precisamos decidir também em qual dia colocar cada atração.</p>
+    <p>É essa distribuição entre percursos que aparece no problema de roteamento de veículos, o VRP. No nosso caso, cada rota representa um dia de viagem, saindo e retornando à hospedagem ou à base adotada. Não estamos planejando uma frota de turistas: estamos aproveitando a estrutura matemática de várias rotas para organizar vários dias.</p>
+    <p>A terceira etapa acrescenta as janelas de tempo. Um museu pode estar aberto das dez às dezoito, e a visita pode durar duas horas. Não basta chegar antes das dezoito: precisamos reservar o tempo de visita dentro do funcionamento. O VRPTW combina a escolha das rotas com esses horários. Visita, deslocamento e espera precisam caber na agenda.</p>
+    <p>Mesmo assim, exigir que todas as atrações sejam visitadas pode tornar o problema impossível. O problema de orientação, ou OP, permite escolher os pontos que acumulam mais valor dentro de um limite de tempo. O TOPTW, problema de orientação em equipe com janelas de tempo, amplia essa ideia para vários percursos e horários permitidos. É a referência mais próxima da decisão que o nosso aplicativo precisa tomar: o que visitar, em qual dia, em que ordem e em que horário.</p>
+    <p>No Interlude, implementamos essa seleção com visitas opcionais no OR-Tools. Deixar uma atração de fora tem uma penalidade, maior para lugares mais prioritários. O solver considera essa penalidade junto com os deslocamentos e as preferências de distribuição dos dias. Portanto, a função objetivo combina esses custos; a aproximação com o TOPTW explica o problema, enquanto o modelo implementado tem regras próprias. Nos próximos slides, vamos mostrar como transformamos as escolhas do viajante nesses dados e restrições.</p>
+
     <details class="notes-support">
       <summary>Apoio técnico e fontes</summary>
       <p class="obs">A sequência de modelos organiza a explicação das decisões, sem representar uma cronologia. A função objetivo implementada difere da formulação clássica do TOPTW.</p>
@@ -186,7 +190,7 @@
     </svg>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Essa solução foi dividida em componentes com responsabilidades diferentes. O aplicativo móvel apresenta as telas e guarda as escolhas do viajante. O backend recebe a solicitação e reúne os dados necessários para gerar o roteiro.</p>
     <p>É o backend que consulta os lugares, obtém estimativas do modelo de linguagem e prepara os tempos de deslocamento. Antes de consultar novamente um serviço externo, ele procura dados válidos no cache.</p>
     <p>Com essa preparação concluída, o solver recebe uma entrada numérica: paradas, durações, horários e matrizes de deslocamento. Ele calcula as rotas e devolve o resultado ao aplicativo. Por estar separado, podemos testá-lo com uma entrada salva, sem repetir as consultas externas.</p>
@@ -231,7 +235,7 @@
     <div class="er-legend" data-a="fade" style="--d:1500ms"><span><i></i>dados salvos dentro da viagem</span><span><i class="ref"></i>vínculo com o usuário pelo ownerId</span></div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Aqui mostramos o que é guardado quando uma viagem é salva. O elemento central é o TripDraft, que representa a viagem e fica em um documento do Firestore, no caminho trips seguido do identificador da viagem.</p>
     <p>Dentro desse registro ficam os destinos, o roteiro gerado e o progresso das visitas. O roteiro contém uma lista de dias. Cada dia contém as paradas, com a ordem e os horários de chegada e saída, além dos deslocamentos entre elas. Por exemplo: para recuperar a hora de uma visita, seguimos a viagem, o roteiro, o dia e a parada.</p>
     <p>As linhas contínuas mostram essa relação de conteúdo: esses dados são salvos como partes da própria viagem. Já a linha tracejada liga a viagem ao usuário pelo campo ownerId. Ela guarda o identificador do proprietário; o perfil do usuário fica em seu próprio registro. Assim, o mesmo usuário pode ter várias viagens salvas.</p>
@@ -264,7 +268,7 @@
     </div>
     </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Agora podemos acompanhar o caminho entre preencher a viagem e receber a agenda. Nas primeiras etapas, o viajante define o destino e o período, encontra atrações e escolhe suas prioridades.</p>
     <p>Essas escolhas chegam ao backend, que reúne horários, durações e deslocamentos. Com os dados preparados, montamos as restrições do problema e executamos a busca. A última etapa transforma a solução em uma agenda que pode ser consultada e salva no aplicativo.</p>
     <p>Vamos percorrer esse fluxo com os dados de Nova Iorque. Primeiro, as escolhas feitas na tela; depois, como elas se tornam uma entrada para o solver.</p>
@@ -299,7 +303,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Nesta execução, a viagem foi definida de 14 a 18 de setembro, com cinco dias e hospedagem no Wyndham New Yorker. Esses campos têm um efeito direto no modelo: os cinco dias viram cinco rotas, e a hospedagem é usada como início e fim de cada uma.</p>
     <p>O ritmo moderado estabelece o teto de quatro atrações por dia. O meio de transporte define quais tempos de deslocamento entram na matriz. Aqui usamos transporte público, sugerido pelo aplicativo e aceito pelo usuário.</p>
     <p>O horário informado para a chegada foi catorze horas. Na entrada registrada, as atrações do primeiro dia só podem começar a partir desse horário. Mas identificamos uma diferença importante: a base ainda permite sair antes da chegada. Vou retomar esse problema ao analisar a agenda, porque limitar a primeira visita não basta para representar toda a logística corretamente.</p>
@@ -338,7 +342,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Com a viagem definida, o aplicativo busca lugares associados aos interesses escolhidos. O retorno inclui nome, posição, nota, quantidade de avaliações e tipos do lugar. O Central Park é um exemplo desse retorno.</p>
     <p>Antes de ordenar as sugestões, aplicamos um filtro. Um resultado marcado como atração turística pode ser uma loja, um hotel ou outro estabelecimento que não corresponde ao passeio procurado. O filtro considera os tipos do lugar, os interesses explícitos e as exceções de atrações reconhecidas.</p>
     <p>O resultado é uma lista de candidatos para o viajante examinar. A nota e o número de avaliações ajudam a ordenar essa lista, mas ainda precisamos tratar a diferença entre um lugar pouco avaliado e outro com milhares de avaliações.</p>
@@ -378,7 +382,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Um lugar com nota cinco e uma única avaliação não oferece a mesma evidência que um lugar com nota quatro vírgula oito e milhares de avaliações. Por isso, o primeiro termo ajusta a nota usando uma média de referência. Quando há poucas avaliações, o valor fica mais próximo dessa referência; quando há muitas, fica próximo da nota observada.</p>
     <p>É o que acontece no exemplo à direita: a nota cinco do lugar hipotético se aproxima de quatro, enquanto a do Central Park continua perto de quatro vírgula oito.</p>
     <p>Depois acrescentamos um termo de popularidade baseado no volume de avaliações, comprimido por logaritmo. Por fim, descontamos a distância: dentro do raio de busca não há desconto; fora dele, cada duplicação da distância reduz o escore em zero vírgula quinze.</p>
@@ -408,7 +412,7 @@
   <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao escore completo; Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Aqui mantivemos as mesmas doze atrações e comparamos três critérios. Na primeira coluna, multiplicamos nota pelo número de avaliações. Como as notas são muito próximas, o volume de avaliações praticamente determina a ordem.</p>
     <p>Na coluna do meio usamos a média bayesiana. Como estes lugares já têm muitas avaliações, os resultados ficam muito próximos de quatro vírgula sete ou quatro vírgula oito. O ajuste é mais relevante para os candidatos com poucas avaliações, que não estão nesta seleção final.</p>
     <p>Na última coluna, acrescentamos a popularidade relativa. O Metropolitan sobe da sétima para a quarta posição, enquanto o Empire State cai da quarta para a sétima. As cores destacam a mudança entre a primeira e a última coluna.</p>
@@ -441,7 +445,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Depois de examinar as sugestões, o viajante escolhe as atrações e arrasta a lista para indicar suas prioridades. Aqui foram selecionadas doze.</p>
     <p>Estar em primeiro nessa lista significa que aquele lugar é mais importante para a pessoa. Isso aumenta o custo de deixá-lo de fora se faltar tempo. A lista não obriga o roteiro a visitar os pontos nessa mesma sequência: os horários e os deslocamentos ainda precisam ser respeitados.</p>
     <p>Dessa forma, conseguimos separar duas decisões. O usuário diz o que prefere preservar, e o solver procura em que dia e em que ordem encaixar cada visita. A fórmula seguinte mostra como essa preferência entra no cálculo.</p>
@@ -481,7 +485,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Esta é a penalidade cobrada quando uma atração fica de fora. Ela faz parte da função de custo do solver; não representa um preço pago pelo usuário.</p>
     <p>Partimos de cinco milhões e ajustamos esse valor pela posição na lista, pela popularidade do lugar e pela adequação à época da viagem. A posição tem a maior amplitude de peso. A popularidade também influencia e pode inverter o custo entre atrações próximas na lista.</p>
     <p>Neste exemplo, todas as atrações têm adequação sazonal igual a um. Portanto, esse fator não muda a comparação. Atividades de dia inteiro recebem um custo de exclusão próprio, mais elevado.</p>
@@ -529,7 +533,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Para montar a entrada do solver, o backend reúne os horários de funcionamento, as durações estimadas e os tempos de deslocamento. A grade à esquerda mostra quando cada visita pode começar em cada dia.</p>
     <p>O fim da janela já desconta a duração da visita. Por exemplo, se um lugar fecha às dezessete horas e a visita dura duas horas, o início precisa ocorrer até as quinze. Assim, respeitar a janela também permite concluir a visita antes do fechamento.</p>
     <p>À direita está a matriz de tempos por transporte público. Cada linha é uma origem e cada coluna é um destino. São treze posições distintas: a hospedagem e as doze atrações.</p>
@@ -588,7 +592,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Com os dados preparados, o modelo precisa decidir quais paradas visitar, em que dia e em qual sequência. Cada dia é representado por um veículo que sai de uma base e retorna a uma base.</p>
     <p>Na notação, x indica um deslocamento usado, z indica que o ponto foi visitado naquele dia, y indica que ele ficou de fora e T registra o horário de início. A primeira condição diz que um ponto opcional é visitado uma vez ou excluído. A seguinte liga a visita à entrada e à saída daquele ponto na rota.</p>
     <p>O teto de quatro atrações por dia é obrigatório neste ritmo. Já o mínimo de duas é uma preferência com penalidade, aplicada aos dias que têm visitas.</p>
@@ -623,7 +627,7 @@
   </div>
   <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início em i no dia d, em segundos desde as 06:00</span><span><span class="math">s<sub>i</sub></span>tempo estimado da visita</span><span><span class="math">t<sub>ij</sub></span>deslocamento de i até j no modal escolhido</span></div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>O relógio é propagado ao longo da rota. A próxima visita só pode começar depois que a anterior terminar e depois de concluído o deslocamento.</p>
     <p>No exemplo do segundo dia, a visita à Catedral de São Patrício dura trinta minutos. Somamos o transporte até o Metropolitan. Se chegarmos antes da janela de atendimento do museu, precisamos esperar. É por isso que a desigualdade permite que o próximo início seja maior que a soma, e não exige igualdade.</p>
     <p>Além desse encadeamento, cada atração tem dias permitidos e horários de início. As preferências acrescentam um custo quando a visita começa depois da faixa recomendada, mas não proíbem esse atraso.</p>
@@ -647,37 +651,62 @@
   </template>
 </section>
 
-<section class="slide" id="slide-17" data-title="Etapa 6 — Como a busca monta o roteiro" data-stage="6">
-  <h2 class="title" data-a="up">Etapa 6 — Como a busca monta o roteiro</h2>
-  <p class="lead" data-a="up" style="--d:100ms">O solver constrói uma agenda inicial, tenta melhorá-la e devolve a melhor solução encontrada dentro do prazo.</p>
-  <ol class="search-method">
-    <li data-a="up" style="--d:200ms"><span class="method-number">01</span><h3>Encaixar as visitas</h3><p>Insere cada parada na posição que acrescenta menos custo, entre os encaixes permitidos pelos horários.</p><small>Parallel Cheapest Insertion</small></li>
-    <li data-a="up" style="--d:350ms"><span class="method-number">02</span><h3>Testar outras combinações</h3><p>Troca a ordem das paradas e sua distribuição entre os dias para tentar reduzir deslocamentos e penalidades.</p><small>Guided Local Search (GLS)</small></li>
-    <li data-a="up" style="--d:500ms"><span class="method-number">03</span><h3>Devolver a melhor agenda</h3><p>Ao terminar o prazo, entrega a melhor solução encontrada. Não há prova de que ela seja a solução ótima.</p><small>Nesta execução: 12 atrações em 5 dias</small></li>
-  </ol>
-  <div class="search-budget" data-a="up" style="--d:650ms">
-    <div><h3>Por que buscar por 5 segundos?</h3><p>O limite cresce conforme a quantidade de pontos e de dias.</p><div class="budget-equation">52 nós + 2 × 5 dias = <b>62</b></div><small>Indicador de tamanho da instância</small></div>
-    <div class="budget-ranges"><div><b>2 s</b><span>até 30</span></div><div class="chosen"><b>5 s</b><span>31 a 70 · este caso</span></div><div><b>15 s</b><span>acima de 70</span></div><p>Tempo registrado nesta execução: <b>5,03 s</b>, incluindo o processamento do solver.</p></div>
+<section class="slide" id="slide-17" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
+<h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2>
+  <p class="lead" data-a="up">Uma heurística constrói a primeira agenda; a busca local guiada explora outras combinações até o prazo terminar.</p>
+  <div class="search-algorithms">
+    <div data-a="up"><span>01 · SOLUÇÃO INICIAL</span><h3>Parallel Cheapest Insertion</h3><p>Compara inserções entre as rotas e escolhe a que acrescenta menos custo, respeitando as restrições.</p></div>
+    <div data-a="up"><span>02 · MELHORIA DA SOLUÇÃO</span><h3>Guided Local Search <em>(GLS)</em></h3><p>Reorganiza as visitas e usa penalidades internas para escapar de mínimos locais e explorar novas alternativas.</p></div>
   </div>
+  <div class="search-implementation" data-a="up">
+    <figure><figcaption>Python · trechos da chamada e da configuração da busca</figcaption><pre class="search-code"><code>solution = self._solve_with_strategy(
+    routing,
+    routing_enums_pb2.FirstSolutionStrategy
+        .<b>PARALLEL_CHEAPEST_INSERTION</b>,
+    primary_time_limit,
+)
+
+<span class="code-comment"># Dentro de _solve_with_strategy:</span>
+params.first_solution_strategy = strategy
+params.local_search_metaheuristic = (
+    routing_enums_pb2.LocalSearchMetaheuristic
+        .<b>GUIDED_LOCAL_SEARCH</b>
+)
+return routing.SolveWithParameters(params)</code></pre></figure>
+    <figure><figcaption>JSON · campos da resposta registrada, sem os demais detalhes</figcaption><pre class="search-json"><code>{
+  "total_distance_meters": <b>62379</b>,
+  "days": [
+    {
+      "day_index": <b>0</b>,
+      "distance_meters": <b>15736</b>,
+      "total_time_seconds": <b>31937</b>
+    }
+  ],
+  "unassigned": <b>[]</b>
+}</code></pre><p class="json-explanation">Trecho com o primeiro dia, de cinco; <code>unassigned: []</code> indica que nenhuma atração ficou de fora.</p></figure>
+  </div>
+  <p class="search-execution" data-a="up"><b>Nesta execução:</b> 52 nós · 5 dias · limite de busca de 5 s · melhor solução encontrada, sem prova de ótimo.</p>
   <template class="speaker-notes">
-    <h4>Fala</h4>
-    <p>Com a entrada pronta, o solver começa construindo uma agenda. Para cada parada, ele procura uma posição que respeite as restrições e acrescente pouco custo. Esse é o papel da inserção mais barata em paralelo.</p>
-    <p>A primeira agenda ainda pode ser melhorada. A busca local guiada testa mudanças na ordem das paradas e na distribuição entre os dias. Ela usa penalidades internas de busca para conseguir explorar outras combinações, além de uma melhoria imediata.</p>
-    <p>Esse processo tem um prazo. Aqui são cinquenta e dois nós e cinco dias: o indicador de tamanho resulta em sessenta e dois, então a busca recebe cinco segundos. As alternativas de almoço também contam nesses cinquenta e dois nós.</p>
-    <p>Ao final, devolvemos a melhor agenda encontrada. Nesta execução, as doze atrações foram incluídas em cinco dias. Isso não é uma prova de ótimo. A animação seguinte mostra as melhorias registradas em uma nova execução com essa mesma entrada.</p>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
+    <p>Com as restrições montadas, precisamos encontrar uma combinação viável e tentar reduzir o seu custo. A configuração tem duas decisões diferentes, destacadas aqui: como construir a primeira solução e como melhorá-la depois.</p>
+    <p>Para a primeira solução, usamos Parallel Cheapest Insertion, ou inserção mais barata em paralelo. A ideia é avaliar onde uma parada pode entrar entre duas outras, comparando as posições e as rotas disponíveis. O algoritmo favorece a inserção que acrescenta menos custo de percurso e respeita as restrições. Como cada rota representa um dia, ele constrói a distribuição das visitas entre os dias. O termo paralelo aqui se refere à construção das rotas, e não significa que configuramos várias threads de execução.</p>
+    <p>Em seguida entra a Guided Local Search, a busca local guiada. A busca local considera mudanças, como trocar a ordem de visitas e movê-las entre dias. O problema é que uma solução pode chegar a um mínimo local: nenhuma pequena mudança considerada melhora imediatamente o custo, embora possa existir uma combinação melhor mais adiante.</p>
+    <p>A GLS usa penalidades internas para mudar o que a busca passa a favorecer e conseguir explorar além desse mínimo local. Essas penalidades pertencem ao mecanismo de busca. Elas são diferentes da penalidade de excluir uma atração, que representa a preferência do viajante na função objetivo.</p>
+    <p>O código à esquerda mostra onde escolhemos a inserção mais barata e onde ativamos a GLS antes de chamar o solver. À direita, estão alguns campos da resposta real: a distância total, os dados do primeiro dia e a lista de atrações não alocadas. Essa lista está vazia, porque as doze atrações foram incluídas. A resposta completa tem os cinco dias e a sequência de paradas com horários.</p>
+    <p>A busca tem um limite adaptado ao tamanho da entrada. Neste caso, são cinquenta e dois nós e cinco dias, o que leva a cinco segundos de busca. Ao terminar, devolvemos a melhor solução encontrada nesse prazo, sem afirmar que seja a ótima. A próxima animação mostra como o objetivo diminui durante uma nova execução com a mesma entrada.</p>
+
     <details class="notes-study">
-      <summary>Estudo das fórmulas e símbolos · não faz parte da fala</summary>
-      <h4>Indicador de tamanho: |V| + 2|D|</h4><p>Leia: “quantidade de nós mais duas vezes a quantidade de dias”. As barras | | indicam cardinalidade, isto é, número de elementos, e não valor absoluto neste contexto. Aqui V inclui 52 nós, inclusive alternativas de almoço; D contém 5 dias. Logo, 52 + 2 × 5 = 62, na faixa de busca de 5 segundos. Esse é um indicador prático do código, não uma medida formal da complexidade computacional.</p>
+      <summary>Estudo do algoritmo, código e símbolos · não faz parte da fala</summary>
+      <h4>Como explicar a inserção mais barata</h4><p>Para inserir k entre i e j, compare o custo dos novos trechos i → k e k → j com o trecho i → j que será substituído. O custo de inserção se baseia nos custos dos arcos. Restrições de horários e de capacidade de cada dia limitam os encaixes possíveis. A heurística constrói uma primeira solução; isso não garante a melhor combinação global.</p>
+      <h4>Como explicar um mínimo local e a GLS</h4><p>Um mínimo local é uma solução para a qual os movimentos da vizinhança considerados não produzem melhora imediata. A GLS modifica a avaliação interna por penalidades, permitindo explorar outras regiões da busca. Distinguir esse mecanismo das penalidades de exclusão do modelo: a primeira orienta a exploração; a segunda expressa o custo de omitir visitas.</p>
+      <h4>Como ler o código</h4><p>Leia PARALLEL_CHEAPEST_INSERTION como “inserção mais barata em paralelo” e GUIDED_LOCAL_SEARCH como “busca local guiada”. FirstSolutionStrategy escolhe a construção inicial; LocalSearchMetaheuristic escolhe a busca posterior. O primeiro trecho chama _solve_with_strategy; o segundo recorta esse método, omitindo a criação de params e a linha de configuração do prazo. SolveWithParameters executa a busca com esses parâmetros.</p>
+      <h4>Como ler o JSON</h4><p>O JSON é uma projeção de campos reais da resposta, com apenas o primeiro objeto de days e sem steps. day_index começa em zero: 0 é o primeiro dia. total_distance_meters = 62379 significa 62,379 km em toda a viagem; distance_meters = 15736 significa 15,736 km no primeiro dia. total_time_seconds = 31937 equivale a 8 h 52 min 17 s nesse dia. unassigned: [] significa lista vazia de atrações não alocadas. Não é uma entrada completa nem uma resposta completa.</p>
+      <h4>Indicador de tamanho: |V| + 2|D|</h4><p>Leia “quantidade de nós mais duas vezes a quantidade de dias”. As barras indicam cardinalidade: número de elementos. Aqui V inclui 52 nós, inclusive alternativas de almoço, e D contém 5 dias. Logo, 52 + 2 × 5 = 62, na faixa de 5 segundos. Até 30, o limite é 2 s; de 31 a 70, 5 s; acima de 70, 15 s. É uma regra prática da implementação, não uma medida formal de complexidade.</p>
     </details>
     <details class="notes-support">
       <summary>Apoio técnico e fontes</summary>
-      <p class="obs">Os limites padrão são 2, 5 e 15 segundos, conforme os limiares 30 e 70. O prazo restante da requisição pode reduzi-los. A tentativa alternativa usa AUTOMATIC por até 30 segundos, condicionada ao prazo restante e à ausência de solução na busca principal.</p>
-      <h4>Fontes</h4>
-      <ul>
-            <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Estratégias e orçamento adaptativo</a></li>
-            <li><a href="references/aplicativo/solver/app/main.py">Configuração de serviço: 15 s e 30 s</a></li>
-
-          </ul>
+      <p class="obs">Os trechos preservam os identificadores do solver e omitem linhas intermediárias. O prazo restante da requisição pode reduzir o limite escolhido. Se a busca principal não encontrar solução, a tentativa alternativa usa AUTOMATIC por até 30 segundos, condicionada ao prazo restante.</p>
+      <h4>Fontes</h4><ul><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação das estratégias e orçamento adaptativo</a></li><li><a href="data/solver-response.json">Resposta completa registrada</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: estratégias iniciais e busca local</a></li></ul>
     </details>
   </template>
 </section>
@@ -695,7 +724,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Esta animação foi produzida com uma nova execução do solver usando a mesma entrada de Nova Iorque. Cada quadro corresponde a uma melhoria da melhor solução completa encontrada até aquele momento.</p>
     <p>O número identifica a atração e a cor indica o dia. Conforme a ordem e a distribuição das visitas mudam, o custo diminui. No registro, ele passa de aproximadamente quarenta e um milhões para cento e cinquenta e quatro mil unidades.</p>
     <p>As refeições continuam participando do cálculo, mas foram ocultadas no mapa para facilitar a leitura das atrações. Também desaceleramos a reprodução: o tempo real aparece no indicador.</p>
@@ -715,7 +744,7 @@
   <div class="daily-results" id="dailyResults"></div>
   <p class="route-key" data-a="fade" style="--d:800ms"><b>Como ler:</b> os números ligam cada ponto à visita na lista e indicam sua ordem no dia. <span class="hotel-key"></span> Hospedagem. Linhas ligam as paradas; os trajetos reais seguem a malha de transporte.</p>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Este é o roteiro devolvido para os cinco dias de Nova Iorque. As doze atrações foram incluídas, com sessenta e dois vírgula quatro quilômetros de deslocamento no total.</p>
     <p>Cada coluna reúne o mapa e a agenda de um dia. Os números indicam a sequência das visitas naquele dia, e a lista abaixo traz o nome e o horário de cada uma. O quadrado marca a hospedagem. Os mapas usam a mesma escala, e as linhas mostram a ordem entre as paradas, não o desenho exato do transporte.</p>
     <p>No segundo dia, por exemplo, a Catedral de São Patrício vem antes do Metropolitan e do Central Park, com uma pausa de almoço entre o museu e o parque. Já o terceiro dia concentra o maior deslocamento, por incluir a Estátua da Liberdade.</p>
@@ -755,7 +784,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Nesta comparação, mantivemos as atrações, os horários, as matrizes e os pesos. Alteramos apenas a configuração da busca e o tempo disponível.</p>
     <p>A primeira solução obtida pela inserção paralela já inclui as doze atrações, mas ainda tem um objetivo alto. Ao aplicar a busca local, esse valor cai bastante. Portanto, conseguir uma solução viável é uma etapa; melhorar sua organização exige continuar a busca.</p>
     <p>A descida gulosa terminou em cerca de onze centésimos de segundo, com objetivo zero vírgula sete por cento acima do menor observado. A busca local guiada encontrou o mesmo objetivo de cento e cinquenta e quatro mil cento e noventa e dois em todos os limites testados, de dois a seiscentos segundos.</p>
@@ -769,33 +798,31 @@
   </template>
 </section>
 
-<section class="slide" id="slide-21" data-title="Validação das regras e do fluxo">
-  <h2 class="title" data-a="up">Validação das regras e do fluxo do aplicativo</h2>
-  <p class="lead" data-a="up" style="--d:100ms">As verificações cobriram o solver, a geração integrada e a recuperação da viagem salva.</p>
-  <table class="validation-table" data-a="up" style="--d:250ms">
-    <thead><tr><th>O que foi verificado</th><th>Como foi verificado</th><th>Resultado registrado</th></tr></thead>
+<section class="slide" id="slide-21" data-title="Validação do aplicativo">
+<h2 class="title" data-a="up">Validação durante a consolidação do aplicativo</h2>
+  <p class="lead" data-a="up">Os testes automatizados foram acompanhados por verificações dos fluxos integrados e novas rodadas após a publicação.</p>
+  <table class="validation-table validation-broad" data-a="up">
+    <thead><tr><th>Frente de validação</th><th>O que foi exercitado</th><th>Evidências registradas</th></tr></thead>
     <tbody>
-      <tr><th>Regras do solver</th><td>Oito verificações em cinco cenários controlados: distribuição, prioridades, passeios de dia inteiro, horários, refeições, início do dia e limites de busca.</td><td><b>8 verificações aprovadas</b><span>Condições esperadas atendidas nesses cenários.</span></td></tr>
-      <tr><th>Geração integrada</th><td>Execuções em Nova Iorque, Brasília e Pirenópolis, reunindo preparação dos dados, otimização e retorno do resultado.</td><td><b>Roteiros gerados nas 3 cidades</b><span>As atrações selecionadas foram mantidas nessas execuções.</span></td></tr>
-      <tr><th>Consulta e persistência</th><td>Consulta do mapa e da agenda; reabertura do aplicativo e recuperação da viagem pelo Firestore após reinstalação.</td><td><b>Viagem salva recuperada</b><span>O roteiro permaneceu disponível para consulta.</span></td></tr>
+      <tr><th>Regras e regressões</th><td>Restrições do solver, lógica do backend e do aplicativo, além de verificações de tipos, lint e compilação.</td><td>Suítes automatizadas e verificações de publicação aprovadas.</td></tr>
+      <tr><th>Geração e uso do roteiro</th><td>Geração integrada, consulta da agenda, mapas 2D/3D, destaque por dia, detalhes e grafo do solver.</td><td>Roteiros gerados e consultados no aplicativo instalado.</td></tr>
+      <tr><th>Instalação e persistência</th><td>Instalação da versão distribuída, login, reabertura offline e recuperação das viagens após reinstalação.</td><td>Autenticação e restauração pelo Firestore verificadas.</td></tr>
+      <tr><th>Colaboração e encerramento</th><td>Permissões de editor e visualizador, despesas, saída da viagem, exclusão da conta, Memórias e compartilhamento.</td><td>Acesso por papel, preservação das viagens e exportação em imagem/vídeo conferidos.</td></tr>
     </tbody>
   </table>
-  <p class="validation-takeaway" data-a="up" style="--d:450ms">Esses testes verificam condições específicas. A avaliação com participantes, a seguir, revelou problemas em situações de uso.</p>
+  <p class="validation-takeaway" data-a="up">Essas verificações continuaram após a integração; a avaliação com participantes acrescentou situações de uso e revelou falhas de agenda.</p>
   <template class="speaker-notes">
-    <h4>Fala</h4>
-    <p>A validação foi feita em três níveis. Primeiro, usamos cinco cenários controlados para verificar oito propriedades do solver. Eles exercitam situações como sobrecarga de atrações, prioridades, dias permitidos e escolhas de refeição. As oito verificações passaram.</p>
-    <p>Depois acompanhamos a geração integrada em Nova Iorque, Brasília e Pirenópolis. Nas três execuções, o fluxo produziu um roteiro e manteve as atrações selecionadas. Isso verifica a integração entre a preparação dos dados e a resposta do solver.</p>
-    <p>Também conferimos a consulta do mapa e da agenda e a recuperação da viagem salva, inclusive após reinstalar o aplicativo. A persistência permitiu recuperar o roteiro pelo Firestore.</p>
-    <p>Esses resultados se referem às condições verificadas. Para observar situações de uso, seis participantes também realizaram tarefas no aplicativo. Foi nessa etapa que encontramos os problemas que vou mostrar agora.</p>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
+    <p>A validação acompanhou a consolidação do aplicativo e continuou depois da integração e da publicação. Os cenários controlados do solver e as execuções em algumas cidades fazem parte desse processo, mas não representam todas as verificações realizadas.</p>
+    <p>Na parte automatizada, verificamos as regras do solver e executamos as suítes do backend e do aplicativo. O fechamento de publicação também incluiu a checagem de tipos, o lint e a compilação dos componentes. Isso ajuda a detectar regressões antes de distribuir uma nova versão.</p>
+    <p>Também verificamos os fluxos no aplicativo instalado: gerar o roteiro, consultar a agenda, alternar os mapas em duas e três dimensões e explorar os dias e as conexões do grafo. Conferimos a instalação da versão distribuída, o login, a reabertura offline e a recuperação das viagens pelo Firestore após a reinstalação.</p>
+    <p>As rodadas posteriores incluíram a colaboração. Conferimos as permissões de editor e visualizador, o registro de despesas e a remoção do acesso ao sair de uma viagem. Também verificamos a preservação das viagens na exclusão de uma conta, a conclusão do roteiro em Memórias e o compartilhamento por imagem e vídeo.</p>
+    <p>Essas verificações mostram o funcionamento dos fluxos nas condições exercitadas. A avaliação com participantes, que vem a seguir, acrescentou situações de uso e encontrou problemas que as verificações anteriores não tinham eliminado.</p>
+
     <details class="notes-support">
       <summary>Apoio técnico e fontes</summary>
-      <p class="obs">As três execuções integradas preservaram as atrações. A suíte sintética e o recorte de dois dias também exercitam exclusões. Os tempos têm abrangências diferentes e não devem ser agregados em uma média.</p>
-      <h4>Fontes</h4>
-      <ul>
-            <li><a href="references/README.md">Validações realizadas</a></li>
-
-
-          </ul>
+      <p class="obs">O registro de validações inclui oito testes do solver em cinco cenários, 15 testes do backend e 24 do mobile no fechamento de publicação, além de TypeScript, ESLint e builds. Esses números são registros de etapas específicas, e não uma contagem de todas as validações do projeto. O README também documenta verificações posteriores de mapas, grafo, colaboração, ciclo de vida da viagem e compartilhamento. Não foi realizado ensaio sob carga.</p>
+      <h4>Fontes</h4><ul><li><a href="references/README.md">Validações realizadas e verificações posteriores à publicação</a></li></ul>
     </details>
   </template>
 </section>
@@ -844,7 +871,7 @@
     </div>
   </div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Bruno</span></h4>
     <p>Seis participantes usaram o aplicativo em seus aparelhos e realizaram cinco casos de teste cada um. Foram trinta casos no total: dezesseis atenderam à expectativa, nove foram concluídos com ressalva e cinco não atenderam.</p>
     <p>Todos conseguiram gerar e consultar um roteiro, mas apareceram dificuldades concretas. A reserva de almoço informada para doze e meia foi agendada às treze e cinquenta e seis. Na priorização, um participante precisou de ajuda para descobrir que era necessário arrastar os itens. Também houve saída da hospedagem antes da chegada informada.</p>
     <p>Na tabela, cada coluna corresponde a um participante. Na afirmação sobre a espera pela geração, todas as notas foram quatro ou cinco. Já a confiança nas durações e nos horários recebeu notas entre dois e quatro. Isso orienta a atenção para a confiabilidade da agenda, além da velocidade.</p>
@@ -870,7 +897,7 @@
   </div>
   <p class="cost-caption">Estimativa de consumo, não uma fatura medida. Tarifas de setembro de 2026, antes de franquias, impostos e infraestrutura. Valores arredondados para centavos.</p>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Para dimensionar o custo, calculamos um cenário de cinco dias, com doze atrações e uma hospedagem. Usando as tarifas de setembro de dois mil e vinte e seis, a primeira geração, sem reaproveitamento de dados, fica em aproximadamente um dólar e trinta e oito centavos em APIs.</p>
     <p>A maior parcela é a matriz de deslocamentos. São treze posições distintas, e precisamos considerar cada origem com cada destino: cento e sessenta e nove pares. Essa parcela custa cerca de oitenta e cinco centavos, ou sessenta e um vírgula quatro por cento do total.</p>
     <p>À direita, comparamos o que acontece quando parte das respostas já está armazenada. Reaproveitar apenas as estimativas da IA reduz o total para um dólar e vinte e oito. Reaproveitar os dados de planejamento e a matriz deixa nove centavos de novas fotos. Sem novas consultas nem fotos, a parcela dessas APIs é zero.</p>
@@ -899,17 +926,17 @@
 </section>
 
 <section class="slide" id="slide-24" data-title="Limitações do trabalho">
-  <h2 class="title" data-a="up">Limitações do trabalho</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Os resultados dependem das regras implementadas, das estimativas recebidas e do conjunto de casos avaliados.</p>
-  <div class="limitations-list">
-    <div data-a="up" style="--d:180ms"><h3>Confiabilidade da agenda</h3><p>Foram observados conflitos com reservas, saída antes da chegada informada e passeios de dia inteiro combinados com outras visitas.</p></div>
-    <div data-a="up" style="--d:260ms"><h3>Qualidade das estimativas</h3><p>Durações sugeridas pelo modelo de linguagem não foram validadas em visitas reais. A matriz não acompanha mudanças ao longo da viagem.</p></div>
-    <div data-a="up" style="--d:340ms"><h3>Qualidade da solução</h3><p>A busca termina por limite de tempo, sem prova de ótimo. Os pesos foram definidos de forma exploratória e podem produzir dias cansativos.</p></div>
-    <div data-a="up" style="--d:420ms"><h3>Alcance da avaliação</h3><p>Participaram seis pessoas. A comparação de estratégias usou um conjunto de atrações de Nova Iorque; não representa todos os destinos e ritmos.</p></div>
-    <div data-a="up" style="--d:500ms"><h3>Custo e escala de operação</h3><p>Os custos são estimativas de APIs, sem medição completa da infraestrutura. As execuções registradas não medem o comportamento sob carga.</p></div>
-  </div>
+<h2 class="title" data-a="up">Limitações do trabalho</h2>
+  <ol class="limitations-list">
+    <li data-a="up">A agenda ainda pode apresentar conflitos com reservas e com o horário de chegada do viajante.</li>
+    <li data-a="up">Passeios de dia inteiro podem ser combinados com outras visitas e ficar sem pausa para almoço.</li>
+    <li data-a="up">As durações são estimadas e a matriz de deslocamentos não acompanha mudanças durante a viagem.</li>
+    <li data-a="up">A busca termina por prazo, sem prova de ótimo, e os pesos podem produzir dias cansativos.</li>
+    <li data-a="up">A avaliação com seis participantes e a comparação de estratégias em Nova Iorque limitam a generalização.</li>
+    <li data-a="up">Os custos completos de infraestrutura e o desempenho sob carga não foram medidos.</li>
+  </ol>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Esses resultados têm limites. O primeiro é a confiabilidade da agenda: encontramos conflitos com reservas e com a disponibilidade de chegada, além de um passeio de dia inteiro combinado com outras atividades.</p>
     <p>As durações também são estimativas do modelo de linguagem e não foram conferidas em visitas reais. Os tempos da matriz são usados como valores fixos na geração; não acompanham as condições que mudam durante a viagem.</p>
     <p>Quanto à otimização, o solver devolve a melhor solução que encontrou no prazo, sem prova de ótimo. Os pesos foram definidos de forma exploratória, e respeitar as restrições obrigatórias ainda pode resultar em dias cansativos.</p>
@@ -926,7 +953,7 @@
 <section class="slide dark conclusion" id="slide-25" data-title="Agradecimento e perguntas">
   <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude · Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><p data-a="up" style="--d:250ms">Agradecemos a atenção.<br>Estamos à disposição para perguntas.</p><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília · FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
-    <h4>Fala</h4>
+    <h4>Fala <span class="speaker-name">· Kenzo</span></h4>
     <p>Obrigado pela atenção e pelas contribuições ao trabalho. Estamos à disposição para as perguntas.</p>
     <details class="notes-support">
       <summary>Apoio técnico e fontes</summary>
@@ -945,7 +972,7 @@
 
 <nav class="controls" aria-label="Controles da apresentação">
   <button id="prevBtn" title="Anterior (←)"><svg data-i="chevron-left"></svg></button>
-  <span class="counter" id="counter">01 / 27</span>
+  <span class="counter" id="counter">01 / 25</span>
   <button id="nextBtn" title="Próximo (→)"><svg data-i="chevron-right"></svg></button>
   <button id="scriptBtn" title="Roteiro de fala (N)"><svg data-i="file-text"></svg></button>
   <button id="overviewBtn" title="Visão geral (O)"><svg data-i="layout-grid"></svg></button>
@@ -967,13 +994,13 @@
 <dialog id="overviewDialog"><div class="dlg-head"><b>Visão geral</b><button id="closeOverview">Fechar</button></div><div class="overview-grid" id="overviewGrid"></div></dialog>
 
 <section class="presenter" id="presenter" hidden>
-  <div class="p-top"><span id="pCounter">01 / 27</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
+  <div class="p-top"><span id="pCounter">01 / 25</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
   <div class="p-left"><div class="p-frame" id="pCurrent"></div><div class="p-frame p-next" id="pNextFrame"></div></div>
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=36"></script>
-<script src="motion.js?v=36"></script>
-<script src="scenes.js?v=36"></script>
+<script src="data.js?v=37"></script>
+<script src="motion.js?v=37"></script>
+<script src="scenes.js?v=37"></script>
 </body>
 </html>

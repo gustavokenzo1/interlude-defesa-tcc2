@@ -1177,3 +1177,51 @@ body.presenter-mode .viewport, body.presenter-mode .controls, body.presenter-mod
 .thanks-body > img { position: absolute; width: 160px; right: 0; bottom: 55px; border-radius: 4px; }
 
 .day-chips div { border-top: 1px solid var(--hairline); border-radius: 0; background: transparent; }
+
+/* Prévias completas e estáveis; o palco oculto conserva as medidas dos diagramas. */
+body.presenter-mode .viewport { display: block; visibility: hidden; pointer-events: none; left: -20000px; right: auto; width: 1600px; height: 900px; }
+body.presenter-mode .deck { transform: none; }
+#presenter .p-frame .slide, #presenter .p-frame .slide *, #presenter .p-frame .slide *::before, #presenter .p-frame .slide *::after { animation: none !important; transition: none !important; }
+.p-frame .slide [data-a], .p-frame .slide [data-build], .p-frame .slide .code .ln, .p-frame .slide .ch { opacity: 1 !important; transform: none; clip-path: none; filter: none; }
+.speaker-name { font-weight: 600; color: #C6D9D0; }
+
+/* A progressão teórica conserva os quatro diagramas e explicita cada decisão. */
+#slide-4 .theory { margin-top: 24px; gap: 18px; }
+#slide-4 .theory article { padding: 14px 18px 18px; border-radius: 10px; }
+#slide-4 .theory .mini { height: 177px; margin-bottom: 12px; }
+#slide-4 .theory h3 { font-size: 32px; margin: 0 0 10px; }
+#slide-4 .theory small { display: block; font-size: 10px; line-height: 1.4; min-height: 29px; letter-spacing: .025em; }
+#slide-4 .theory p { font-size: 19px; line-height: 1.45; margin-top: 8px; }
+#slide-4 .theory em { font-size: 15px; line-height: 1.4; min-height: 42px; }
+#slide-4 .interlude-line { margin-top: 22px; font-size: 20px; }
+
+/* Construção inicial e melhoria recebem o mesmo destaque que o código real. */
+.search-algorithms { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 23px; }
+.search-algorithms > div { border-top: 2px solid var(--ink); padding-top: 13px; }
+.search-algorithms span { font: 600 12px var(--body); letter-spacing: .055em; color: var(--ink-muted); }
+.search-algorithms h3 { font: 700 30px/1.1 var(--display); margin: 9px 0 10px; }
+.search-algorithms h3 em { font-style: normal; font-weight: 500; }
+.search-algorithms p { font-size: 19px; line-height: 1.45; color: var(--ink-muted); }
+.search-implementation { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; margin-top: 24px; }
+.search-implementation figcaption { font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
+.search-implementation pre { margin: 0; padding: 18px 22px; background: #E8EAE6; color: var(--ink); font: 400 17px/1.4 var(--mono); border-radius: 4px; }
+.search-implementation code { font-family: inherit; }
+.search-implementation pre b { font-weight: 700; color: var(--pine-deep); }
+.search-implementation .code-comment { color: var(--ink-muted); }
+.search-implementation .search-json { font-size: 18px; }
+.json-explanation { margin-top: 13px; color: var(--ink-muted); font-size: 16px; line-height: 1.5; }
+.json-explanation code { font-family: var(--mono); font-size: 15px; }
+.search-execution { margin-top: 19px; padding-top: 14px; border-top: 1px solid var(--hairline); font-size: 17px; color: var(--ink-muted); }
+.search-execution b { color: var(--ink); }
+
+.validation-broad { margin-top: 28px; }
+.validation-broad th:first-child { width: 24%; }
+.validation-broad th:nth-child(2) { width: 44%; }
+.validation-broad th, .validation-broad td { padding-top: 19px; padding-bottom: 19px; }
+.validation-broad tbody th { font-size: 25px; }
+.validation-broad td { font-size: 19px; line-height: 1.5; }
+
+/* Uma frase por limitação, em lista numerada centralizada no espaço do slide. */
+.limitations-list { counter-reset: limitation; display: grid; grid-template-columns: 1fr; gap: 0; width: 1190px; margin: 50px auto 0; }
+.limitations-list > li { counter-increment: limitation; position: relative; padding: 22px 0 22px 70px; border-top: 1px solid var(--hairline); font-size: 25px; line-height: 1.45; color: var(--ink); }
+.limitations-list > li::before { content: counter(limitation, decimal-leading-zero); position: absolute; left: 0; top: 23px; font: 600 25px/1.45 var(--display); color: var(--ink-muted); }

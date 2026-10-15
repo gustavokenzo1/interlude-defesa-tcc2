@@ -169,14 +169,16 @@
     current = index;
     const slide = slides[current];
     slide.classList.add("active");
-    if (instant) slide.classList.add("play");
-    else play(slide);
-    if (instant) slide.querySelectorAll("[data-a], .code .ln, .ch").forEach((el) => { el.style.animationDuration = "0s"; el.style.animationDelay = "0s"; });
-    else slide.querySelectorAll("[data-a], .code .ln, .ch").forEach((el) => { el.style.animationDuration = ""; el.style.animationDelay = ""; });
-    applyBuild(current, instant);
-    sceneOf(current)?.enter?.(slide, instant);
-    runCounts(slide);
-    schedulePlayback();
+    if (!isPresenter) {
+      if (instant) slide.classList.add("play");
+      else play(slide);
+      if (instant) slide.querySelectorAll("[data-a], .code .ln, .ch").forEach((el) => { el.style.animationDuration = "0s"; el.style.animationDelay = "0s"; });
+      else slide.querySelectorAll("[data-a], .code .ln, .ch").forEach((el) => { el.style.animationDuration = ""; el.style.animationDelay = ""; });
+      applyBuild(current, instant);
+      sceneOf(current)?.enter?.(slide, instant);
+      runCounts(slide);
+      schedulePlayback();
+    }
     history.replaceState(null, "", `#${current + 1}`);
     document.getElementById("counter").textContent = `${pad(current + 1)} / ${pad(total)}`;
     document.getElementById("progress").style.width = `${((current + 1) / total) * 100}%`;
@@ -187,6 +189,7 @@
   }
 
   function next() {
+    if (isPresenter) { show(current + 1); return; }
     const scene = sceneOf(current);
     if (scene?.busy?.()) { scene.finish(slides[current]); return; }
     const totalSteps = maxBuild(current);
@@ -201,7 +204,7 @@
     const target = current - 1;
     buildLevel[target] = maxBuild(target);
     show(target, { instant: true });
-    sceneOf(target)?.finish?.(slides[target]);
+    if (!isPresenter) sceneOf(target)?.finish?.(slides[target]);
   }
 
   function replay() {
@@ -254,25 +257,63 @@
 
   // Apresentador
   const presenter = document.getElementById("presenter");
+  const presenterSlides = new Map();
+  let presenterIndex = -1;
+
+  // Prepara cada cena uma vez, já completa. As prévias não acompanham os
+  // passos da animação da banca nem recriam o roteiro durante sua leitura.
+  function presenterSlide(index, frameId) {
+    if (!presenterSlides.has(index)) {
+      const source = slides[index];
+      source.classList.add("active", "play");
+      buildLevel[index] = maxBuild(index);
+      applyBuild(index, true);
+      sceneOf(index)?.enter?.(source, true);
+      runCounts(source);
+      presenterSlides.set(index, source.cloneNode(true));
+      if (index !== current) source.classList.remove("active", "play");
+    }
+    const clone = presenterSlides.get(index).cloneNode(true);
+    clone.removeAttribute("id");
+    clone.classList.add("active", "play");
+    clone.querySelectorAll("animate, animateMotion, animateTransform, set, .pkt").forEach((el) => el.remove());
+
+    // Cada prévia tem seus próprios identificadores SVG, sem disputar
+    // marcadores e referências com o slide original ou com a outra prévia.
+    const ids = new Map();
+    clone.querySelectorAll("[id]").forEach((el) => {
+      const old = el.id;
+      el.id = `${frameId}-${old}`;
+      ids.set(old, el.id);
+    });
+    clone.querySelectorAll("*").forEach((el) => {
+      for (const attr of [...el.attributes]) {
+        let value = attr.value.replace(/url\(#([^)]*)\)/g, (match, id) => ids.has(id) ? `url(#${ids.get(id)})` : match);
+        if (["href", "xlink:href"].includes(attr.name) && value.startsWith("#") && ids.has(value.slice(1))) value = `#${ids.get(value.slice(1))}`;
+        if (["aria-labelledby", "aria-describedby"].includes(attr.name)) value = value.split(/\s+/).map((id) => ids.get(id) || id).join(" ");
+        if (value !== attr.value) el.setAttribute(attr.name, value);
+      }
+    });
+    return clone;
+  }
+
   function fitFrame(frame) {
     const clone = frame.querySelector(".slide");
     if (clone) clone.style.transform = `scale(${frame.clientWidth / 1600})`;
   }
   function renderPresenter() {
-    if (!isPresenter) return;
+    if (!isPresenter || current === presenterIndex) return;
+    presenterIndex = current;
     document.getElementById("pCounter").textContent = `${pad(current + 1)} / ${pad(total)}`;
     const frames = [["pCurrent", current], ["pNextFrame", Math.min(current + 1, total - 1)]];
     frames.forEach(([id, i]) => {
       const frame = document.getElementById(id);
-      const clone = slides[i].cloneNode(true);
-      clone.removeAttribute("id");
-      clone.classList.add("active", "play");
-      clone.querySelectorAll("[data-build]").forEach((el) => el.classList.add("built"));
-      frame.replaceChildren(clone);
+      frame.replaceChildren(presenterSlide(i, id));
+      fitFrame(frame);
     });
     const notes = slides[current].querySelector(".speaker-notes");
     document.getElementById("pNotes").innerHTML = notes ? notes.innerHTML : "<p>Sem notas para este slide.</p>";
-    requestAnimationFrame(() => { fitFrame(document.getElementById("pCurrent")); fitFrame(document.getElementById("pNextFrame")); });
+    document.getElementById("pNotes").scrollTop = 0;
   }
 
   function openPresenter() {
@@ -337,7 +378,10 @@
     bind("pNext", next);
     bind("pAudience", () => { const u = new URL(location.href); u.searchParams.delete("presenter"); window.open(u.href, "interlude-motion-audience"); });
 
-    addEventListener("resize", () => { fit(); renderPresenter(); });
+    addEventListener("resize", () => {
+      fit();
+      if (isPresenter) ["pCurrent", "pNextFrame"].forEach((id) => fitFrame(document.getElementById(id)));
+    });
     addEventListener("keydown", onKey);
     addEventListener("hashchange", () => {
       const n = Number(location.hash.replace(/\D/g, ""));
@@ -356,11 +400,13 @@
     channel?.addEventListener("message", (e) => {
       const d = e.data;
       if (d?.type === "slide") { buildLevel[d.index] = 0; show(d.index, { broadcast: false }); }
-      else if (d?.type === "build" && d.index === current) { buildLevel[d.index] = d.level; applyBuild(d.index); }
+      else if (!isPresenter && d?.type === "build" && d.index === current) { buildLevel[d.index] = d.level; applyBuild(d.index); }
     });
 
     if (isPresenter) {
       document.body.classList.add("presenter-mode");
+      document.querySelector(".viewport").setAttribute("aria-hidden", "true");
+      document.querySelector(".viewport").inert = true;
       presenter.hidden = false;
       const clock = () => { document.getElementById("pClock").textContent = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date()); };
       clock();

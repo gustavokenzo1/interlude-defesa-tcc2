@@ -303,11 +303,12 @@
       clearTimeout(this.t);
       const run = () => {
         demo.classList.add("after");
-        tween(instant ? 1 : 1200, (p) => {
+        const draw = (p) => {
           const e = easeInOut(p);
           hyp.textContent = dec(5 + (target[0] - 5) * e, 3);
           cp.textContent = dec(4.8 + (target[1] - 4.8) * e, 3);
-        });
+        };
+        if (instant) draw(1); else tween(1200, draw);
       };
       if (instant) run(); else this.t = setTimeout(run, 900);
     },
