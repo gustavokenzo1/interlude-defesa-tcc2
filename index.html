@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=42" />
+  <link rel="stylesheet" href="motion.css?v=43" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -165,83 +165,190 @@
   </template>
 </section>
 
-<section class="slide app-flow-slide" id="slide-6" data-stage="1" data-title="Preparar a viagem — criar e buscar o destino">
-<h2 class="title" data-a="up">Criar a viagem e buscar o destino</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="1072" width="1090" height="238" rx="30"/><path d="M1300,1191.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="62" y="1892" width="1085" height="205" rx="30"/><path d="M1300,1994.5 H1163 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http"><code>query=Nova York</code></pre></div><div><h4>Response<small>suggestions[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "primaryText": "Nova York",
-  "secondaryText": "NY, EUA"
-}</code></pre></div></div></div><div class="local-fields"><h3>Resposta usada na seleção</h3><p><code>placeId</code> identifica a cidade consultada na próxima etapa.</p></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Agora vamos percorrer o que o viajante faz no aplicativo antes de receber as sugestões de atrações. A primeira ação é tocar em Criar uma nova viagem, na tela inicial.</p><p>Em seguida, ele busca a cidade. Neste exemplo, digitamos Nova York e selecionamos o resultado correspondente. A busca identifica o destino que será usado nas consultas seguintes.</p><p>Ao digitar a cidade, o aplicativo chama o endpoint de autocomplete. A resposta traz sugestões e seus identificadores. O botão de criar a viagem inicia o rascunho local.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
+<section class="slide app-flow-slide contract-slide" id="slide-6" data-stage="1" data-title="Destino, busca por texto">
+<h2 class="title" data-a="up">A busca retorna sugestões e seus IDs</h2>
+<div class="app-flow api-flow">
+<div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="1072" width="1090" height="238" rx="30"/><path d="M1300,1191.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="62" y="1892" width="1085" height="205" rx="30"/><path d="M1300,1994.5 H1163 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
+<aside class="api-panel">
+<div class="api-call" data-contract-call="1"><h3><span class="call-number">01</span> GET /v1/places/autocomplete</h3><p class="call-purpose">Ao digitar a cidade, o app obtém as opções para seleção.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>query=Nova York</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;suggestions&quot;: [
+    {
+      &quot;placeId&quot;: &quot;NYC&quot;,
+      &quot;primaryText&quot;: &quot;Nova York&quot;,
+      &quot;secondaryText&quot;: &quot;NY, EUA&quot;
+    }
+  ]
+}</code></pre></div></div></div>
+<p class="contract-result">A seleção guarda o <code>placeId</code>. Esse ID identifica o destino na chamada seguinte.</p>
+<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
+</aside></div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>O viajante começa criando uma viagem. Esse botão abre o rascunho local. Quando ele digita Nova York na busca, aí sim acontece a primeira chamada HTTP, para autocomplete.</p><p>A API devolve uma lista de sugestões. Cada sugestão tem o texto que aparece na tela e um placeId. Para facilitar a leitura, abreviamos o identificador da cidade como NYC. Ao tocar na sugestão, o aplicativo usa esse ID para obter a localização do destino. É essa passagem que vamos ver no próximo slide.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/features/places/PlaceAutocomplete.tsx">Autocomplete após digitação e seleção</a></li></ul></details></template>
 </section>
 
-<section class="slide app-flow-slide" id="slide-7" data-stage="1" data-title="Preparar a viagem — destinos e datas">
-<h2 class="title" data-a="up">Confirmar o destino e as datas</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="746" width="1090" height="225" rx="30"/><path d="M1300,858.5 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>04</span> Escolher o período</h3><div class="flow-phone"><img src="assets/app/dates-selected.png" alt="Calendário com 14 a 18 de setembro selecionados"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="196" y="1210" width="824" height="140" rx="30"/><path d="M1300,1280.0 H1036 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/{placeId}</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http"><code>purpose=location</code></pre></div><div><h4>Response<small>place</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "name": "Nova Iorque"
-}</code></pre></div></div></div><div class="local-fields"><h3>Datas no rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
-  "startDate": "2026-09-14",
-  "endDate": "2026-09-18"
-}</code></pre></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>O destino selecionado aparece nesta lista. É possível acrescentar outras cidades e definir a ordem em que serão visitadas. Essa ordem é uma escolha do viajante.</p><p>Na próxima tela, o calendário registra o período de cada destino. O exemplo usa de quatorze a dezoito de setembro, totalizando cinco dias. No modelo, cada um desses dias será representado por uma rota.</p><p>Com os destinos e as datas confirmados, o aplicativo pode relacionar a hospedagem e as preferências ao período correto da viagem.</p><p>Depois da seleção, uma chamada de detalhes com purpose igual a location recupera a localização e a área do destino. As datas ficam no rascunho, sem uma requisição HTTP específica nessa tela.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
+<section class="slide app-flow-slide contract-slide destination-contract" id="slide-7" data-stage="1" data-title="Destino selecionado, localização e datas">
+<h2 class="title" data-a="up">O ID selecionado permite obter a localização</h2>
+<div class="app-flow api-flow">
+<div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="746" width="1090" height="225" rx="30"/><path d="M1300,858.5 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>04</span> Escolher o período</h3><div class="flow-phone"><img src="assets/app/dates-selected.png" alt="Calendário com 14 a 18 de setembro selecionados"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="196" y="1210" width="824" height="140" rx="30"/><path d="M1300,1280.0 H1036 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
+<aside class="api-panel">
+<div class="api-call" data-contract-call="2"><h3><span class="call-number">02</span> GET /v1/places/NYC</h3><p class="call-purpose">Após o toque na sugestão, o app consulta o destino pelo ID.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>purpose=location</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;place&quot;: {
+    &quot;placeId&quot;: &quot;NYC&quot;,
+    &quot;name&quot;: &quot;Nova Iorque&quot;,
+    &quot;coordinate&quot;: {
+      &quot;latitude&quot;: 40.7128,
+      &quot;longitude&quot;: -74.006
+    }
+  }
+}</code></pre></div></div></div>
+<div class="local-fields"><h3>As datas ficam no rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
+  &quot;startDate&quot;: &quot;2026-09-14&quot;,
+  &quot;endDate&quot;: &quot;2026-09-18&quot;
+}</code></pre></div>
+<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
+</aside></div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Aqui o usuário já escolheu a cidade. O aplicativo passa o placeId recebido no autocomplete para a chamada de detalhes. O parâmetro purpose igual a location seleciona os dados de localização. A resposta acrescenta as coordenadas e, quando disponível, a área geográfica do destino.</p><p>Isso explica a diferença entre as duas chamadas. A primeira procura sugestões pelo texto digitado. A segunda consulta os dados da opção escolhida pelo seu identificador. O aplicativo usa essa localização para iniciar o mapa da hospedagem.</p><p>Depois, o viajante escolhe as datas. Esses valores ficam no rascunho local e definem o período da cidade. Essa escolha no calendário não dispara uma chamada HTTP própria. No exemplo, são cinco dias, de quatorze a dezoito de setembro.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><p>O endpoint também pode retornar viewport. O recorte mantém coordinate para explicar o posicionamento inicial do mapa, sem exibir mais dois pares de coordenadas.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/destination.tsx">handleSelect consulta detalhes e adiciona o destino</a></li><li><a href="references/aplicativo/mobile/src/features/lodging/LodgingMapPicker.tsx">Localização inicial e pesquisa de hospedagem</a></li></ul></details></template>
 </section>
 
-<section class="slide app-flow-slide" id="slide-8" data-stage="1" data-title="Preparar a viagem — base e preferências">
-<h2 class="title" data-a="up">Hospedagem e preferências da viagem</h2><div class="app-flow api-flow three-api"><div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="140" y="1100" width="1005" height="228" rx="30"/><path d="M1300,1214.0 H1161 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="112" y="1435" width="995" height="235" rx="30"/><path d="M1260,1552.5 H1123 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="48" y="690" width="1100" height="220" rx="30"/><path d="M1300,800.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json"><code>{
-  "query": "Wyndham New Yorker Nova Iorque",
-  "radiusMeters": 25000,
-  "maxResultCount": 8
-}</code></pre></div><div><h4>Response<small>places[0].coordinate</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "latitude": 40.7527316,
-  "longitude": -73.9936287
-}</code></pre></div></div></div><div class="api-call"><h3>POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json"><code>{
-  "city": "Nova Iorque"
-}</code></pre></div><div><h4>Response<small>recommendation</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "mode": "transit"
-}</code></pre></div></div></div><div class="local-fields"><h3>Escolhas no rascunho</h3><div class="local-pair"><div><h4>Perfil da viagem</h4><pre class="syntax-block" data-language="json"><code>{
-  "pace": "moderate",
-  "travelMode": "transit"
-}</code></pre></div><div><h4>interestLevels</h4><pre class="syntax-block" data-language="json"><code>{
-  "culture": 1,
-  "nature": 1
-}</code></pre></div></div></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Primeiro, informamos a hospedagem e os horários de entrada e saída. A hospedagem será a base das rotas. No exemplo, usamos o Wyndham New Yorker, as visitas do primeiro dia são disponibilizadas a partir das quatorze horas.</p><p>Depois, escolhemos o ritmo e o transporte. O perfil equilibrado define um teto de quatro atrações por dia neste modelo. O transporte público, sugerido pelo aplicativo e aceito pelo viajante, define os tempos da matriz de deslocamentos.</p><p>Por fim, selecionamos os interesses, como cultura, museus e parques. Essas categorias orientam a busca por atrações. Todas essas escolhas ficam no rascunho da viagem e seguem para a etapa de descoberta, que vamos detalhar agora.</p><p>A hospedagem é pesquisada pelo endpoint text-search, que recebe o texto e a região de busca. A recomendação de transporte é outra chamada, que recebe o nome da cidade e retorna o modo e o motivo. Ritmo e interesses são escolhas locais.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
+<section class="slide app-flow-slide contract-slide lodging-contract" id="slide-8" data-stage="1" data-title="Hospedagem, base das rotas">
+<h2 class="title" data-a="up">A hospedagem define a base dos deslocamentos</h2>
+<div class="app-flow api-flow one-screen">
+<div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="140" y="1100" width="1005" height="228" rx="30"/><path d="M1300,1214.0 H1161 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
+<aside class="api-panel">
+<div class="api-call" data-contract-call="3"><h3><span class="call-number">03</span> POST /v1/places/text-search</h3><p class="call-purpose">A pesquisa pelo nome usa a região do destino como referência.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+  &quot;query&quot;: &quot;Wyndham New Yorker Nova Iorque&quot;,
+  &quot;location&quot;: {
+    &quot;latitude&quot;: 40.7128,
+    &quot;longitude&quot;: -74.006
+  },
+  &quot;radiusMeters&quot;: 25000,
+  &quot;maxResultCount&quot;: 8
+}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;places&quot;: [
+    {
+      &quot;placeId&quot;: &quot;HOTEL&quot;,
+      &quot;name&quot;: &quot;Wyndham New Yorker Hotel&quot;,
+      &quot;coordinate&quot;: {
+        &quot;latitude&quot;: 40.7527316,
+        &quot;longitude&quot;: -73.9936287
+      }
+    }
+  ]
+}</code></pre></div></div></div>
+<p class="contract-result">Ao escolher o hotel, o app guarda suas coordenadas. Elas serão a base da descoberta e das rotas.</p>
+<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
+</aside></div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Com o destino e as datas definidos, o viajante informa a hospedagem. Na busca por nome, o aplicativo envia o texto junto com a localização atual do mapa e um raio de referência. Ao abrir o mapa, essa localização começa no destino selecionado.</p><p>A resposta devolve os hotéis encontrados, cada um com identificador, nome e coordenadas. Ao tocar em uma opção, o aplicativo guarda esses dados no rascunho. Também registra o período da estadia e os horários de entrada e saída.</p><p>A hospedagem escolhida tem duas funções no fluxo. Suas coordenadas são a base da busca por atrações. Mais adiante, ela será o ponto de saída e retorno das rotas diárias. No exemplo usamos o Wyndham New Yorker Hotel.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/features/lodging/LodgingMapPicker.tsx">Busca textual e armazenamento da opção escolhida</a></li><li><a href="references/aplicativo/mobile/src/features/discover/anchor.ts">Descoberta ancorada na primeira hospedagem</a></li></ul></details></template>
 </section>
 
-<section class="slide" id="slide-9" data-title="Etapa 2 — Descoberta de candidatos" data-stage="2">
-  <h2 class="title" data-a="up">Etapa 2 — Descoberta de candidatos</h2>
-  <div class="step">
-    <div><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/poi-recommendation.png" alt="Card de recomendação do aplicativo exibindo o Central Park com foto, nota 4,8, 301.915 avaliações e duração estimada de 2 horas" /></div></div>
-<div class="step-body discovery-api"><div class="api-call"><h3>POST /v1/places/discover</h3><div class="http-pair"><div><h4>Request<small>buckets[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "id": "nature",
-  "types": ["park"]
-}</code></pre></div><div><h4>Response<small>buckets[0].places[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "name": "Central Park",
-  "rating": 4.8,
-  "userRatingCount": 301915,
-  "primaryType": "park"
-}</code></pre></div></div></div><div class="api-call"><h3>POST /v1/places/enrich</h3><div class="http-pair"><div><h4>Request<small>places[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "name": "Central Park",
-  "rating": 4.8
-}</code></pre></div><div><h4>Response<small>places[0].insight</small></h4><pre class="syntax-block" data-language="json"><code>{
-  "averageMinutes": 120
-}</code></pre></div></div></div><p class="api-footnote">Recortes dos objetos indicados acima. A descoberta usa a localização da hospedagem e as categorias ativas. O enriquecimento acrescenta estimativas e fotos.</p><div class="filter-inline"><h3>Filtro antes da ordenação</h3><p>Preservar atrações compatíveis com os interesses e remover estabelecimentos sem relação com a visita.</p></div></div>
-  </div>
-  <template class="speaker-notes">
-    <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-    <p>Com a viagem definida, o aplicativo busca lugares associados aos interesses escolhidos. O retorno inclui nome, posição, nota, quantidade de avaliações e tipos do lugar. O Central Park é um exemplo desse retorno.</p>
-    <p>Antes de ordenar as sugestões, aplicamos um filtro. Um resultado marcado como atração turística pode ser uma loja, um hotel ou outro estabelecimento que não corresponde ao passeio procurado. O filtro considera os tipos do lugar, os interesses explícitos e as exceções de atrações reconhecidas.</p>
-    <p>O resultado é uma lista de candidatos para o viajante examinar. A nota e o número de avaliações ajudam a ordenar essa lista, mas ainda precisamos tratar a diferença entre um lugar pouco avaliado e outro com milhares de avaliações.</p>
-    <p>À direita estão os dois endpoints envolvidos. Discover retorna os candidatos separados por categoria. Enrich acrescenta a estimativa de duração e a foto. Os blocos mostram apenas os campos relevantes dos contratos.</p><details class="notes-support">
-      <summary>Apoio técnico e fontes</summary>
-      <p class="obs">O filtro considera tipos primários e secundários, interesses explícitos e exceções. A variante TCC apresenta os oito primeiros candidatos pelo escore global e depois intercala as categorias ativas com peso igual.</p>
-      <h4>Fontes</h4>
-      <ul>
-            <li><a href="references/aplicativo/mobile/src/application/places-service.ts">Request e response de discover e enrich</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Rotas e validação dos contratos HTTP</a></li><li><a href="references/aplicativo/mobile/src/features/discover/ranking.ts">Filtro de não-atrações e ranking</a></li>
-            <li><a href="references/aplicativo/backend/src/application/discover-places.ts">Composição das buscas por categoria</a></li>
-          </ul>
-    </details>
-  </template>
+<section class="slide app-flow-slide contract-slide preferences-contract" id="slide-9" data-stage="1" data-title="Preferências, transporte e interesses">
+<h2 class="title" data-a="up">Preferências orientam a busca e os deslocamentos</h2>
+<div class="app-flow api-flow">
+<div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="112" y="1435" width="995" height="235" rx="30"/><path d="M1260,1552.5 H1123 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="48" y="690" width="1100" height="220" rx="30"/><path d="M1300,800.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
+<aside class="api-panel">
+<div class="api-call" data-contract-call="4"><h3><span class="call-number">04</span> POST /v1/travel-mode/recommend</h3><p class="call-purpose">A cidade orienta a sugestão de transporte apresentada ao viajante.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+  &quot;city&quot;: &quot;Nova Iorque&quot;
+}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;recommendation&quot;: {
+    &quot;mode&quot;: &quot;transit&quot;,
+    &quot;reason&quot;: &quot;O metrô cobre bem as áreas turísticas e evita o trânsito e o custo de estacionar em Nova Iorque.&quot;
+  }
+}</code></pre></div></div></div>
+<div class="local-fields"><h3>Rascunho local, recorte de dois interesses</h3><pre class="syntax-block" data-language="json"><code>{
+  &quot;pace&quot;: &quot;moderate&quot;,
+  &quot;travelMode&quot;: &quot;transit&quot;,
+  &quot;interestLevels&quot;: {
+    &quot;culture&quot;: 1,
+    &quot;nature&quot;: 1
+  }
+}</code></pre></div>
+<p class="contract-result">Os interesses definem as categorias da próxima busca. O transporte define os tempos de deslocamento.</p>
+</aside></div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Depois da hospedagem, o viajante define ritmo, transporte e interesses. O aplicativo pede uma recomendação de transporte para a cidade. A resposta inclui o modo sugerido e o motivo mostrado na tela. Aqui a sugestão é transporte público.</p><p>O viajante pode aceitar a sugestão ou escolher outro modo. O modo confirmado será usado no cálculo dos tempos de deslocamento. O ritmo equilibrado define, neste modelo, um teto de quatro atrações por dia.</p><p>Ritmo e interesses são escolhas locais. No recorte aparecem cultura e natureza ativadas com valor um. As categorias ativas se transformam nos grupos de tipos enviados à chamada de descoberta. Agora já temos uma base geográfica e os interesses que orientam essa busca.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Recomendação com modo e justificativa</a></li><li><a href="references/aplicativo/mobile/src/domain/preferences.ts">Categorias e tipos do Google Places</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Montagem dos grupos e chamadas de descoberta</a></li></ul></details></template>
 </section>
 
-<section class="slide" id="slide-10" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
+<section class="slide contract-slide discover-contract" id="slide-10" data-title="Descoberta, categorias e candidatos" data-stage="2">
+<h2 class="title" data-a="up">A descoberta transforma categorias em candidatos</h2>
+<div class="contract-full">
+<div class="api-call" data-contract-call="5"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><p class="call-purpose">A entrada combina a base da hospedagem com os tipos de lugar desejados.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+  &quot;location&quot;: {
+    &quot;latitude&quot;: 40.7527316,
+    &quot;longitude&quot;: -73.9936287
+  },
+  &quot;buckets&quot;: [
+    {
+      &quot;id&quot;: &quot;nature&quot;,
+      &quot;types&quot;: [&quot;park&quot;]
+    }
+  ],
+  &quot;destinationName&quot;: &quot;Nova Iorque&quot;
+}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;buckets&quot;: [
+    {
+      &quot;id&quot;: &quot;nature&quot;,
+      &quot;places&quot;: [
+        {
+          &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+          &quot;name&quot;: &quot;Central Park&quot;,
+          &quot;coordinate&quot;: {
+            &quot;latitude&quot;: 40.7825547,
+            &quot;longitude&quot;: -73.9655834
+          },
+          &quot;rating&quot;: 4.8,
+          &quot;userRatingCount&quot;: 301915,
+          &quot;primaryType&quot;: &quot;park&quot;
+        }
+      ]
+    }
+  ]
+}</code></pre></div></div></div>
+<div class="contract-takeaway"><p><b>Request:</b> cada grupo informa sua categoria e os tipos buscados.</p><p><b>Response:</b> a API acrescenta <code>places</code> com os lugares encontrados para esse grupo.</p></div>
+<p class="api-footnote">Recorte de uma categoria, um tipo e uma atração. Demais tipos, grupos e campos omitidos.</p>
+</div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>A descoberta recebe a localização da hospedagem e os grupos associados aos interesses. Neste recorte mantivemos apenas o grupo nature e o tipo park. A chamada do aplicativo inclui os demais tipos e as outras categorias ativas.</p><p>É importante distinguir os dois formatos de buckets. Na requisição, cada grupo tem um identificador e os tipos procurados. A resposta mantém o identificador e acrescenta places, a lista dos lugares encontrados naquele grupo. Por isso places aparece na resposta, sem precisar existir na entrada.</p><p>O Central Park já chega com nome, identificador, coordenadas, nota e quantidade de avaliações. Esses dados permitem localizar e comparar os candidatos. O filtro de tipos remove estabelecimentos sem relação com os interesses, e a ordenação define a sequência das sugestões.</p><p>Ainda faltam informações para planejar e apresentar a visita, como duração e descrição. O aplicativo solicita esses dados para os candidatos da fila. O próximo slide mostra exatamente o que essa etapa acrescenta.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><p>A entrada exibe somente um dos tipos da categoria nature. O aplicativo também envia viewport, radiusMeters e includeSurprise. O servidor pode acrescentar os grupos de surpresa e busca regional. Esses itens foram omitidos para manter o foco na relação entre categoria e candidatos.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Descoberta, ordenação e fila de enriquecimento</a></li><li><a href="references/aplicativo/backend/src/application/discover-places.ts">Busca por grupo e composição de places</a></li><li><a href="references/aplicativo/mobile/src/features/discover/anchor.ts">Coordenadas da base da busca</a></li></ul></details></template>
+</section>
+
+<section class="slide contract-slide enrich-contract" id="slide-11" data-title="Enriquecimento, duração e descrição" data-stage="2">
+<h2 class="title" data-a="up">O enriquecimento acrescenta duração e descrição</h2>
+<div class="enrich-layout">
+<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png" alt="Central Park no aplicativo com nota 4,8, 301.915 avaliações, duração de duas horas e descrição" /></div><p><b>Nota e avaliações:</b> descoberta<br><b>Duração e descrição:</b> enriquecimento</p></div>
+<div class="api-panel">
+<div class="api-call" data-contract-call="6"><h3><span class="call-number">06</span> POST /v1/places/enrich</h3><p class="call-purpose">O app envia os candidatos descobertos. A resposta preserva o lugar e acrescenta insight.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+  &quot;places&quot;: [
+    {
+      &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+      &quot;name&quot;: &quot;Central Park&quot;,
+      &quot;coordinate&quot;: {
+        &quot;latitude&quot;: 40.7825547,
+        &quot;longitude&quot;: -73.9655834
+      },
+      &quot;rating&quot;: 4.8,
+      &quot;userRatingCount&quot;: 301915,
+      &quot;primaryType&quot;: &quot;park&quot;
+    }
+  ],
+  &quot;includePhotos&quot;: false
+}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+  &quot;places&quot;: [
+    {
+      &quot;place&quot;: {
+        &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+        &quot;name&quot;: &quot;Central Park&quot;
+      },
+      &quot;insight&quot;: {
+        &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+        &quot;averageMinutes&quot;: 120,
+        &quot;description&quot;: &quot;Grande parque urbano com lagos, pontes, jardins, áreas arborizadas e vistas clássicas de Manhattan.&quot;
+      }
+    }
+  ]
+}</code></pre></div></div></div>
+<p class="contract-result"><code>averageMinutes: 120</code> preenche as <b>2 h</b> da visita. A descrição preenche o texto do card.</p>
+<p class="api-footnote">Fotos carregam em paralelo por <code>POST /v1/places/photos</code>. Campos repetidos de <code>place</code> e demais campos de <code>insight</code> omitidos. A descrição foi recortada na primeira frase.</p>
+</div></div>
+<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Depois de descobrir e ordenar os candidatos, o aplicativo antecipa o enriquecimento dos próximos itens da fila, em lotes. No recorte, enviamos só o Central Park. O objeto vem da descoberta anterior, com o mesmo placeId, coordenadas e avaliações.</p><p>A resposta separa dois conjuntos de informações. place preserva os dados do lugar. insight acrescenta estimativas e uma descrição produzidas com apoio do modelo de linguagem. Para leitura, repetimos apenas o identificador e o nome dentro de place.</p><p>Agora o enriquecimento fica visível no resultado. averageMinutes igual a cento e vinte corresponde às duas horas mostradas no card. A descrição preenche o texto abaixo das avaliações. A estimativa de duração também segue para a preparação da instância que será resolvida pelo solver.</p><p>Neste fluxo o aplicativo envia includePhotos igual a false. As fotos carregam por uma chamada própria em paralelo. Não há dependência entre a foto e o enriquecimento da descrição. As duas partes se encontram no mesmo card pelo identificador do lugar.</p><p>No próximo slide vamos detalhar o cálculo que ordena os candidatos a partir das avaliações e da distância. Esse cálculo acontece com os dados da descoberta, antes dos pedidos de enriquecimento da fila.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Exemplos dos contratos implementados, sem captura HTTP. Os identificadores NYC e HOTEL são abreviações usadas apenas para leitura. Listas e campos secundários foram reduzidos, mantendo os objetos e arrays que relacionam as chamadas. Coordenadas da cidade arredondadas. A posição da hospedagem e do Central Park vem da entrada registrada do solver. Nota, volume de avaliações, duração e descrição do Central Park aparecem na captura do aplicativo.</p><p>averageMinutes é uma estimativa de duração, não uma medição do tempo gasto por um participante. A resposta de insight pode conter também custo estimado, confiança e recomendações. Os campos foram omitidos porque seus valores completos não estão preservados na captura. O hook de fotos usa photoNames e pode consultar detalhes com purpose photos quando faltam referências.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Ordenação e enrich com includePhotos false em lotes</a></li><li><a href="references/aplicativo/backend/src/application/enrich-places.ts">Resposta com place, insight e foto opcional</a></li><li><a href="references/aplicativo/mobile/src/features/places/usePlacePhotos.ts">Fotos carregadas em paralelo e cacheadas no cliente</a></li><li><a href="references/aplicativo/backend/src/infrastructure/google/gemini-adapter.ts">Estimativas e descrições produzidas pelo modelo</a></li></ul></details></template>
+</section>
+
+<section class="slide" id="slide-12" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
   <h2 class="title" data-a="up">Etapa 2 — Ordenação dos candidatos</h2>
   <p class="lead" data-a="up" style="--d:100ms">O escore combina a nota ajustada pelo volume de avaliações, a popularidade relativa e um desconto por distância.</p>
   <div class="formula" style="margin-top:22px">
@@ -289,7 +396,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-11" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
+<section class="slide" id="slide-13" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
   <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
   <p class="lead" data-a="up" style="--d:100ms">As mesmas doze atrações em três ordenações. Em destaque, quem mudou de posição.</p>
   <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao escore completo, Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
@@ -315,7 +422,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-12" data-title="Etapa 3 — Seleção e priorização" data-stage="3" data-scene="prio">
+<section class="slide" id="slide-14" data-title="Etapa 3 — Seleção e priorização" data-stage="3" data-scene="prio">
   <h2 class="title" data-a="up">Etapa 3 — Seleção e priorização</h2>
   <div class="step" style="grid-template-columns:560px 1fr">
     <div><div class="pair"><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /></div><div class="phone" data-a="phone" style="--d:300ms"><img src="assets/app/poi-priority-2.png" alt="Continuação da lista de priorização mostrando as atrações de número 8 a 12" /></div></div></div>
@@ -348,7 +455,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-13" data-title="Etapa 3 — Penalidade de exclusão" data-stage="3" data-scene="penalty">
+<section class="slide" id="slide-15" data-title="Etapa 3 — Penalidade de exclusão" data-stage="3" data-scene="penalty">
   <h2 class="title" data-a="up">Etapa 3 — Penalidade de exclusão</h2>
   <p class="lead" data-a="up" style="--d:100ms">Excluir uma atração acrescenta uma penalidade ao objetivo. O valor combina a prioridade do viajante, a popularidade e a época da viagem.</p>
   <div class="formula penalty-formula">
@@ -393,7 +500,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-14" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
+<section class="slide" id="slide-16" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
 <h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><p class="lead" data-a="up">Horários de funcionamento e durações definem quando visitar, a matriz informa o tempo para chegar ao próximo lugar.</p>
 <div class="instance-examples">
  <figure data-a="up"><figcaption><b>Até que horas a visita pode começar?</b><span>Metropolitan, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="Metropolitan: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg><p class="instance-reading">Último início às <b>13h45</b> para terminar até <b>17h</b>.</p></figure>
@@ -423,7 +530,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-15" data-title="Etapa 5 — Formulação do problema" data-stage="5">
+<section class="slide" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
   <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
   <p class="lead" data-a="up" style="--d:100ms">O modelo escolhe quais paradas visitar, em que dia e em qual sequência. Cada dia corresponde a um veículo no OR-Tools.</p>
   <div class="model">
@@ -482,7 +589,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-16" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
+<section class="slide" id="slide-18" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
   <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
   <p class="lead" data-a="up" style="--d:100ms">A próxima visita começa depois que a anterior termina e o deslocamento é concluído. Exemplo: Catedral de São Patrício → Metropolitan, no dia 2.</p>
   <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 330" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
@@ -518,7 +625,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-17" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
+<section class="slide" id="slide-19" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
 <h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2><p class="lead" data-a="up"><b>Parallel Cheapest Insertion</b> constrói a agenda inicial, <b>Guided Local Search (GLS)</b> busca alternativas de menor custo.</p>
 <div class="search-implementation search-simple" data-a="up">
 <figure><figcaption>Python, construção inicial e busca local</figcaption><pre class="search-code syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
@@ -572,7 +679,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-18" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
+<section class="slide" id="slide-20" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
   <h2 class="title" data-a="up" style="margin-bottom:10px">Busca das rotas em execução</h2>
   <div class="search">
     <div class="search-map"><svg id="searchMap" viewBox="0 0 560 640" role="img" aria-label="Mapa com as posições reais das atrações, as rotas por dia mudam a cada melhoria encontrada pelo solver"></svg></div>
@@ -599,7 +706,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-19" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
+<section class="slide" id="slide-21" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
   <h2 class="title" data-a="up">Etapa 7 — As visitas distribuídas pelos cinco dias</h2>
   <div class="route-summary" data-a="up" style="--d:100ms"><p><b>12 de 12 atrações incluídas</b>, 62,4 km de deslocamento no total</p><span>Nova Iorque, 14 a 18 de setembro</span></div>
   <div class="daily-results" id="dailyResults"></div>
@@ -622,7 +729,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-20" data-title="Comparação de estratégias de busca">
+<section class="slide" id="slide-22" data-title="Comparação de estratégias de busca">
 <h2 class="title" data-a="up">Comparação de estratégias de busca</h2><p class="lead" data-a="up">Mesma entrada: 12 atrações em 5 dias. O <b>custo do objetivo</b> combina deslocamentos e penalidades, <b>menor é melhor</b>.</p>
 <table class="strategy-table" data-a="up"><colgroup><col style="width:30%"><col style="width:25%"><col style="width:17%"><col style="width:17%"><col style="width:11%"></colgroup>
 <thead><tr><th>Solução inicial</th><th>Busca local</th><th>Parada / limite</th><th>Custo do objetivo</th><th>Atrações</th></tr></thead>
@@ -649,7 +756,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-21" data-title="Validação do aplicativo">
+<section class="slide" id="slide-23" data-title="Validação do aplicativo">
 <h2 class="title" data-a="up">Validação funcional do aplicativo</h2><p class="lead" data-a="up">Testes automatizados e verificações no aplicativo, repetidos após a integração e a publicação.</p>
 <dl class="validation-summary">
 <div data-a="up"><dt>Regras e regressões</dt><dd>Solver, backend, aplicativo e verificações de tipos e compilação.</dd></div>
@@ -673,7 +780,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-22" data-title="Avaliação com participantes">
+<section class="slide" id="slide-24" data-title="Avaliação com participantes">
   <h2 class="title" data-a="up">Avaliação com participantes</h2>
   <p class="lead" data-a="up" style="--d:100ms">Seis participantes, cada um com seu aparelho e cenário, executaram cinco casos de teste e responderam a um formulário próprio.</p>
   <div class="eval">
@@ -731,7 +838,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-23" data-title="Custos estimados por geração">
+<section class="slide" id="slide-25" data-title="Custos estimados por geração">
 <h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2><p class="lead" data-a="up">Quatro cenários para a mesma viagem: 5 dias, 12 atrações e 1 hospedagem. <b>US$ por geração, apenas APIs.</b></p>
 <div class="cost-scenarios">
 <article data-a="up"><span class="scenario-index">CENÁRIO A</span><h3>Sem dados<br>reaproveitados</h3><strong>US$ 1,38</strong><p><b>Novas consultas:</b><br>lugares, matriz, IA e fotos.</p></article>
@@ -770,7 +877,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide" id="slide-24" data-title="Limitações do trabalho">
+<section class="slide" id="slide-26" data-title="Limitações do trabalho">
 <h2 class="title" data-a="up">Limitações do trabalho</h2><ol class="limitations-list limitations-short">
 <li data-a="up"><b>Passeios de dia inteiro</b> podem dividir o dia com outras visitas e ficar <b>sem almoço</b>.</li>
 <li data-a="up"><b>Durações estimadas</b> e <b>deslocamentos fixos</b> podem divergir das condições da viagem.</li>
@@ -791,7 +898,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   </template>
 </section>
 
-<section class="slide dark conclusion" id="slide-25" data-title="Agradecimento e perguntas">
+<section class="slide dark conclusion" id="slide-27" data-title="Agradecimento e perguntas">
   <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude, Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><p data-a="up" style="--d:250ms">Agradecemos a atenção.<br>Estamos à disposição para perguntas.</p><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília, FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
     <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -813,7 +920,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 
 <nav class="controls" aria-label="Controles da apresentação">
   <button id="prevBtn" title="Anterior (←)"><svg data-i="chevron-left"></svg></button>
-  <span class="counter" id="counter">01 / 25</span>
+  <span class="counter" id="counter">01 / 27</span>
   <button id="nextBtn" title="Próximo (→)"><svg data-i="chevron-right"></svg></button>
   <button id="scriptBtn" title="Roteiro de fala (N)"><svg data-i="file-text"></svg></button>
   <button id="overviewBtn" title="Visão geral (O)"><svg data-i="layout-grid"></svg></button>
@@ -835,7 +942,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 <dialog id="overviewDialog"><div class="dlg-head"><b>Visão geral</b><button id="closeOverview">Fechar</button></div><div class="overview-grid" id="overviewGrid"></div></dialog>
 
 <section class="presenter" id="presenter" hidden>
-  <div class="p-top"><span id="pCounter">01 / 25</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
+  <div class="p-top"><span id="pCounter">01 / 27</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
   <div class="p-left"><div class="p-frame" id="pCurrent"></div><div class="p-frame p-next" id="pNextFrame"></div></div>
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>

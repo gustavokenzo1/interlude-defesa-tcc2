@@ -1425,6 +1425,47 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .discovery-api .api-call { margin-bottom: 18px; }
 .search-simple pre.syntax-block { padding: 23px; font-size: 18px; line-height: 1.65; }
 
+/* Cada chamada mantém o contexto que liga a entrada à resposta. */
+.contract-slide .title { font-size: 48px; }
+.contract-slide .api-flow { margin-top: 28px; gap: 52px; }
+.contract-slide .api-call { margin-bottom: 18px; padding-top: 14px; }
+.contract-slide .api-call h3 { font-size: 18px; margin-bottom: 11px; }
+.call-number { color: var(--ink-muted); font-weight: 400; margin-right: 6px; }
+.call-purpose { color: var(--ink-muted); font: 400 18px/1.45 var(--body); margin: 0 0 16px; }
+.contract-slide .http-pair { grid-template-columns: .8fr 1.2fr; gap: 20px; }
+.contract-slide .http-pair h4 { min-height: 0; font-size: 15px; margin-bottom: 10px; }
+.contract-slide pre.syntax-block { font-size: 16px; line-height: 1.35; padding: 14px 16px; }
+.contract-slide .syntax-line { min-height: 1.35em; }
+.contract-result { font: 400 19px/1.5 var(--body); margin-top: 16px; color: var(--ink-muted); }
+.contract-result code { color: var(--pine); font-size: .92em; }
+.contract-result b { color: var(--ink); }
+.contract-slide .api-footnote { margin-top: 14px; font-size: 13px; line-height: 1.45; }
+.destination-contract .local-fields { margin-top: 18px; padding-top: 15px; }
+.destination-contract .local-fields h3 { font-size: 18px; margin-bottom: 12px; }
+.contract-slide .one-screen { grid-template-columns: 310px 1fr; gap: 55px; }
+.one-screen .flow-screens { grid-template-columns: 270px; }
+.one-screen .flow-phone { width: 270px; }
+.one-screen .flow-step h3 { min-height: 38px; }
+.one-screen .http-pair { grid-template-columns: 1fr 1fr; gap: 30px; }
+.preferences-contract .http-pair { grid-template-columns: .8fr 1.2fr; }
+.preferences-contract .local-fields { margin-top: 18px; padding-top: 15px; }
+.preferences-contract .local-fields h3 { font-size: 18px; margin-bottom: 12px; }
+.preferences-contract .local-fields pre { font-size: 16px; }
+.contract-full { margin-top: 28px; }
+.contract-full .http-pair { grid-template-columns: 1fr 1fr; gap: 35px; }
+.contract-full .api-call { margin-bottom: 14px; }
+.contract-full pre.syntax-block { font-size: 17px; }
+.contract-takeaway { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; font-size: 19px; color: var(--ink-muted); line-height: 1.45; }
+.contract-takeaway b { color: var(--ink); }
+.enrich-layout { display: grid; grid-template-columns: 272px 1fr; gap: 42px; margin-top: 28px; }
+.enrich-preview .phone { width: 246px; padding: 7px; border-radius: 30px; }
+.enrich-preview .phone img { border-radius: 24px; }
+.enrich-preview p { font-size: 14px; line-height: 1.6; color: var(--ink-muted); margin-top: 18px; }
+.enrich-preview b { color: var(--ink); font-weight: 600; }
+.enrich-contract .http-pair { grid-template-columns: 1fr 1fr; gap: 22px; }
+.enrich-contract pre.syntax-block { font-size: 16px; line-height: 1.35; }
+.enrich-contract .contract-result { font-size: 18px; }
+
 /* O registro da busca e o prazo configurado têm significados distintos */
 .search-side { gap: 13px; }
 .search-side > .lead { font-size: 19px !important; line-height: 1.45; }
