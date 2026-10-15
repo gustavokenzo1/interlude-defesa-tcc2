@@ -158,7 +158,7 @@
       const svg = slide.querySelector("#problemMap");
       const pos = project({ x: 20, y: 46, w: 600, h: 548 }, { pad: 30, minDist: 42 });
       const routeLayer = svgEl("g", {}, svg);
-      this.paths = solutionRoutes.map((seq, d) => svgEl("path", { class: "route bdraw", d: routeD(seq, pos, 0.18), style: { stroke: DAY[d], strokeWidth: 3.2, transitionDelay: `${d * 220}ms` } }, routeLayer));
+      this.paths = solutionRoutes.map((seq, d) => svgEl("path", { class: "route problem-route", pathLength: 1, d: routeD(seq, pos, 0.18), style: { stroke: DAY[d], strokeWidth: 3.2, transitionDelay: `${d * 180}ms` } }, routeLayer));
       this.nodes = drawNodes(svg, pos, { r: 13 });
       const labels = svgEl("g", {}, svg);
       nodes.forEach((n, i) => {
@@ -173,9 +173,12 @@
       slide.querySelector("#problemLegend").innerHTML = solutionRoutes.map((seq, d) => `<span><i style="background:${DAY[d]}"></i>Dia ${d + 1}, ${seq.filter((i) => i !== hotel).length} atrações</span>`).join("");
       measure(svg);
     },
-    build(slide, level) {
+    build(slide, level, instant) {
       const out = level >= 1;
-      this.paths.forEach((p) => p.classList.toggle("on", out));
+      this.paths.forEach((p) => {
+        p.style.transition = instant || !out ? "none" : "";
+        p.classList.toggle("on", out);
+      });
       colorNodes(this.nodes.els, out ? this.assignment : new Map(), false);
       slide.querySelector("#problemTag").textContent = out ? "Saída" : "Entrada";
       slide.querySelector("#problemCaption").textContent = out ? "5 dias, com saída e retorno ao hotel, 12 atrações incluídas" : "12 atrações e a hospedagem, nas coordenadas reais";
@@ -186,8 +189,9 @@
   // ---------- 04 Teoria ----------
   const MINI = [[62, 52], [118, 30], [214, 36], [272, 78], [262, 160], [196, 182], [104, 172], [46, 126]];
   const MDEPOT = [160, 106];
+  const MMEALS = { A: [168, 31], B: [280, 120] };
   function miniPath(seq) {
-    const pt = (i) => (i === "D" ? MDEPOT : MINI[i]);
+    const pt = (i) => (i === "D" ? MDEPOT : MMEALS[i] || MINI[i]);
     let d = `M${pt(seq[0]).join(",")}`;
     for (let i = 1; i < seq.length; i++) {
       const a = pt(seq[i - 1]), b = pt(seq[i]);
@@ -203,7 +207,7 @@
         vrp: { tours: [["D", 7, 0, 1, 2, "D"], ["D", 3, 4, 5, 6, "D"]], depot: true },
         vrptw: { tours: [["D", 7, 0, 1, 2, "D"], ["D", 3, 4, 5, 6, "D"]], depot: true, windows: true },
         toptw: { tours: [["D", 0, 1, 2, "D"], ["D", 3, 4, 6, "D"]], depot: true, windows: true, dropped: [5, 7] },
-        interlude: { tours: [["D", 0, 1, 2, "D"], ["D", 3, 4, 6, "D"]], depot: true, windows: true, dropped: [5, 7] },
+        interlude: { tours: [["D", 0, 1, "A", 2, "D"], ["D", 3, "B", 4, 6, "D"]], depot: true, windows: true, dropped: [5, 7], priorities: true, meals: true },
       };
       slide.querySelectorAll("svg[data-mini]").forEach((svg) => {
         const cfg = tours[svg.dataset.mini];
@@ -221,12 +225,17 @@
             svgEl("circle", { cx: x, cy: y, r: R, style: { fill: "none", stroke: "#E3E2DC", strokeWidth: 3 } }, svg);
             svgEl("path", { d: `M${x + R * Math.cos(a0)},${y + R * Math.sin(a0)} A${R},${R} 0 ${span > 180 ? 1 : 0} 1 ${x + R * Math.cos(a1)},${y + R * Math.sin(a1)}`, style: { fill: "none", stroke: "var(--amber)", strokeWidth: 3, strokeLinecap: "round" } }, svg);
           }
-          svgEl("circle", { cx: x, cy: y, r: 7, style: dropped ? { fill: "none", stroke: "#9AA7A1", strokeWidth: 1.6, strokeDasharray: "3 3" } : { fill: "#fff", stroke: "#5C6A64", strokeWidth: 2 } }, svg);
+          svgEl("circle", { cx: x, cy: y, r: cfg.priorities && !dropped ? 9 : 7, style: dropped ? { fill: "none", stroke: "#9AA7A1", strokeWidth: 1.6, strokeDasharray: "3 3" } : { fill: "#fff", stroke: "#5C6A64", strokeWidth: 2 } }, svg);
+          if (cfg.priorities && !dropped) svgEl("text", { class: "mini-priority", x, y: y + 4, "text-anchor": "middle", text: i + 1 }, svg);
           if (dropped) {
             svgEl("path", { d: `M${x - 4},${y - 4} L${x + 4},${y + 4} M${x + 4},${y - 4} L${x - 4},${y + 4}`, style: { stroke: "#E8613F", strokeWidth: 1.8, strokeLinecap: "round" } }, svg);
           }
         });
         if (cfg.depot) svgEl("rect", { x: MDEPOT[0] - 8, y: MDEPOT[1] - 8, width: 16, height: 16, rx: 3, transform: `rotate(45 ${MDEPOT[0]} ${MDEPOT[1]})`, style: { fill: "var(--amber)", stroke: "#fff", strokeWidth: 2 } }, svg);
+        if (cfg.meals) Object.values(MMEALS).forEach(([x, y]) => {
+          svgEl("rect", { x: x - 11, y: y - 11, width: 22, height: 22, rx: 2, fill: "var(--pine)", stroke: "#fff", "stroke-width": 2 }, svg);
+          svgEl("text", { class: "mini-meal", x, y: y + 4, "text-anchor": "middle", text: "A" }, svg);
+        });
       });
       measure(slide);
     },

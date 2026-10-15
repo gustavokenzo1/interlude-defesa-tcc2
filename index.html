@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=41" />
+  <link rel="stylesheet" href="motion.css?v=42" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -79,20 +79,20 @@
 </section>
 
 <section class="slide theory-slide" id="slide-3" data-title="Fundamentos de roteamento" data-scene="theory">
-<h2 class="title" data-a="up">Do menor percurso à seleção de visitas</h2><p class="lead" data-a="up">Os lugares formam os nós do grafo, os deslocamentos ligam esses nós. Cada modelo acrescenta uma decisão à agenda.</p><div class="theory"><article class="" data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210" aria-label="Diagrama do modelo TSP"></svg><h3>TSP</h3><small>Traveling Salesman Problem</small><p>Visitar <b>todos os lugares</b> em uma única rota, com o menor custo.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRP"></svg><h3>VRP</h3><small>Vehicle Routing Problem</small><p>Distribuir as visitas entre <b>várias rotas</b>, no app, cada rota é um dia.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRPTW"></svg><h3>VRPTW</h3><small>Vehicle Routing Problem with Time Windows</small><p>Respeitar <b>horários</b>, somando visitas, deslocamentos e esperas.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo TOPTW"></svg><h3>TOPTW</h3><small>Team Orienteering Problem with Time Windows</small><p>Selecionar as visitas de <b>maior valor</b> que cabem nos dias e horários.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="interlude-model" data-build="5"><svg class="mini" data-mini="interlude" viewBox="0 0 320 210" aria-label="Diagrama do modelo Interlude"></svg><h3>Interlude</h3><small>Modelo implementado</small><p>Combinar <b>deslocamentos, exclusões e preferências</b> em um custo a minimizar no OR-Tools.</p></article></div><p class="theory-key" data-a="up">Linhas: rotas, arcos âmbar: horários permitidos, pontos tracejados: visitas excluídas.</p>
+<h2 class="title" data-a="up">Do menor percurso à seleção de visitas</h2><p class="lead" data-a="up">Os lugares formam os nós do grafo, os deslocamentos ligam esses nós. Cada modelo acrescenta uma decisão à agenda.</p><div class="theory"><article class="" data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210" aria-label="Diagrama do modelo TSP"></svg><h3>TSP</h3><small>Traveling Salesman Problem</small><p>Visitar <b>todos os lugares</b> em uma única rota, com o menor custo.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRP"></svg><h3>VRP</h3><small>Vehicle Routing Problem</small><p>Distribuir as visitas entre <b>várias rotas</b>, no app, cada rota é um dia.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRPTW"></svg><h3>VRPTW</h3><small>Vehicle Routing Problem with Time Windows</small><p>Respeitar <b>horários</b>, somando visitas, deslocamentos e esperas.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo TOPTW"></svg><h3>TOPTW</h3><small>Team Orienteering Problem with Time Windows</small><p>Selecionar as visitas de <b>maior valor</b> que cabem nos dias e horários.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="interlude-model" data-build="5"><svg class="mini" data-mini="interlude" viewBox="0 0 320 210" aria-label="Interlude com prioridades numeradas e paradas de almoço indicadas pela letra A"></svg><h3>Interlude</h3><small>Modelo implementado</small><div class="mini-model-key"><span>Números: prioridade</span><span>A: almoço</span></div><p>Minimizar <b>deslocamentos, exclusões e desvios de preferência</b>, com pausas para almoço.</p></article></div><p class="theory-key" data-a="up">Linhas: rotas. Arcos âmbar: horários permitidos. Pontos tracejados: visitas excluídas.</p>
 <template class="speaker-notes">
     <h4>Fala <span class="speaker-name">Bruno</span></h4>
 <p>O fundamento do projeto é um problema de roteamento. Representamos cada lugar como um nó de um grafo e cada deslocamento como uma ligação com custo. Só que uma boa agenda precisa decidir mais coisas do que o menor caminho entre dois pontos.</p>
 <p>O TSP, ou Traveling Salesman Problem, procura uma rota de menor custo que visite todos os pontos e retorne ao início. Ele resolve a ordem das visitas, mas considera apenas uma rota.</p>
 <p>O VRP distribui as visitas entre várias rotas. No nosso caso, usamos essa ideia para representar os dias da viagem: cada dia tem uma rota que sai da hospedagem e retorna a ela. O VRPTW acrescenta as janelas de tempo. Uma visita só pode acontecer em um horário compatível com o funcionamento do local, considerando sua duração e o deslocamento até a próxima parada.</p>
 <p>Mesmo assim, talvez não caiba visitar tudo. O TOPTW combina várias rotas, horários e seleção de pontos pelo valor que oferecem. Os pontos tracejados representam visitas que ficaram de fora. Esse é o fundamento mais próximo do nosso problema turístico: escolher o que cabe e em que dia visitar.</p>
-<p>No último quadro está a adaptação implementada no Interlude. Usamos o roteamento do OR-Tools com visitas opcionais e um custo que combina deslocamentos, penalidades por excluir atrações e desvios das preferências. Excluir uma atração prioritária pesa mais. Assim, o sistema tenta preservar as escolhas mais importantes enquanto respeita as restrições recebidas.</p>
+<p>No último quadro está a adaptação implementada no Interlude. Os números indicam a prioridade dada pelo viajante e os quadrados com a letra A representam pausas para almoço. Essas pausas entram nas rotas junto com as visitas e ocupam tempo na agenda. Usamos o roteamento do OR-Tools com visitas opcionais e um custo que combina deslocamentos, penalidades por excluir atrações e desvios das preferências. Excluir uma atração prioritária pesa mais. Assim, o sistema tenta preservar as escolhas mais importantes enquanto respeita as restrições recebidas.</p>
 <p>Essa adaptação se aproxima do TOPTW, mas não é uma reprodução literal da sua função objetivo clássica. O TOPTW costuma maximizar o valor das visitas, o nosso modelo minimiza um custo ponderado. Essa distinção explica por que precisamos olhar tanto a viabilidade da agenda quanto a composição desse custo.</p>
 <details class="notes-support">
       <summary>Apoio técnico e fontes</summary>
-      <p class="obs">A sequência de modelos organiza a explicação das decisões, sem representar uma cronologia. A função objetivo implementada difere da formulação clássica do TOPTW.</p>
+      <p class="obs">Os diagramas são esquemáticos, sem representar uma execução. No Interlude, o menor número indica maior prioridade. A inclusão de almoço e os custos de preferência são adaptações da aplicação, não propriedades exclusivas de um problema matemático. A sequência de modelos organiza a explicação das decisões, sem representar uma cronologia. A função objetivo implementada difere da formulação clássica do TOPTW.</p>
       <h4>Fontes</h4>
-      <ul><li><a href="https://www.math.uwaterloo.ca/tsp/book/index.html">Applegate et al. (2006)</a></li><li><a href="https://doi.org/10.1287/opre.35.2.254">Solomon (1987)</a></li><li><a href="https://doi.org/10.1016/j.ejor.2010.03.045">Vansteenwegen et al. (2011)</a></li><li><a href="https://doi.org/10.1016/j.cor.2009.03.008">TOPTW: busca local iterada (2009)</a></li></ul>
+      <ul><li><a href="https://www.math.uwaterloo.ca/tsp/book/index.html">Applegate et al. (2006)</a></li><li><a href="https://doi.org/10.1287/opre.35.2.254">Solomon (1987)</a></li><li><a href="https://doi.org/10.1016/j.ejor.2010.03.045">Vansteenwegen et al. (2011)</a></li><li><a href="https://doi.org/10.1016/j.cor.2009.03.008">TOPTW: busca local iterada (2009)</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Prioridades, custos e alternativas de refeição implementados</a></li></ul>
     </details>
   </template>
 </section>
@@ -114,7 +114,6 @@
       <text class="el" x="1010" y="494" text-anchor="middle">APIs externas</text>
       <text class="el" x="738" y="438">Admin SDK</text>
       <text class="el" x="365" y="574" text-anchor="middle">SDK cliente e regras de segurança</text>
-      <text class="arch-notation" x="40" y="635">Dependência UML: a seta aponta de quem usa para o serviço utilizado</text>
       <g class="node" style="--d:100ms"><rect class="box client" x="40" y="224" width="290" height="112" rx="18"/><svg data-i="smartphone" class="icon" x="64" y="248" width="28" height="28"></svg><text class="uml-component" x="104" y="247">«component»</text><text class="bt" x="104" y="270">Aplicativo móvel</text><text class="bs" x="104" y="300">Expo, React Native</text></g>
       <g class="node core-t" style="--d:420ms"><rect class="box core" x="552" y="190" width="336" height="180" rx="22"/><svg data-i="server" class="icon" x="580" y="218" width="30" height="30"></svg><text class="uml-component" x="624" y="239">«component»</text><text class="bt" x="580" y="290" style="font-size:30px">Backend</text><text class="bs" x="580" y="320">Fastify, TypeScript</text><text class="bs" x="580" y="344">orquestração e contratos</text></g>
       <g class="node" style="--d:640ms"><rect class="box solver" x="1112" y="44" width="300" height="112" rx="18"/><svg data-i="route" class="icon" x="1136" y="68" width="28" height="28"></svg><text class="uml-component" x="1176" y="67">«component»</text><text class="bt" x="1176" y="90">Solver</text><text class="bs" x="1176" y="120">Python, FastAPI e OR-Tools</text></g>
@@ -167,35 +166,42 @@
 </section>
 
 <section class="slide app-flow-slide" id="slide-6" data-stage="1" data-title="Preparar a viagem — criar e buscar o destino">
-<h2 class="title" data-a="up">Criar a viagem e buscar o destino</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="1072" width="1090" height="238" rx="30"/><path d="M1300,1191.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="62" y="1892" width="1085" height="205" rx="30"/><path d="M1300,1994.5 H1163 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre>query=Nova York</pre></div><div><h4>Response</h4><pre>{ &quot;suggestions&quot;: [{
-  &quot;primaryText&quot;: &quot;Nova York&quot;,
-  &quot;secondaryText&quot;: &quot;NY, EUA&quot;
-}] }</pre></div></div></div><div class="local-fields"><h3>Resposta usada na seleção</h3><p><code>placeId</code> identifica a cidade consultada na próxima etapa.</p></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
+<h2 class="title" data-a="up">Criar a viagem e buscar o destino</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="1072" width="1090" height="238" rx="30"/><path d="M1300,1191.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="62" y="1892" width="1085" height="205" rx="30"/><path d="M1300,1994.5 H1163 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http"><code>query=Nova York</code></pre></div><div><h4>Response<small>suggestions[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "primaryText": "Nova York",
+  "secondaryText": "NY, EUA"
+}</code></pre></div></div></div><div class="local-fields"><h3>Resposta usada na seleção</h3><p><code>placeId</code> identifica a cidade consultada na próxima etapa.</p></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
 <template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Agora vamos percorrer o que o viajante faz no aplicativo antes de receber as sugestões de atrações. A primeira ação é tocar em Criar uma nova viagem, na tela inicial.</p><p>Em seguida, ele busca a cidade. Neste exemplo, digitamos Nova York e selecionamos o resultado correspondente. A busca identifica o destino que será usado nas consultas seguintes.</p><p>Ao digitar a cidade, o aplicativo chama o endpoint de autocomplete. A resposta traz sugestões e seus identificadores. O botão de criar a viagem inicia o rascunho local.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
 </section>
 
 <section class="slide app-flow-slide" id="slide-7" data-stage="1" data-title="Preparar a viagem — destinos e datas">
-<h2 class="title" data-a="up">Confirmar o destino e as datas</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="746" width="1090" height="225" rx="30"/><path d="M1300,858.5 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>04</span> Escolher o período</h3><div class="flow-phone"><img src="assets/app/dates-selected.png" alt="Calendário com 14 a 18 de setembro selecionados"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="196" y="1210" width="824" height="140" rx="30"/><path d="M1300,1280.0 H1036 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/{placeId}</h3><div class="http-pair"><div><h4>Request</h4><pre>purpose=location</pre></div><div><h4>Response</h4><pre>{ &quot;place&quot;: {
-  &quot;name&quot;: &quot;Nova Iorque&quot;
-} }</pre></div></div></div><div class="local-fields"><h3>Datas no rascunho local</h3><pre>{ "startDate": "2026-09-14",
-  "endDate": "2026-09-18" }</pre></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
+<h2 class="title" data-a="up">Confirmar o destino e as datas</h2><div class="app-flow api-flow"><div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="746" width="1090" height="225" rx="30"/><path d="M1300,858.5 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>04</span> Escolher o período</h3><div class="flow-phone"><img src="assets/app/dates-selected.png" alt="Calendário com 14 a 18 de setembro selecionados"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="196" y="1210" width="824" height="140" rx="30"/><path d="M1300,1280.0 H1036 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>GET /v1/places/{placeId}</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http"><code>purpose=location</code></pre></div><div><h4>Response<small>place</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "name": "Nova Iorque"
+}</code></pre></div></div></div><div class="local-fields"><h3>Datas no rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
+  "startDate": "2026-09-14",
+  "endDate": "2026-09-18"
+}</code></pre></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
 <template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>O destino selecionado aparece nesta lista. É possível acrescentar outras cidades e definir a ordem em que serão visitadas. Essa ordem é uma escolha do viajante.</p><p>Na próxima tela, o calendário registra o período de cada destino. O exemplo usa de quatorze a dezoito de setembro, totalizando cinco dias. No modelo, cada um desses dias será representado por uma rota.</p><p>Com os destinos e as datas confirmados, o aplicativo pode relacionar a hospedagem e as preferências ao período correto da viagem.</p><p>Depois da seleção, uma chamada de detalhes com purpose igual a location recupera a localização e a área do destino. As datas ficam no rascunho, sem uma requisição HTTP específica nessa tela.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
 </section>
 
 <section class="slide app-flow-slide" id="slide-8" data-stage="1" data-title="Preparar a viagem — base e preferências">
-<h2 class="title" data-a="up">Hospedagem e preferências da viagem</h2><div class="app-flow api-flow three-api"><div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="140" y="1100" width="1005" height="228" rx="30"/><path d="M1300,1214.0 H1161 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="112" y="1435" width="995" height="235" rx="30"/><path d="M1260,1552.5 H1123 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="48" y="690" width="1100" height="220" rx="30"/><path d="M1300,800.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre>{ &quot;query&quot;: &quot;Wyndham New Yorker Nova Iorque&quot;,
-  &quot;radiusMeters&quot;: 25000,
-  &quot;maxResultCount&quot;: 8 }</pre></div><div><h4>Response</h4><pre>{ &quot;places&quot;: [{
-  &quot;name&quot;: &quot;Wyndham New Yorker Hotel&quot;,
-  &quot;coordinate&quot;: {
-    &quot;latitude&quot;: 40.7527316,
-    &quot;longitude&quot;: -73.9936287
-  }
-}] }</pre></div></div></div><div class="api-call"><h3>POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre>{ &quot;city&quot;: &quot;Nova Iorque&quot; }</pre></div><div><h4>Response</h4><pre>{ &quot;recommendation&quot;: {
-  &quot;mode&quot;: &quot;transit&quot;
-} }</pre></div></div></div><div class="local-fields"><h3>Escolhas no rascunho</h3><pre>pace: "moderate"
-travelMode: "transit"
-interestLevels: { culture: 1, nature: 1 }</pre></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
+<h2 class="title" data-a="up">Hospedagem e preferências da viagem</h2><div class="app-flow api-flow three-api"><div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="140" y="1100" width="1005" height="228" rx="30"/><path d="M1300,1214.0 H1161 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="112" y="1435" width="995" height="235" rx="30"/><path d="M1260,1552.5 H1123 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="48" y="690" width="1100" height="220" rx="30"/><path d="M1300,800.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article></div><aside class="api-panel"><div class="api-call"><h3>POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json"><code>{
+  "query": "Wyndham New Yorker Nova Iorque",
+  "radiusMeters": 25000,
+  "maxResultCount": 8
+}</code></pre></div><div><h4>Response<small>places[0].coordinate</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "latitude": 40.7527316,
+  "longitude": -73.9936287
+}</code></pre></div></div></div><div class="api-call"><h3>POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json"><code>{
+  "city": "Nova Iorque"
+}</code></pre></div><div><h4>Response<small>recommendation</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "mode": "transit"
+}</code></pre></div></div></div><div class="local-fields"><h3>Escolhas no rascunho</h3><div class="local-pair"><div><h4>Perfil da viagem</h4><pre class="syntax-block" data-language="json"><code>{
+  "pace": "moderate",
+  "travelMode": "transit"
+}</code></pre></div><div><h4>interestLevels</h4><pre class="syntax-block" data-language="json"><code>{
+  "culture": 1,
+  "nature": 1
+}</code></pre></div></div></div><p class="api-footnote">Campos relevantes dos contratos. Identificadores e demais campos foram omitidos.</p></aside></div>
 <template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Primeiro, informamos a hospedagem e os horários de entrada e saída. A hospedagem será a base das rotas. No exemplo, usamos o Wyndham New Yorker, as visitas do primeiro dia são disponibilizadas a partir das quatorze horas.</p><p>Depois, escolhemos o ritmo e o transporte. O perfil equilibrado define um teto de quatro atrações por dia neste modelo. O transporte público, sugerido pelo aplicativo e aceito pelo viajante, define os tempos da matriz de deslocamentos.</p><p>Por fim, selecionamos os interesses, como cultura, museus e parques. Essas categorias orientam a busca por atrações. Todas essas escolhas ficam no rascunho da viagem e seguem para a etapa de descoberta, que vamos detalhar agora.</p><p>A hospedagem é pesquisada pelo endpoint text-search, que recebe o texto e a região de busca. A recomendação de transporte é outra chamada, que recebe o nome da cidade e retorna o modo e o motivo. Ritmo e interesses são escolhas locais.</p><details class="notes-support"><summary>Apoio técnico e fontes</summary><p>Os blocos são recortes dos contratos HTTP, não uma captura de tráfego de rede. Os valores apresentados vêm das telas e da entrada do exemplo. Campos e itens foram omitidos para leitura. Capturas reais do aplicativo. As escolhas são mantidas no rascunho da viagem e enviadas às próximas etapas da geração.</p><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos de lugares no aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Endpoints do backend</a></li><li><a href="references/aplicativo/mobile/src/application/travel-mode-service.ts">Contrato de recomendação de transporte</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da entrada de geração</a></li><li><a href="data/solver-request.json">Entrada registrada do solver</a></li></ul></details></template>
 </section>
 
@@ -203,20 +209,20 @@ interestLevels: { culture: 1, nature: 1 }</pre></div><p class="api-footnote">Cam
   <h2 class="title" data-a="up">Etapa 2 — Descoberta de candidatos</h2>
   <div class="step">
     <div><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/poi-recommendation.png" alt="Card de recomendação do aplicativo exibindo o Central Park com foto, nota 4,8, 301.915 avaliações e duração estimada de 2 horas" /></div></div>
-<div class="step-body discovery-api"><div class="api-call"><h3>POST /v1/places/discover</h3><div class="http-pair"><div><h4>Request</h4><pre>{ &quot;location&quot;: { &quot;latitude&quot;: 40.7527316,
-  &quot;longitude&quot;: -73.9936287 },
-  &quot;buckets&quot;: [{ &quot;id&quot;: &quot;nature&quot;,
-    &quot;types&quot;: [&quot;park&quot;] }] }</pre></div><div><h4>Response</h4><pre>{ &quot;buckets&quot;: [{ &quot;id&quot;: &quot;nature&quot;,
-  &quot;places&quot;: [{ &quot;name&quot;: &quot;Central Park&quot;,
-    &quot;rating&quot;: 4.8,
-    &quot;userRatingCount&quot;: 301915,
-    &quot;primaryType&quot;: &quot;park&quot; }] }] }</pre></div></div></div><div class="api-call"><h3>POST /v1/places/enrich</h3><div class="http-pair"><div><h4>Request</h4><pre>{ &quot;places&quot;: [{
-  &quot;name&quot;: &quot;Central Park&quot;,
-  &quot;rating&quot;: 4.8
-}], &quot;includePhotos&quot;: true }</pre></div><div><h4>Response</h4><pre>{ &quot;places&quot;: [{
-  &quot;insight&quot;: { &quot;averageMinutes&quot;: 120 },
-  &quot;place&quot;: { &quot;name&quot;: &quot;Central Park&quot; }
-}] }</pre></div></div></div><p class="api-footnote">Recortes dos contratos. A descoberta real envia todas as categorias ativas. O enriquecimento acrescenta estimativas e fotos.</p><div class="filter-inline"><h3>Filtro antes da ordenação</h3><p>Preservar atrações compatíveis com os interesses e remover estabelecimentos sem relação com a visita.</p></div></div>
+<div class="step-body discovery-api"><div class="api-call"><h3>POST /v1/places/discover</h3><div class="http-pair"><div><h4>Request<small>buckets[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "id": "nature",
+  "types": ["park"]
+}</code></pre></div><div><h4>Response<small>buckets[0].places[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "name": "Central Park",
+  "rating": 4.8,
+  "userRatingCount": 301915,
+  "primaryType": "park"
+}</code></pre></div></div></div><div class="api-call"><h3>POST /v1/places/enrich</h3><div class="http-pair"><div><h4>Request<small>places[0]</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "name": "Central Park",
+  "rating": 4.8
+}</code></pre></div><div><h4>Response<small>places[0].insight</small></h4><pre class="syntax-block" data-language="json"><code>{
+  "averageMinutes": 120
+}</code></pre></div></div></div><p class="api-footnote">Recortes dos objetos indicados acima. A descoberta usa a localização da hospedagem e as categorias ativas. O enriquecimento acrescenta estimativas e fotos.</p><div class="filter-inline"><h3>Filtro antes da ordenação</h3><p>Preservar atrações compatíveis com os interesses e remover estabelecimentos sem relação com a visita.</p></div></div>
   </div>
   <template class="speaker-notes">
     <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -515,30 +521,30 @@ interestLevels: { culture: 1, nature: 1 }</pre></div><p class="api-footnote">Cam
 <section class="slide" id="slide-17" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
 <h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2><p class="lead" data-a="up"><b>Parallel Cheapest Insertion</b> constrói a agenda inicial, <b>Guided Local Search (GLS)</b> busca alternativas de menor custo.</p>
 <div class="search-implementation search-simple" data-a="up">
-<figure><figcaption>Python, construção inicial e busca local</figcaption><pre class="search-code"><code>solution = self._solve_with_strategy(
+<figure><figcaption>Python, construção inicial e busca local</figcaption><pre class="search-code syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
     routing,
     routing_enums_pb2.FirstSolutionStrategy
-        .<b>PARALLEL_CHEAPEST_INSERTION</b>,
+        .PARALLEL_CHEAPEST_INSERTION,
     primary_time_limit,
 )
 
-<span class="code-comment"># Dentro de _solve_with_strategy:</span>
+# Dentro de _solve_with_strategy:
 params.first_solution_strategy = strategy
 params.local_search_metaheuristic = (
     routing_enums_pb2.LocalSearchMetaheuristic
-        .<b>GUIDED_LOCAL_SEARCH</b>
+        .GUIDED_LOCAL_SEARCH
 )
 return routing.SolveWithParameters(params)</code></pre></figure>
-<figure><figcaption>JSON, resposta registrada, recorte do primeiro dia</figcaption><pre class="search-json"><code>{
-  "total_distance_meters": <b>62379</b>,
+<figure><figcaption>JSON, resposta registrada, recorte do primeiro dia</figcaption><pre class="search-json syntax-block" data-language="json"><code>{
+  "total_distance_meters": 62379,
   "days": [
     {
-      "day_index": <b>0</b>,
-      "distance_meters": <b>15736</b>,
-      "total_time_seconds": <b>31937</b>
+      "day_index": 0,
+      "distance_meters": 15736,
+      "total_time_seconds": 31937
     }
   ],
-  "unassigned": <b>[]</b>
+  "unassigned": []
 }</code></pre><p class="json-explanation">Um dos cinco dias, <code>unassigned: []</code> significa nenhuma atração excluída.</p></figure>
 </div><p class="search-execution"><b>Limite desta busca: 5 segundos.</b> Retorna a melhor solução encontrada, sem prova de ótimo.</p>
 <template class="speaker-notes">
@@ -835,7 +841,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 </section>
 
 <script src="data.js?v=41"></script>
-<script src="motion.js?v=41"></script>
-<script src="scenes.js?v=41"></script>
+<script src="motion.js?v=42"></script>
+<script src="scenes.js?v=42"></script>
 </body>
 </html>

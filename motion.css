@@ -1373,6 +1373,58 @@ body.presenter-mode .deck { transform: none; }
 .filter-inline p { font-size: 19px; color: var(--ink-muted); line-height: 1.5; }
 .selection-title { font: 700 28px/1.3 var(--display); }
 
+/* Rotas normalizadas: a entrada começa sem segmentos residuais. */
+.problem-route { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset .9s var(--ease-io), opacity 0s; }
+.problem-route.on { stroke-dashoffset: 0; opacity: 1; }
+.bdraw:not(.on) { opacity: 0; }
+.bdraw.on { opacity: 1; }
+.ov-item .bdraw { opacity: 1; }
+.p-frame .problem-route, .ov-item .problem-route { stroke-dashoffset: 0 !important; opacity: 1; transition: none; }
+@media (prefers-reduced-motion: reduce) { .problem-route { transition: none; } }
+
+/* A adaptação turística acrescenta prioridades e pausas de almoço. */
+.mini-priority { font: 700 11px var(--mono); fill: var(--ink); }
+.mini-meal { font: 700 12px var(--body); fill: white; }
+.mini-model-key { display: grid; gap: 3px; font: 500 13px/1.4 var(--body); color: #D3E5DD; margin: -8px 0 13px; }
+.theory-slide .theory .interlude-model small { min-height: 28px; }
+
+/* Exemplos de código com um único padrão de fundo e realce de sintaxe. */
+pre.syntax-block, .search-simple pre.syntax-block {
+  margin: 0;
+  padding: 15px 17px;
+  border: 1px solid #30463C;
+  border-radius: 5px;
+  background: #14251F;
+  color: #D5E0D9;
+  font: 400 16px/1.45 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+  box-shadow: none;
+}
+pre.syntax-block code, .search-simple pre.syntax-block code { display: block; font: inherit; white-space: normal; }
+.syntax-line { display: block; white-space: pre-wrap; min-height: 1.45em; }
+.syntax-key { color: #A9D1EB; }
+.syntax-string { color: #D4E6B5; }
+.syntax-number { color: #F1C782; }
+.syntax-keyword { color: #CFBAEC; font-weight: 600; }
+.syntax-comment { color: #9AB4A6; }
+.http-pair h4 { min-height: 40px; margin-bottom: 10px; }
+.http-pair h4 small { display: block; margin-top: 4px; font: 400 12px/1.3 var(--mono); color: var(--ink-muted); overflow-wrap: anywhere; }
+.three-api .http-pair h4 { min-height: 40px; font: 600 14px/1.3 var(--body); }
+.three-api .http-pair h4 small { font-size: 11px; }
+.three-api pre.syntax-block { padding: 12px 13px; font-size: 14px; line-height: 1.4; }
+.three-api .local-fields pre.syntax-block { font-size: 14px; line-height: 1.4; }
+.three-api .local-fields { margin-top: 12px; padding-top: 12px; }
+.local-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.local-pair > div { min-width: 0; }
+.local-pair h4 { margin: 0 0 9px; font: 600 13px/1.3 var(--body); color: var(--ink-muted); }
+.three-api .api-call { margin-bottom: 16px; padding-top: 12px; }
+.discovery-api pre.syntax-block { font-size: 17px; }
+.discovery-api .http-pair { grid-template-columns: 1fr 1fr; }
+.discovery-api .api-call { margin-bottom: 18px; }
+.search-simple pre.syntax-block { padding: 23px; font-size: 18px; line-height: 1.65; }
+
 /* O registro da busca e o prazo configurado têm significados distintos */
 .search-side { gap: 13px; }
 .search-side > .lead { font-size: 19px !important; line-height: 1.45; }

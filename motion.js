@@ -76,6 +76,51 @@
     });
   }
 
+  // Realça os tipos de valor sem alterar o conteúdo dos exemplos.
+  function highlightCode(root) {
+    root.querySelectorAll("pre[data-language]").forEach((pre) => {
+      const language = pre.dataset.language;
+      const source = pre.textContent;
+      const code = document.createElement("code");
+      const pattern = language === "python"
+        ? /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:return|True|False|None|self)\b|\b[A-Z][A-Z_]+\b|\b\d+(?:\.\d+)?\b/g
+        : language === "json"
+          ? /"(?:\\.|[^"\\])*"(?=\s*:)|"(?:\\.|[^"\\])*"|\b(?:true|false|null)\b|-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g
+          : /^[^=\n]+(?==)|[^=\n]+$/gm;
+      let offset = 0;
+      for (const match of source.matchAll(pattern)) {
+        code.append(document.createTextNode(source.slice(offset, match.index)));
+        const token = document.createElement("span");
+        const value = match[0];
+        const rest = source.slice(match.index + value.length);
+        const kind = language === "http"
+          ? (rest.startsWith("=") ? "key" : "string")
+          : value.startsWith("#") ? "comment"
+          : /^["']/.test(value) ? (language === "json" && /^\s*:/.test(rest) ? "key" : "string")
+          : /^-?\d/.test(value) ? "number" : "keyword";
+        token.className = `syntax-${kind}`;
+        token.textContent = value;
+        code.append(token);
+        offset = match.index + value.length;
+      }
+      code.append(document.createTextNode(source.slice(offset)));
+      const markup = code.innerHTML.split("\n");
+      const lines = source.split("\n");
+      code.replaceChildren();
+      markup.forEach((line, index) => {
+        const row = document.createElement("span");
+        const indentation = lines[index].match(/^ */)[0].length;
+        row.className = "syntax-line";
+        row.style.paddingLeft = `${indentation + 2}ch`;
+        row.style.textIndent = `-${indentation + 2}ch`;
+        row.innerHTML = line || " ";
+        if (index) code.append(document.createTextNode("\n"));
+        code.append(row);
+      });
+      pre.replaceChildren(code);
+    });
+  }
+
   const fmtCache = {};
   function formatNumber(value, dec) {
     const key = dec;
@@ -360,6 +405,7 @@
   function start() {
     fillIcons(document);
     slides.forEach(decorate);
+    highlightCode(document);
     fillIcons(document);
     slides.forEach((slide) => Scenes[slide.dataset.scene]?.init?.(slide));
     measureDraws(document);
