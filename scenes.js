@@ -170,7 +170,7 @@
       });
       this.assignment = new Map();
       solutionRoutes.forEach((seq, d) => seq.forEach((i) => { if (i !== hotel) this.assignment.set(i, d); }));
-      slide.querySelector("#problemLegend").innerHTML = solutionRoutes.map((seq, d) => `<span><i style="background:${DAY[d]}"></i>Dia ${d + 1} · ${seq.filter((i) => i !== hotel).length} atrações</span>`).join("");
+      slide.querySelector("#problemLegend").innerHTML = solutionRoutes.map((seq, d) => `<span><i style="background:${DAY[d]}"></i>Dia ${d + 1}, ${seq.filter((i) => i !== hotel).length} atrações</span>`).join("");
       measure(svg);
     },
     build(slide, level) {
@@ -178,7 +178,7 @@
       this.paths.forEach((p) => p.classList.toggle("on", out));
       colorNodes(this.nodes.els, out ? this.assignment : new Map(), false);
       slide.querySelector("#problemTag").textContent = out ? "Saída" : "Entrada";
-      slide.querySelector("#problemCaption").textContent = out ? "5 dias, com saída e retorno ao hotel · 12 atrações incluídas" : "12 atrações e a hospedagem, nas coordenadas reais";
+      slide.querySelector("#problemCaption").textContent = out ? "5 dias, com saída e retorno ao hotel, 12 atrações incluídas" : "12 atrações e a hospedagem, nas coordenadas reais";
       slide.querySelector("#problemLegend").style.opacity = level >= 2 ? 1 : 0;
     },
   };
@@ -237,34 +237,30 @@
 
   // ---------- 06 ER ----------
   Scenes.er = {
-    enter(slide) {
-      const box = slide.querySelector("#er");
-      const svg = slide.querySelector("#erLinks");
-      svg.replaceChildren();
-      const rect = (id) => {
-        const card = slide.querySelector("#" + id);
-        const col = card.parentElement;
-        return { x: col.offsetLeft + card.offsetLeft, y: col.offsetTop + card.offsetTop, w: card.offsetWidth, h: card.offsetHeight };
-      };
-      const link = (from, to, label, opts = {}) => {
-        const a = rect(from), b = rect(to);
-        const x1 = a.x + a.w, y1 = a.y + Math.min(a.h / 2, 40), x2 = b.x, y2 = b.y + Math.min(b.h / 2, 40);
-        const mx = (x1 + x2) / 2;
-        const path = svgEl("path", { class: `lnk draw${opts.ref ? " ref" : ""}`, d: `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}` }, svg);
-        path.style.setProperty("--d", `${opts.delay}ms`);
-        svgEl("text", { class: "card-lbl", x: x1 + 8, y: y1 - 7, text: "1" }, svg);
-        svgEl("text", { class: "card-lbl", x: x2 - 8, y: y2 - 7, "text-anchor": "end", text: label }, svg);
-        if (opts.name) svgEl("text", { class: "card-lbl", x: mx, y: Math.max(y1, y2) + 20, "text-anchor": "middle", text: opts.name }, svg);
-      };
-      link("en-user", "en-trip", "N", { ref: true, delay: 500, name: "ownerId" });
-      link("en-trip", "en-leg", "N", { delay: 750 });
-      link("en-trip", "en-sol", "1", { delay: 850 });
-      link("en-trip", "en-live", "1", { delay: 950 });
-      link("en-sol", "en-day", "N", { delay: 1150 });
-      link("en-day", "en-step", "N", { delay: 1300 });
-      link("en-day", "en-rleg", "N", { delay: 1400 });
-      measure(svg);
-      void box.offsetWidth;
+    init(slide) {
+      const svg = slide.querySelector("#erLinks")
+      const defs = svgEl("defs", {}, svg)
+      const arrow = svgEl("marker", { id: "dataAssociation", viewBox: "0 0 12 12", refX: 11, refY: 6, markerWidth: 9, markerHeight: 9, orient: "auto" }, defs)
+      svgEl("path", { d: "M1,1 L11,6 L1,11", fill: "none", stroke: "#5C6A64", "stroke-width": 1.5 }, arrow)
+      const label = (x, y, text, anchor = "start") => svgEl("text", { class: "card-lbl", x, y, text, "text-anchor": anchor }, svg)
+      const composition = (x, y, points, targetX, targetY, multiplicity) => {
+        svgEl("path", { class: "lnk", d: `M${x + 20},${y} ${points}` }, svg)
+        svgEl("path", { d: `M${x},${y} l10,-6 l10,6 l-10,6 Z`, fill: "#2F5D50" }, svg)
+        label(x + 10, y + (targetY === y ? 20 : -14), "1", "middle")
+        label(targetX - 7, targetY - 10, multiplicity, "end")
+      }
+      // O losango fica no objeto que contém os dados, e as multiplicidades
+      // descrevem os campos opcionais e as listas do documento salvo.
+      composition(532, 150, "H568 V40 H600", 600, 40, "0..*")
+      composition(532, 205, "H556 V285 H600", 600, 285, "0..1")
+      composition(532, 245, "H544 V510 H600", 600, 510, "0..1")
+      composition(832, 285, "H900", 900, 285, "0..*")
+      composition(1132, 285, "H1170 V150 H1200", 1200, 150, "0..*")
+      composition(1132, 350, "H1158 V430 H1200", 1200, 430, "0..*")
+      svgEl("path", { class: "lnk association", d: "M300,150 H232", "marker-end": "url(#dataAssociation)" }, svg)
+      label(239, 136, "0..1")
+      label(293, 168, "0..*", "end")
+      label(267, 194, "ownerId", "middle")
     },
   };
 
@@ -317,9 +313,9 @@
 
   // ---------- 11 Evolução da ordenação ----------
   const META = {
-    "Central Park": "4,8 · 301.915", "Times Square": "4,7 · 246.545", "Rockefeller Center": "4,7 · 201.962", "Empire State Building": "4,7 · 129.004",
-    "Estátua da Liberdade": "4,7 · 112.723", "Parque Bryant": "4,7 · 107.557", "Metropolitan Museum": "4,8 · 94.843", "Memorial do 11/9": "4,8 · 94.772",
-    "Ponte do Brooklyn": "4,8 · 93.288", "Catedral S. Patrício": "4,8 · 42.771", "Radio City Music Hall": "4,8 · 27.658", "Lincoln Center": "4,8 · 22.105",
+    "Central Park": "4,8, 301.915", "Times Square": "4,7, 246.545", "Rockefeller Center": "4,7, 201.962", "Empire State Building": "4,7, 129.004",
+    "Estátua da Liberdade": "4,7, 112.723", "Parque Bryant": "4,7, 107.557", "Metropolitan Museum": "4,8, 94.843", "Memorial do 11/9": "4,8, 94.772",
+    "Ponte do Brooklyn": "4,8, 93.288", "Catedral S. Patrício": "4,8, 42.771", "Radio City Music Hall": "4,8, 27.658", "Lincoln Center": "4,8, 22.105",
   };
   const COLS = [
     { title: "Produto simples", sub: "nota × avaliações, em milhares", rows: [["Central Park", "1.449"], ["Times Square", "1.159"], ["Rockefeller Center", "949"], ["Empire State Building", "606"], ["Estátua da Liberdade", "530"], ["Parque Bryant", "506"], ["Metropolitan Museum", "455"], ["Memorial do 11/9", "455"], ["Ponte do Brooklyn", "448"], ["Catedral S. Patrício", "205"], ["Radio City Music Hall", "133"], ["Lincoln Center", "106"]] },
@@ -471,8 +467,8 @@
       const order = [nodes[hotel], ...["Central Park", "Metropolitan", "São Patrício"].map((name) => nodes.find((n) => n.name === name))];
       const name = (n) => n.depot ? "Hotel" : n.name;
       const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
-      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><caption>Linha: origem · coluna: destino</caption><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-      slide.querySelector("#matrixExample").innerHTML = `Hotel → Metropolitan: <b>${minutes(order[0], order[2])} min</b>; volta: <b>${minutes(order[2], order[0])} min</b>.`;
+      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><caption>Linhas representam origens. Colunas representam destinos.</caption><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+      slide.querySelector("#matrixExample").innerHTML = `Hotel → Metropolitan: <b>${minutes(order[0], order[2])} min</b>. Volta: <b>${minutes(order[2], order[0])} min</b>.`;
     },
   };
 
@@ -506,7 +502,7 @@
         svgEl("text", { class: "tl-lbl", x: cx, y: Y - 62, text: sub[1] }, gx);
       };
       let L = g(1); this.layers.push(L);
-      node(L, x(Ti), "i", [`T<tspan dy="6" font-size="13">i</tspan><tspan dy="-6"> = ${fmt(Ti)} s</tspan>`, `São Patrício · ${hhmm(Ti)}`], "var(--pine)");
+      node(L, x(Ti), "i", [`T<tspan dy="6" font-size="13">i</tspan><tspan dy="-6"> = ${fmt(Ti)} s</tspan>`, `São Patrício, ${hhmm(Ti)}`], "var(--pine)");
       L = g(2); this.layers.push(L);
       const sbar = svgEl("rect", { x: x(Ti) + 22, y: Y - 18, width: Math.max(0, x(Ti + si) - x(Ti) - 22), height: 36, rx: 8, style: { fill: "var(--pine-soft)", stroke: "var(--pine)", strokeWidth: 1.6 } }, L);
       svgEl("text", { class: "tl-math", x: (x(Ti) + x(Ti + si)) / 2 + 10, y: Y + 8, text: "" }, L).innerHTML = `s<tspan font-size="16" dy="6">i</tspan><tspan dy="-6" font-style="normal" font-family="var(--body)" font-size="15"> = ${fmt(si)} s</tspan>`;
@@ -525,7 +521,7 @@
         svgEl("rect", { x: x(ready), y: Y - 18, width: x(Tj) - x(ready), height: 36, rx: 8, style: { fill: "url(#waitHatch)", stroke: "var(--amber)", strokeWidth: 1.4 } }, L);
         svgEl("text", { class: "tl-lbl", x: (x(ready) + x(Tj)) / 2, y: Y - 30, style: { fill: "var(--amber-ink)" }, text: `espera ${fmt(wait)} s` }, L);
       }
-      node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `Metropolitan · ${hhmm(Tj)}`], "var(--day-3)");
+      node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `Metropolitan, ${hhmm(Tj)}`], "var(--day-3)");
       L = g(6); this.layers.push(L);
       const eq = svgEl("text", { class: "tl-eq", x: 716, y: 336 }, L);
       eq.innerHTML = `x<tspan font-size="22" dy="8">ij</tspan><tspan font-size="22" dy="-18">d</tspan><tspan dy="10" font-style="normal"> = 1  ⇒  </tspan>T<tspan font-size="22" dy="8">j</tspan><tspan dy="-8" font-style="normal"> ≥ </tspan>T<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>s<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>t<tspan font-size="22" dy="8">ij</tspan><tspan dy="-8" font-style="normal" font-family="var(--mono)" font-size="22">     ${fmt(Tj)} ≥ ${fmt(Ti)} + ${fmt(si)} + ${fmt(tij)} = ${fmt(ready)}</tspan>`;
@@ -560,19 +556,29 @@
       });
       this.frames = D.frames;
       const conv = slide.querySelector("#convChart");
-      const W = 860, H = 210, L = 64, B = 186, T = 8, R = 840;
-      const tmin = Math.log10(0.01), tmax = Math.log10(0.5), omin = 5, omax = 8;
-      this.cx = (t) => L + ((Math.log10(t) - tmin) / (tmax - tmin)) * (R - L);
-      this.cy = (o) => B - ((Math.log10(o) - omin) / (omax - omin)) * (B - T);
-      const grid = svgEl("g", { class: "grid" }, conv);
-      [[1e5, "100 mil"], [1e6, "1 mi"], [1e7, "10 mi"], [1e8, "100 mi"]].forEach(([o, label]) => {
-        svgEl("line", { x1: L, x2: R, y1: this.cy(o), y2: this.cy(o) }, grid);
-        svgEl("text", { class: "ax", x: L - 8, y: this.cy(o) + 4, "text-anchor": "end", text: label }, grid);
-      });
-      [[0.01, "0,01 s"], [0.03, "0,03 s"], [0.1, "0,1 s"], [0.3, "0,3 s"]].forEach(([t, label]) => {
-        svgEl("text", { class: "ax", x: this.cx(t), y: H - 2, "text-anchor": "middle", text: label }, grid);
-      });
-      svgEl("text", { class: "ax", x: R, y: T + 10, "text-anchor": "end", text: "custo × tempo, escalas log" }, grid);
+      const W = 860, H = 260, L = 88, B = 197, T = 36, R = 825
+      const tmin = Math.log10(0.01), tmax = Math.log10(5), omin = 5, omax = 8
+      this.cx = (t) => L + ((Math.log10(t) - tmin) / (tmax - tmin)) * (R - L)
+      this.cy = (o) => B - ((Math.log10(o) - omin) / (omax - omin)) * (B - T)
+      const grid = svgEl("g", { class: "grid" }, conv)
+      const costTicks = [[1e5, "100 mil"], [1e6, "1 milhão"], [1e7, "10 milhões"], [1e8, "100 milhões"]]
+      costTicks.forEach(([o, label]) => {
+        svgEl("line", { x1: L, x2: R, y1: this.cy(o), y2: this.cy(o) }, grid)
+        svgEl("text", { class: "ax", x: L - 10, y: this.cy(o) + 4, "text-anchor": "end", text: label }, grid)
+      })
+      const timeTicks = [[0.01, "0,01"], [0.1, "0,1"], [1, "1"], [5, "5"]]
+      timeTicks.forEach(([t, label]) => {
+        svgEl("line", { x1: this.cx(t), x2: this.cx(t), y1: T, y2: B }, grid)
+        svgEl("text", { class: "ax", x: this.cx(t), y: B + 21, "text-anchor": "middle", text: label }, grid)
+      })
+      svgEl("text", { class: "axis-title", x: 0, y: 15, text: "Custo do objetivo (menor é melhor)" }, grid)
+      svgEl("text", { class: "axis-title", x: R, y: H - 7, "text-anchor": "end", text: "Tempo do solver em segundos" }, grid)
+      svgEl("text", { class: "ax", x: R, y: 15, "text-anchor": "end", text: "Eixos em escala logarítmica" }, grid)
+      const last = this.frames[this.frames.length - 1]
+      const plateau = svgEl("g", { class: "search-plateau" }, conv)
+      svgEl("line", { x1: this.cx(last.t), x2: R, y1: this.cy(last.objective), y2: this.cy(last.objective), stroke: "#2F5D50", "stroke-width": 2, "stroke-dasharray": "6 5" }, plateau)
+      svgEl("text", { class: "ax", x: (this.cx(last.t) + R) / 2, y: this.cy(last.objective) - 17, "text-anchor": "middle", text: "Sem nova melhora até o limite" }, plateau)
+      this.plateau = plateau
       this.convPath = svgEl("path", { style: { fill: "none", stroke: "var(--pine)", strokeWidth: 2.4, strokeLinejoin: "round" } }, conv);
       this.convDot = svgEl("circle", { r: 6, style: { fill: "#fff", stroke: "var(--pine)", strokeWidth: 3 } }, conv);
       const chips = slide.querySelector("#dayChips");
@@ -623,6 +629,7 @@
       this.convPath.setAttribute("d", d);
       this.convDot.setAttribute("cx", this.cx(frame.t));
       this.convDot.setAttribute("cy", this.cy(frame.objective));
+      this.plateau.style.opacity = k === this.frames.length - 1 ? 1 : 0;
       this.shown = k;
     },
     // Tempo em escala log com permanência mínima por quadro: as melhorias

@@ -182,7 +182,7 @@
     history.replaceState(null, "", `#${current + 1}`);
     document.getElementById("counter").textContent = `${pad(current + 1)} / ${pad(total)}`;
     document.getElementById("progress").style.width = `${((current + 1) / total) * 100}%`;
-    document.title = `${pad(current + 1)} · ${slide.dataset.title} — Interlude`;
+    document.title = `${pad(current + 1)} — ${slide.dataset.title} — Interlude`;
     renderPresenter();
     if (scriptDialog.open) openScript();
     if (broadcast && channel) channel.postMessage({ type: "slide", index: current });
@@ -224,7 +224,7 @@
   const scriptDialog = document.getElementById("scriptDialog");
   function openScript() {
     const notes = slides[current].querySelector(".speaker-notes");
-    document.getElementById("scriptSlide").textContent = `Slide ${pad(current + 1)} · roteiro de fala`;
+    document.getElementById("scriptSlide").textContent = `Slide ${pad(current + 1)} — roteiro de fala`;
     document.getElementById("scriptTitle").textContent = slides[current].dataset.title;
     document.getElementById("scriptBody").innerHTML = notes ? notes.innerHTML : "<p>Sem roteiro para este slide.</p>";
     if (!scriptDialog.open) scriptDialog.showModal();
@@ -246,7 +246,7 @@
       item.appendChild(clone);
       const label = document.createElement("span");
       label.className = "ov-label";
-      label.textContent = `${pad(i + 1)} · ${slide.dataset.title}`;
+      label.textContent = `${pad(i + 1)} — ${slide.dataset.title}`;
       item.appendChild(label);
       item.addEventListener("click", () => { overviewDialog.close(); buildLevel[i] = 0; show(i); });
       grid.appendChild(item);
