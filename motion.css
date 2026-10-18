@@ -1485,24 +1485,34 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .arch .uml-component { font: 500 12px var(--body); fill: var(--ink-muted); }
 .arch .core-t .uml-component { fill: #CFE0D8; }
 
-/* Slide 19: configuração e exemplos das duas fases da busca. */
-.solver-strategies { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 20px; }
-.solver-phase { min-width: 0; }
-.solver-phase h3 { font: 700 27px/1.3 var(--display); margin-bottom: 12px; }
-.solver-phase pre.syntax-block { padding: 16px 20px; font-size: 17px; line-height: 1.4; }
-.solver-phase h4 { font: 600 20px/1.4 var(--body); margin: 18px 0 10px; }
-.insertion-rule, .meal-change { font: 400 17px/1.5 var(--body); color: var(--ink-muted); min-height: 34px; }
-.insertion-rule .math { color: var(--pine-deep); font-size: 25px; }
-.solver-example { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
-.solver-example th, .solver-example td { text-align: left; border-bottom: 1px solid var(--hairline); padding: 10px 10px; font: 400 18px/1.4 var(--body); }
-.solver-example thead th { font-size: 14px; font-weight: 600; color: var(--ink-muted); border-top: 2px solid var(--pine); }
-.solver-example b { color: var(--pine-deep); }
-.insertion-options th:first-child { width: 47%; }
-.insertion-options td { font-size: 17px; }
-.improvement-cost th:first-child { width: 46%; }
-.improvement-cost td { font-variant-numeric: tabular-nums; }
-.solver-example .solver-cost-total th, .solver-example .solver-cost-total td { font-weight: 700; color: var(--pine-deep); background: var(--pine-soft); }
-.phase-reading { margin-top: 16px; font: 400 20px/1.45 var(--body); color: var(--ink-muted); }
-.phase-reading b { color: var(--ink); font-weight: 600; }
-.example-origin { margin-top: 12px; font: 400 15px/1.45 var(--body); color: var(--ink-muted); }
-.solver-focused .search-execution { margin-top: 18px; font-size: 17px; line-height: 1.5; }
+/* Slide 17: relação entre decisões, restrições e custo. */
+.formulation-explained .lead { max-width: 1400px; }
+.formulation-objective { display: grid; grid-template-columns: 45px 1.1fr 28px 1fr 28px .95fr; gap: 18px; align-items: start; margin-top: 25px; padding-bottom: 22px; border-bottom: 2px solid var(--pine); }
+.formulation-min, .formulation-plus { font: 400 31px/1.2 var(--math); padding-top: 16px; }
+.objective-part > .math { font-size: 39px; line-height: 1.3; min-height: 79px; color: var(--pine-deep); white-space: nowrap; }
+.formulation-sum { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-style: normal; margin-right: 4px; }
+.formulation-sum > span { font-size: 1.18em; line-height: .92; }
+.formulation-sum > small { font: italic 400 13px/1.35 var(--math); margin-top: 5px; }
+.objective-part h3 { font: 700 23px/1.3 var(--display); margin-bottom: 8px; }
+.objective-part p { font: 400 17px/1.4 var(--body); color: var(--ink-muted); }
+.formulation-detail { display: grid; grid-template-columns: 1fr 1.08fr; gap: 48px; margin-top: 23px; }
+.formulation-detail h3 { font: 700 24px/1.3 var(--display); margin-bottom: 12px; }
+.formulation-route { font: 400 17px/1.5 var(--body); color: var(--ink-muted); padding-bottom: 11px; }
+.formulation-route b { color: var(--ink); }
+.formulation-rule { border-top: 1px solid var(--hairline); padding: 12px 0; }
+.formulation-rule > div { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.formulation-rule h4 { font: 600 18px/1.4 var(--body); max-width: 215px; }
+.formulation-rule .math { font-size: 29px; line-height: 1.4; white-space: nowrap; }
+.formulation-rule .formulation-sum > small { font-size: 12px; }
+.formulation-rule p { font: 400 17px/1.45 var(--body); color: var(--ink-muted); margin-top: 9px; }
+.formulation-rule p b { color: var(--ink); font-weight: 500; }
+.formulation-phi h3 { display: flex; justify-content: space-between; align-items: baseline; }
+.formulation-phi h3 small { font: 400 14px/1.4 var(--body); color: var(--ink-muted); }
+.phi-costs { border-collapse: collapse; width: 100%; table-layout: fixed; font: 400 17px/1.35 var(--body); }
+.phi-costs th, .phi-costs td { text-align: left; padding: 9px 12px; vertical-align: middle; border-bottom: 1px solid var(--hairline); }
+.phi-costs th:first-child { width: 48%; }
+.phi-costs thead th { border-top: 2px solid var(--pine); color: var(--ink-muted); font-size: 14px; font-weight: 500; padding-top: 8px; padding-bottom: 8px; }
+.phi-costs tbody th { font-weight: 400; }
+.phi-costs b { color: var(--pine-deep); font-weight: 600; }
+.phi-conditions { font: 400 13px/1.4 var(--body); color: var(--ink-muted); margin-top: 10px; }
+.formulation-notation { margin-top: 16px; font: 400 14px/1.5 var(--body); color: var(--ink-muted); }
