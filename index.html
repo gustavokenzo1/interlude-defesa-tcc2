@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=44" />
+  <link rel="stylesheet" href="motion.css?v=45" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -500,27 +500,8 @@
   </template>
 </section>
 
-<section class="slide expanded-model penalty-factors" id="slide-16" data-title="Os fatores da penalidade de exclusão" data-stage="3"><h2 class="title" data-a="up">Os fatores da penalidade de exclusão</h2>
-<p class="lead" data-a="up">Cada fator tem uma regra própria. O exemplo mantém o <b>Central Park, primeiro entre 12 atrações</b>.</p>
-<table class="explain-table factor-table" data-a="up"><colgroup><col style="width:20%"><col style="width:38%"><col style="width:42%"></colgroup><thead><tr><th>Fator</th><th>Regra e dados usados</th><th>Cálculo no exemplo</th></tr></thead><tbody>
-<tr><th>Prioridade do viajante</th><td><div class="math eq-inline">ρ<sub>i</sub> = (N − ordem<sub>i</sub>) / N</div><small>N: total de atrações. A ordem começa em zero.</small></td><td><div class="math eq-inline">ρ<sub>i</sub> = (12 − 0) / 12 = 1</div><small>O fator 1 + 4ρ<sub>i</sub> vale <b>5</b>.</small></td></tr>
-<tr><th>Popularidade</th><td><div class="math eq-inline">ι<sub>i</sub> = min(1, log<sub>10</sub>(1 + n<sub>i</sub>) / 5)</div><small>n<sub>i</sub>: número de avaliações do lugar.</small></td><td><div class="math eq-inline">n<sub>i</sub> = 301.915 &nbsp; ⇒ &nbsp; ι<sub>i</sub> = 1</div><small>Saturação em cerca de 100 mil avaliações. Fator <b>1,5</b>.</small></td></tr>
-<tr><th>Adequação sazonal</th><td><div class="math eq-inline">σ<sub>i</sub> = 0,6 ou 1</div><small>0,6 quando todos os meses do trecho são desaconselhados. Nos demais casos, 1.</small></td><td><div class="math eq-inline">σ<sub>i</sub> = 1 &nbsp; ⇒ &nbsp; (1 + σ<sub>i</sub>) / 2 = 1</div><small>Fechamentos restringem os dias permitidos separadamente.</small></td></tr>
-</tbody></table>
-<div class="worked-line" data-a="up"><span class="math">π<sub>i</sub> = ⌊5.000.000 × 5 × 1,5 × 1⌋ = <b>37.500.000</b></span><p>Se apenas σ<sub>i</sub> caísse para 0,6, o custo seria 30.000.000, uma redução de 20%.</p></div>
-<p class="model-foot">π₀ = 5.000.000, ω = 4 e μ = 0,5 são os coeficientes da fórmula. ⌊ ⌋ converte o resultado para inteiro.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Bruno</span></h4><p>A fórmula anterior reúne três cálculos. Vamos abri-los usando o Central Park, que ocupa a primeira posição entre as doze atrações selecionadas.</p><p>A ordem começa em zero. Então a prioridade normalizada é doze menos zero, dividido por doze: um. Na fórmula de exclusão, isso produz o fator cinco. Popularidade usa a quantidade de avaliações em uma escala fixa. Com mais de cem mil avaliações, o indicador já chegou ao teto de um, produzindo o fator um e meio.</p><p>A adequação sazonal vale um nesta entrada. O produto resulta em trinta e sete milhões e meio de unidades para excluir o Central Park. Se apenas a adequação caísse para zero vírgula seis, o fator sazonal seria zero vírgula oito e a penalidade cairia vinte por cento. Essa segunda conta é uma comparação hipotética, não uma mudança nos dados coletados.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Coeficientes e indicadores</h4><p>π₀ é a base, ω pondera a posição e μ pondera a popularidade. ρ lê-se rô, ι lê-se iota, σ lê-se sigma. N é o total de atrações, nᵢ é o volume de avaliações de uma atração. São quantidades diferentes. min escolhe o menor argumento. log₁₀ é o logaritmo na base dez. Os indicadores são calculados na preparação da entrada e no solver, não são novas decisões livres da busca.</p><h4>Escalas diferentes</h4><p>A iconicidade I da curadoria é relativa aos candidatos encontrados. A importância ι da exclusão usa escala fixa e chega a um em aproximadamente cem mil avaliações. Maior prioridade aumenta a penalidade, mas não estabelece precedência absoluta. Coeficientes escolhidos no desenvolvimento, sem calibração com participantes. Dia inteiro usa exceção fixa de 2 bilhões.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5, páginas 63–65</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação do modelo e da busca</a></li></ul></details></template></section>
 
-<section class="slide expanded-model service-detail" id="slide-17" data-title="Etapa 4 — Duração de cada visita" data-stage="4"><h2 class="title" data-a="up">Etapa 4 — Duração de cada visita</h2>
-<p class="lead" data-a="up">O backend transforma a estimativa de visita em <b>tempo reservado na agenda</b>, antes de enviar a instância ao solver.</p>
-<div class="display-equation" data-a="up"><span class="math">s<sub>i</sub> = min{ s̄, max(v<sub>i</sub><sup>min</sup>, αv<sub>i</sub>) + β<sub>i</sub> }</span></div>
-<div class="service-columns" data-a="up"><dl class="definition-list">
-<div><dt>s<sub>i</sub></dt><dd>Duração reservada para a visita i.</dd></div><div><dt>v<sub>i</sub>, v<sub>i</sub><sup>min</sup></dt><dd>Duração média estimada e mínimo recomendado. Sem dados: 75 min e 0.</dd></div><div><dt>α</dt><dd>Fator de ritmo: tranquilo 1,3, equilibrado 1,0 e intenso 0,8.</dd></div><div><dt>β<sub>i</sub></dt><dd>Margem de planejamento, de 0 a 120 min, somada após o ajuste de ritmo.</dd></div><div><dt>s̄</dt><dd>Teto de 3,5 h para atração comum. Para dia inteiro, horizonte de 17 h.</dd></div></dl>
-<div class="service-work"><h3>Exemplo de cálculo</h3><p>Visita de 120 min, mínimo de 60 min e margem de 30 min.</p><div><b>Tranquilo</b><span>max(60, 1,3 × 120) + 30 = <strong>186 min</strong></span></div><div><b>Intenso</b><span>max(60, 0,8 × 120) + 30 = <strong>126 min</strong></span></div><p class="service-result">O ritmo altera a duração da visita. A margem permanece igual nos dois cálculos.</p></div></div>
-<p class="model-foot">Dia inteiro: v<sub>i</sub> + β<sub>i</sub> ≥ 70% de 9 h, isto é, 6,3 h. Esse teste usa a duração antes do fator de ritmo.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>O tempo de serviço não é apenas a duração média sugerida pelo enriquecimento. Primeiro aplicamos o ritmo, sem reduzir abaixo do mínimo recomendado. Depois somamos a margem de planejamento e aplicamos o teto.</p><p>Neste exemplo de cálculo, uma visita média de duas horas tem mínimo de uma hora e margem de meia hora. No ritmo tranquilo, reservamos cento e oitenta e seis minutos. No intenso, cento e vinte e seis. A margem não é multiplicada pelo ritmo.</p><p>Para atividades comuns, o teto é de três horas e meia. Quando a duração original mais a margem já ocupa seis vírgula três horas, o backend trata a atividade como dia inteiro e usa o horizonte como teto. Isso favorece um dia dedicado pela duração, sem proibir outra visita naquele dia.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Como ler a fórmula</h4><p>sᵢ lê-se tempo de serviço da visita i. min seleciona o menor valor e max o maior. α lê-se alfa e β lê-se beta. A barra de s̄ indica o teto. No código, as durações são convertidas para segundos e arredondadas. O exemplo usa minutos para facilitar a leitura e valores que não geram diferenças de arredondamento.</p><h4>Dados do exemplo</h4><p>Os 120, 60 e 30 minutos formam um exemplo didático da regra, não um novo registro de execução. Na entrada real, Central Park tem sᵢ = 7.200 s e Metropolitan, 11.700 s. A fórmula de serviço vem da página 63, imediatamente anterior aos custos da página 64.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Preparação de serviceTimeSeconds</a></li><li><a href="references/aplicativo/backend/src/domain/value-objects.ts">Perfis de ritmo e limites</a></li><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5</a></li></ul></details></template></section>
-
-<section class="slide" id="slide-18" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
+<section class="slide" id="slide-16" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
 <h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><p class="lead" data-a="up">Horários de funcionamento e durações definem quando visitar, a matriz informa o tempo para chegar ao próximo lugar.</p>
 <div class="instance-examples">
  <figure data-a="up"><figcaption><b>Até que horas a visita pode começar?</b><span>Metropolitan, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="Metropolitan: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg><p class="instance-reading">Último início às <b>13h45</b> para terminar até <b>17h</b>.</p></figure>
@@ -550,7 +531,7 @@
   </template>
 </section>
 
-<section class="slide" id="slide-19" data-title="Etapa 5 — Formulação do problema" data-stage="5">
+<section class="slide" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
   <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
   <p class="lead" data-a="up" style="--d:100ms">O modelo escolhe quais paradas visitar, em que dia e em qual sequência. Cada dia corresponde a um veículo no OR-Tools.</p>
   <div class="model">
@@ -559,7 +540,7 @@
         <h3><i>1</i>Conjuntos e variáveis</h3>
         <dl class="sym">
           <div><dt>D</dt><dd>dias da viagem, cada dia é um veículo</dd></div>
-          <div><dt>V<sub>A</sub> <span class="up">⊆</span> U</dt><dd>U: atrações e refeições. V<sub>A</sub>: apenas atrações. o<sub>d</sub> e f<sub>d</sub>: bases do dia d</dd></div>
+          <div><dt>U, V<sub>A</sub> <span class="up">⊆</span> U</dt><dd>pontos opcionais (atrações e refeições) e as atrações, o<sub>d</sub> e f<sub>d</sub> são as bases do dia d</dd></div>
           <div><dt>x<span class="ss"><sup>d</sup><sub>ij</sub></span> <span class="up">∈ {0,1}</span></dt><dd>arco de i a j utilizado no dia d</dd></div>
           <div><dt>z<span class="ss"><sup>d</sup><sub>i</sub></span> <span class="up">∈ {0,1}</span></dt><dd>ponto i visitado no dia d</dd></div>
           <div><dt>y<sub>i</sub> <span class="up">∈ {0,1}</span></dt><dd>ponto i excluído da viagem</dd></div>
@@ -609,36 +590,8 @@
   </template>
 </section>
 
-<section class="slide expanded-model objective-detail" id="slide-20" data-title="Etapa 5 — Como o custo compara as agendas" data-stage="5"><h2 class="title" data-a="up">Etapa 5 — Como o custo compara as agendas</h2>
-<p class="lead" data-a="up">Entre as agendas que respeitam as restrições obrigatórias, a busca procura <b>reduzir a soma de três parcelas</b>.</p>
-<div class="objective-expanded" data-a="up"><span class="min-label">min</span><div><span class="math"><span class="sum-stacked"><span>∑</span><small>d ∈ D</small></span> <span class="sum-stacked"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></span><b>Deslocamentos</b><p>Soma apenas os trechos usados. t<sub>ij</sub> é o tempo de i até j, e x<sub>ij</sub><sup>d</sup> vale 1 quando o trecho está na rota do dia d.</p></div><span class="plus-label">+</span><div><span class="math"><span class="sum-stacked"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></span><b>Atrações excluídas</b><p>π<sub>i</sub> é o custo de excluir a atração. y<sub>i</sub> vale 1 se a atração fica de fora e 0 se ela é incluída.</p></div><span class="plus-label">+</span><div><span class="math">Φ</span><b>Demais custos</b><p>Duração, horários, distribuição das visitas e refeições. Cada desvio acrescenta o custo definido nas próximas tabelas.</p></div></div>
-<div class="objective-example" data-a="up"><h3>Estado final da execução animada de Nova Iorque</h3><div><span><b>20.697</b>deslocamentos</span><em>+</em><span><b>0</b>atrações excluídas</span><em>+</em><span><b>133.495</b>demais custos, Φ</span><em>=</em><span class="objective-total"><b>154.192</b>custo da agenda</span></div></div>
-<p class="model-foot">D: dias. E<sup>d</sup>: ligações possíveis no dia d. V<sub>A</sub>: atrações. ∑ soma os termos indicados. O total é uma pontuação interna, sem unidade monetária.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>A função objetivo compara agendas viáveis. O primeiro termo soma o deslocamento de cada arco usado. O segundo cobra as atrações que ficaram de fora. O terceiro, fi, reúne os custos de duração, horários, distribuição e refeições.</p><p>Uma duração de visita ocupa o relógio da rota, mas não entra como tempo de deslocamento do arco. Ela influencia a duração diária, que está dentro de fi. Por isso, o objetivo não é simplesmente o tempo total da viagem.</p><p>No estado final do registro animado, a soma dos deslocamentos é vinte mil seiscentos e noventa e sete. Nenhuma atração foi excluída. Os demais custos somam cento e trinta e três mil quatrocentos e noventa e cinco, fechando o objetivo de cento e cinquenta e quatro mil cento e noventa e dois. As próximas tabelas mostram o que pode compor essa terceira parcela.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Leitura dos somatórios</h4><p>O primeiro percorre os dias d e os arcos possíveis (i,j) de cada dia. Multiplicar por x binário seleciona apenas os usados. O segundo percorre apenas atrações, e y seleciona as excluídas. Φ lê-se fi maiúsculo, reúne custos e não é uma variável de decisão independente.</p><h4>Proveniência da conta</h4><p>Os números vêm do último estado de all_improvements em busca-animada.json. Somam-se os valores da time_matrix para todos os arcos das cinco rotas, incluindo bases e refeições. Todas as 12 atrações estão presentes, logo o segundo termo é zero. Φ = 154.192 − 20.697 = 133.495. É o agregado dos demais custos, sem atribuir esse valor a uma única preferência. Esta é a nova execução registrada para a animação, distinta da execução original de 5,032 s.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="data/busca-animada.json">Rotas e objetivos registrados</a></li><li><a href="data/solver-request.json">Matriz completa do solver</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Objetivo e coeficientes implementados</a></li></ul></details></template></section>
 
-<section class="slide expanded-model phi-time" id="slide-21" data-title="Custos de Φ: duração e horários" data-stage="5"><h2 class="title" data-a="up">Custos de Φ: duração e horários</h2>
-<p class="lead" data-a="up">Limites suaves permitem um desvio mediante custo. As janelas obrigatórias continuam restringindo o que é viável.</p>
-<table class="explain-table phi-table" data-a="up"><colgroup><col style="width:19%"><col style="width:49%"><col style="width:32%"></colgroup><thead><tr><th>Componente de Φ</th><th>Custo aplicado</th><th>Exemplo isolado</th></tr></thead><tbody>
-<tr><th>Duração do dia</th><td><div class="math eq-inline">λℓ<sub>d</sub>, &nbsp; λ = 1</div><small>ℓ<sub>d</sub> = T<sub>f<sub>d</sub></sub><sup>d</sup> − T<sub>o<sub>d</sub></sub><sup>d</sup>, inclui visitas, transporte e espera.</small></td><td>8 h de duração<br><b>28.800 unidades</b></td></tr>
-<tr><th>Excesso sobre 9 h</th><td><div class="math eq-inline">40 [ℓ<sub>d</sub> − 32.400]<sub>+</sub></div><small>Custo adicional por segundo que ultrapassa nove horas.</small></td><td>30 min excedentes<br><b>72.000 adicionais</b></td></tr>
-<tr><th>Início do dia</th><td><div class="math eq-inline">2 [a<sub>d</sub> − T<sub>o<sub>d</sub></sub><sup>d</sup>]<sub>+</sub> + 30 [T<sub>o<sub>d</sub></sub><sup>d</sup> − a<sub>d</sub>]<sub>+</sub></div><small>a<sub>d</sub>: 9h, ou o fim da janela de saída se ele for anterior.</small></td><td>30 min antes: <b>3.600</b><br>30 min depois: <b>54.000</b></td></tr>
-<tr><th>Janela preferida</th><td><div class="math eq-inline">k<sub>i</sub> [T<sub>i</sub><sup>d</sup> − b<sub>i</sub><sup>pref</sup>]<sub>+</sub></div><small>k<sub>i</sub> = 500 na forte e 20 na suave, por segundo após o fim recomendado b<sub>i</sub><sup>pref</sup>.</small></td><td>10 min após o fim<br>Forte: <b>300.000</b><br>Suave: <b>12.000</b></td></tr>
-</tbody></table>
-<div class="table-legend" data-a="up"><p><span class="math">[u]<sub>+</sub> = max(0, u)</span> cobra apenas a parte positiva. T: instante em segundos. o<sub>d</sub> e f<sub>d</sub>: saída e retorno do dia d.</p><p>Somam-se os custos dos dias e das visitas incluídas. Antecipar uma janela preferida não gera custo simétrico.</p></div>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Fi reúne vários custos, e cada um pode alterar a agenda. A duração diária custa uma unidade por segundo. Ultrapassar nove horas acrescenta outras quarenta unidades por segundo excedente. Esses termos se acumulam.</p><p>O início do dia tem referência às nove horas, ou ao fim da janela de saída quando ele é anterior. Antecipar custa duas unidades por segundo e atrasar custa trinta. Por isso o modelo tende a começar pela manhã.</p><p>Já a janela preferida da atração cobra apenas o início após o fim da faixa recomendada: quinhentas unidades por segundo na preferência forte e vinte na suave. Dez minutos de atraso custam trezentas mil ou doze mil unidades. Esses exemplos mostram a escala dos pesos, não valores pagos pelo viajante.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Parte positiva e relógio</h4><p>[u]₊ = max(0,u), ou seja, zero se não houver excesso e o excesso quando positivo. ℓ lê-se ele, λ lê-se lambda. Tᵈ de f_d é o instante do retorno e Tᵈ de o_d é o instante da saída. Sua diferença é a duração. Todos os instantes do modelo estão em segundos desde as 06h: 9h corresponde a 10.800 s. A referência a_d é min(10.800, fim da janela da base de saída).</p><h4>Condições de cobrança</h4><p>O custo da preferência de horário incide em visitas incluídas. Uma janela preferida não permite violar uma janela obrigatória de funcionamento. Os exemplos são cálculos isolados: o custo de excesso sobre 9h é adicional ao de duração, e não o custo total daquele dia. Os pesos vêm de SolverOptions e não foram calibrados com participantes.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5, páginas 63–65</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação do modelo e da busca</a></li></ul></details></template></section>
-
-<section class="slide expanded-model phi-counts" id="slide-22" data-title="Custos de Φ: distribuição e refeições" data-stage="5"><h2 class="title" data-a="up">Custos de Φ: distribuição e refeições</h2>
-<p class="lead" data-a="up">A quantidade de atrações e as escolhas de refeição também participam do custo da agenda.</p>
-<table class="explain-table phi-table count-table" data-a="up"><colgroup><col style="width:22%"><col style="width:47%"><col style="width:31%"></colgroup><thead><tr><th>Componente de Φ</th><th>Custo aplicado</th><th>Exemplo isolado</th></tr></thead><tbody>
-<tr><th>Atrações acima da média</th><td><div class="math eq-inline">10.000 [c<sub>d</sub> − ⌈N / |D|⌉]<sub>+</sub></div><small>c<sub>d</sub>: atrações do dia. N: total de atrações. |D|: número de dias.</small></td><td>12 atrações / 5 dias: teto suave 3.<br>Dia com 4: <b>10.000</b></td></tr>
-<tr><th>Atrações abaixo do piso</th><td><div class="math eq-inline">20.000.000 [m − c<sub>d</sub>]<sub>+</sub></div><small>m = min(C<sub>min</sub>, ⌊N / |D|⌋). C<sub>min</sub>: piso do ritmo. Cobrança em dia com visita.</small></td><td>Equilibrado: m = min(3, 2) = 2.<br>Dia com 1: <b>20.000.000</b></td></tr>
-<tr><th>Refeição omitida</th><td><b>100.000</b> por grupo de pausa automática.<br><b>1.000.000.000</b> por grupo de local escolhido.<small>Escolhe no máximo uma alternativa do grupo. Sem grupo, a pausa custa 100.000 individualmente.</small></td><td>Excluir um grupo de 13 alternativas automáticas:<br><b>100.000, uma única vez</b></td></tr>
-<tr><th>Concentração de locais</th><td><div class="math eq-inline">200.000 [r<sub>d,h</sub> − ⌈R<sub>h</sub> / |D|⌉]<sub>+</sub></div><small>R<sub>h</sub>: locais distintos escolhidos na categoria h. r<sub>d,h</sub>: paradas dessa categoria no dia.</small></td><td>3 restaurantes em 2 dias: teto suave 2.<br>3 no mesmo dia: <b>200.000</b></td></tr>
-</tbody></table>
-<div class="table-legend" data-a="up"><p>⌈ ⌉ arredonda para cima. ⌊ ⌋ arredonda para baixo. [u]<sub>+</sub> = max(0,u). h identifica café ou restaurante.</p><p>O OR-Tools não cobra o piso em uma rota vazia. A concentração só é penalizada com mais de um local e mais de um dia.</p></div>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Para distribuir as atrações, o modelo calcula a média por dia. Com doze atrações em cinco dias, a referência superior é três. Uma quarta atração no mesmo dia acrescenta dez mil unidades, embora continue dentro do teto obrigatório de quatro do ritmo equilibrado.</p><p>O piso efetivo é o menor entre o piso do ritmo e a média arredondada para baixo. Aqui, o piso nominal três cai para dois. Uma única atração em um dia custa vinte milhões pela falta de uma visita. Há uma particularidade: o OR-Tools não cobra esse piso em uma rota vazia.</p><p>As refeições são agrupadas por alternativas. Deixar de escolher qualquer uma das treze opções de uma pausa automática custa cem mil uma única vez. Para um local escolhido pelo usuário, a exclusão do grupo custa um bilhão. Além disso, concentrar locais escolhidos da mesma categoria acima da média diária pode gerar duzentas mil unidades por parada excedente.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Contagens e limites</h4><p>c_d soma apenas atrações. Bases e refeições ficam fora da contagem. |D| é a cardinalidade do conjunto dos dias. O teto da média é suave e não substitui C_max, o limite rígido do ritmo. No exemplo, C_max = 4. O piso C_min vale 3 no equilibrado, mas o piso efetivo m vale 2. [u]₊ elimina valores negativos.</p><h4>Refeições</h4><p>Cada grupo admite no máximo uma alternativa na viagem. A penalidade de exclusão incide uma vez se nenhuma alternativa for escolhida. A distribuição por categoria considera coffee e restaurant para estabelecimentos escolhidos, não a simples multiplicação de alternativas automáticas. R_h é a contagem de identificadores de candidatos distintos. O exemplo dos 3 restaurantes em 2 dias é didático, não faz parte da entrada registrada de Nova Iorque.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.5, páginas 63–65</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação do modelo e da busca</a></li></ul></details></template></section>
-
-<section class="slide" id="slide-23" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
+<section class="slide" id="slide-18" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
   <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
   <p class="lead" data-a="up" style="--d:100ms">A próxima visita começa depois que a anterior termina e o deslocamento é concluído. Exemplo: Catedral de São Patrício → Metropolitan, no dia 2.</p>
   <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 330" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
@@ -674,47 +627,71 @@
   </template>
 </section>
 
-<section class="slide expanded-model solver-model" id="slide-24" data-title="Etapa 6 — O modelo executado no OR-Tools" data-stage="6"><h2 class="title" data-a="up">Etapa 6 — O modelo executado no OR-Tools</h2>
-<p class="lead" data-a="up">O adaptador monta rotas, relógios e custos. A biblioteca executa a construção inicial e a melhoria da agenda.</p>
-<div class="solver-model-grid" data-a="up"><figure><figcaption>Callbacks usados pela implementação, recortes</figcaption><pre class="syntax-block" data-language="python"><code>def transit_with_service(from_index, to_index):
-    from_node = manager.IndexToNode(from_index)
-    to_node = manager.IndexToNode(to_index)
-    return service_times[from_node] + time_matrix[from_node][to_node]
+<section class="slide solver-focused" id="slide-19" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
+<h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2>
+<p class="lead" data-a="up">Cada dia é uma rota. A inserção <b>constrói a agenda inicial</b>, e a GLS <b>tenta reduzir o custo</b>.</p>
+<div class="solver-strategies" data-a="up">
+  <div class="solver-phase">
+    <h3>1. Construção por inserção</h3>
+    <pre class="syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
+    routing,
+    routing_enums_pb2.FirstSolutionStrategy
+        .PARALLEL_CHEAPEST_INSERTION,
+    primary_time_limit,
+)</code></pre>
+    <h4>Exemplo de encaixe da Catedral</h4>
+    <p class="insertion-rule"><span class="math">Δ = t<sub>ik</sub> + t<sub>kj</sub> − t<sub>ij</sub></span> &nbsp; k entra entre i e j.</p>
+    <table class="solver-example insertion-options"><thead><tr><th>Entre quais pontos?</th><th>Acréscimo de transporte</th></tr></thead><tbody>
+      <tr><th>Hotel e Central Park</th><td>741 + 1.446 − 1.376 = <b>811 s</b></td></tr>
+      <tr><th>Central Park e Metropolitan</th><td>1.274 + 1.051 − 519 = <b>1.806 s</b></td></tr>
+    </tbody></table>
+    <p class="phase-reading">O primeiro encaixe acrescenta menos transporte, mas só pode ser usado se <b>respeitar horários e durações</b>.</p>
+    <p class="example-origin">Comparação didática com a matriz real de Nova Iorque.</p>
+  </div>
+  <div class="solver-phase">
+    <h3>2. Melhoria por busca local guiada</h3>
+    <pre class="syntax-block" data-language="python"><code>params.first_solution_strategy = strategy
+params.local_search_metaheuristic = (
+    routing_enums_pb2.LocalSearchMetaheuristic
+        .GUIDED_LOCAL_SEARCH
+)
+return routing.SolveWithParameters(params)</code></pre>
+    <h4>Uma melhoria registrada na busca</h4>
+    <p class="meal-change">Almoço do dia 2: posição do hotel → posição do Central Park.</p>
+    <table class="solver-example improvement-cost"><thead><tr><th>Custo da viagem</th><th>Antes</th><th>Depois</th></tr></thead><tbody>
+      <tr><th>Deslocamentos</th><td>23.518</td><td>23.642</td></tr>
+      <tr><th>Demais custos, Φ</th><td>150.304</td><td>148.196</td></tr>
+      <tr class="solver-cost-total"><th>Total</th><td>173.822</td><td>171.838</td></tr>
+    </tbody></table>
+    <p class="phase-reading"><b>Φ −2.108</b>, transporte <b>+124</b>. Total <b>−1.984</b>, com as <b>12 atrações</b>.</p>
+    <p class="example-origin">A GLS usa penalidades internas para explorar além de mínimos locais.</p>
+  </div>
+</div>
+<p class="search-execution"><b>Limite desta busca: 5 segundos.</b> Retorna a melhor agenda encontrada, sem prova de ótimo.</p>
+<template class="speaker-notes">
+<h4>Fala <span class="speaker-name">Kenzo</span></h4>
+<p>Com o modelo de horários e custos pronto, o solver trabalha em duas etapas. O código à esquerda escolhe a inserção mais barata em paralelo para construir a primeira agenda. O trecho à direita ativa a busca local guiada e executa a busca.</p>
+<p>Para entender a construção, imagine inserir a Catedral entre dois pontos de uma rota parcial. Removemos o deslocamento direto e somamos os dois novos trechos. Entre hotel e Central Park, o acréscimo é de oitocentos e onze segundos. Entre Central Park e Metropolitan, é de mil oitocentos e seis. Entre essas duas posições, a primeira acrescenta menos transporte. Mesmo assim, ela só pode ser usada se a visita e as seguintes couberem nos horários. A heurística compara encaixes entre posições e dias para construir uma agenda viável.</p>
+<p>Depois, a busca local tenta mudanças na agenda. O exemplo da direita vem de duas melhorias consecutivas do registro real. A alternativa de almoço do segundo dia muda da posição do hotel para a posição do Central Park. São posições de uma pausa automática, não restaurantes consultados. O transporte total aumenta cento e vinte e quatro unidades, mas os demais custos caem duas mil cento e oito. O custo total diminui mil novecentos e oitenta e quatro, mantendo as doze atrações. Isso mostra por que melhorar o objetivo não significa apenas encurtar o percurso.</p>
+<p>Quando os movimentos considerados deixam de melhorar o custo, a GLS usa penalidades internas para orientar novas tentativas. Essas penalidades pertencem à busca e são diferentes dos custos de excluir atrações e das preferências de fi. O registro não revela o operador ou a penalidade interna que produziu a troca de almoço, apenas a melhoria observada.</p>
+<p>Nesta entrada, o limite é de cinco segundos. O retorno é a melhor solução encontrada nesse prazo, sem certificado de ótimo. A animação seguinte mostra a evolução do custo ao longo da execução registrada.</p>
+<details class="notes-study"><summary>Estudo do algoritmo, código e exemplo, não faz parte da fala</summary>
+<h4>Leitura do código</h4><p>O bloco da esquerda recorta a chamada principal. O bloco da direita reúne linhas de _solve_with_strategy, omitindo a criação de params e a configuração do prazo. strategy recebe PARALLEL_CHEAPEST_INSERTION. GUIDED_LOCAL_SEARCH configura a melhoria posterior. SolveWithParameters executa ambas as fases com o modelo já montado. O termo paralelo descreve a construção das rotas disponíveis, não múltiplas threads configuradas pelo aplicativo.</p>
+<h4>Inserção e matriz</h4><p>Δ, delta, é a variação do custo dos arcos ao inserir k entre i e j. t é tempo de transporte em segundos. O tempo de serviço ocupa o relógio e precisa caber na rota, mas o custo do arco inclui apenas transporte. Na entrada registrada: hotel 0, Catedral 46, Central Park 40, Metropolitan 41. Primeira conta: t[0][46] + t[46][40] − t[0][40] = 741 + 1.446 − 1.376 = 811 s, ou 13 min 31 s. Segunda: t[40][46] + t[46][41] − t[40][41] = 1.274 + 1.051 − 519 = 1.806 s, ou 30 min 6 s. A comparação é didática e não reproduz a ordem efetiva da construção inicial. Não afirma viabilidade em qualquer dia ou horário. Inserção usa custos de arco, enquanto o objetivo completo inclui os demais custos do modelo.</p>
+<h4>Melhoria observada</h4><p>Estados 22 e 23 de all_improvements, contando a partir de 1, aos 0,0837 s e 0,0976 s. A rota do dia de índice 1 muda de [0,40,41,1,44,0] para [0,40,41,2,44,0]. As outras quatro rotas são idênticas. O nó 1 fica na posição do hotel e o nó 2 na posição do Central Park. Todas as atrações de 40 a 51 estão incluídas nos dois estados, portanto sua penalidade de exclusão é zero. O custo dos arcos de todas as rotas soma 23.518 e 23.642. Φ é calculado por diferença: 173.822 − 23.518 = 150.304 e 171.838 − 23.642 = 148.196. O registro não contém os horários intermediários, candidatos rejeitados ou penalidades internas da GLS. Não atribuir a redução de Φ a um componente específico nem a troca a um operador particular.</p>
+<h4>Prazo adaptativo</h4><p>O indicador de tamanho é |V| + 2|D|. Com 52 nós e 5 dias, vale 62, na faixa de 5 s. Até 30, o teto da faixa é 2 s. Até 70, é 5 s. Acima disso, usa o limite global configurado. Cada faixa respeita o menor entre seu teto e o limite global. O prazo restante da requisição pode reduzir o valor. Se a busca principal não encontrar solução, há tentativa com AUTOMATIC dentro do orçamento restante. A execução registrada para a animação é distinta da execução original de 5,032 s.</p>
+</details>
+<details class="notes-support"><summary>Apoio técnico e fontes</summary><ul>
+<li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Estratégias, custos e orçamento adaptativo implementados</a></li>
+<li><a href="data/solver-request.json">Entrada e matriz de Nova Iorque</a></li>
+<li><a href="data/busca-animada.json">Melhorias e rotas da execução registrada</a></li>
+<li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: primeira solução e metaheurísticas de busca</a></li>
+</ul></details>
+</template>
+</section>
 
-def travel_only(from_index, to_index):
-    from_node = manager.IndexToNode(from_index)
-    to_node = manager.IndexToNode(to_index)
-    return time_matrix[from_node][to_node]</code></pre><p class="model-code-note">O relógio soma visita e transporte. O custo do arco soma apenas transporte.</p></figure>
-<div class="solver-explanation"><h3>Da formulação à biblioteca</h3><dl><div><dt>Rotas e dias</dt><dd>RoutingIndexManager associa índices internos aos pontos. Cada veículo representa um dia.</dd></div><div><dt>Relógio e viabilidade</dt><dd>AddDimension acumula os tempos. SetRange limita horários. AddDisjunction permite excluir pontos mediante custo.</dd></div><div><dt>Preferências</dt><dd>Limites suaves e custo de duração implementam as parcelas de Φ.</dd></div></dl></div></div>
-<div class="solver-phases" data-a="up"><div><b>1. Construção</b><code>PARALLEL_CHEAPEST_INSERTION</code><span>Testa encaixes viáveis entre pontos e dias.</span></div><div><b>2. Melhoria</b><code>GUIDED_LOCAL_SEARCH</code><span>Explora mudanças na agenda e tenta reduzir o custo.</span></div><div><b>3. Retorno</b><code>SolveWithParameters(params)</code><span>Devolve a melhor solução encontrada dentro do prazo.</span></div></div>
-<p class="model-foot">Nesta entrada: 52 nós + 2 × 5 dias = 62, faixa de busca de 5 s. O resultado não inclui prova de ótimo.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Agora podemos relacionar a formulação ao código que realmente executamos. O manager traduz os índices internos da biblioteca para os pontos da viagem. Cada veículo representa um dia.</p><p>Os dois callbacks mostram uma separação importante. O primeiro soma o serviço da visita de origem com o transporte até o próximo lugar e alimenta a dimensão de tempo. O segundo retorna somente o transporte e define o custo do arco.</p><p>Além disso, o adaptador aplica janelas de horário, visitas opcionais e limites suaves. A biblioteca recebe esse modelo e começa com a inserção mais barata em paralelo. Em seguida, a busca local guiada tenta melhorar a agenda. Os próximos exemplos mostram uma comparação de encaixes e uma mudança que ocorreu no registro real.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Recortes de código</h4><p>Os corpos dos callbacks são os da implementação, omitindo apenas as anotações de tipo para caber. transit_with_service é registrado e usado por AddDimension na dimensão Time. travel_only é registrado e passado a SetArcCostEvaluatorOfAllVehicles. A configuração de primeira solução, metaheurística e prazo é feita antes de SolveWithParameters.</p><h4>Prazo</h4><p>O indicador é |V| + 2|D|, uma regra prática da implementação. Até 30, o teto da faixa é 2 s. Até 70, é 5 s. Acima disso, usa o limite global configurado. Cada faixa usa o menor entre esse teto e o limite global. O prazo restante da requisição pode reduzir o valor. Se a busca principal não encontra solução, o código tenta AUTOMATIC dentro do orçamento restante. Isso não é uma enumeração exaustiva das agendas.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Callbacks, dimensões e estratégias</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: configuração da busca</a></li></ul></details></template></section>
 
-<section class="slide expanded-model insertion-demo" id="slide-25" data-title="Inserção mais barata: um encaixe concreto" data-stage="6"><h2 class="title" data-a="up">Inserção mais barata: um encaixe concreto</h2>
-<p class="lead" data-a="up">Para inserir a <b>Catedral de São Patrício</b>, a heurística compara posições entre pontos já ligados. Cada opção precisa respeitar os horários.</p>
-<div class="insertion-equation" data-a="up"><span class="math">Δ<sub>ijk</sub> = t<sub>ik</sub> + t<sub>kj</sub> − t<sub>ij</sub></span><p>i e j: trecho existente. k: visita inserida. Δ: acréscimo de transporte ao substituir um trecho por dois.</p></div>
-<table class="explain-table insertion-table" data-a="up"><colgroup><col style="width:37%"><col style="width:38%"><col style="width:25%"></colgroup><thead><tr><th>Encaixe avaliado</th><th>Conta com a matriz real</th><th>Acréscimo</th></tr></thead><tbody>
-<tr class="favored"><th>Hotel, Catedral, Central Park<small>Substitui Hotel, Central Park.</small></th><td>741 + 1.446 − 1.376 segundos</td><td><b>811 s</b><small>13 min 31 s</small></td></tr>
-<tr><th>Central Park, Catedral, Metropolitan<small>Substitui Central Park, Metropolitan.</small></th><td>1.274 + 1.051 − 519 segundos</td><td><b>1.806 s</b><small>30 min 6 s</small></td></tr>
-</tbody></table>
-<div class="insertion-reading" data-a="up"><b>Entre essas duas posições, a primeira acrescenta menos transporte.</b><p>A inserção ainda precisa caber na janela da Catedral, permitir as visitas seguintes e respeitar o teto do dia. Depois, a busca compara novos encaixes nas rotas disponíveis.</p></div>
-<p class="model-foot">Comparação didática com valores exatos da matriz de Nova Iorque. Não representa a ordem registrada da construção inicial. Paralelo refere-se às rotas, não a múltiplas threads.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Para visualizar a inserção mais barata, vamos comparar dois lugares onde a Catedral poderia entrar em uma rota parcial. Se ela entrar entre i e j, substituímos um trecho pelos dois trechos que passam pela nova visita.</p><p>Entre o hotel e o Central Park, a conta é setecentos e quarenta e um, mais mil quatrocentos e quarenta e seis, menos mil trezentos e setenta e seis segundos: um acréscimo de oitocentos e onze. Entre o Central Park e o Metropolitan, o acréscimo é mil oitocentos e seis. A primeira posição adiciona menos transporte.</p><p>Essa conta explica a preferência de inserção por custo de arco, mas a posição só é utilizável quando respeita as restrições. A visita tem duração, a Catedral precisa estar disponível e a sequência seguinte também precisa caber. A biblioteca repete comparações nas rotas e posições disponíveis para construir a agenda inicial.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Significado de Δ</h4><p>Delta é a variação do custo de arcos. t_ik e t_kj são os dois novos deslocamentos, t_ij é o deslocamento removido. Δ é uma conta explicativa do custo de inserção, não a função objetivo completa. Serviço, esperas e limites suaves continuam no modelo. A estratégia PARALLEL_CHEAPEST_INSERTION usa custos de arco para a construção, ao contrário de uma seleção exaustiva por todos os termos do objetivo.</p><h4>Proveniência e escopo</h4><p>Índices no payload: hotel 0, Catedral 46, Central Park 40 e Metropolitan 41. São tempos direcionais reais da time_matrix. A comparação é um exemplo didático em uma rota parcial e não uma reprodução da escolha exata feita pela heurística. Não se afirma que a posição de menor acréscimo seja viável em qualquer dia ou horário.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="data/solver-request.json">Matriz de Nova Iorque</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: primeira solução por inserção</a></li></ul></details></template></section>
-
-<section class="slide expanded-model gls-demo" id="slide-26" data-title="Busca local guiada: uma mudança registrada" data-stage="6"><h2 class="title" data-a="up">Busca local guiada: uma mudança registrada</h2>
-<p class="lead" data-a="up">A busca modifica uma agenda já viável. Este par de melhorias mostra a <b>troca da alternativa de almoço no segundo dia</b>.</p>
-<div class="observed-routes" data-a="up"><div><small>Antes, aos 0,0837 s</small><p>Hotel, Central Park, Metropolitan,<br><b>almoço na posição do hotel</b>, Times Square, hotel.</p></div><div class="observed-after"><small>Depois, aos 0,0976 s</small><p>Hotel, Central Park, Metropolitan,<br><b>almoço na posição do Central Park</b>, Times Square, hotel.</p></div></div>
-<table class="explain-table observed-cost" data-a="up"><thead><tr><th>Objetivo da viagem completa</th><th>Antes</th><th>Depois</th><th>Variação</th></tr></thead><tbody><tr><th>Deslocamentos</th><td>23.518</td><td>23.642</td><td>+124</td></tr><tr><th>Exclusão de atrações</th><td>0</td><td>0</td><td>0</td></tr><tr><th>Demais custos, Φ</th><td>150.304</td><td>148.196</td><td>−2.108</td></tr><tr class="favored"><th>Custo total</th><td>173.822</td><td>171.838</td><td><b>−1.984</b></td></tr></tbody></table>
-<div class="gls-mechanism" data-a="up"><h3>Como a GLS amplia a exploração</h3><p>A busca local testa mudanças de ordem, de dia e de alternativas. Quando as mudanças locais deixam de melhorar o custo, a GLS aplica penalidades internas a características da solução para orientar novas tentativas. Ela guarda a melhor agenda pelo custo original.</p></div>
-<p class="model-foot">As rotas e os custos vêm de duas melhorias consecutivas do registro. O arquivo não registra os operadores rejeitados nem as penalidades internas da GLS.</p>
-<template class="speaker-notes"><h4>Fala <span class="speaker-name">Kenzo</span></h4><p>Na busca local, já temos uma agenda e passamos a testar mudanças. Aqui usamos duas melhorias consecutivas do registro. Apenas o segundo dia muda: o almoço automático sai da posição do hotel e passa para a posição do Central Park. São alternativas geográficas de uma pausa, não restaurantes consultados.</p><p>Essa mudança aumenta o transporte da viagem em cento e vinte e quatro unidades, mas reduz os demais custos em duas mil cento e oito. O custo total cai mil novecentos e oitenta e quatro. Isso mostra por que melhorar a agenda não significa apenas encurtar o percurso.</p><p>Uma busca local pode parar em um mínimo local, quando os movimentos considerados não melhoram imediatamente o custo. A GLS aplica penalidades internas para orientar novas tentativas e explorar outras combinações. Essas penalidades são do algoritmo, diferentes dos custos de excluir atrações e das preferências de fi. A melhor solução continua sendo comparada pelo objetivo original.</p><p>O registro mostra as melhores soluções completas, sem guardar os candidatos rejeitados ou o estado interno da GLS. Portanto, este par demonstra uma melhoria observada durante a busca configurada com GLS, sem atribuir essa troca a uma penalidade interna específica.</p><details class="notes-study"><summary>Estudo das fórmulas e do exemplo, não faz parte da fala</summary><h4>Conta verificável</h4><p>Estados 22 e 23, em contagem a partir de 1, de all_improvements. Rotas do dia de índice 1: [0,40,41,1,44,0] e [0,40,41,2,44,0]. As outras quatro rotas são idênticas. O nó 1 é a pausa na posição do hotel, o nó 2 é a pausa na posição do Central Park. A soma de todos os deslocamentos muda de 23.518 para 23.642. Todas as atrações estão presentes em ambos os estados. Calcula-se Φ por diferença: 173.822 − 23.518 = 150.304 e 171.838 − 23.642 = 148.196.</p><h4>O que o registro permite concluir</h4><p>As rotas e o objetivo são observados. A decomposição distingue transporte, exclusão de atrações e o agregado Φ. Como os horários das soluções intermediárias não foram registrados, não se atribui a redução de Φ a um componente específico. O registro não informa qual operador produziu a transição ou se ela ocorreu após um mínimo local.</p></details><details class="notes-support"><summary>Apoio técnico e fontes</summary><h4>Fontes</h4><ul><li><a href="data/busca-animada.json">Todas as melhorias da execução</a></li><li><a href="data/solver-request.json">Nós e matriz direcionada</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: metaheurísticas de busca</a></li></ul></details></template></section>
-
-
-
-
-
-
-<section class="slide" id="slide-27" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
+<section class="slide" id="slide-20" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
   <h2 class="title" data-a="up" style="margin-bottom:10px">Busca das rotas em execução</h2>
   <div class="search">
     <div class="search-map"><svg id="searchMap" viewBox="0 0 560 640" role="img" aria-label="Mapa com as posições reais das atrações, as rotas por dia mudam a cada melhoria encontrada pelo solver"></svg></div>
@@ -741,7 +718,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-28" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
+<section class="slide" id="slide-21" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
   <h2 class="title" data-a="up">Etapa 7 — As visitas distribuídas pelos cinco dias</h2>
   <div class="route-summary" data-a="up" style="--d:100ms"><p><b>12 de 12 atrações incluídas</b>, 62,4 km de deslocamento no total</p><span>Nova Iorque, 14 a 18 de setembro</span></div>
   <div class="daily-results" id="dailyResults"></div>
@@ -764,7 +741,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-29" data-title="Comparação de estratégias de busca">
+<section class="slide" id="slide-22" data-title="Comparação de estratégias de busca">
 <h2 class="title" data-a="up">Comparação de estratégias de busca</h2><p class="lead" data-a="up">Mesma entrada: 12 atrações em 5 dias. O <b>custo do objetivo</b> combina deslocamentos e penalidades, <b>menor é melhor</b>.</p>
 <table class="strategy-table" data-a="up"><colgroup><col style="width:30%"><col style="width:25%"><col style="width:17%"><col style="width:17%"><col style="width:11%"></colgroup>
 <thead><tr><th>Solução inicial</th><th>Busca local</th><th>Parada / limite</th><th>Custo do objetivo</th><th>Atrações</th></tr></thead>
@@ -791,7 +768,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-30" data-title="Validação do aplicativo">
+<section class="slide" id="slide-23" data-title="Validação do aplicativo">
 <h2 class="title" data-a="up">Validação funcional do aplicativo</h2><p class="lead" data-a="up">Testes automatizados e verificações no aplicativo, repetidos após a integração e a publicação.</p>
 <dl class="validation-summary">
 <div data-a="up"><dt>Regras e regressões</dt><dd>Solver, backend, aplicativo e verificações de tipos e compilação.</dd></div>
@@ -815,7 +792,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-31" data-title="Avaliação com participantes">
+<section class="slide" id="slide-24" data-title="Avaliação com participantes">
   <h2 class="title" data-a="up">Avaliação com participantes</h2>
   <p class="lead" data-a="up" style="--d:100ms">Seis participantes, cada um com seu aparelho e cenário, executaram cinco casos de teste e responderam a um formulário próprio.</p>
   <div class="eval">
@@ -873,7 +850,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-32" data-title="Custos estimados por geração">
+<section class="slide" id="slide-25" data-title="Custos estimados por geração">
 <h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2><p class="lead" data-a="up">Quatro cenários para a mesma viagem: 5 dias, 12 atrações e 1 hospedagem. <b>US$ por geração, apenas APIs.</b></p>
 <div class="cost-scenarios">
 <article data-a="up"><span class="scenario-index">CENÁRIO A</span><h3>Sem dados<br>reaproveitados</h3><strong>US$ 1,38</strong><p><b>Novas consultas:</b><br>lugares, matriz, IA e fotos.</p></article>
@@ -912,7 +889,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide" id="slide-33" data-title="Limitações do trabalho">
+<section class="slide" id="slide-26" data-title="Limitações do trabalho">
 <h2 class="title" data-a="up">Limitações do trabalho</h2><ol class="limitations-list limitations-short">
 <li data-a="up"><b>Passeios de dia inteiro</b> podem dividir o dia com outras visitas e ficar <b>sem almoço</b>.</li>
 <li data-a="up"><b>Durações estimadas</b> e <b>deslocamentos fixos</b> podem divergir das condições da viagem.</li>
@@ -933,7 +910,7 @@ def travel_only(from_index, to_index):
   </template>
 </section>
 
-<section class="slide dark conclusion" id="slide-34" data-title="Agradecimento e perguntas">
+<section class="slide dark conclusion" id="slide-27" data-title="Agradecimento e perguntas">
   <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude, Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><p data-a="up" style="--d:250ms">Agradecemos a atenção.<br>Estamos à disposição para perguntas.</p><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília, FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
     <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -983,7 +960,7 @@ def travel_only(from_index, to_index):
 </section>
 
 <script src="data.js?v=41"></script>
-<script src="motion.js?v=44"></script>
+<script src="motion.js?v=42"></script>
 <script src="scenes.js?v=42"></script>
 </body>
 </html>
