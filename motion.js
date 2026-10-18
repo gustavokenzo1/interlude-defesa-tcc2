@@ -83,7 +83,7 @@
       const source = pre.textContent;
       const code = document.createElement("code");
       const pattern = language === "python"
-        ? /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:return|True|False|None|self)\b|\b[A-Z][A-Z_]+\b|\b\d+(?:\.\d+)?\b/g
+        ? /#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:def|return|True|False|None|self)\b|\b[A-Z][A-Z_]+\b|\b\d+(?:\.\d+)?\b/g
         : language === "json"
           ? /"(?:\\.|[^"\\])*"(?=\s*:)|"(?:\\.|[^"\\])*"|\b(?:true|false|null)\b|-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g
           : /^[^=\n]+(?==)|[^=\n]+$/gm;
