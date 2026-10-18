@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=47" />
+  <link rel="stylesheet" href="motion.css?v=48" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -537,12 +537,12 @@
   <span class="formulation-min">min</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></div>
-    <h3>Deslocamentos</h3><p>t: tempo · x: trecho usado</p>
+    <h3>Deslocamentos</h3><p>t: tempo entre paradas</p>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></div>
-    <h3>Atrações excluídas</h3><p>π: penalidade · y: exclusão</p>
+    <h3>Atrações excluídas</h3><p>π: custo de excluir</p>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
@@ -552,12 +552,12 @@
 </div>
 <div class="formulation-detail">
   <div class="formulation-rules" data-build="2">
-    <h3>Visita (z) no dia 2</h3>
+    <h3>Recorte do dia 2</h3>
     <div class="formulation-route" role="img" aria-label="Recorte da rota real do dia 2: almoço, Central Park e hotel. Os dois trechos têm x igual a um. O Central Park tem visita z igual a um e exclusão y igual a zero.">
       <span>Almoço</span>
-      <span class="route-link"><small>x = 1</small><span>⟶</span></span>
-      <span class="route-stop"><b>Central Park</b><small>z = 1 &nbsp; y = 0</small></span>
-      <span class="route-link"><small>x = 1</small><span>⟶</span></span>
+      <span class="route-link"><small>x = 1</small><span>⟶</span><em>trecho usado</em></span>
+      <span class="route-stop"><b>Central Park</b><small><span><i>z = 1</i> visita no dia</span><span><i>y = 0</i> não excluído</span></small></span>
+      <span class="route-link"><small>x = 1</small><span>⟶</span><em>trecho usado</em></span>
       <span>Hotel</span>
     </div>
     <div class="formulation-rule">
@@ -584,27 +584,36 @@
 </div>
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-<p>A formulação tem dois papéis. As restrições dizem quais agendas são permitidas. Entre essas agendas, a função objetivo compara o custo: transporte nos trechos usados, penalidades das atrações deixadas de fora e os demais custos reunidos em fi.</p>
-<p>No primeiro termo, t é o tempo de um trecho e x vale um quando ele é usado. No segundo, pi é o custo de exclusão calculado na etapa três e y vale um quando a atração é excluída. O terceiro termo soma os custos da tabela. Eles são unidades de comparação, não dinheiro nem apenas tempo total.</p>
-<p>Vamos ler as restrições com a rota real do segundo dia. Ela passa pela Catedral, Metropolitan, almoço, Central Park e hotel. Para o Central Park, z no dia dois vale um e y vale zero. A soma das visitas ao longo dos dias mais a exclusão deve ser um. Isso impede visitar o mesmo ponto em dois dias.</p>
-<p>A próxima equação liga a escolha da visita aos deslocamentos. Como o Central Park é visitado, precisa haver uma entrada e uma saída naquele dia. A entrada vem do almoço e a saída vai para o hotel. Se não fosse visitado, esses trechos não poderiam continuar ativos.</p>
-<p>A última restrição conta apenas atrações. Neste ritmo, o limite obrigatório é quatro por dia. Essa rota tem três: Catedral, Metropolitan e Central Park. Almoço e hospedagem não contam.</p>
-<p>A tabela de fi mostra preferências que podem ser descumpridas mediante custo. Duração do dia, início, horários recomendados, distribuição e refeições alteram o custo da agenda. Nesta entrada, distribuir as doze atrações em cinco dias produz teto suave de três e piso suave de dois. Diferente do limite obrigatório de quatro, essas referências admitem desvios com penalidade. As janelas e o encadeamento dos horários aparecem no próximo slide.</p>
-<details class="notes-study"><summary>Estudo das fórmulas, do exemplo e de Φ, não faz parte da fala</summary>
-<h4>Índices e decisões</h4><p>D é o conjunto dos dias. Cada dia corresponde a um veículo. U reúne pontos opcionais, inclusive refeições, e Vₐ é o subconjunto das atrações. Eᵈ reúne arcos possíveis no dia d, sem entrada na base inicial nem saída da base final. A ligação direta entre as bases permite um dia sem visitas. i e j identificam pontos. O sobrescrito d indica o dia, não potência. xᵈᵢⱼ, zᵈᵢ e yᵢ são binários. A soma das entradas e saídas percorre apenas arcos admissíveis. As restrições de fluxo também se aplicam aos pontos opcionais de refeição.</p>
-<h4>Como ler as três regras</h4><p>∑ᵈ zᵈᵢ + yᵢ = 1: somar as visitas de i nos dias e a exclusão deve resultar em um. Se zᵈᵢ = 1 em um dia, todos os outros z de i são zero e yᵢ = 0. Se não houver visita em nenhum dia, yᵢ = 1. ∑ⱼ xᵈⱼᵢ = ∑ⱼ xᵈᵢⱼ = zᵈᵢ: as quantidades de entrada e saída são uma quando a visita está ativa e zero quando está excluída desse dia. ∑ᵢ∈Vₐ zᵈᵢ ≤ 4: contar apenas atrações, sem refeições ou bases. Quatro é o teto rígido do ritmo moderado desta entrada, não de todos os perfis.</p>
-<h4>Rota usada no exemplo</h4><p>O dia de índice 1 em solver-response.json corresponde ao segundo dia. A sequência é hospedagem, Catedral de São Patrício, Metropolitan Museum of Art, almoço automático, Central Park e hospedagem. O slide mostra apenas o recorte almoço, Central Park e hotel. Nesse diagrama, x e z se referem ao segundo dia, e z e y à visita ao Central Park. z igual a um significa visita ativa, e y igual a zero significa que essa atração não foi excluída. CP abrevia Central Park. O sobrescrito 2 é o segundo dia na notação de apresentação; a API enumera esse mesmo dia como 1. O exemplo ilustra as decisões da solução registrada, sem alegar que o programa mantenha objetos chamados x, z e y. Na Routing Library, essas decisões são representadas por sucessores, veículos, atividade e dimensões acumuladas.</p>
-<h4>Objetivo</h4><p>min ∑d∈D ∑(i,j)∈Eᵈ tᵢⱼxᵈᵢⱼ + ∑i∈Vₐ πᵢyᵢ + Φ. Multiplicar por x ou y binário seleciona os deslocamentos usados e as atrações excluídas. t inclui apenas transporte. Serviço e espera ocupam o relógio e influenciam a duração do dia dentro de Φ. A fórmula da penalidade π foi explicada na etapa 3. Φ é um agregado de custos e não uma decisão independente. A função é minimizada entre agendas que satisfazem os limites rígidos. O retorno heurístico não contém prova de ótimo.</p>
-<h4>Duração e referência de início</h4><p>ℓ_d = Tᵈ_f_d − Tᵈ_o_d, com T em segundos desde as 06h. O custo de duração é ℓ_d + 40 max(0, ℓ_d − 32.400). Inclui transporte, serviço e espera. A referência de início a_d é min(10.800, fim da janela de saída). O início custa 2 max(0, a_d − Tᵈ_o_d) + 30 max(0, Tᵈ_o_d − a_d). No relógio do modelo, 10.800 corresponde às 09h. Os pesos são cumulativos e não substituem as janelas obrigatórias.</p>
-<h4>Preferência de horário</h4><p>Para uma visita incluída, a penalidade é kᵢ max(0, Tᵈᵢ − bᵢ_pref), com k igual a 500 na preferência forte e 20 na suave. b_pref é o fim da faixa recomendada. Não há custo simétrico por começar antes dessa faixa. Isso não permite violar o horário obrigatório de funcionamento.</p>
-<h4>Distribuição das atrações</h4><p>Com N atrações e |D| dias, o teto suave é ceil(N/|D|), e o piso suave é m = min(C_min, floor(N/|D|)). Nesta entrada: N = 12, |D| = 5, C_min = 3. Portanto, teto = 3 e piso = 2. A parcela por dia é 10.000 max(0, c_d − 3) + 20.000.000 max(0, 2 − c_d), sendo c_d a contagem de atrações. A Routing Library não cobra o piso em uma rota sem nenhuma visita. Um dia com refeições, ainda que sem atrações, é uma rota ativa. Piso e teto suave são diferentes do teto rígido de quatro. Para outros ritmos ou quantidades, recalcular as referências.</p>
-<h4>Refeições e concentração</h4><p>Um grupo representa alternativas de uma mesma refeição. O grupo é atendido por no máximo uma alternativa. Excluir todas custa 100 mil para uma pausa automática e um bilhão para locais escolhidos. Uma refeição sem grupo custa 100 mil individualmente. A concentração conta locais distintos escolhidos por categoria, café ou restaurante. Se há mais de um local e mais de um dia, o teto diário é ceil(R_h/|D|), e cada parada além dele custa 200 mil. R_h é o total de locais distintos escolhidos nessa categoria. Essa contagem é distinta dos grupos de alternativas automáticas.</p>
+<p>A função no alto do slide é minimizada. Ela soma o tempo dos deslocamentos usados, o custo das atrações excluídas e os custos de Φ, listados na tabela. t é o tempo entre duas paradas e π é o custo de excluir uma atração.</p>
+<p>O exemplo mostra um recorte do segundo dia: almoço, Central Park e hotel. Cada seta tem x igual a um porque aquele trecho é usado na solução. No Central Park, z igual a um significa que a visita acontece nesse dia. y igual a zero significa que o parque não foi excluído da viagem. Por isso, o termo π vezes y não cobra exclusão do Central Park.</p>
+<p>A primeira regra exige visitar ou excluir. Somamos as visitas de uma atração em todos os dias e a decisão de exclusão. Para o Central Park, uma visita e nenhuma exclusão dão um mais zero, igual a um.</p>
+<p>A segunda regra conecta a visita aos trechos. Como z vale um, deve haver uma entrada e uma saída. No desenho, a entrada vem do almoço e a saída segue para o hotel. A terceira regra limita o dia inteiro a quatro atrações. Almoço e hotel não entram nessa contagem.</p>
+<p>Na tabela, Φ reúne os custos de duração, início, atraso na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. A meta de duas a três atrações admite desvios com custo. O limite de quatro da equação é obrigatório.</p>
+<details class="notes-study"><summary>Leitura dos símbolos e das regras exibidas</summary>
+<h4>Índices das fórmulas</h4>
+<p>d identifica um dia e D é o conjunto dos dias da viagem. i e j identificam paradas. Eᵈ é o conjunto das ligações possíveis no dia d. Vₐ é o conjunto das atrações. O sobrescrito d indica o dia. O símbolo ∑ significa somar os termos indicados abaixo dele, ∈ significa pertencer a um conjunto, e min pede o menor custo.</p>
+<h4>Decisões com valor zero ou um</h4>
+<ul>
+<li><b>xᵈᵢⱼ</b>: um quando o trecho de i para j é usado no dia d, zero quando não é. No desenho, as duas setas são usadas no segundo dia, portanto cada x vale um.</li>
+<li><b>zᵈᵢ</b>: um quando a parada i é visitada no dia d, zero quando não é visitada naquele dia. No desenho, a visita ao Central Park acontece no segundo dia, portanto z vale um.</li>
+<li><b>yᵢ</b>: um quando a atração i é excluída da viagem, zero quando é incluída. O Central Park está incluído, portanto y vale zero.</li>
+</ul>
+<h4>Como as decisões entram no objetivo</h4>
+<p>tᵢⱼ é o tempo de deslocamento de i para j. Multiplicar por xᵈᵢⱼ conta esse tempo somente se o trecho for usado. πᵢ é o custo de excluir a atração i. Multiplicar por yᵢ cobra esse custo somente se ela for excluída. No exemplo, os dois trechos contribuem com seus tempos, e o Central Park não contribui com custo de exclusão. Os valores do desenho representam a sequência registrada na resposta do solver.</p>
+<h4>As três restrições</h4>
+<p><b>Visitar ou excluir:</b> a soma das visitas de uma atração nos dias, mais a exclusão, deve ser um. Isso permite uma visita em um único dia ou a exclusão da viagem. Para o Central Park, z vale um no segundo dia e zero nos outros, enquanto y vale zero.</p>
+<p><b>Uma entrada e uma saída:</b> na soma da esquerda, j é a parada anterior e i é a parada visitada. Na soma do meio, i é a parada visitada e j é a seguinte. Ambas as somas devem ser iguais a z. Como a visita ao Central Park está ativa, uma seta entra e uma sai. Se a visita não estivesse ativa nesse dia, as duas somas seriam zero.</p>
+<p><b>Até quatro atrações por dia:</b> somar z apenas para as atrações de Vₐ deve resultar em no máximo quatro. Esse é o limite do perfil usado no exemplo. A equação se aplica ao dia inteiro, e o desenho mostra apenas seu trecho final.</p>
+<h4>Condições dos pesos de Φ</h4>
+<p><b>Duração:</b> uma unidade por segundo do dia, incluindo visitas e esperas, com mais quarenta por segundo além de nove horas. <b>Início:</b> duas unidades por segundo antes da referência e trinta depois. A referência é nove horas ou o fim da janela de saída, caso termine antes. <b>Atraso na preferência:</b> quinhentas unidades por segundo na preferência forte e vinte na suave, somente após o fim da faixa preferida.</p>
+<p><b>Atrações por dia:</b> nesta entrada, a faixa de referência é duas a três. Cada atração acima de três custa dez mil, e cada uma abaixo de duas custa vinte milhões. O piso não é cobrado em dias sem nenhuma visita. <b>Refeição omitida:</b> excluir todas as alternativas de um grupo custa cem mil para pausa automática ou um bilhão para local escolhido.</p>
+<p><b>Cafés e restaurantes:</b> duzentos mil por parada acima do teto diário da categoria. Esse teto é a quantidade de locais distintos escolhidos na categoria dividida pelos dias, arredondada para cima. Aplica-se quando há mais de um local e mais de um dia. Esses pesos são unidades de comparação entre agendas.</p>
 </details>
-<details class="notes-support"><summary>Apoio técnico e fontes</summary><ul>
+<details class="notes-support"><summary>Fontes do modelo e do recorte</summary><ul>
 <li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, modelagem matemática, páginas 63–65</a></li>
-<li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Restrições, dimensões e custos implementados</a></li>
-<li><a href="data/solver-request.json">Entrada com 12 atrações, cinco dias e ritmo moderado</a></li>
-<li><a href="data/solver-response.json">Sequência de visitas registrada no segundo dia</a></li>
+<li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Restrições e pesos dos custos</a></li>
+<li><a href="data/solver-request.json">Entrada do solver</a></li>
+<li><a href="data/solver-response.json">Resposta do solver, recorte do dia 2</a></li>
 </ul></details>
 </template>
 </section>

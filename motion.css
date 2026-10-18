@@ -1485,7 +1485,7 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .arch .uml-component { font: 500 12px var(--body); fill: var(--ink-muted); }
 .arch .core-t .uml-component { fill: #CFE0D8; }
 
-/* Slide 17: fórmula anotada, recorte da rota e pesos resumidos. */
+/* Slide 17: decisões explicadas no mesmo recorte usado no roteiro. */
 .formulation-objective { display: grid; grid-template-columns: 56px 1.12fr 30px 1fr 30px .82fr; gap: 22px; align-items: start; margin-top: 46px; padding-bottom: 30px; border-bottom: 2px solid var(--pine); }
 .formulation-min, .formulation-plus { font: 400 35px/1.2 var(--math); padding-top: 18px; }
 .objective-part > .math { font-size: 46px; line-height: 1.3; min-height: 91px; color: var(--pine-deep); white-space: nowrap; }
@@ -1496,15 +1496,17 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .objective-part p { font: 400 20px/1.4 var(--body); color: var(--ink-muted); }
 .formulation-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 31px; }
 .formulation-detail h3 { font: 700 26px/1.3 var(--display); margin-bottom: 21px; }
-.formulation-route { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: start; gap: 12px; font: 400 22px/1.5 var(--body); padding: 15px 0 30px; }
+.formulation-route { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: start; gap: 12px; font: 400 22px/1.5 var(--body); padding: 8px 0 17px; }
 .formulation-route > span:not(.route-link) { padding-top: 24px; }
 .formulation-route b { color: var(--pine-deep); font-weight: 600; }
 .route-link { display: flex; flex-direction: column; align-items: center; color: var(--pine-deep); }
 .route-link small { font: italic 400 21px/1.2 var(--math); }
 .route-link > span { font: 400 48px/.65 var(--math); }
 .route-stop { text-align: center; }
-.route-stop small { display: block; margin-top: 9px; font: italic 400 21px/1.3 var(--math); color: var(--pine-deep); }
-.formulation-rule { border-top: 1px solid var(--hairline); padding: 19px 0; }
+.route-link em { margin-top: 8px; font: normal 400 16px/1.3 var(--body); color: var(--ink-muted); white-space: nowrap; }
+.route-stop small { display: grid; gap: 6px; margin-top: 9px; font: 400 17px/1.3 var(--body); color: var(--ink-muted); white-space: nowrap; text-align: left; }
+.route-stop small i { display: inline-block; min-width: 55px; font: italic 400 21px/1.2 var(--math); color: var(--pine-deep); margin-right: 7px; }
+.formulation-rule { border-top: 1px solid var(--hairline); padding: 14px 0; }
 .formulation-rule > div { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .formulation-rule h4 { font: 500 21px/1.4 var(--body); max-width: 195px; }
 .formulation-rule .math { font-size: 32px; line-height: 1.4; white-space: nowrap; }
