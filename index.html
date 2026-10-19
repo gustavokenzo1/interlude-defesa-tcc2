@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=50" />
+  <link rel="stylesheet" href="motion.css?v=51" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -606,7 +606,7 @@
 <section class="slide formulation-explained" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
 <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
 <div class="formulation-choice" data-build="1">
-  <div class="math"><span class="formulation-min"><span>min</span><small>x, y, z, T</small></span> C(x,y,z,T)</div>
+  <div class="math"><span class="formulation-min"><span>min</span><small>x, y, z, T</small></span> C</div>
   <p>Menor custo total entre agendas viáveis</p>
 </div>
 <div class="formulation-decisions" data-build="1">
@@ -616,32 +616,32 @@
   <span class="formulation-cost math">C =</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></div>
-    <h3>Deslocamentos</h3><p>Somar trechos de todos os dias</p>
+    <h3>Deslocamentos</h3>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></div>
-    <h3>Exclusões</h3><p>Somar penalidades das excluídas</p>
+    <h3>Exclusões</h3>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
-    <div class="math">Φ(x,y,z,T)</div>
-    <h3>Preferências</h3><p>Somar os custos da tabela</p>
+    <div class="math">Φ</div>
+    <h3>Preferências</h3>
   </div>
 </div>
 <div class="formulation-detail">
   <div class="formulation-rules" data-build="2">
-    <h3>Sujeito às regras <small>restringem as decisões</small></h3>
+    <h3>Sujeito às regras</h3>
     <div class="formulation-rule"><div>
-      <div><h4>Visitar ou excluir</h4><p>Liga z a y</p></div>
+      <div><h4>Visitar ou excluir</h4></div>
       <span class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> + y<sub>i</sub> = 1</span>
     </div></div>
     <div class="formulation-rule"><div>
-      <div><h4>Uma entrada e uma saída</h4><p>Liga x a z</p></div>
+      <div><h4>Uma entrada e uma saída</h4></div>
       <span class="math"><span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ji</sub></span> = <span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ij</sub></span> = z<span class="ss"><sup>d</sup><sub>i</sub></span></span>
     </div></div>
     <div class="formulation-rule"><div>
-      <div><h4>Até 4 atrações/dia</h4><p>Limita z em cada dia</p></div>
+      <div><h4>Até 4 atrações/dia</h4></div>
       <span class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> ≤ 4</span>
     </div></div>
     <div class="formulation-example">
@@ -668,18 +668,22 @@
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
 <p>A expressão no alto pede ao solver que escolha os trechos x, as exclusões y, as visitas por dia z e os horários T. Essas decisões definem uma agenda e seu custo total C. Minimizar significa buscar decisões viáveis que produzam o menor custo total. Cada agenda candidata tem seu próprio valor de C.</p>
-<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi) quando y vale um, indicando exclusão. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
+<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi), calculado no slide anterior, quando y vale um. Essa exclusão vale para a viagem inteira e é cobrada uma única vez por atração. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
 <p>As regras abaixo são o “sujeito a” dessa minimização. A primeira liga z a y: cada atração deve ser visitada uma vez ou excluída. A segunda liga x a z: uma visita ativa precisa de entrada e saída no mesmo dia. A terceira limita a quatro atrações por dia. Uma combinação que descumpra uma dessas regras não é uma solução viável, mesmo que pareça barata.</p>
 <p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários completam as restrições, como veremos no próximo slide.</p>
 <p>Φ (fi) soma os custos que variam conforme a agenda: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros produzidos. Eles expressam as preferências adotadas no projeto; não foram calibrados formalmente com participantes. A meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro é obrigatório.</p>
 <details class="notes-study"><summary>Leitura da minimização, das somas e das regras</summary>
 <h4>O que é C e quais são as variáveis?</h4>
-<p>C(x,y,z,T) é uma função escalar: recebe uma combinação de decisões e produz um único número, o custo total daquela agenda. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min com x, y, z e T abaixo significa minimizar em relação a essas decisões. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
+<p>C é o custo total da agenda, uma função escalar das decisões x, y, z e T. No slide, usamos C e Φ (fi) como abreviações, omitindo a lista de argumentos entre parênteses. A dependência das decisões continua existindo. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min com x, y, z e T abaixo significa minimizar em relação a essas decisões. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
 <h4>Como min se relaciona com um array?</h4>
 <p>Em programação, min pode receber uma coleção pronta de números. Aqui, a notação descreve um problema de otimização: cada combinação viável de decisões produz um valor de C, e procuramos o menor desses valores. O comparativo é entre custos totais de agendas diferentes. Não se escolhe o menor dos três componentes de uma mesma agenda. Também não se aplica min a um único total já fixado: as decisões ainda podem mudar.</p>
 <p>O OR-Tools gera e modifica soluções durante a busca, mantendo a melhor encontrada dentro do prazo. Ele não precisa montar previamente um array com os custos de todas as agendas. A escrita matemática expressa o objetivo; a busca com prazo não fornece uma prova de que o mínimo global foi alcançado.</p>
 <h4>Por que há três sinais de somatório no custo?</h4>
 <p>Os dois primeiros são aninhados e formam juntos o custo de deslocamento. Leia primeiro a soma de dentro: para um dia d fixado, percorra as ligações permitidas de i para j e some tᵢⱼ vezes xᵈᵢⱼ. Depois, a soma de fora percorre todos os dias d em D e reúne seus custos. O terceiro somatório percorre as atrações de Vₐ e soma πᵢ (pi) vezes yᵢ. Φ (fi) já é o agregado dos outros custos aplicáveis, mostrado como uma função das mesmas decisões.</p>
+<h4>Por que a exclusão não tem uma soma por dia?</h4>
+<p>yᵢ indica se a atração i foi excluída da viagem inteira, por isso não tem índice de dia. A regra de visitar ou excluir conecta as visitas diárias z à exclusão global y. Se o Central Park é visitado no dia 2, a soma de z nos dias vale um e y vale zero. Ele não é considerado excluído nos outros quatro dias. Se não for visitado em nenhum dia, y vale um e cobramos πᵢ (pi) uma única vez. Somar esse mesmo custo também pelos dias multiplicaria a penalidade pela duração da viagem.</p>
+<h4>Onde entram os dias nos custos de Φ (fi)?</h4>
+<p>Φ (fi) já representa o total agregado das parcelas de preferência. Duração, desvio do início, distribuição de atrações e concentração de cafés e restaurantes geram custos por dia, reunidos dentro desse total. O atraso na preferência é calculado na visita correspondente. A omissão de refeição é cobrada uma vez por grupo de alternativas, conforme sua inclusão na agenda. Por isso não há um único somatório externo sobre os dias envolvendo todo Φ (fi). A abreviação já reúne as cobranças com os índices adequados a cada componente.</p>
 <h4>Índices e dados das fórmulas</h4>
 <p>d é um dia e D é o conjunto dos dias. i e j identificam paradas; Eᵈ reúne as ligações permitidas no dia d. Vₐ contém apenas as atrações, excluindo almoço e hospedagem. ∑ significa somar sobre os índices indicados, e ∈ significa pertencer a um conjunto. tᵢⱼ é um tempo de deslocamento fixado pela matriz. πᵢ (pi) é o custo previamente calculado para excluir a atração i.</p>
 <h4>Como cada regra afeta o objetivo?</h4>
