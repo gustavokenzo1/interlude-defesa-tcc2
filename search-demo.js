@@ -3,8 +3,8 @@ window.INTERLUDE_SEARCH_DEMO = {
   "names": [
     "Hotel",
     "Empire State",
-    "São Patrício",
-    "Metropolitan",
+    "Saint Patrick",
+    "The MET",
     "Central Park"
   ],
   "matrix": [

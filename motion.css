@@ -1565,14 +1565,14 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .demo-controls button:hover { border-color: var(--pine); color: var(--pine); }
 .demo-controls button:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
 .demo-controls button:disabled { opacity: .4; cursor: default; }
-.demo-edge { fill: none; stroke-width: 5; stroke-linecap: round; }
+.demo-edge { fill: none; stroke-width: 4; stroke-linecap: butt; }
 .demo-edge-route { stroke: var(--pine); stroke-dasharray: 1; animation: demoTrace .8s var(--ease) both; }
 .demo-edge-trial { stroke: var(--amber); stroke-dasharray: 1; animation: demoTrace .8s var(--ease) both; }
 .demo-edge-old { stroke: #BFC7C2; stroke-width: 3; stroke-dasharray: 8 8; }
-.demo-arrow { stroke-width: 2.4; }
-.demo-arrow-route { stroke: var(--pine); }
-.demo-arrow-trial { stroke: var(--amber); }
-.demo-arrow-old { stroke: #BFC7C2; }
+.demo-arrow { stroke: none; }
+.demo-arrow-route { fill: var(--pine); }
+.demo-arrow-trial { fill: var(--amber); }
+.demo-arrow-old { fill: #AEB8B1; }
 .demo-edge-time { font: 500 20px var(--mono); fill: var(--ink); text-anchor: middle; paint-order: stroke; stroke: var(--surface); stroke-width: 8px; stroke-linejoin: round; }
 .demo-node circle, .demo-node rect { fill: var(--pine); stroke: var(--surface); stroke-width: 5; }
 .demo-node.pending circle { fill: #C7CFC9; }
@@ -1581,3 +1581,24 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 .demo-node-name { fill: var(--ink); text-anchor: middle; font: 600 24px var(--display); }
 @keyframes demoTrace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) { .demo-edge { animation: none; } }
+
+/* Comparações antes da inserção: prévia separada da confirmação. */
+.demo-totals strong { font-size: 38px; }
+.demo-action { margin: 17px 0 18px; }
+.demo-action h3 { font-size: 25px; }
+.demo-choices li { padding: 10px 11px; font-size: 16px; line-height: 1.35; }
+.demo-choices li > span { min-width: 0; }
+.demo-choices li.active { background: #F3EAD6; color: var(--amber-ink); }
+.demo-calculation { margin-top: 19px; padding-top: 14px; border-top: 2px solid var(--hairline); }
+.demo-calculation > small { display: block; font: 400 14px var(--body); color: var(--ink-muted); margin-bottom: 8px; }
+.demo-calculation > div { font: 500 20px/1.45 var(--display); white-space: nowrap; }
+.demo-calculation p { margin-top: 8px; font: 400 15px var(--body); color: var(--ink-muted); }
+.demo-node-name { font-size: 23px; paint-order: stroke; stroke: var(--surface); stroke-width: 8px; stroke-linejoin: round; }
+.demo-node.preview circle { fill: var(--amber); }
+.demo-node.preview .demo-node-letter { fill: #322710; }
+.demo-route-caption { fill: var(--ink-muted); font: 500 17px var(--body); }
+.demo-edge-time.replaced { fill: var(--ink-muted); }
+
+.screen-name-layer { position: relative; overflow: hidden; border-radius: 38px; }
+.screen-name-aliases { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.screen-name-aliases text { fill: #17221E; font: 600 34px var(--body); }

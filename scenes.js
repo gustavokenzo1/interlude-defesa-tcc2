@@ -319,13 +319,13 @@
   // ---------- 11 Evolução da ordenação ----------
   const META = {
     "Central Park": "4,8, 301.915", "Times Square": "4,7, 246.545", "Rockefeller Center": "4,7, 201.962", "Empire State Building": "4,7, 129.004",
-    "Estátua da Liberdade": "4,7, 112.723", "Parque Bryant": "4,7, 107.557", "Metropolitan Museum": "4,8, 94.843", "Memorial do 11/9": "4,8, 94.772",
-    "Ponte do Brooklyn": "4,8, 93.288", "Catedral S. Patrício": "4,8, 42.771", "Radio City Music Hall": "4,8, 27.658", "Lincoln Center": "4,8, 22.105",
+    "Statue of Liberty": "4,7, 112.723", "Bryant Park": "4,7, 107.557", "The MET": "4,8, 94.843", "9/11 Memorial": "4,8, 94.772",
+    "Brooklyn Bridge": "4,8, 93.288", "Saint Patrick": "4,8, 42.771", "Radio City Music Hall": "4,8, 27.658", "Lincoln Center": "4,8, 22.105",
   };
   const COLS = [
-    { title: "Produto simples", sub: "nota × avaliações, em milhares", rows: [["Central Park", "1.449"], ["Times Square", "1.159"], ["Rockefeller Center", "949"], ["Empire State Building", "606"], ["Estátua da Liberdade", "530"], ["Parque Bryant", "506"], ["Metropolitan Museum", "455"], ["Memorial do 11/9", "455"], ["Ponte do Brooklyn", "448"], ["Catedral S. Patrício", "205"], ["Radio City Music Hall", "133"], ["Lincoln Center", "106"]] },
-    { title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", rows: [["Central Park", "4,799"], ["Metropolitan Museum", "4,796"], ["Memorial do 11/9", "4,796"], ["Ponte do Brooklyn", "4,796"], ["Catedral S. Patrício", "4,791"], ["Radio City Music Hall", "4,786"], ["Lincoln Center", "4,782"], ["Times Square", "4,699"], ["Rockefeller Center", "4,698"], ["Empire State Building", "4,697"], ["Estátua da Liberdade", "4,697"], ["Parque Bryant", "4,697"]] },
-    { title: "Escore completo", sub: "+ popularidade relativa", rows: [["Central Park", "5,399"], ["Times Square", "5,252"], ["Rockefeller Center", "5,206"], ["Metropolitan Museum", "5,130"], ["Memorial do 11/9", "5,130"], ["Ponte do Brooklyn", "5,126"], ["Empire State Building", "5,102"], ["Estátua da Liberdade", "5,071"], ["Parque Bryant", "5,060"], ["Catedral S. Patrício", "4,942"], ["Radio City Music Hall", "4,837"], ["Lincoln Center", "4,782"]] },
+    { title: "Produto simples", sub: "nota × avaliações, em milhares", rows: [["Central Park", "1.449"], ["Times Square", "1.159"], ["Rockefeller Center", "949"], ["Empire State Building", "606"], ["Statue of Liberty", "530"], ["Bryant Park", "506"], ["The MET", "455"], ["9/11 Memorial", "455"], ["Brooklyn Bridge", "448"], ["Saint Patrick", "205"], ["Radio City Music Hall", "133"], ["Lincoln Center", "106"]] },
+    { title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", rows: [["Central Park", "4,799"], ["The MET", "4,796"], ["9/11 Memorial", "4,796"], ["Brooklyn Bridge", "4,796"], ["Saint Patrick", "4,791"], ["Radio City Music Hall", "4,786"], ["Lincoln Center", "4,782"], ["Times Square", "4,699"], ["Rockefeller Center", "4,698"], ["Empire State Building", "4,697"], ["Statue of Liberty", "4,697"], ["Bryant Park", "4,697"]] },
+    { title: "Escore completo", sub: "+ popularidade relativa", rows: [["Central Park", "5,399"], ["Times Square", "5,252"], ["Rockefeller Center", "5,206"], ["The MET", "5,130"], ["9/11 Memorial", "5,130"], ["Brooklyn Bridge", "5,126"], ["Empire State Building", "5,102"], ["Statue of Liberty", "5,071"], ["Bryant Park", "5,060"], ["Saint Patrick", "4,942"], ["Radio City Music Hall", "4,837"], ["Lincoln Center", "4,782"]] },
   ];
   Scenes.bump = {
     init(slide) {
@@ -446,7 +446,7 @@
     },
     windows(slide) {
       const svg = slide.querySelector("#winGrid");
-      const met = nodes.find((n) => n.name === "Metropolitan");
+      const met = nodes.find((n) => n.name === "The MET");
       const [first, last] = met.windows["1"];
       const close = last + met.service;
       const X0 = 185, X1 = 715, t0 = 3 * 3600, t1 = 12 * 3600;
@@ -469,20 +469,20 @@
       svgEl("text", { x: (x(last) + x(close)) / 2, y: 314, "text-anchor": "middle", class: "instance-duration", text: "visita de 3h15" }, svg);
     },
     matrix(slide) {
-      const order = [nodes[hotel], ...["Central Park", "Metropolitan", "São Patrício"].map((name) => nodes.find((n) => n.name === name))];
+      const order = [nodes[hotel], ...["Central Park", "The MET", "Saint Patrick"].map((name) => nodes.find((n) => n.name === name))];
       const name = (n) => n.depot ? "Hotel" : n.name;
       const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
       slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
     },
   };
 
-  // ---------- 16 Propagação temporal (dia 2: São Patrício → Metropolitan) ----------
+  // ---------- 16 Propagação temporal (dia 2: Saint Patrick → The MET) ----------
   Scenes.temporal = {
     init(slide) {
       const svg = slide.querySelector("#tlSvg");
-      const cat = nodes.find((n) => n.name === "São Patrício"), met = nodes.find((n) => n.name === "Metropolitan");
+      const cat = nodes.find((n) => n.name === "Saint Patrick"), met = nodes.find((n) => n.name === "The MET");
       const day = D.days[1].steps;
-      const sCat = day.find((s) => s.name === "São Patrício"), sMet = day.find((s) => s.name === "Metropolitan");
+      const sCat = day.find((s) => s.name === "Saint Patrick"), sMet = day.find((s) => s.name === "The MET");
       const Ti = sCat.arrival, si = sCat.departure - sCat.arrival, tij = D.timeMatrix[cat.node][met.node];
       const ready = Ti + si + tij, Tj = sMet.arrival, wait = Tj - ready;
       this.values = { Ti, si, tij, ready, Tj, wait };
@@ -506,7 +506,7 @@
         svgEl("text", { class: "tl-lbl", x: cx, y: Y - 62, text: sub[1] }, gx);
       };
       let L = g(1); this.layers.push(L);
-      node(L, x(Ti), "i", [`T<tspan dy="6" font-size="13">i</tspan><tspan dy="-6"> = ${fmt(Ti)} s</tspan>`, `São Patrício, ${hhmm(Ti)}`], "var(--pine)");
+      node(L, x(Ti), "i", [`T<tspan dy="6" font-size="13">i</tspan><tspan dy="-6"> = ${fmt(Ti)} s</tspan>`, `Saint Patrick, ${hhmm(Ti)}`], "var(--pine)");
       L = g(2); this.layers.push(L);
       const sbar = svgEl("rect", { x: x(Ti) + 22, y: Y - 18, width: Math.max(0, x(Ti + si) - x(Ti) - 22), height: 36, rx: 8, style: { fill: "var(--pine-soft)", stroke: "var(--pine)", strokeWidth: 1.6 } }, L);
       svgEl("text", { class: "tl-math", x: (x(Ti) + x(Ti + si)) / 2 + 10, y: Y + 8, text: "" }, L).innerHTML = `s<tspan font-size="16" dy="6">i</tspan><tspan dy="-6" font-style="normal" font-family="var(--body)" font-size="15"> = ${fmt(si)} s</tspan>`;
@@ -519,13 +519,13 @@
       L = g(4); this.layers.push(L);
       svgEl("rect", { x: x(Tj), y: Y + 96, width: X1 + 40 - x(Tj), height: 34, rx: 8, style: { fill: "var(--amber-soft)", stroke: "var(--amber)", strokeWidth: 1.6 } }, L);
       svgEl("line", { x1: x(Tj), x2: x(Tj), y1: Y + 20, y2: Y + 96, style: { stroke: "var(--amber)", strokeWidth: 1.6, strokeDasharray: "4 4" } }, L);
-      svgEl("text", { x: x(Tj) + 14, y: Y + 119, style: { font: "600 15px var(--body)", fill: "var(--amber-ink)" }, text: "janela do Metropolitan no dia 2: 10:00 às 13:45 →" }, L);
+      svgEl("text", { x: x(Tj) + 14, y: Y + 119, style: { font: "600 15px var(--body)", fill: "var(--amber-ink)" }, text: "janela do The MET no dia 2: 10:00 às 13:45 →" }, L);
       L = g(5); this.layers.push(L);
       if (wait > 0) {
         svgEl("rect", { x: x(ready), y: Y - 18, width: x(Tj) - x(ready), height: 36, rx: 8, style: { fill: "url(#waitHatch)", stroke: "var(--amber)", strokeWidth: 1.4 } }, L);
         svgEl("text", { class: "tl-lbl", x: (x(ready) + x(Tj)) / 2, y: Y - 30, style: { fill: "var(--amber-ink)" }, text: `espera ${fmt(wait)} s` }, L);
       }
-      node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `Metropolitan, ${hhmm(Tj)}`], "var(--day-3)");
+      node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `The MET, ${hhmm(Tj)}`], "var(--day-3)");
       L = g(6); this.layers.push(L);
       const eq = svgEl("text", { class: "tl-eq", x: 716, y: 320 }, L);
       eq.innerHTML = `x<tspan font-size="22" dy="8">ij</tspan><tspan font-size="22" dy="-18">d</tspan><tspan dy="10" font-style="normal"> = 1  ⇒  </tspan>T<tspan font-size="22" dy="8">j</tspan><tspan dy="-8" font-style="normal"> ≥ </tspan>T<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>s<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>t<tspan font-size="22" dy="8">ij</tspan>`;
@@ -546,21 +546,34 @@
       this.slide = slide;
       this.demo = window.INTERLUDE_SEARCH_DEMO;
       const { names, matrix, construction, search } = this.demo;
-      const firstChoices = names.slice(1).map((name, i) => ({ label: name, value: matrix[0][i + 1] + matrix[i + 1][0], chosen: i === 0 })).sort((a, b) => a.value - b.value);
-      this.frames = [{ phase: 0, title: "Escolher a primeira visita", route: [0, 0], before: [], current: 0, best: null, focus: 1, choices: firstChoices, choiceTitle: "Acréscimo por visita" }];
-      let before = [0, 0];
-      construction.forEach((step, i) => {
-        const choices = i === 0 ? firstChoices : step.choices.map((c, k) => ({ label: `${names[before[c.position - 1]]} → ${names[before[c.position]]}`, value: c.delta, chosen: k === 0 }));
-        this.frames.push({ phase: 0, title: `Inserir ${names[step.insert]}`, route: step.route, before, current: step.cost, best: i === 3 ? step.cost : null, focus: step.insert, choices, choiceTitle: i === 0 ? "Acréscimo por visita" : "Acréscimo por encaixe" });
-        before = step.route;
+      const cost = (route) => route.slice(1).reduce((sum, b, k) => sum + matrix[route[k]][b], 0);
+      const insertion = (route, node, position) => {
+        const a = route[position - 1], b = route[position];
+        const result = [...route.slice(0, position), node, ...route.slice(position)];
+        return { node, position, route: result, delta: cost(result) - cost(route), terms: [matrix[a][node], matrix[node][b], matrix[a][b]], label: `${names[a]} → ${names[node]} → ${names[b]}` };
+      };
+      this.frames = [];
+      let route = [0, 0];
+      construction.forEach((step) => {
+        const current = cost(route);
+        const candidates = names.map((_, node) => node).filter((node) => node && !route.includes(node)).map((node) => {
+          const slots = route.slice(1).map((_, k) => insertion(route, node, k + 1));
+          return slots.reduce((best, slot) => slot.delta < best.delta ? slot : best);
+        }).sort((a, b) => a.delta - b.delta);
+        const slots = route.slice(1).map((_, k) => insertion(route, step.insert, k + 1));
+        const winning = slots.reduce((best, slot) => slot.delta < best.delta ? slot : best);
+        this.frames.push({ phase: 0, stage: "compare", title: "Comparar próximas atrações", route, current, secondary: candidates[0].delta, secondaryLabel: "Menor acréscimo", choiceTitle: "Melhor encaixe de cada atração", choices: candidates.map((c) => ({ label: names[c.node], value: c.delta })), choiceDelta: true });
+        slots.forEach((slot, k) => this.frames.push({ phase: 0, stage: "preview", title: `Testar ${names[step.insert]}`, route, current, secondary: cost(slot.route), secondaryLabel: "Custo da prévia", choiceTitle: `Encaixe ${k + 1} de ${slots.length}`, choices: slots.map((c) => ({ label: c.label, value: c.delta, active: c.position === slot.position })), choiceDelta: true, preview: slot }));
+        this.frames.push({ phase: 0, stage: "commit", title: `Confirmar ${names[step.insert]}`, route: step.route, current: step.cost, secondary: step.delta, secondaryLabel: "Acrescentado", choiceTitle: "Encaixe escolhido", choices: [{ label: winning.label, value: winning.delta, chosen: true }], choiceDelta: true, calculation: winning, previousCost: current, focus: step.insert });
+        route = step.route;
       });
       const initial = search[0], improved = search[1], exploring = search[2];
-      const comparison = [{ label: "Ordem inicial", value: initial.cost }, { label: "Outra ordem", value: improved.cost, chosen: true }];
+      const comparison = [{ label: "Primeira rota completa", value: initial.cost }, { label: "Outra ordem", value: improved.cost }];
       this.frames.push(
-        { phase: 1, title: "Testar outra ordem", route: improved.route, before: initial.route, current: improved.cost, best: initial.cost, choices: comparison, choiceTitle: "Deslocamento total", trial: true },
-        { phase: 1, title: "Guardar a melhoria", route: improved.route, before: initial.route, current: improved.cost, best: improved.cost, choices: comparison, choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost },
-        { phase: 1, title: "Continuar explorando", route: exploring.route, before: improved.route, current: exploring.cost, best: improved.cost, choices: [{ label: "Rota em exploração", value: exploring.cost }, { label: "Melhor guardada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", trial: true },
-        { phase: 1, title: "Devolver a melhor encontrada", route: improved.route, before: [], current: improved.cost, best: improved.cost, choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Melhor encontrada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost }
+        { phase: 1, stage: "local-preview", title: "Testar outra ordem", route: improved.route, current: initial.cost, secondary: improved.cost, secondaryLabel: "Custo da prévia", choices: comparison.map((c, i) => ({ ...c, active: i === 1 })), choiceTitle: "Deslocamento total", trial: true },
+        { phase: 1, stage: "local-commit", title: "Guardar a melhoria", route: improved.route, current: improved.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: comparison.map((c, i) => ({ ...c, chosen: i === 1 })), choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost },
+        { phase: 1, stage: "explore", title: "Explorar outra alternativa", route: exploring.route, current: exploring.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: [{ label: "Rota em exploração", value: exploring.cost, active: true }, { label: "Melhor guardada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", trial: true },
+        { phase: 1, stage: "final", title: "Devolver a melhor encontrada", route: improved.route, current: improved.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Melhor encontrada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost }
       );
       slide.querySelector("#demoReplay").addEventListener("click", () => window.Deck.replay());
       slide.querySelector("#demoNext").addEventListener("click", () => window.Deck.next());
@@ -568,67 +581,66 @@
       this.render();
     },
     get stepCount() { return this.frames.length; },
-    setStep(step) {
-      this.index = Math.max(0, Math.min(step, this.frames.length - 1));
-      this.render();
-    },
-    enter(slide, instant = false) {
-      this.setStep(instant ? this.frames.length - 1 : 0);
-    },
+    setStep(step) { this.index = Math.max(0, Math.min(step, this.frames.length - 1)); this.render(); },
+    enter(slide, instant = false) { this.setStep(instant ? this.frames.length - 1 : 0); },
     busy() { return this.index < this.frames.length - 1; },
     finish() { this.setStep(this.frames.length - 1); },
-    buttons() {
-      const final = this.index === this.frames.length - 1;
-      this.slide.querySelector("#demoNext").disabled = final;
-    },
     render() {
       const slide = this.slide, frame = this.frames[this.index];
       const { names, matrix } = this.demo;
       const svg = slide.querySelector("#solverDemoMap");
       svg.replaceChildren();
-      svg.setAttribute("aria-label", `${frame.title}. Rota atual: ${frame.route.map((i) => names[i]).join(", ")}. ${fmt(frame.current)} segundos de deslocamento. Melhor rota completa: ${frame.best === null ? "ainda não construída" : fmt(frame.best) + " segundos"}.`);
-      const pos = [[130, 425], [750, 425], [730, 245], [650, 75], [260, 75]];
-      const initials = ["H", "E", "S", "M", "C"];
+      svg.setAttribute("aria-label", `${frame.title}. ${frame.trial ? "Ordem em teste" : "Rota atual"}: ${frame.route.map((i) => names[i]).join(", ")}. Custo atual: ${fmt(frame.current)} segundos. ${frame.secondaryLabel}: ${fmt(frame.secondary)} segundos.`);
       const defs = svgEl("defs", {}, svg);
       ["route", "trial", "old"].forEach((kind) => {
-        const marker = svgEl("marker", { id: `demoArrow-${kind}`, viewBox: "0 0 12 12", refX: 10, refY: 6, markerWidth: 13, markerHeight: 13, markerUnits: "userSpaceOnUse", orient: "auto" }, defs);
-        svgEl("path", { d: "M1,1 L10,6 L1,11", fill: "none", class: `demo-arrow demo-arrow-${kind}` }, marker);
+        const marker = svgEl("marker", { id: `demoArrow-${kind}`, viewBox: "0 0 16 14", refX: 14, refY: 7, markerWidth: 16, markerHeight: 14, markerUnits: "userSpaceOnUse", orient: "auto" }, defs);
+        svgEl("path", { d: "M0,0 L14,7 L0,14 Z", class: `demo-arrow demo-arrow-${kind}` }, marker);
       });
-      const active = svgEl("g", {}, svg), labels = [];
-      const edges = (route) => route.slice(1).map((b, k) => [route[k], b]).filter(([a, b]) => a !== b);
-      const currentEdges = new Set(edges(frame.route).map((e) => e.join("-")));
-      const draw = (a, b, kind) => {
-        const [ax, ay] = pos[a], [bx, by] = pos[b], dx = bx - ax, dy = by - ay;
-        const len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
-        const sx = ax + ux * 34, sy = ay + uy * 34, ex = bx - ux * 38, ey = by - uy * 38;
-        const cx = (ax + bx) / 2 - dy * .09, cy = (ay + by) / 2 + dx * .09;
-        svgEl("path", { d: `M${sx},${sy} Q${cx},${cy} ${ex},${ey}`, class: `demo-edge demo-edge-${kind}`, ...(kind !== "old" ? { pathLength: 1 } : {}), "marker-end": `url(#demoArrow-${kind})` }, active);
-        if (kind !== "old") {
-          const hotelToCathedral = a === 0 && b === 2;
-          const t = hotelToCathedral ? .35 : .5, q = 1 - t, offset = hotelToCathedral ? -18 : 13;
-          labels.push({ x: q * q * sx + 2 * q * t * cx + t * t * ex - uy * offset, y: q * q * sy + 2 * q * t * cy + t * t * ey + ux * offset, value: matrix[a][b] });
-        }
+      const initials = ["H", "E", "S", "M", "C"];
+      const labels = [], active = svgEl("g", {}, svg);
+      const drawEdge = (a, b, from, to, kind) => {
+        if (a === b) return;
+        const dx = to.x - from.x, dy = to.y - from.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+        const sx = from.x + ux * 33, sy = from.y + uy * 33, ex = to.x - ux * 37, ey = to.y - uy * 37;
+        svgEl("path", { d: `M${sx},${sy} L${ex},${ey}`, class: `demo-edge demo-edge-${kind}`, ...(kind !== "old" ? { pathLength: 1 } : {}), "marker-end": `url(#demoArrow-${kind})` }, active);
+        labels.push({ x: (sx + ex) / 2 + uy * 19, y: (sy + ey) / 2 - ux * 19, value: matrix[a][b], kind });
       };
-      edges(frame.before).forEach(([a, b]) => { if (!currentEdges.has(`${a}-${b}`)) draw(a, b, "old"); });
-      edges(frame.route).forEach(([a, b]) => draw(a, b, frame.trial ? "trial" : "route"));
-      labels.forEach((label) => svgEl("text", { x: label.x, y: label.y + 7, class: "demo-edge-time", text: fmt(label.value) }, svg));
-      const included = new Set(frame.route);
-      pos.forEach(([x, y], i) => {
-        const pending = !included.has(i), focus = i === frame.focus;
-        const group = svgEl("g", { class: `demo-node${pending ? " pending" : ""}${focus ? " selected" : ""}` }, svg);
-        svgEl(i === 0 ? "rect" : "circle", i === 0 ? { x: x - 28, y: y - 28, width: 56, height: 56, rx: 8 } : { cx: x, cy: y, r: 28 }, group);
-        svgEl("text", { x, y: y + 8, class: "demo-node-letter", text: initials[i] }, group);
-        svgEl("text", { x: i === 2 ? x - 48 : x, y: i === 2 ? y + 8 : i === 0 || i === 1 ? y + 65 : y - 43, class: "demo-node-name", ...(i === 2 ? { style: { textAnchor: "end" } } : {}), text: names[i] }, group);
-      });
+      const pending = names.map((_, i) => i).filter((i) => i && !frame.route.includes(i) && i !== frame.preview?.node);
+      const y = pending.length || frame.preview ? 375 : 275;
+      const positions = frame.route.map((node, i) => ({ node, x: 80 + i * 740 / (frame.route.length - 1), y }));
+      positions.slice(1).forEach((to, k) => drawEdge(positions[k].node, to.node, positions[k], to, frame.preview?.position === k + 1 ? "old" : frame.trial ? "trial" : "route"));
+      let previewNode = null;
+      if (frame.preview) {
+        const p = frame.preview.position;
+        previewNode = { node: frame.preview.node, x: (positions[p - 1].x + positions[p].x) / 2, y: 220 };
+        drawEdge(positions[p - 1].node, previewNode.node, positions[p - 1], previewNode, "trial");
+        drawEdge(previewNode.node, positions[p].node, previewNode, positions[p], "trial");
+      }
+      labels.forEach((label) => svgEl("text", { x: label.x, y: label.y + 7, class: `demo-edge-time${label.kind === "old" ? " replaced" : ""}`, text: fmt(label.value) }, svg));
+      const drawNode = (point, state = "", above = false) => {
+        const { x, y, node } = point;
+        const group = svgEl("g", { class: `demo-node ${state}` }, svg);
+        svgEl(node === 0 ? "rect" : "circle", node === 0 ? { x: x - 28, y: y - 28, width: 56, height: 56, rx: 8 } : { cx: x, cy: y, r: 28 }, group);
+        svgEl("text", { x, y: y + 8, class: "demo-node-letter", text: initials[node] }, group);
+        svgEl("text", { x, y: above ? y - 46 : y + 63, class: "demo-node-name", text: names[node] }, group);
+      };
+      pending.forEach((node, i) => drawNode({ node, x: 80 + (i + .5) * 740 / pending.length, y: 75 }, "pending"));
+      positions.forEach((point) => drawNode(point, point.node === frame.focus ? "selected" : ""));
+      if (previewNode) drawNode(previewNode, "preview", true);
+      svgEl("text", { x: 80, y: 20, class: "demo-route-caption", text: frame.preview ? "Rota atual e encaixe em teste" : frame.trial ? "Prévia de outra ordem" : frame.stage === "compare" ? "Rota atual" : "Sequência de visitas" }, svg);
       slide.querySelector("#demoPhaseBuild").classList.toggle("active", frame.phase === 0);
       slide.querySelector("#demoPhaseSearch").classList.toggle("active", frame.phase === 1);
       slide.querySelector("#demoCurrent").innerHTML = `${fmt(frame.current)} <small>s</small>`;
-      slide.querySelector("#demoCurrent").classList.toggle("trial", !!frame.trial);
-      slide.querySelector("#demoBest").innerHTML = frame.best === null ? "—" : `${fmt(frame.best)} <small>s</small>`;
+      slide.querySelector("#demoCurrent").classList.toggle("trial", frame.stage === "explore");
+      slide.querySelector("#demoSecondaryLabel").textContent = frame.secondaryLabel;
+      slide.querySelector("#demoBest").innerHTML = `${frame.secondaryLabel === "Acrescentado" ? "+" : ""}${fmt(frame.secondary)} <small>s</small>`;
+      slide.querySelector("#demoBest").classList.toggle("trial", frame.stage.includes("preview"));
       slide.querySelector("#demoStep").textContent = `${String(this.index + 1).padStart(2, "0")} / ${String(this.frames.length).padStart(2, "0")}`;
       slide.querySelector("#demoAction").textContent = frame.title;
-      slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : ""}"><span>${choice.label}</span><b>${frame.phase === 0 ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
-      this.buttons();
+      const calculation = frame.preview || frame.calculation;
+      const formula = calculation ? `<div class="demo-calculation"><small>Novos trechos − trecho substituído</small><div>${fmt(calculation.terms[0])} + ${fmt(calculation.terms[1])} − ${fmt(calculation.terms[2])} = <b>+${fmt(calculation.delta)} s</b></div><p>Total: ${fmt(frame.previousCost ?? frame.current)} + ${fmt(calculation.delta)} = ${fmt((frame.previousCost ?? frame.current) + calculation.delta)} s</p></div>` : "";
+      slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : choice.active ? "active" : ""}"><span>${choice.label}</span><b>${frame.choiceDelta ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${formula}${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
+      slide.querySelector("#demoNext").disabled = this.index === this.frames.length - 1;
     },
   };
 
@@ -763,7 +775,7 @@
   Scenes.dailyResults = {
     init(slide) {
       const grid = slide.querySelector("#dailyResults");
-      const names = { "São Patrício": "Catedral de São Patrício", "Memorial 11/9": "Memorial do 11 de Setembro", "Rockefeller": "Rockefeller Center" };
+      const names = { "Saint Patrick": "Saint Patrick", "9/11 Memorial": "9/11 Memorial", "Rockefeller": "Rockefeller Center" };
       grid.innerHTML = D.days.map((day, d) => {
         let visit = 0;
         const stops = day.steps.filter((s) => !s.depot).map((s) => {

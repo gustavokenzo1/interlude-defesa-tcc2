@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=53" />
+  <link rel="stylesheet" href="motion.css?v=55" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -448,13 +448,13 @@
 
 <section class="slide" id="slide-13" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
   <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
-  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao escore completo, Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
+  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. The MET, 9/11 Memorial e Brooklyn Bridge sobem três posições do produto simples ao escore completo, Empire State, Statue of Liberty e Bryant Park descem três."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>As três colunas usam as mesmas doze atrações. A primeira multiplica a nota pelo número de avaliações. Como as notas são próximas, o volume de avaliações domina essa ordem.</p>
   <p>A coluna central aplica a média bayesiana. Com muitas avaliações, os valores permanecem próximos das notas observadas, e os lugares com quatro vírgula oito se concentram no alto.</p>
-  <p>A última coluna acrescenta a popularidade relativa. O Metropolitan sobe da sétima para a quarta posição e o Empire State cai da quarta para a sétima. As linhas permitem acompanhar cada lugar; as cores destacam a mudança entre a primeira e a última coluna.</p>
+  <p>A última coluna acrescenta a popularidade relativa. The MET sobe da sétima para a quarta posição e o Empire State cai da quarta para a sétima. As linhas permitem acompanhar cada lugar; as cores destacam a mudança entre a primeira e a última coluna.</p>
   <p>Todas estas atrações estão dentro do raio de busca, então não recebem desconto por distância. A ordenação organiza as sugestões que o viajante vai examinar.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
@@ -475,7 +475,7 @@
 <section class="slide" id="slide-14" data-title="Etapa 3 — Seleção e priorização" data-stage="3" data-scene="prio">
   <h2 class="title" data-a="up">Etapa 3 — Seleção e priorização</h2>
   <div class="step" style="grid-template-columns:560px 1fr">
-    <div><div class="pair"><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /></div><div class="phone" data-a="phone" style="--d:300ms"><img src="assets/app/poi-priority-2.png" alt="Continuação da lista de priorização mostrando as atrações de número 8 a 12" /></div></div></div>
+    <div><div class="pair"><div class="phone" data-a="phone" style="--d:150ms"><div class="screen-name-layer"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes das atrações padronizados para a apresentação"><rect x="292" y="911" width="440" height="85" fill="#fff"/><text x="296" y="947">The MET</text><rect x="292" y="1104" width="440" height="94" fill="#fff"/><text x="296" y="1143">9/11 Memorial</text><rect x="292" y="1304" width="440" height="74" fill="#fff"/><text x="296" y="1343">Brooklyn Bridge</text></svg></div></div><div class="phone" data-a="phone" style="--d:300ms"><div class="screen-name-layer"><img src="assets/app/poi-priority-2.png" alt="Continuação da lista de priorização mostrando as atrações de número 8 a 12" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes das atrações padronizados para a apresentação"><rect x="292" y="858" width="440" height="65" fill="#fff"/><text x="296" y="894">Statue of Liberty</text><rect x="292" y="1408" width="440" height="62" fill="#fff"/><text x="296" y="1447">Bryant Park</text></svg></div></div></div></div>
     <div class="step-body">
       <div class="prio" data-a="up" style="--d:400ms">
         <div class="prio-head"><span>Ordem definida pelo usuário</span><span>fator de posição <span class="math">1 + 4ρ<sub>i</sub></span></span></div>
@@ -486,7 +486,7 @@
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>O viajante escolhe as atrações e arrasta a lista para indicar suas prioridades. A lista à direita mostra a ordem definida para as doze atrações deste exemplo.</p>
-  <p>O fator de posição é maior no início da lista. Para o Central Park, que está em primeiro, vale cinco. Para o Parque Bryant, em último, fica próximo de um vírgula trinta e três. Esse fator aumenta o custo de excluir os lugares mais prioritários.</p>
+  <p>O fator de posição é maior no início da lista. Para o Central Park, que está em primeiro, vale cinco. Para o Bryant Park, em último, fica próximo de um vírgula trinta e três. Esse fator aumenta o custo de excluir os lugares mais prioritários.</p>
   <p>A posição expressa o que o viajante quer preservar. O solver ainda precisa decidir o dia e a sequência das visitas conforme horários e deslocamentos. A próxima fórmula combina esse fator com os demais componentes da penalidade de exclusão.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
@@ -495,6 +495,7 @@
   </details>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
+    <p>Os nomes das atrações nas capturas foram padronizados como rótulos da apresentação: The MET, 9/11 Memorial, Brooklyn Bridge, Statue of Liberty e Bryant Park. A ordem, os dados e as imagens dos lugares permanecem os da captura.</p>
     <p>A priorização atualiza o rascunho local antes do envio para geração. Uma prioridade alta aumenta o custo de exclusão, sem garantir inclusão quando as restrições impedem a visita.</p>
     <h4>Fontes</h4>
     <ul>
@@ -557,21 +558,21 @@
 
 <section class="slide" id="slide-16" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
 <h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><div class="instance-examples">
- <figure data-a="up"><figcaption><b>Janela de início da visita</b><span>Metropolitan, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="Metropolitan: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg></figure>
+ <figure data-a="up"><figcaption><b>Janela de início da visita</b><span>The MET, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="The MET: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg></figure>
  <figure data-a="up"><figcaption><b>Matriz de deslocamentos</b><span>Google Routes API, travelMode: TRANSIT, minutos</span></figcaption><div id="instanceMatrix"></div></figure>
 </div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>O backend transforma os dados dos lugares em uma entrada numérica para o solver. O slide mostra uma janela de visita e um recorte da matriz de deslocamentos.</p>
-  <p>À esquerda, o Metropolitan funciona das dez às dezessete horas no dia quinze de setembro, e a visita estimada dura três horas e quinze minutos. A faixa verde permite iniciar até treze e quarenta e cinco. A faixa inferior mostra o último encaixe: começar nesse horário permite terminar às dezessete.</p>
-  <p>A matriz vem da Google Routes API, pelo método computeRouteMatrix. O aplicativo usa o valor transit, convertido pelo backend em travelMode TRANSIT para consultar o transporte público. Na tabela, a linha é a origem e a coluna é o destino. Do hotel ao Metropolitan são cerca de trinta e dois minutos; na volta, vinte e oito. Cada sentido precisa ser considerado separadamente.</p>
+  <p>À esquerda, o The MET funciona das dez às dezessete horas no dia quinze de setembro, e a visita estimada dura três horas e quinze minutos. A faixa verde permite iniciar até treze e quarenta e cinco. A faixa inferior mostra o último encaixe: começar nesse horário permite terminar às dezessete.</p>
+  <p>A matriz vem da Google Routes API, pelo método computeRouteMatrix. O aplicativo usa o valor transit, convertido pelo backend em travelMode TRANSIT para consultar o transporte público. Na tabela, a linha é a origem e a coluna é o destino. Do hotel ao The MET são cerca de trinta e dois minutos; na volta, vinte e oito. Cada sentido precisa ser considerado separadamente.</p>
   <p>O solver usará a matriz, as durações e as janelas para verificar se uma visita pode suceder a outra.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
     <h4>Janela de início</h4>
     <p>17h menos 3h15 resulta em 13h45. Esse é o último início que permite concluir a visita até o fechamento. Começar às 13h45 e somar 3h15 leva às 17h.</p>
     <h4>Matriz dirigida</h4>
-    <p>Leia cada célula cruzando a origem da linha com o destino da coluna. Hotel para Metropolitan usa uma célula, e Metropolitan para Hotel usa outra. O traço na diagonal marca o deslocamento de um lugar para ele mesmo, sem exibir um tempo.</p>
+    <p>Leia cada célula cruzando a origem da linha com o destino da coluna. Hotel para The MET usa uma célula, e The MET para Hotel usa outra. O traço na diagonal marca o deslocamento de um lugar para ele mesmo, sem exibir um tempo.</p>
   </details>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
@@ -696,22 +697,22 @@
 
 <section class="slide" id="slide-18" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
   <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
-  <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 390" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
+  <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 390" role="img" aria-label="Linha do tempo real: início em Saint Patrick, visita, deslocamento, espera até a abertura da janela do The MET e início do atendimento"></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span><span class="signal" data-build="3"></span><span class="signal" data-build="4"></span><span class="signal" data-build="5"></span><span class="signal" data-build="6"></span>
 
   <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início da visita, desde as 06:00</span><span><span class="math">s<sub>i</sub></span>duração da visita</span><span><span class="math">t<sub>ij</sub></span>tempo de deslocamento</span></div>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>A linha do tempo aplica a regra de que a próxima visita começa depois de terminar a visita anterior e concluir o deslocamento.</p>
-  <p>No segundo dia, a Catedral de São Patrício começa às nove e doze, com onze mil quinhentos e quarenta e um segundos desde as seis da manhã. Somamos mil e oitocentos segundos de visita e mil e cinquenta e um de transporte. O resultado é quatorze mil trezentos e noventa e dois segundos.</p>
-  <p>O Metropolitan só permite iniciar às dez, equivalentes a quatorze mil e quatrocentos segundos. Por isso aparecem oito segundos de espera. A desigualdade admite essa espera entre a chegada e o início da visita.</p>
+  <p>No segundo dia, a Saint Patrick começa às nove e doze, com onze mil quinhentos e quarenta e um segundos desde as seis da manhã. Somamos mil e oitocentos segundos de visita e mil e cinquenta e um de transporte. O resultado é quatorze mil trezentos e noventa e dois segundos.</p>
+  <p>The MET só permite iniciar às dez, equivalentes a quatorze mil e quatrocentos segundos. Por isso aparecem oito segundos de espera. A desigualdade admite essa espera entre a chegada e o início da visita.</p>
   <p>Além da sequência temporal ilustrada, o modelo restringe os dias permitidos e considera a preferência de horário. Fechamentos retiram opções de visita; a preferência acrescenta custo ao atraso. Todos os horários usam a mesma origem às seis da manhã.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
     <h4>Regra temporal</h4>
     <p>xᵈᵢⱼ igual a um significa que o trecho de i para j é usado no dia d. A seta ⇒ lê-se “implica”. T é o início da visita, s é a duração e t é o deslocamento. O sinal ≥ lê-se “maior ou igual”. Os T do desenho se referem ao mesmo dia, com o sobrescrito omitido.</p>
     <h4>Soma do exemplo</h4>
-    <p>11.541 + 1.800 + 1.051 = 14.392. O início seguinte vale 14.400, portanto a diferença é de oito segundos. A janela do Metropolitan vai das 10h às 13h45 para o início da visita.</p>
+    <p>11.541 + 1.800 + 1.051 = 14.392. O início seguinte vale 14.400, portanto a diferença é de oito segundos. A janela do The MET vai das 10h às 13h45 para o início da visita.</p>
     <h4>Origem do relógio</h4>
     <p>A origem é 06h. Somar 61.200 segundos leva às 23h, e somar 28.800 segundos leva às 14h. São valores relativos à origem, usados para preparar e depois exibir os horários.</p>
     <h4>Funcionamento e preferência</h4>
@@ -737,39 +738,49 @@
 </div>
 <div class="solver-demo">
   <div class="demo-visual">
-    <div class="demo-context">Recorte didático, 1 dia, 4 atrações, só deslocamentos em segundos</div>
+    <div class="demo-context">1 dia, 4 atrações obrigatórias, deslocamentos em segundos</div>
     <svg id="solverDemoMap" class="demo-map" viewBox="0 0 900 510" role="img" aria-label="Simulação de inserções de quatro atrações e melhoria da ordem da rota"></svg>
   </div>
   <aside class="demo-side">
-    <div class="demo-totals"><div><span>Rota atual</span><strong id="demoCurrent">0 <small>s</small></strong></div><div><span>Melhor completa</span><strong id="demoBest">—</strong></div></div>
-    <div class="demo-action"><span id="demoStep">01 / 09</span><h3 id="demoAction">Escolher a primeira visita</h3></div>
+    <div class="demo-totals"><div><span>Rota atual</span><strong id="demoCurrent">0 <small>s</small></strong></div><div><span id="demoSecondaryLabel">Menor acréscimo</span><strong id="demoBest">—</strong></div></div>
+    <div class="demo-action"><span id="demoStep">01 / 22</span><h3 id="demoAction">Escolher a primeira visita</h3></div>
     <div id="demoChoices" class="demo-choices"></div>
   </aside>
 </div>
 <div class="demo-controls"><button id="demoReplay" type="button">Repetir</button><button id="demoNext" type="button">Próximo passo →</button></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>Aqui acompanhamos um exemplo pequeno para entender as duas estratégias. Usamos o hotel e quatro atrações de Nova Iorque, com os mesmos tempos da matriz. Neste recorte, todas as visitas são obrigatórias e comparamos apenas os deslocamentos. As janelas, as durações e as outras parcelas do custo voltam na execução completa do próximo slide.</p>
-  <p>Primeiro, a inserção mais barata constrói a rota. Empire State é a primeira visita porque acrescenta oitocentos e quarenta e sete segundos, incluindo a volta ao hotel. Depois comparamos onde encaixar São Patrício: entre hotel e Empire State acrescenta quinhentos e oitenta e quatro segundos; no outro encaixe, mil setecentos e cinquenta e um. A animação destaca a opção escolhida. Um trecho é substituído por dois, então o acréscimo desconta o trecho removido.</p>
-  <p>O processo continua com Metropolitan e Central Park. Cada passo mantém as visitas já inseridas e escolhe um encaixe barato para a próxima. Ao incluir as quatro, a primeira rota soma quatro mil e setenta e quatro segundos de transporte. Em uma viagem com vários dias, a estratégia compara encaixes nas rotas em construção; “paralelo” não significa necessariamente várias threads.</p>
-  <p>A segunda etapa já pode mudar a ordem das visitas inseridas. Nesta execução reduzida do OR-Tools, inverter a sequência São Patrício, Metropolitan e Central Park leva a três mil quinhentos e cinquenta e quatro segundos, uma redução de quinhentos e vinte segundos. Isso mostra por que uma construção barata passo a passo ainda pode ser melhorada depois.</p>
-  <p>A busca continua explorando. Surge uma rota de quatro mil quatrocentos e cinquenta e dois segundos, mas a melhor completa continua guardada em três mil quinhentos e cinquenta e quatro. A Guided Local Search usa penalidades internas para favorecer outras alternativas quando a busca fica presa em um mínimo local. Essas penalidades não são a penalidade de exclusão π (pi) do nosso modelo. Ao terminar o prazo, devolvemos a melhor encontrada, sem uma garantia geral de ótimo.</p>
-  <details class="notes-study"><summary>Como ler os passos da animação</summary>
-    <h4>Dados e escopo</h4>
-    <p>Os números são segundos de transporte, não o custo C completo do slide 17 nem a duração total do dia. O desenho é um grafo esquemático, sem escala geográfica. H é hotel; E, Empire State; S, São Patrício; M, Metropolitan; C, Central Park. Os nomes aparecem junto aos nós. Os sentidos importam porque a matriz é assimétrica.</p>
-    <h4>As quatro inserções</h4>
-    <p>A primeira rota é hotel, Empire State, hotel: 773 + 74 = 847. São Patrício entra antes de Empire State: o acréscimo é 741 + 616 − 773 = 584, e o total passa a 1.431. Metropolitan entra entre São Patrício e Empire State: 1.051 + 1.344 − 616 = 1.779, total de 3.210. Central Park entra entre Metropolitan e Empire State: 559 + 1.649 − 1.344 = 864, total de 4.074.</p>
-    <p>Na primeira comparação, o quadro mostra o custo de inserir cada atração na rota vazia. Nas seguintes, mostra os encaixes possíveis para a atração escolhida. A implementação didática calculou os encaixes pelo custo dos arcos, e a rota completa coincide com a primeira solução registrada do OR-Tools nesse modelo reduzido.</p>
+  <p>Este recorte usa quatro atrações obrigatórias e só os tempos de deslocamento, em segundos. O hotel aparece nas duas pontas porque saímos dele e voltamos para ele. A posição no desenho indica a ordem das visitas, sem escala geográfica. Cada seta do teclado avança uma comparação, um teste ou uma confirmação.</p>
+  <p>Na construção inicial existem duas perguntas: qual atração acrescentar e em qual trecho encaixá-la. Para cada atração que falta, calculamos todos os encaixes e guardamos o mais barato. A tabela “Melhor encaixe de cada atração” compara esses mínimos. Portanto, a próxima atração não está predeterminada e não é escolhida só pela distância ao hotel.</p>
+  <p>Na primeira comparação a rota está vazia. Inserir Empire State custa 773 segundos para ir e 74 para voltar: 847 ao todo. É o menor acréscimo entre as quatro opções. O próximo quadro mostra esse encaixe em âmbar, antes de alterar a rota. Só no quadro “Confirmar Empire State” ele entra na rota verde.</p>
+  <p>Agora vem a comparação que explica a segunda escolha. Com Empire State já incluído, o melhor encaixe de Saint Patrick acrescenta 584 segundos. O melhor de Central Park acrescentaria 2.252 e o de The MET, 2.500. Saint Patrick é o segundo porque tem o menor acréscimo sobre a rota atual. Esses números mudaram em relação à primeira tabela porque agora podemos aproveitar trechos que já existem.</p>
+  <p>Vamos testar os dois encaixes de Saint Patrick antes de confirmar. Hotel → Saint Patrick → Empire State substitui o trecho hotel → Empire State. Entram 741 e 616 segundos, e saem os 773 do trecho substituído: 741 + 616 − 773 = 584. O total da prévia é 847 + 584 = 1.431 segundos. No outro teste, Empire State → Saint Patrick → hotel, o acréscimo é 936 + 889 − 74 = 1.751. A confirmação guarda o primeiro encaixe, por ser mais barato. As linhas da tabela agora escrevem o nome da atração entre a origem e o destino; a linha tracejada é o trecho que seria substituído.</p>
+  <p>Depois comparamos as duas atrações restantes. The MET tem um encaixe de 1.779 segundos, menor que os 1.909 de Central Park. Por isso The MET vem em seguida. Testamos os três trechos disponíveis e confirmamos Saint Patrick → The MET → Empire State: 1.051 + 1.344 − 616 = 1.779. A rota passa de 1.431 para 3.210 segundos.</p>
+  <p>Resta Central Park. Agora não precisamos escolher entre atrações, mas ainda precisamos escolher entre quatro encaixes. Testamos os quatro. O mais barato fica entre The MET e Empire State: 559 + 1.649 − 1.344 = 864. A primeira rota completa fica hotel, Saint Patrick, The MET, Central Park, Empire State, hotel, com 4.074 segundos. Assim, a posição de Central Park foi escolhida pelo custo do encaixe, não pela ordem em que aparece no mapa.</p>
+  <p>Na busca local, a ordem das visitas já inseridas pode mudar. Primeiro aparece uma prévia da ordem hotel, Central Park, The MET, Saint Patrick, Empire State, hotel, com 3.554 segundos. O quadro seguinte guarda essa melhoria, de 520 segundos. A construção por inserções baratas ainda permitia uma melhoria posterior.</p>
+  <p>A busca continua e explora uma rota de 4.452 segundos, mas mantém a melhor guardada em 3.554. A Guided Local Search usa penalidades internas para favorecer outras alternativas quando fica presa em um mínimo local. Essas penalidades não são a penalidade de exclusão π (pi) do modelo. Ao terminar o prazo, devolvemos a melhor encontrada. A execução completa com vários dias, janelas, durações e as demais parcelas do custo aparece no próximo slide.</p>
+  <details class="notes-study"><summary>Comparações e passos da simulação</summary>
+    <h4>Escolher uma atração e escolher um encaixe</h4>
+    <p>Para cada atração ainda ausente, enumeramos os trechos da rota atual e calculamos o acréscimo ao substituir um trecho por dois. Comparamos o menor acréscimo de cada atração. Depois mostramos os encaixes da atração vencedora, um por quadro, antes de confirmá-la. O quadro em âmbar é uma prévia: o custo atual permanece igual até a confirmação. Verde indica a rota confirmada; tracejado indica o trecho substituído no teste.</p>
+    <h4>As quatro rodadas</h4>
+    <table><thead><tr><th>Rota atual (s)</th><th>Menor acréscimo de cada atração (s)</th><th>Confirmar</th></tr></thead><tbody>
+      <tr><td>0</td><td>Empire State 847; Saint Patrick 1.630; Central Park 2.770; The MET 3.604</td><td>Empire State</td></tr>
+      <tr><td>847</td><td>Saint Patrick 584; Central Park 2.252; The MET 2.500</td><td>Saint Patrick</td></tr>
+      <tr><td>1.431</td><td>The MET 1.779; Central Park 1.909</td><td>The MET</td></tr>
+      <tr><td>3.210</td><td>Central Park 864</td><td>Central Park</td></tr>
+    </tbody></table>
+    <p>Os encaixes de Saint Patrick acrescentam 584 ou 1.751 s. Os de The MET, na ordem dos trechos da rota, acrescentam 2.157, 1.779 ou 3.362 s. Os de Central Park acrescentam 1.909, 914, 864 ou 3.476 s. O cálculo desconta o trecho substituído; não soma apenas os dois novos deslocamentos.</p>
     <h4>Ordem e melhor solução</h4>
-    <p>A rota inicial é H → S → M → C → E → H, com 4.074 s. A melhoria é H → C → M → S → E → H: 1.376 + 519 + 969 + 616 + 74 = 3.554 s. A alternativa seguinte é H → M → C → S → E → H, com 4.452 s. As três são as primeiras soluções aceitas registradas na execução reduzida. A animação desacelera esses eventos e termina exibindo a melhor rota armazenada.</p>
-    <h4>Construção e GLS</h4>
-    <p>PARALLEL_CHEAPEST_INSERTION constrói a solução inicial usando custos de inserção baseados nos arcos. A mudança que reduz 520 s é uma melhoria de busca local observada com GUIDED_LOCAL_SEARCH configurada; ela não demonstra, isoladamente, que as penalidades da GLS foram necessárias para obter essa melhoria. A rota pior ilustra a diferença entre explorar uma solução e atualizar a melhor encontrada.</p>
+    <p>A primeira rota completa custa 4.074 s. A melhoria custa 1.376 + 519 + 969 + 616 + 74 = 3.554 s. A alternativa seguinte, hotel → The MET → Central Park → Saint Patrick → Empire State → hotel, custa 4.452 s. São as três primeiras soluções aceitas registradas na execução reduzida do OR-Tools. A animação mostra os eventos em passos manuais e termina na melhor rota guardada.</p>
+    <h4>Escopo e estratégias</h4>
+    <p>Os números são segundos de transporte, não o custo C completo do slide 17 nem a duração total do dia. A matriz é assimétrica. Neste recorte todas as atrações são obrigatórias, sem janelas, durações, exclusões ou preferências. A construção didática calcula os encaixes pelos custos dos arcos e sua primeira rota completa coincide com a primeira solução registrada no OR-Tools. Em vários dias, PARALLEL_CHEAPEST_INSERTION compara encaixes nas rotas em construção; “paralelo” não implica necessariamente várias threads.</p>
+    <p>A redução de 520 s é uma melhoria de busca local observada com GUIDED_LOCAL_SEARCH configurada. Ela não demonstra, isoladamente, que as penalidades da GLS foram necessárias para essa melhoria. Explorar uma rota pior é diferente de atualizar a melhor solução, e não há garantia geral de ótimo.</p>
     <h4>Controles</h4>
-    <p>Cada toque na seta direita avança um quadro. A seta esquerda volta um quadro. O botão Próximo passo também avança um quadro, e Repetir reinicia a sequência. Os passos ficam parados até o próximo comando, inclusive quando o avanço parte do modo do apresentador. Após o último quadro, a próxima seta direita abre o slide seguinte.</p>
+    <p>Seta direita avança um quadro e seta esquerda retorna um quadro. Repetir reinicia a sequência. O modo do apresentador envia os passos à tela da banca. Depois do último quadro, a próxima seta direita abre o slide seguinte.</p>
   </details>
   <details class="notes-support"><summary>Execução reduzida e fontes</summary>
-    <p>Recorte executado em 19/10/2026 com OR-Tools 9.10.4067, uma rota e quatro visitas obrigatórias. Estratégias PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. Os tempos vêm de timeMatrix, sem arredondamento. A animação não representa o registro completo de cinco dias, mostrado no slide 20.</p>
-    <ul><li><a href="search-demo.js">Matriz, encaixes, soluções registradas e proveniência do exemplo</a></li><li><a href="data/busca-animada.json">Registro da execução completa do próximo slide</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Configuração das estratégias no aplicativo</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: inserção mais barata e busca local guiada</a></li></ul>
+    <p>Recorte executado em 19/10/2026 com OR-Tools 9.10.4067, uma rota e quatro visitas obrigatórias. Estratégias PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. Tempos da timeMatrix, sem arredondamento. As comparações intermediárias são calculadas sobre a mesma matriz para tornar cada inserção visível; o registro completo de cinco dias está no slide 20.</p>
+    <ul><li><a href="search-demo.js">Matriz, encaixes, soluções registradas e proveniência</a></li><li><a href="data/busca-animada.json">Registro da execução completa</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Configuração das estratégias no aplicativo</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: inserção mais barata e busca local guiada</a></li></ul>
   </details>
 </template>
 </section>
@@ -816,7 +827,7 @@
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>Esta é a resposta registrada para os cinco dias de Nova Iorque. As doze atrações foram incluídas e o deslocamento total foi de sessenta e dois vírgula quatro quilômetros.</p>
   <p>Cada coluna reúne o mapa e a agenda de um dia. A numeração recomeça em cada coluna e liga os pontos à ordem das visitas na lista. O quadrado marca a hospedagem. Os mapas usam a mesma escala, e as linhas ligam as paradas na sequência da agenda.</p>
-  <p>No segundo dia, a Catedral de São Patrício vem antes do Metropolitan e do Central Park, com almoço entre o museu e o parque. O terceiro dia tem o maior deslocamento e inclui a Estátua da Liberdade.</p>
+  <p>No segundo dia, a Saint Patrick vem antes do The MET e do Central Park, com almoço entre o museu e o parque. O terceiro dia tem o maior deslocamento e inclui a Statue of Liberty.</p>
   <p>Os rodapés mostram os horários de saída e retorno ao hotel. No primeiro dia, a saída aparece às nove, embora a chegada informada fosse às quatorze. Esse resultado revela uma falha na preparação da disponibilidade da base: incluir todas as atrações ainda pode produzir uma agenda incompatível com a chegada.</p>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
@@ -1044,9 +1055,9 @@
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=41"></script>
+<script src="data.js?v=55"></script>
 <script src="motion.js?v=54"></script>
-<script src="search-demo.js?v=53"></script>
-<script src="scenes.js?v=54"></script>
+<script src="search-demo.js?v=55"></script>
+<script src="scenes.js?v=55"></script>
 </body>
 </html>
