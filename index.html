@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=51" />
+  <link rel="stylesheet" href="motion.css?v=52" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -51,14 +51,13 @@
 <section class="slide" id="slide-2" data-title="Problema de geração de roteiros" data-scene="problem">
 <h2 class="title" data-a="up">Do planejamento à agenda no celular</h2>
 <div class="problem problem-scope">
- <div><p class="lead" data-a="up">Escolher o que visitar exige conciliar <b>interesses, horários e deslocamentos</b> no tempo disponível.</p>
- <dl class="io">
+ <div><dl class="io">
   <div data-a="left"><i><svg data-i="map-pin"></svg></i><span><dt>Preparar a viagem</dt><dd>Destino, datas, hospedagem, ritmo e transporte.</dd></span></div>
   <div data-a="left"><i><svg data-i="workflow"></svg></i><span><dt>Escolher as visitas</dt><dd>Descobrir atrações e indicar a ordem de preferência.</dd></span></div>
   <div data-a="left"><i><svg data-i="calendar-check"></svg></i><span><dt>Gerar e usar o roteiro</dt><dd>Consultar a agenda e o mapa, editar e salvar a viagem.</dd></span></div>
  </dl></div>
- <div class="problem-panel" data-a="scale"><div class="panel-tag"><b id="problemTag">Entrada</b><span id="problemCaption">12 atrações e a hospedagem, nas coordenadas reais</span></div><svg id="problemMap" viewBox="0 0 640 640" aria-label="Atrações e hospedagem de Nova Iorque, organizadas em cinco dias"></svg><div class="legend-days" id="problemLegend"></div></div>
-</div><span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
+ <div class="problem-panel" data-a="scale"><svg id="problemMap" viewBox="0 0 640 640" aria-label="Atrações e hospedagem de Nova Iorque, organizadas em cinco dias"></svg></div>
+</div><span class="signal" data-build="1"></span>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>O problema começa na escolha dos lugares. Precisamos saber o que combina com nossos interesses e quanto tempo existe para visitar, incluindo os deslocamentos.</p>
@@ -76,8 +75,7 @@
 </section>
 
 <section class="slide theory-slide" id="slide-3" data-title="Fundamentos de roteamento" data-scene="theory">
-<h2 class="title" data-a="up">Do menor percurso à seleção de visitas</h2><p class="lead" data-a="up">Os lugares formam os nós do grafo, os deslocamentos ligam esses nós. Cada modelo acrescenta uma decisão à agenda.</p><div class="theory"><article class="" data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210" aria-label="Diagrama do modelo TSP"></svg><h3>TSP</h3><small>Traveling Salesman Problem</small><p>Visitar <b>todos os lugares</b> em uma única rota, com o menor custo.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRP"></svg><h3>VRP</h3><small>Vehicle Routing Problem</small><p>Distribuir as visitas entre <b>várias rotas</b>, no app, cada rota é um dia.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRPTW"></svg><h3>VRPTW</h3><small>Vehicle Routing Problem with Time Windows</small><p>Respeitar <b>horários</b>, somando visitas, deslocamentos e esperas.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo TOPTW"></svg><h3>TOPTW</h3><small>Team Orienteering Problem with Time Windows</small><p>Selecionar as visitas de <b>maior valor</b> que cabem nos dias e horários.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="interlude-model" data-build="5"><svg class="mini" data-mini="interlude" viewBox="0 0 320 210" aria-label="Interlude com prioridades numeradas e paradas de almoço indicadas pela letra A"></svg><h3>Interlude</h3><small>Modelo implementado</small><div class="mini-model-key"><span>Números: prioridade</span><span>A: almoço</span></div><p>Minimizar <b>deslocamentos, exclusões e desvios de preferência</b>, com pausas para almoço.</p></article></div><p class="theory-key" data-a="up">Linhas: rotas. Arcos âmbar: horários permitidos. Pontos tracejados: visitas excluídas.</p>
-<template class="speaker-notes">
+<h2 class="title" data-a="up">Do menor percurso à seleção de visitas</h2><div class="theory"><article class="" data-build="1"><svg class="mini" data-mini="tsp" viewBox="0 0 320 210" aria-label="Diagrama do modelo TSP"></svg><h3>TSP</h3><small>Traveling Salesman Problem</small><p>Visitar <b>todos os lugares</b> em uma única rota, com o menor custo.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="2"><svg class="mini" data-mini="vrp" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRP"></svg><h3>VRP</h3><small>Vehicle Routing Problem</small><p>Distribuir as visitas entre <b>várias rotas</b>, no app, cada rota é um dia.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="3"><svg class="mini" data-mini="vrptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo VRPTW"></svg><h3>VRPTW</h3><small>Vehicle Routing Problem with Time Windows</small><p>Respeitar <b>horários</b>, somando visitas, deslocamentos e esperas.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="" data-build="4"><svg class="mini" data-mini="toptw" viewBox="0 0 320 210" aria-label="Diagrama do modelo TOPTW"></svg><h3>TOPTW</h3><small>Team Orienteering Problem with Time Windows</small><p>Selecionar as visitas de <b>maior valor</b> que cabem nos dias e horários.</p><svg class="theory-arrow" data-i="chevron-right"></svg></article><article class="interlude-model" data-build="5"><svg class="mini" data-mini="interlude" viewBox="0 0 320 210" aria-label="Interlude com prioridades numeradas e paradas de almoço indicadas pela letra A"></svg><h3>Interlude</h3><small>Modelo implementado</small><p>Minimizar <b>deslocamentos, exclusões e desvios de preferência</b>, com pausas para almoço.</p></article></div><template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>Os diagramas mostram as decisões que acrescentamos ao problema de roteamento. Os pontos são lugares e as linhas representam as rotas.</p>
   <p>O TSP procura uma única rota de menor custo que visite todos os lugares e volte ao início. O VRP distribui as visitas entre várias rotas. No aplicativo, cada rota corresponde a um dia, com saída e retorno à hospedagem.</p>
@@ -140,12 +138,12 @@
 </section>
 
 <section class="slide" id="slide-5" data-title="Dados de uma viagem salva" data-scene="er">
-<h2 class="title" data-a="up">Estrutura dos dados de uma viagem salva</h2><div class="er uml-data" id="er"><svg class="links" id="erLinks" viewBox="0 0 1432 618" aria-label="Diagrama de classes UML com composição, associação e multiplicidades"></svg><div class="ent " id="en-user" style="left:0px;top:110px"><header><b>UserProfile</b><small>users/{uid}</small></header><ul><li>uid: string</li><li>displayName?: string</li><li>interests?: Record</li></ul></div><div class="ent root" id="en-trip" style="left:300px;top:110px"><header><b>TripDraft</b><small>trips/{id}</small></header><ul><li>id: string</li><li>ownerId?: string</li><li>createdAt: string</li><li>updatedAt: string</li></ul></div><div class="ent " id="en-leg" style="left:600px;top:0px"><header><b>TripLeg</b><small>legs[]</small></header><ul><li>destination: PlaceDetails</li><li>startDate?, endDate?</li><li>lodgings: LodgingStay[]</li><li>selectedCandidateIds</li></ul></div><div class="ent " id="en-sol" style="left:600px;top:240px"><header><b>ItinerarySolution</b><small>itinerary?</small></header><ul><li>totalDistanceMeters</li><li>totalTimeSeconds</li><li>solverTrace?</li></ul></div><div class="ent " id="en-live" style="left:600px;top:470px"><header><b>LiveProgress</b><small>liveProgress?</small></header><ul><li>completedStopIds</li><li>skippedStopIds</li></ul></div><div class="ent " id="en-day" style="left:900px;top:240px"><header><b>DayPlan</b><small>days[]</small></header><ul><li>dayIndex: number</li><li>legId?, date?</li><li>distanceMeters</li><li>totalTimeSeconds</li></ul></div><div class="ent " id="en-step" style="left:1200px;top:110px"><header><b>RouteStep</b><small>steps[]</small></header><ul><li>stopId, order</li><li>arrivalSeconds</li><li>departureSeconds</li><li>isDepot: boolean</li></ul></div><div class="ent " id="en-rleg" style="left:1200px;top:390px"><header><b>RouteLeg</b><small>legs[]</small></header><ul><li>fromStopId, toStopId</li><li>distanceMeters</li><li>durationSeconds</li></ul></div></div><div class="uml-legend"><span><svg viewBox="0 0 64 20"><path d="M3,10 L12,4 L21,10 L12,16 Z" fill="currentColor"/><path d="M21,10 H62" stroke="currentColor"/></svg>Composição: losango no objeto que contém os dados</span><span><svg viewBox="0 0 64 20"><path d="M2,10 H61 M53,3 L61,10 L53,17" fill="none" stroke="currentColor"/></svg>Associação: TripDraft referencia o proprietário</span><span>0..1 opcional &nbsp; 0..* vários</span></div>
-<template class="speaker-notes">
+<h2 class="title" data-a="up">Estrutura dos dados de uma viagem salva</h2><div class="er uml-data" id="er"><svg class="links" id="erLinks" viewBox="0 0 1432 618" aria-label="Diagrama de classes UML com composição, associação e multiplicidades"></svg><div class="ent " id="en-user" style="left:0px;top:110px"><header><b>UserProfile</b><small>users/{uid}</small></header><ul><li>uid: string</li><li>displayName?: string</li><li>interests?: Record&lt;string, boolean&gt;</li></ul></div><div class="ent root" id="en-trip" style="left:300px;top:110px"><header><b>TripDraft</b><small>trips/{id}</small></header><ul><li>id: string</li><li>ownerId?: string</li><li>createdAt: string</li><li>updatedAt: string</li></ul></div><div class="ent " id="en-leg" style="left:600px;top:0px"><header><b>TripLeg</b><small>legs[]</small></header><ul><li>destination: PlaceDetails</li><li>startDate?: string</li><li>endDate?: string</li><li>lodgings: LodgingStay[]</li><li>selectedCandidateIds: string[]</li></ul></div><div class="ent " id="en-sol" style="left:600px;top:240px"><header><b>ItinerarySolution</b><small>itinerary?</small></header><ul><li>totalDistanceMeters: number</li><li>totalTimeSeconds: number</li><li>solverTrace?: SolverTrace</li></ul></div><div class="ent " id="en-live" style="left:600px;top:470px"><header><b>LiveProgress</b><small>liveProgress?</small></header><ul><li>completedStopIds: string[]</li><li>skippedStopIds: string[]</li></ul></div><div class="ent " id="en-day" style="left:900px;top:240px"><header><b>DayPlan</b><small>days[]</small></header><ul><li>dayIndex: number</li><li>legId?: string</li><li>date?: string</li><li>distanceMeters: number</li><li>totalTimeSeconds: number</li></ul></div><div class="ent " id="en-step" style="left:1200px;top:110px"><header><b>RouteStep</b><small>steps[]</small></header><ul><li>stopId: string</li><li>order: number</li><li>arrivalSeconds: number</li><li>departureSeconds: number</li><li>isDepot: boolean</li></ul></div><div class="ent " id="en-rleg" style="left:1200px;top:390px"><header><b>RouteLeg</b><small>legs[]</small></header><ul><li>fromStopId: string</li><li>toStopId: string</li><li>distanceMeters: number</li><li>durationSeconds: number</li></ul></div></div><template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>O centro do diagrama é TripDraft, o registro da viagem salvo no Firestore. Ele contém os trechos por destino, o roteiro gerado e o progresso das visitas.</p>
   <p>Seguindo o roteiro, ItinerarySolution contém os dias em DayPlan. Cada dia reúne as paradas em RouteStep, com ordem e horários de chegada e saída, e os deslocamentos em RouteLeg, com distância e duração. É esse encadeamento que permite recuperar a agenda de uma viagem salva.</p>
-  <p>Os losangos preenchidos ficam junto do objeto que contém os dados. Zero a um indica um campo opcional e zero a muitos indica uma lista. A ligação entre a viagem e UserProfile usa ownerId para referenciar o proprietário, cujo perfil fica em um documento separado.</p>
+  <p>O losango preenchido representa composição: o lado do losango é o todo, e o outro lado é uma parte contida nele. Por exemplo, o losango junto de ItinerarySolution indica que os dias pertencem àquela solução; o losango junto de DayPlan indica que suas paradas e deslocamentos fazem parte daquele dia. Aqui são objetos aninhados salvos dentro do documento da viagem, e não documentos independentes unidos por uma chave.</p>
+  <p>As multiplicidades dizem quantas partes podem existir: zero a um é um objeto opcional; zero a muitos é uma lista que pode estar vazia. A linha simples até UserProfile é diferente: ownerId referencia um perfil que existe em outro documento. O perfil pertence à pessoa e pode ser usado em várias viagens. O losango descreve a estrutura dos dados; ele não representa uma regra automática de exclusão em cascata do Firestore.</p>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
     <p>O diagrama representa tipos persistidos em documentos do Firestore. TripLeg representa um trecho da viagem associado a um destino; RouteLeg representa um deslocamento entre duas paradas. itinerary e liveProgress são opcionais, e as listas podem estar vazias. A associação com UserProfile referencia o proprietário pelo campo ownerId.</p>
@@ -164,7 +162,7 @@
 <div class="app-flow api-flow">
 <div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="1072" width="1090" height="238" rx="30"/><path d="M1300,1191.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="62" y="1892" width="1085" height="205" rx="30"/><path d="M1300,1994.5 H1163 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
 <aside class="api-panel">
-<div class="api-call" data-contract-call="1"><h3><span class="call-number">01</span> GET /v1/places/autocomplete</h3><p class="call-purpose">Ao digitar a cidade, o app obtém as opções para seleção.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>query=Nova York</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+<div class="api-call" data-contract-call="1"><h3><span class="call-number">01</span> GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>query=Nova York</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;suggestions&quot;: [
     {
       &quot;placeId&quot;: &quot;NYC&quot;,
@@ -173,8 +171,6 @@
     }
   ]
 }</code></pre></div></div></div>
-<p class="contract-result">A seleção guarda o <code>placeId</code>. Esse ID identifica o destino na chamada seguinte.</p>
-<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
 </aside></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -194,7 +190,7 @@
 <div class="app-flow api-flow">
 <div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="58" y="746" width="1090" height="225" rx="30"/><path d="M1300,858.5 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>04</span> Escolher o período</h3><div class="flow-phone"><img src="assets/app/dates-selected.png" alt="Calendário com 14 a 18 de setembro selecionados"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="196" y="1210" width="824" height="140" rx="30"/><path d="M1300,1280.0 H1036 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
 <aside class="api-panel">
-<div class="api-call" data-contract-call="2"><h3><span class="call-number">02</span> GET /v1/places/NYC</h3><p class="call-purpose">Após o toque na sugestão, o app consulta o destino pelo ID.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>purpose=location</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
+<div class="api-call" data-contract-call="2"><h3><span class="call-number">02</span> GET /v1/places/NYC</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>purpose=location</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;place&quot;: {
     &quot;placeId&quot;: &quot;NYC&quot;,
     &quot;name&quot;: &quot;Nova Iorque&quot;,
@@ -204,11 +200,10 @@
     }
   }
 }</code></pre></div></div></div>
-<div class="local-fields"><h3>As datas ficam no rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
+<div class="local-fields"><h3>Rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
   &quot;startDate&quot;: &quot;2026-09-14&quot;,
   &quot;endDate&quot;: &quot;2026-09-18&quot;
 }</code></pre></div>
-<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
 </aside></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -229,7 +224,7 @@
 <div class="app-flow api-flow one-screen">
 <div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="140" y="1100" width="1005" height="228" rx="30"/><path d="M1300,1214.0 H1161 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
 <aside class="api-panel">
-<div class="api-call" data-contract-call="3"><h3><span class="call-number">03</span> POST /v1/places/text-search</h3><p class="call-purpose">A pesquisa pelo nome usa a região do destino como referência.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+<div class="api-call" data-contract-call="3"><h3><span class="call-number">03</span> POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;query&quot;: &quot;Wyndham New Yorker Nova Iorque&quot;,
   &quot;location&quot;: {
     &quot;latitude&quot;: 40.7128,
@@ -249,8 +244,6 @@
     }
   ]
 }</code></pre></div></div></div>
-<p class="contract-result">Ao escolher o hotel, o app guarda suas coordenadas. Elas serão a base da descoberta e das rotas.</p>
-<p class="api-footnote">Exemplos dos contratos. NYC e HOTEL abreviam os IDs. Campos secundários e demais itens omitidos.</p>
 </aside></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -271,7 +264,7 @@
 <div class="app-flow api-flow">
 <div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="112" y="1435" width="995" height="235" rx="30"/><path d="M1260,1552.5 H1123 m38,-28 l-38,28 l38,28"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 1206 2622" aria-hidden="true"><rect x="48" y="690" width="1100" height="220" rx="30"/><path d="M1300,800.0 H1164 m38,-28 l-38,28 l38,28"/></svg></div></article></div>
 <aside class="api-panel">
-<div class="api-call" data-contract-call="4"><h3><span class="call-number">04</span> POST /v1/travel-mode/recommend</h3><p class="call-purpose">A cidade orienta a sugestão de transporte apresentada ao viajante.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+<div class="api-call" data-contract-call="4"><h3><span class="call-number">04</span> POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;city&quot;: &quot;Nova Iorque&quot;
 }</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;recommendation&quot;: {
@@ -279,7 +272,7 @@
     &quot;reason&quot;: &quot;O metrô cobre bem as áreas turísticas e evita o trânsito e o custo de estacionar em Nova Iorque.&quot;
   }
 }</code></pre></div></div></div>
-<div class="local-fields"><h3>Rascunho local, recorte de dois interesses</h3><pre class="syntax-block" data-language="json"><code>{
+<div class="local-fields"><h3>Rascunho local</h3><pre class="syntax-block" data-language="json"><code>{
   &quot;pace&quot;: &quot;moderate&quot;,
   &quot;travelMode&quot;: &quot;transit&quot;,
   &quot;interestLevels&quot;: {
@@ -287,11 +280,10 @@
     &quot;nature&quot;: 1
   }
 }</code></pre></div>
-<p class="contract-result">Os interesses definem as categorias da próxima busca. O transporte define os tempos de deslocamento.</p>
 </aside></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>Agora o viajante define o ritmo, o transporte e os interesses. A chamada à esquerda pede uma recomendação de transporte para Nova Iorque. A resposta sugere transporte público e explica o motivo mostrado na tela.</p>
+  <p>Agora o viajante define o ritmo, o transporte e os interesses. A chamada no painel à direita pede uma recomendação de transporte para Nova Iorque. A resposta sugere transporte público e explica o motivo mostrado na tela.</p>
   <p>O viajante confirma o modo que deseja usar. Esse modo orientará o cálculo dos tempos de deslocamento. No rascunho à direita, transit registra essa escolha e moderate registra o ritmo equilibrado.</p>
   <p>Os interesses também ficam no rascunho. Neste recorte, cultura e natureza estão ativadas com valor um. Essas categorias definem os grupos de tipos de lugar enviados à próxima busca.</p>
   <details class="notes-support">
@@ -306,7 +298,7 @@
 <section class="slide contract-slide discover-contract" id="slide-10" data-title="Descoberta, categorias e candidatos" data-stage="2">
 <h2 class="title" data-a="up">A descoberta transforma categorias em candidatos</h2>
 <div class="contract-full">
-<div class="api-call" data-contract-call="5"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><p class="call-purpose">A entrada combina a base da hospedagem com os tipos de lugar desejados.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+<div class="api-call" data-contract-call="5"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;location&quot;: {
     &quot;latitude&quot;: 40.7527316,
     &quot;longitude&quot;: -73.9936287
@@ -338,8 +330,7 @@
     }
   ]
 }</code></pre></div></div></div>
-<div class="contract-takeaway"><p><b>Request:</b> cada grupo informa sua categoria e os tipos buscados.</p><p><b>Response:</b> a API acrescenta <code>places</code> com os lugares encontrados para esse grupo.</p></div>
-<p class="api-footnote">Recorte de uma categoria, um tipo e uma atração. Demais tipos, grupos e campos omitidos.</p>
+
 </div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -358,9 +349,9 @@
 <section class="slide contract-slide enrich-contract" id="slide-11" data-title="Enriquecimento, duração e descrição" data-stage="2">
 <h2 class="title" data-a="up">O enriquecimento acrescenta duração e descrição</h2>
 <div class="enrich-layout">
-<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png" alt="Central Park no aplicativo com nota 4,8, 301.915 avaliações, duração de duas horas e descrição" /></div><p><b>Nota e avaliações:</b> descoberta<br><b>Duração e descrição:</b> enriquecimento</p></div>
+<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png" alt="Central Park no aplicativo com nota 4,8, 301.915 avaliações, duração de duas horas e descrição" /></div></div>
 <div class="api-panel">
-<div class="api-call" data-contract-call="6"><h3><span class="call-number">06</span> POST /v1/places/enrich</h3><p class="call-purpose">O app envia os candidatos descobertos. A resposta preserva o lugar e acrescenta insight.</p><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
+<div class="api-call" data-contract-call="6"><h3><span class="call-number">06</span> POST /v1/places/enrich</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;places&quot;: [
     {
       &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
@@ -390,8 +381,6 @@
     }
   ]
 }</code></pre></div></div></div>
-<p class="contract-result"><code>averageMinutes: 120</code> preenche as <b>2 h</b> da visita. A descrição preenche o texto do card.</p>
-<p class="api-footnote">Fotos carregam em paralelo por <code>POST /v1/places/photos</code>. Campos repetidos de <code>place</code> e demais campos de <code>insight</code> omitidos. A descrição foi recortada na primeira frase.</p>
 </div></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -401,7 +390,7 @@
   <p>Vamos agora detalhar a ordenação dos candidatos. No fluxo do aplicativo, esse cálculo usa os dados da descoberta antes de alimentar a fila de enriquecimento.</p>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
-    <p>O contrato foi reduzido a um candidato; place omite campos repetidos e a descrição mantém a primeira frase da captura. averageMinutes é uma estimativa para planejar a visita. No aplicativo, os próximos candidatos da fila são enriquecidos em lotes, e as fotos usam o endpoint separado indicado no slide.</p>
+    <p>O contrato foi reduzido a um candidato; place omite campos repetidos e a descrição mantém a primeira frase da captura. averageMinutes é uma estimativa para planejar a visita. No aplicativo, os próximos candidatos da fila são enriquecidos em lotes, e as fotos usam o endpoint próprio POST /v1/places/photos.</p>
     <h4>Fontes</h4>
     <ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Ordenação e enrich com includePhotos false em lotes</a></li><li><a href="references/aplicativo/backend/src/application/enrich-places.ts">Resposta com place, insight e foto opcional</a></li><li><a href="references/aplicativo/mobile/src/features/places/usePlacePhotos.ts">Fotos carregadas em paralelo e cacheadas no cliente</a></li><li><a href="references/aplicativo/backend/src/infrastructure/google/gemini-adapter.ts">Estimativas e descrições produzidas pelo modelo</a></li></ul>
   </details>
@@ -410,7 +399,6 @@
 
 <section class="slide" id="slide-12" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
   <h2 class="title" data-a="up">Etapa 2 — Ordenação dos candidatos</h2>
-  <p class="lead" data-a="up" style="--d:100ms">O escore combina a nota ajustada pelo volume de avaliações, a popularidade relativa e um desconto por distância.</p>
   <div class="formula" style="margin-top:22px">
     <span class="t" data-build="1"><span>S</span><sub>i</sub></span><span class="op" data-build="1">=</span>
     <span class="t c1" data-build="1">B<sub>i</sub></span>
@@ -418,9 +406,9 @@
     <span class="op" data-build="3">−</span><span class="t c3" data-build="3"><span style="font-style:normal">0,15</span> G<sub>i</sub></span>
   </div>
   <div class="terms">
-    <div class="term c1" data-build="1"><h3><span class="math">B<sub>i</sub></span>, média bayesiana</h3><div class="eq">B<sub>i</sub> = <span class="up">(</span>n<sub>i</sub> r<sub>i</sub> + <span class="up">500 × 4,0)</span> / <span class="up">(</span>n<sub>i</sub> + <span class="up">500)</span></div><p>Aproxima notas com poucas avaliações da referência 4,0. Com muitas avaliações, preserva a nota observada.</p></div>
-    <div class="term c2" data-build="2"><h3><span class="math">I<sub>i</sub></span>, popularidade relativa</h3><div class="eq">u<sub>i</sub> = <span class="up">log<sub>10</sub>(1 +</span> n<sub>i</sub><span class="up">)</span><br>I<sub>i</sub> = <span class="up">(</span>u<sub>i</sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span> / <span class="up">(</span>u<sub><span class="up">máx</span></sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span></div><p>Usa o volume de avaliações como indicador de popularidade, em uma escala de 0 a 1 entre os candidatos.</p></div>
-    <div class="term c3" data-build="3"><h3><span class="math">G<sub>i</sub></span>, decaimento por distância</h3><div class="eq">G<sub>i</sub> = <span class="up">log<sub>2</sub>(máx(1,</span> d<sub>i</sub> / R<span class="up">))</span></div><p>Até o raio R, não há desconto no escore. Fora dele, cada duplicação da distância reduz o escore em 0,15.</p></div>
+    <div class="term c1" data-build="1"><h3><span class="math">B<sub>i</sub></span>, média bayesiana</h3><div class="eq">B<sub>i</sub> = <span class="up">(</span>n<sub>i</sub> r<sub>i</sub> + <span class="up">500 × 4,0)</span> / <span class="up">(</span>n<sub>i</sub> + <span class="up">500)</span></div></div>
+    <div class="term c2" data-build="2"><h3><span class="math">I<sub>i</sub></span>, popularidade relativa</h3><div class="eq">u<sub>i</sub> = <span class="up">log<sub>10</sub>(1 +</span> n<sub>i</sub><span class="up">)</span><br>I<sub>i</sub> = <span class="up">(</span>u<sub>i</sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span> / <span class="up">(</span>u<sub><span class="up">máx</span></sub> − u<sub><span class="up">mín</span></sub><span class="up">)</span></div></div>
+    <div class="term c3" data-build="3"><h3><span class="math">G<sub>i</sub></span>, decaimento por distância</h3><div class="eq">G<sub>i</sub> = <span class="up">log<sub>2</sub>(máx(1,</span> d<sub>i</sub> / R<span class="up">))</span></div></div>
   </div>
   <div class="bayes-demo" id="bayesDemo" data-build="4">
     <h4>Exemplo: média bayesiana</h4>
@@ -434,7 +422,7 @@
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>O escore no alto combina três termos. Primeiro, a média bayesiana ajusta a nota pelo número de avaliações. Os quinhentos funcionam como peso da nota de referência quatro, reduzindo a influência de uma nota sustentada por poucas avaliações.</p>
-  <p>Na animação à direita, o lugar hipotético começa com nota cinco e uma avaliação. Após o ajuste, fica em aproximadamente quatro vírgula zero zero dois. O Central Park, com mais de trezentas mil avaliações, permanece perto de quatro vírgula oito.</p>
+  <p>Na animação da média bayesiana, o lugar hipotético começa com nota cinco e uma avaliação. Após o ajuste, fica em aproximadamente quatro vírgula zero zero dois. O Central Park, com mais de trezentas mil avaliações, permanece perto de quatro vírgula oito.</p>
   <p>O segundo termo acrescenta popularidade relativa: aplica um logaritmo ao volume de avaliações e o normaliza entre os candidatos. O terceiro desconta a distância. Até o raio de busca, o desconto é zero; fora dele, cada duplicação reduz o escore em zero vírgula quinze. Os pesos adotados foram ajustados de forma exploratória.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
@@ -460,7 +448,6 @@
 
 <section class="slide" id="slide-13" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
   <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
-  <p class="lead" data-a="up" style="--d:100ms">As mesmas doze atrações em três ordenações. Em destaque, quem mudou de posição.</p>
   <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. Metropolitan, Memorial do 11 de Setembro e Ponte do Brooklyn sobem três posições do produto simples ao escore completo, Empire State, Estátua da Liberdade e Parque Bryant descem três."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
@@ -490,7 +477,6 @@
   <div class="step" style="grid-template-columns:560px 1fr">
     <div><div class="pair"><div class="phone" data-a="phone" style="--d:150ms"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /></div><div class="phone" data-a="phone" style="--d:300ms"><img src="assets/app/poi-priority-2.png" alt="Continuação da lista de priorização mostrando as atrações de número 8 a 12" /></div></div></div>
     <div class="step-body">
-      <h3 class="selection-title">Escolher as atrações e ordenar as prioridades</h3><p class="api-footnote">A ordenação atualiza o rascunho local antes do envio para geração.</p>
       <div class="prio" data-a="up" style="--d:400ms">
         <div class="prio-head"><span>Ordem definida pelo usuário</span><span>fator de posição <span class="math">1 + 4ρ<sub>i</sub></span></span></div>
         <ol id="prioList"></ol>
@@ -521,7 +507,6 @@
 
 <section class="slide" id="slide-15" data-title="Etapa 3 — Penalidade de exclusão" data-stage="3" data-scene="penalty">
   <h2 class="title" data-a="up">Etapa 3 — Penalidade de exclusão</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Excluir uma atração acrescenta uma penalidade ao objetivo. O valor combina a prioridade do viajante, a popularidade e a época da viagem.</p>
   <div class="formula penalty-formula">
     <span class="t" data-build="1">π<sub>i</sub></span><span class="op" data-build="1">=</span>
     <span class="t c1" data-build="1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
@@ -532,10 +517,10 @@
   <div class="pen-wrap">
     <div class="pen-chart" data-a="fade" style="--d:300ms"><svg id="penChart" viewBox="0 0 900 430" role="img" aria-label="Penalidade de exclusão de cada uma das doze atrações, calculada com a fórmula e os dados da execução"></svg></div>
     <div class="pen-steps">
-      <div class="pen-step c1" data-build="1"><h4>Base <code>5.000.000</code></h4><p>Valor alto para favorecer a inclusão. Atrações continuam opcionais, sujeitas às janelas e ao custo total.</p></div>
-      <div class="pen-step c2" data-build="2"><h4>Posição do usuário <code>ρ = (N − ordem)/N</code></h4><p>O fator vai de 5 no primeiro a 1 + 4/N no último.</p></div>
-      <div class="pen-step c3" data-build="3"><h4>Iconicidade <code>ι = mín(1, log₁₀(1+n)/5)</code></h4><p>Fator entre 1 e 1,5. Pode inverter custos entre posições próximas, não é apenas desempate.</p></div>
-      <div class="pen-step c4" data-build="4"><h4>Sazonalidade <code>σ ∈ {0,6 ou 1}</code></h4><p>Com σ = 0,6 o fator é 0,8: redução de 20%. Nesta execução, σ = 1 para todas.</p></div>
+      <div class="pen-step c1" data-build="1"><h4>Base <code>5.000.000</code></h4></div>
+      <div class="pen-step c2" data-build="2"><h4>Posição do usuário <code>ρ = (N − ordem)/N</code></h4></div>
+      <div class="pen-step c3" data-build="3"><h4>Iconicidade <code>ι = mín(1, log₁₀(1+n)/5)</code></h4></div>
+      <div class="pen-step c4" data-build="4"><h4>Sazonalidade <code>σ ∈ {0,6 ou 1}</code></h4></div>
     </div>
   </div>
   <template class="speaker-notes">
@@ -571,16 +556,15 @@
 
 
 <section class="slide" id="slide-16" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
-<h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><p class="lead" data-a="up">Horários de funcionamento e durações definem quando visitar, a matriz informa o tempo para chegar ao próximo lugar.</p>
-<div class="instance-examples">
- <figure data-a="up"><figcaption><b>Até que horas a visita pode começar?</b><span>Metropolitan, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="Metropolitan: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg><p class="instance-reading">Último início às <b>13h45</b> para terminar até <b>17h</b>.</p></figure>
- <figure data-a="up"><figcaption><b>Quanto tempo leva entre dois lugares?</b><span>Transporte público, minutos, recorte da matriz</span></figcaption><div id="instanceMatrix"></div><p class="instance-reading" id="matrixExample"></p></figure>
+<h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><div class="instance-examples">
+ <figure data-a="up"><figcaption><b>Janela de início da visita</b><span>Metropolitan, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="Metropolitan: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg></figure>
+ <figure data-a="up"><figcaption><b>Matriz de deslocamentos</b><span>Google Routes API, travelMode: TRANSIT, minutos</span></figcaption><div id="instanceMatrix"></div></figure>
 </div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>O backend transforma os dados dos lugares em uma entrada numérica para o solver. O slide mostra uma janela de visita e um recorte da matriz de deslocamentos.</p>
   <p>À esquerda, o Metropolitan funciona das dez às dezessete horas no dia quinze de setembro, e a visita estimada dura três horas e quinze minutos. A faixa verde permite iniciar até treze e quarenta e cinco. A faixa inferior mostra o último encaixe: começar nesse horário permite terminar às dezessete.</p>
-  <p>Na matriz, a linha é a origem e a coluna é o destino. Do hotel ao Metropolitan são cerca de trinta e dois minutos; na volta, vinte e oito. Cada sentido precisa ser considerado separadamente.</p>
+  <p>A matriz vem da Google Routes API, pelo método computeRouteMatrix. O aplicativo usa o valor transit, convertido pelo backend em travelMode TRANSIT para consultar o transporte público. Na tabela, a linha é a origem e a coluna é o destino. Do hotel ao Metropolitan são cerca de trinta e dois minutos; na volta, vinte e oito. Cada sentido precisa ser considerado separadamente.</p>
   <p>O solver usará a matriz, as durações e as janelas para verificar se uma visita pode suceder a outra.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
@@ -596,6 +580,7 @@
     <ul>
 <li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem do payload</a></li>
 <li><a href="references/aplicativo/backend/src/infrastructure/google/routes-adapter.ts">Matriz, deduplicação e cache</a></li>
+<li><a href="https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRouteMatrix">Google Routes API: computeRouteMatrix e travelMode</a></li>
 <li><a href="data/solver-request.json">Payload completo desta execução</a></li>
 <li><a href="diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
 </ul>
@@ -606,26 +591,25 @@
 <section class="slide formulation-explained" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
 <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
 <div class="formulation-choice" data-build="1">
-  <div class="math"><span class="formulation-min"><span>min</span><small>x, y, z, T</small></span> C</div>
-  <p>Menor custo total entre agendas viáveis</p>
-</div>
-<div class="formulation-decisions" data-build="1">
-  <span><i>x</i> trechos usados</span><span><i>y</i> atrações excluídas</span><span><i>z</i> visitas por dia</span><span><i>T</i> horários</span>
+  <div class="math"><span class="formulation-min">min</span> <i>C</i></div>
+  <div class="formulation-decisions">
+    <span><i>x</i> trechos usados</span><span><i>y</i> atrações excluídas</span><span><i>z</i> visitas por dia</span>
+  </div>
 </div>
 <div class="formulation-objective" data-build="1">
   <span class="formulation-cost math">C =</span>
   <div class="objective-part">
-    <div class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></div>
+    <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></span></div>
     <h3>Deslocamentos</h3>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
-    <div class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></div>
+    <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></span></div>
     <h3>Exclusões</h3>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
-    <div class="math">Φ</div>
+    <div class="math"><span class="objective-expression">Φ</span></div>
     <h3>Preferências</h3>
   </div>
 </div>
@@ -654,7 +638,7 @@
     </div>
   </div>
   <div class="formulation-phi" data-build="3">
-    <h3>Custos de Φ <small>pesos em unidades de custo</small></h3>
+    <h3>Custos de Φ <small>unidades de custo</small></h3>
     <table class="phi-costs"><tbody>
       <tr><th>Duração</th><td><b>1/s</b> (+ <b>40/s</b> após 9 h)</td></tr>
       <tr><th>Início vs. referência</th><td><b>2/s</b> antes, <b>30/s</b> depois</td></tr>
@@ -667,14 +651,14 @@
 </div>
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-<p>A expressão no alto pede ao solver que escolha os trechos x, as exclusões y, as visitas por dia z e os horários T. Essas decisões definem uma agenda e seu custo total C. Minimizar significa buscar decisões viáveis que produzam o menor custo total. Cada agenda candidata tem seu próprio valor de C.</p>
-<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi), calculado no slide anterior, quando y vale um. Essa exclusão vale para a viagem inteira e é cobrada uma única vez por atração. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
+<p>No alto, min C pede a agenda viável com o menor custo total. A linha seguinte define esse custo. Para apresentar as decisões, leio sempre na mesma ordem: x liga os pontos, y exclui uma atração, z marca a visita em um dia. Cada agenda candidata tem suas próprias escolhas e, portanto, seu próprio valor de C. Os horários serão detalhados no próximo slide.</p>
+<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi), já calculado na etapa de penalidade de exclusão, quando y vale um. Essa exclusão vale para a viagem inteira e é cobrada uma única vez por atração. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
 <p>As regras abaixo são o “sujeito a” dessa minimização. A primeira liga z a y: cada atração deve ser visitada uma vez ou excluída. A segunda liga x a z: uma visita ativa precisa de entrada e saída no mesmo dia. A terceira limita a quatro atrações por dia. Uma combinação que descumpra uma dessas regras não é uma solução viável, mesmo que pareça barata.</p>
 <p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários completam as restrições, como veremos no próximo slide.</p>
 <p>Φ (fi) soma os custos que variam conforme a agenda: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros produzidos. Eles expressam as preferências adotadas no projeto; não foram calibrados formalmente com participantes. A meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro é obrigatório.</p>
 <details class="notes-study"><summary>Leitura da minimização, das somas e das regras</summary>
 <h4>O que é C e quais são as variáveis?</h4>
-<p>C é o custo total da agenda, uma função escalar das decisões x, y, z e T. No slide, usamos C e Φ (fi) como abreviações, omitindo a lista de argumentos entre parênteses. A dependência das decisões continua existindo. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min com x, y, z e T abaixo significa minimizar em relação a essas decisões. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
+<p>C é o custo total da agenda, uma função escalar das decisões x, y, z e T. No slide, usamos C e Φ (fi) como abreviações, omitindo a lista de argumentos entre parênteses. A dependência das decisões continua existindo. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min C minimiza o custo em relação a essas decisões; a lista de variáveis foi omitida sob min para simplificar a leitura. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
 <h4>Como min se relaciona com um array?</h4>
 <p>Em programação, min pode receber uma coleção pronta de números. Aqui, a notação descreve um problema de otimização: cada combinação viável de decisões produz um valor de C, e procuramos o menor desses valores. O comparativo é entre custos totais de agendas diferentes. Não se escolhe o menor dos três componentes de uma mesma agenda. Também não se aplica min a um único total já fixado: as decisões ainda podem mudar.</p>
 <p>O OR-Tools gera e modifica soluções durante a busca, mantendo a melhor encontrada dentro do prazo. Ele não precisa montar previamente um array com os custos de todas as agendas. A escrita matemática expressa o objetivo; a busca com prazo não fornece uma prova de que o mínimo global foi alcançado.</p>
@@ -712,21 +696,16 @@
 
 <section class="slide" id="slide-18" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
   <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
-  <p class="lead" data-a="up" style="--d:100ms">A próxima visita começa depois que a anterior termina e o deslocamento é concluído. Exemplo: Catedral de São Patrício → Metropolitan, no dia 2.</p>
-  <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 330" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
+  <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 390" role="img" aria-label="Linha do tempo real: início na Catedral, visita, deslocamento, espera até a abertura da janela do Metropolitan e início do atendimento"></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span><span class="signal" data-build="3"></span><span class="signal" data-build="4"></span><span class="signal" data-build="5"></span><span class="signal" data-build="6"></span>
-  <div class="temporal-cards" data-build="7">
-    <div class="card"><h3>Dias permitidos</h3><p>O fechamento semanal retira aquele dia das opções de visita da atração.</p></div>
-    <div class="card"><h3>Janela preferida</h3><p>Iniciar após a faixa recomendada custa 500 unidades/s na preferência forte e 20 na suave. Antecipação não gera penalidade.</p></div>
-    <div class="card"><h3>Período de planejamento</h3><p>61.200 s por dia nesta execução, com origem às 06:00. A chegada 28.800 s equivale a 14:00.</p></div>
-  </div>
-  <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início em i no dia d, em segundos desde as 06:00</span><span><span class="math">s<sub>i</sub></span>tempo estimado da visita</span><span><span class="math">t<sub>ij</sub></span>deslocamento de i até j no modal escolhido</span></div>
+
+  <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início da visita, desde as 06:00</span><span><span class="math">s<sub>i</sub></span>duração da visita</span><span><span class="math">t<sub>ij</sub></span>tempo de deslocamento</span></div>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>A linha do tempo aplica a regra de que a próxima visita começa depois de terminar a visita anterior e concluir o deslocamento.</p>
   <p>No segundo dia, a Catedral de São Patrício começa às nove e doze, com onze mil quinhentos e quarenta e um segundos desde as seis da manhã. Somamos mil e oitocentos segundos de visita e mil e cinquenta e um de transporte. O resultado é quatorze mil trezentos e noventa e dois segundos.</p>
   <p>O Metropolitan só permite iniciar às dez, equivalentes a quatorze mil e quatrocentos segundos. Por isso aparecem oito segundos de espera. A desigualdade admite essa espera entre a chegada e o início da visita.</p>
-  <p>Os cartões abaixo distinguem os dias permitidos, a preferência de horário e o período de planejamento. Fechamentos retiram opções de visita; a preferência acrescenta custo ao atraso. Todos os horários usam a mesma origem às seis da manhã.</p>
+  <p>Além da sequência temporal ilustrada, o modelo restringe os dias permitidos e considera a preferência de horário. Fechamentos retiram opções de visita; a preferência acrescenta custo ao atraso. Todos os horários usam a mesma origem às seis da manhã.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
     <h4>Regra temporal</h4>
@@ -751,9 +730,8 @@
 </section>
 
 <section class="slide" id="slide-19" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
-<h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2><p class="lead" data-a="up"><b>Parallel Cheapest Insertion</b> constrói a agenda inicial, <b>Guided Local Search (GLS)</b> busca alternativas de menor custo.</p>
-<div class="search-implementation search-simple" data-a="up">
-<figure><figcaption>Python, construção inicial e busca local</figcaption><pre class="search-code syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
+<h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2><div class="search-implementation search-simple" data-a="up">
+<figure><figcaption>Python, construção e busca local</figcaption><pre class="search-code syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
     routing,
     routing_enums_pb2.FirstSolutionStrategy
         .PARALLEL_CHEAPEST_INSERTION,
@@ -767,7 +745,7 @@ params.local_search_metaheuristic = (
         .GUIDED_LOCAL_SEARCH
 )
 return routing.SolveWithParameters(params)</code></pre></figure>
-<figure><figcaption>JSON, resposta registrada, recorte do primeiro dia</figcaption><pre class="search-json syntax-block" data-language="json"><code>{
+<figure><figcaption>JSON, total e dia 1</figcaption><pre class="search-json syntax-block" data-language="json"><code>{
   "total_distance_meters": 62379,
   "days": [
     {
@@ -777,9 +755,8 @@ return routing.SolveWithParameters(params)</code></pre></figure>
     }
   ],
   "unassigned": []
-}</code></pre><p class="json-explanation">Um dos cinco dias, <code>unassigned: []</code> significa nenhuma atração excluída.</p></figure>
-</div><p class="search-execution"><b>Limite desta busca: 5 segundos.</b> Retorna a melhor solução encontrada, sem prova de ótimo.</p>
-<template class="speaker-notes">
+}</code></pre></figure>
+</div><template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>O código mostra duas escolhas da busca. Primeiro, passamos Parallel Cheapest Insertion como estratégia de construção da solução inicial.</p>
   <p>Essa heurística compara onde inserir uma parada nas rotas em formação. Ela avalia o acréscimo de custo dos trechos e os encaixes permitidos pelas restrições. Como cada rota representa um dia, a construção também distribui as visitas pelos dias. Paralelo se refere à construção das rotas.</p>
@@ -812,10 +789,9 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   <div class="search">
     <div class="search-map"><svg id="searchMap" viewBox="0 0 560 640" role="img" aria-label="Mapa com as posições reais das atrações, as rotas por dia mudam a cada melhoria encontrada pelo solver"></svg></div>
     <div class="search-side">
-      <p class="lead" data-a="up" style="--d:100ms;font-size:20px">Cada quadro mostra uma melhoria real da agenda. O gráfico distingue o instante da última melhora do limite configurado da busca.</p>
       <div class="odo" data-a="up" style="--d:200ms"><small>Custo da melhor solução</small><strong id="odoValue">41.494.118</strong><div class="meta"><span>melhoria <b id="odoFrame">1</b> / 41</span><span>registro aos <b id="odoTime">0,0126 s</b></span></div></div>
       <div class="conv" data-a="up" style="--d:300ms"><svg id="convChart" viewBox="0 0 860 260" role="img" aria-label="Custo da melhor solução por tempo do solver. Os dois eixos usam escala logarítmica. Última melhoria aos 0,4679 segundo. Limite configurado de 5 segundos."></svg></div>
-      <p class="search-timing"><b>Última melhora: 0,4679 s</b><span>Limite da busca: 5 s</span><small>Tempo só do solver. A geração no app também consulta APIs e prepara os dados.</small></p><div class="day-chips" id="dayChips" data-a="up" style="--d:400ms"></div>
+      <p class="search-timing"><b>Última melhora: 0,4679 s</b><span>Limite da busca: 5 s</span></p><div class="day-chips" id="dayChips" data-a="up" style="--d:400ms"></div>
       <button class="replay" type="button" id="searchReplay" data-a="fade" style="--d:500ms"><svg data-i="rotate-ccw"></svg>Repetir animação</button>
     </div>
   </div>
@@ -845,7 +821,6 @@ return routing.SolveWithParameters(params)</code></pre></figure>
   <h2 class="title" data-a="up">Etapa 7 — As visitas distribuídas pelos cinco dias</h2>
   <div class="route-summary" data-a="up" style="--d:100ms"><p><b>12 de 12 atrações incluídas</b>, 62,4 km de deslocamento no total</p><span>Nova Iorque, 14 a 18 de setembro</span></div>
   <div class="daily-results" id="dailyResults"></div>
-  <p class="route-key" data-a="fade" style="--d:800ms"><b>Como ler:</b> os números ligam cada ponto à visita na lista e indicam sua ordem no dia. <span class="hotel-key"></span> Hospedagem. Linhas ligam as paradas, os trajetos reais seguem a malha de transporte.</p>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>Esta é a resposta registrada para os cinco dias de Nova Iorque. As doze atrações foram incluídas e o deslocamento total foi de sessenta e dois vírgula quatro quilômetros.</p>
@@ -865,7 +840,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 </section>
 
 <section class="slide" id="slide-22" data-title="Comparação de estratégias de busca">
-<h2 class="title" data-a="up">Comparação de estratégias de busca</h2><p class="lead" data-a="up">Mesma entrada: 12 atrações em 5 dias. O <b>custo do objetivo</b> combina deslocamentos e penalidades, <b>menor é melhor</b>.</p>
+<h2 class="title" data-a="up">Comparação de estratégias de busca</h2><p class="lead" data-a="up">12 atrações, 5 dias</p>
 <table class="strategy-table" data-a="up"><colgroup><col style="width:30%"><col style="width:25%"><col style="width:17%"><col style="width:17%"><col style="width:11%"></colgroup>
 <thead><tr><th>Solução inicial</th><th>Busca local</th><th>Parada / limite</th><th>Custo do objetivo</th><th>Atrações</th></tr></thead>
 <tbody>
@@ -875,8 +850,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 <tr class="best-strategy"><td><code>GUIDED_LOCAL_SEARCH</code></td><td>2 a 600 s</td><td class="objective"><b>154.192</b></td><td><b>12 / 12</b></td></tr>
 <tr><td><code>SIMULATED_ANNEALING</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
 <tr><td><code>TABU_SEARCH</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
-</tbody></table><p class="strategy-conclusion" data-a="up"><b>GLS: menor custo observado com todas as atrações.</b> Ampliar o prazo de 2 para 600 segundos manteve o mesmo resultado nessa entrada.</p>
-<template class="speaker-notes">
+</tbody></table><template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>Comparamos as estratégias usando a mesma entrada, com doze atrações em cinco dias. As duas primeiras colunas distinguem a construção inicial da busca local. As linhas inferiores continuam usando Parallel Cheapest Insertion como construção inicial.</p>
   <p>O custo reúne os termos da função objetivo, e a última coluna conta as atrações incluídas. Path Cheapest Arc entrega uma primeira solução com dez atrações. Parallel Cheapest Insertion inclui as doze, mas ainda deixa um custo alto.</p>
@@ -892,14 +866,12 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 </section>
 
 <section class="slide" id="slide-23" data-title="Validação do aplicativo">
-<h2 class="title" data-a="up">Validação funcional do aplicativo</h2><p class="lead" data-a="up">Testes automatizados e verificações no aplicativo, repetidos após a integração e a publicação.</p>
-<dl class="validation-summary">
+<h2 class="title" data-a="up">Validação funcional do aplicativo</h2><dl class="validation-summary">
 <div data-a="up"><dt>Regras e regressões</dt><dd>Solver, backend, aplicativo e verificações de tipos e compilação.</dd></div>
 <div data-a="up"><dt>Geração e consulta</dt><dd>Roteiro integrado, agenda, mapas 2D/3D e grafo do solver.</dd></div>
 <div data-a="up"><dt>Acesso e persistência</dt><dd>Instalação, login, reabertura offline e restauração das viagens.</dd></div>
 <div data-a="up"><dt>Colaboração</dt><dd>Permissões, despesas, Memórias e exportação.</dd></div>
-</dl><p class="validation-takeaway" data-a="up">A avaliação com participantes acrescentou situações reais de uso e revelou falhas na agenda.</p>
-<template class="speaker-notes">
+</dl><template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>A validação combinou testes automatizados e verificações no aplicativo após a integração e a publicação.</p>
   <p>O primeiro bloco reúne as regras do solver, as suítes do backend e do aplicativo, além das verificações de tipos e compilação. Esses controles ajudam a detectar regressões nas regras e nos fluxos testados.</p>
@@ -916,7 +888,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 
 <section class="slide" id="slide-24" data-title="Avaliação com participantes">
   <h2 class="title" data-a="up">Avaliação com participantes</h2>
-  <p class="lead" data-a="up" style="--d:100ms">Seis participantes, cada um com seu aparelho e cenário, executaram cinco casos de teste e responderam a um formulário próprio.</p>
+  <p class="lead" data-a="up" style="--d:100ms">6 participantes, 5 tarefas por participante</p>
   <div class="eval">
     <div class="eval-left">
       <div class="card" data-a="up" style="--d:200ms">
@@ -932,9 +904,9 @@ return routing.SolveWithParameters(params)</code></pre></figure>
       <div class="card" data-a="up" style="--d:300ms">
         <h3>Problemas observados nas tarefas</h3>
         <ul class="eval-probs">
-          <li><b>Reserva das 12h30 agendada às 13h56</b><span>a janela da reserva soma a duração da refeição</span></li>
-          <li><b>Prioridade só por arraste</b><span>sem alternativa para quem não descobre o gesto</span></li>
-          <li><b>Disponibilidade e passeios de dia inteiro</b><span>saída antes da chegada, Sintra com outras visitas e sem almoço</span></li>
+          <li><b>Reserva das 12h30 agendada às 13h56</b></li>
+          <li><b>Prioridade só por arraste</b></li>
+          <li><b>Disponibilidade e passeios de dia inteiro</b></li>
         </ul>
       </div>
     </div>
@@ -973,15 +945,15 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 </section>
 
 <section class="slide" id="slide-25" data-title="Custos estimados por geração">
-<h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2><p class="lead" data-a="up">Quatro cenários para a mesma viagem: 5 dias, 12 atrações e 1 hospedagem. <b>US$ por geração, apenas APIs.</b></p>
+<h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2><p class="lead" data-a="up">5 dias, 12 atrações, 1 hospedagem. <b>US$ por geração em APIs.</b></p>
 <div class="cost-scenarios">
-<article data-a="up"><span class="scenario-index">CENÁRIO A</span><h3>Sem dados<br>reaproveitados</h3><strong>US$ 1,38</strong><p><b>Novas consultas:</b><br>lugares, matriz, IA e fotos.</p></article>
-<article data-a="up"><span class="scenario-index">CENÁRIO B</span><h3>Somente a IA<br>reaproveitada</h3><strong>US$ 1,28</strong><p><b>Novas consultas:</b><br>lugares, matriz e fotos.</p></article>
-<article data-a="up"><span class="scenario-index">CENÁRIO C</span><h3>Dados e matriz<br>reaproveitados</h3><strong>US$ 0,09</strong><p><b>Novas consultas:</b><br>apenas as 13 fotos.</p></article>
-<article data-a="up"><span class="scenario-index">CENÁRIO D</span><h3>Sem novas<br>consultas</h3><strong>US$ 0,00</strong><p><b>Nenhuma chamada</b><br>às APIs consideradas.</p></article>
+<article data-a="up"><span class="scenario-index">CENÁRIO A</span><h3>Sem dados<br>reaproveitados</h3><strong>US$ 1,38</strong></article>
+<article data-a="up"><span class="scenario-index">CENÁRIO B</span><h3>Somente a IA<br>reaproveitada</h3><strong>US$ 1,28</strong></article>
+<article data-a="up"><span class="scenario-index">CENÁRIO C</span><h3>Dados e matriz<br>reaproveitados</h3><strong>US$ 0,09</strong></article>
+<article data-a="up"><span class="scenario-index">CENÁRIO D</span><h3>Sem novas<br>consultas</h3><strong>US$ 0,00</strong></article>
 </div>
-<div class="cost-detail" data-a="up"><h4>Composição do cenário A</h4><dl><div><dt>Matriz de deslocamentos</dt><dd>US$ 0,85</dd><small>169 pares, 61,4% do total</small></div><div><dt>Buscas e detalhes</dt><dd>US$ 0,34</dd><small>Informações dos lugares</small></div><div><dt>Modelo de linguagem</dt><dd>US$ 0,10</dd><small>Estimativas e sugestões</small></div><div><dt>Fotos</dt><dd>US$ 0,09</dd><small>13 imagens</small></div></dl></div>
-<p class="cost-caption">Tarifas de setembro de 2026, valores arredondados, antes de franquias, impostos e infraestrutura. Estimativa de consumo, não uma fatura. Reutilização sujeita às condições dos provedores.</p>
+<div class="cost-detail" data-a="up"><h4>Composição do cenário A</h4><dl><div><dt>Matriz de deslocamentos</dt><dd>US$ 0,85</dd><small>169 pares, 61,4% do total</small></div><div><dt>Buscas e detalhes</dt><dd>US$ 0,34</dd></div><div><dt>Modelo de linguagem</dt><dd>US$ 0,10</dd></div><div><dt>Fotos</dt><dd>US$ 0,09</dd><small>13 imagens</small></div></dl></div>
+<p class="cost-caption">Estimativa com tarifas de set/2026, antes de franquias, impostos e infraestrutura.</p>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>Estimamos o consumo de APIs para uma viagem de cinco dias, com doze atrações e uma hospedagem. Com as tarifas de setembro de dois mil e vinte e seis, o cenário A, sem dados reaproveitados, custa cerca de um dólar e trinta e oito centavos.</p>
@@ -1034,7 +1006,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 </section>
 
 <section class="slide dark conclusion" id="slide-27" data-title="Agradecimento e perguntas">
-  <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude, Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><p data-a="up" style="--d:250ms">Agradecemos a atenção.<br>Estamos à disposição para perguntas.</p><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília, FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
+  <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude, Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília, FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>Obrigado pela atenção e pelas contribuições ao trabalho. Estamos à disposição para as perguntas.</p>
@@ -1083,6 +1055,6 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 
 <script src="data.js?v=41"></script>
 <script src="motion.js?v=42"></script>
-<script src="scenes.js?v=42"></script>
+<script src="scenes.js?v=52"></script>
 </body>
 </html>

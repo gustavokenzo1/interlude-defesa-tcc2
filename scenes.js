@@ -170,7 +170,6 @@
       });
       this.assignment = new Map();
       solutionRoutes.forEach((seq, d) => seq.forEach((i) => { if (i !== hotel) this.assignment.set(i, d); }));
-      slide.querySelector("#problemLegend").innerHTML = solutionRoutes.map((seq, d) => `<span><i style="background:${DAY[d]}"></i>Dia ${d + 1}, ${seq.filter((i) => i !== hotel).length} atrações</span>`).join("");
       measure(svg);
     },
     build(slide, level, instant) {
@@ -180,9 +179,6 @@
         p.classList.toggle("on", out);
       });
       colorNodes(this.nodes.els, out ? this.assignment : new Map(), false);
-      slide.querySelector("#problemTag").textContent = out ? "Saída" : "Entrada";
-      slide.querySelector("#problemCaption").textContent = out ? "5 dias, com saída e retorno ao hotel, 12 atrações incluídas" : "12 atrações e a hospedagem, nas coordenadas reais";
-      slide.querySelector("#problemLegend").style.opacity = level >= 2 ? 1 : 0;
     },
   };
 
@@ -476,8 +472,7 @@
       const order = [nodes[hotel], ...["Central Park", "Metropolitan", "São Patrício"].map((name) => nodes.find((n) => n.name === name))];
       const name = (n) => n.depot ? "Hotel" : n.name;
       const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
-      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><caption>Linhas representam origens. Colunas representam destinos.</caption><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-      slide.querySelector("#matrixExample").innerHTML = `Hotel → Metropolitan: <b>${minutes(order[0], order[2])} min</b>. Volta: <b>${minutes(order[2], order[0])} min</b>.`;
+      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
     },
   };
 
@@ -532,8 +527,9 @@
       }
       node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `Metropolitan, ${hhmm(Tj)}`], "var(--day-3)");
       L = g(6); this.layers.push(L);
-      const eq = svgEl("text", { class: "tl-eq", x: 716, y: 336 }, L);
-      eq.innerHTML = `x<tspan font-size="22" dy="8">ij</tspan><tspan font-size="22" dy="-18">d</tspan><tspan dy="10" font-style="normal"> = 1  ⇒  </tspan>T<tspan font-size="22" dy="8">j</tspan><tspan dy="-8" font-style="normal"> ≥ </tspan>T<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>s<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>t<tspan font-size="22" dy="8">ij</tspan><tspan dy="-8" font-style="normal" font-family="var(--mono)" font-size="22">     ${fmt(Tj)} ≥ ${fmt(Ti)} + ${fmt(si)} + ${fmt(tij)} = ${fmt(ready)}</tspan>`;
+      const eq = svgEl("text", { class: "tl-eq", x: 716, y: 320 }, L);
+      eq.innerHTML = `x<tspan font-size="22" dy="8">ij</tspan><tspan font-size="22" dy="-18">d</tspan><tspan dy="10" font-style="normal"> = 1  ⇒  </tspan>T<tspan font-size="22" dy="8">j</tspan><tspan dy="-8" font-style="normal"> ≥ </tspan>T<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>s<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>t<tspan font-size="22" dy="8">ij</tspan>`;
+      svgEl("text", { x: 716, y: 365, "text-anchor": "middle", style: { font: "400 22px var(--mono)", fill: "var(--ink-muted)" }, text: `${fmt(Tj)} ≥ ${fmt(Ti)} + ${fmt(si)} + ${fmt(tij)} = ${fmt(ready)}` }, L);
     },
     build(slide, level) {
       this.layers.forEach((L, i) => {
