@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=49" />
+  <link rel="stylesheet" href="motion.css?v=50" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -504,8 +504,8 @@
   <p>A posição expressa o que o viajante quer preservar. O solver ainda precisa decidir o dia e a sequência das visitas conforme horários e deslocamentos. A próxima fórmula combina esse fator com os demais componentes da penalidade de exclusão.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
-    <h4>Fator de posição 1 + 4ρᵢ</h4>
-    <p>Leia “um mais quatro vezes rô índice i”. i identifica a atração e ρᵢ representa sua posição normalizada, com valor maior para prioridades mais altas. Na lista mostrada, o primeiro fator vale 5 e o último aproximadamente 1,33. O fator expressa a prioridade na exclusão; a sequência cronológica será calculada pelo solver.</p>
+    <h4>Fator de posição 1 + 4ρᵢ (rô)</h4>
+    <p>Leia “um mais quatro vezes ρ (rô) índice i”. i identifica a atração e ρᵢ (rô) representa sua posição normalizada, com valor maior para prioridades mais altas. Na lista mostrada, o primeiro fator vale 5 e o último aproximadamente 1,33. O fator expressa a prioridade na exclusão; a sequência cronológica será calculada pelo solver.</p>
   </details>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
@@ -546,14 +546,14 @@
   <p>Esse valor só será cobrado se a atração for excluída. A busca compara essa penalidade com os demais custos da agenda, respeitando as restrições obrigatórias.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
-    <h4>Penalidade πᵢ e piso ⌊ ⌋</h4>
-    <p>πᵢ, “pi índice i”, é o custo de excluir a atração i. Os sinais ⌊ ⌋ pedem a parte inteira, arredondada para baixo, do produto exibido.</p>
-    <h4>Posição ρᵢ</h4>
-    <p>Leia “ene menos a ordem, dividido por ene”. N é a quantidade de atrações selecionadas e a ordem começa em zero. Assim, a primeira atração tem ρ igual a um e fator de posição cinco. A última tem fator um mais quatro dividido por N.</p>
-    <h4>Iconicidade ιᵢ</h4>
-    <p>Leia “iota índice i é o mínimo entre um e o logaritmo na base dez de um mais ene, dividido por cinco”. n é a quantidade de avaliações, diferente de N, que conta atrações. O fator resultante fica entre um e um vírgula cinco.</p>
-    <h4>Sazonalidade σᵢ</h4>
-    <p>Leia “sigma índice i pertence ao conjunto zero vírgula seis ou um”. Com σ igual a 0,6, o fator 0,5 + 0,5σ vale 0,8, uma redução de 20%. Com σ igual a um, o fator vale um e mantém o produto.</p>
+    <h4>Penalidade πᵢ (pi) e piso ⌊ ⌋</h4>
+    <p>πᵢ (pi) é o custo de excluir a atração i; o índice i identifica a atração. Os sinais ⌊ ⌋ pedem a parte inteira, arredondada para baixo, do produto exibido.</p>
+    <h4>Posição ρᵢ (rô)</h4>
+    <p>Leia “ene menos a ordem, dividido por ene”. N é a quantidade de atrações selecionadas e a ordem começa em zero. Assim, a primeira atração tem ρ (rô) igual a um e fator de posição cinco. A última tem fator um mais quatro dividido por N.</p>
+    <h4>Iconicidade ιᵢ (iota)</h4>
+    <p>Leia “ι (iota) índice i é o mínimo entre um e o logaritmo na base dez de um mais ene, dividido por cinco”. n é a quantidade de avaliações, diferente de N, que conta atrações. O fator resultante fica entre um e um vírgula cinco.</p>
+    <h4>Sazonalidade σᵢ (sigma)</h4>
+    <p>Leia “σ (sigma) índice i pertence ao conjunto zero vírgula seis ou um”. Com σ (sigma) igual a 0,6, o fator 0,5 + 0,5σ (sigma) vale 0,8, uma redução de 20%. Com σ (sigma) igual a um, o fator vale um e mantém o produto.</p>
     <h4>Primeira barra</h4>
     <p>Central Park: cinco milhões vezes cinco vezes um vírgula cinco vezes um resulta em 37.500.000. O gráfico mostra o custo potencial de exclusão, antes de decidir se cada atração será incluída.</p>
   </details>
@@ -605,47 +605,58 @@
 
 <section class="slide formulation-explained" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
 <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
+<div class="formulation-choice" data-build="1">
+  <div class="math"><span class="formulation-min"><span>min</span><small>x, y, z, T</small></span> C(x,y,z,T)</div>
+  <p>Menor custo total entre agendas viáveis</p>
+</div>
+<div class="formulation-decisions" data-build="1">
+  <span><i>x</i> trechos usados</span><span><i>y</i> atrações excluídas</span><span><i>z</i> visitas por dia</span><span><i>T</i> horários</span>
+</div>
 <div class="formulation-objective" data-build="1">
-  <span class="formulation-min">min</span>
+  <span class="formulation-cost math">C =</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></div>
-    <h3>Deslocamentos</h3><p>t: tempo entre paradas</p>
+    <h3>Deslocamentos</h3><p>Somar trechos de todos os dias</p>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
     <div class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></div>
-    <h3>Atrações excluídas</h3><p>π: custo de excluir</p>
+    <h3>Exclusões</h3><p>Somar penalidades das excluídas</p>
   </div>
   <span class="formulation-plus">+</span>
   <div class="objective-part">
-    <div class="math">Φ</div>
-    <h3>Preferências</h3>
+    <div class="math">Φ(x,y,z,T)</div>
+    <h3>Preferências</h3><p>Somar os custos da tabela</p>
   </div>
 </div>
 <div class="formulation-detail">
   <div class="formulation-rules" data-build="2">
-    <h3>Recorte do dia 2</h3>
-    <div class="formulation-route" role="img" aria-label="Recorte da rota real do dia 2: almoço, Central Park e hotel. Os dois trechos têm x igual a um. O Central Park tem visita z igual a um e exclusão y igual a zero.">
-      <span>Almoço</span>
-      <span class="route-link"><small>x = 1</small><span>⟶</span><em>trecho usado</em></span>
-      <span class="route-stop"><b>Central Park</b><small><span><i>z = 1</i> visita no dia</span><span><i>y = 0</i> não excluído</span></small></span>
-      <span class="route-link"><small>x = 1</small><span>⟶</span><em>trecho usado</em></span>
-      <span>Hotel</span>
-    </div>
-    <div class="formulation-rule">
-      <div><h4>Visitar ou excluir</h4><span class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> + y<sub>i</sub> = 1</span></div>
-    </div>
-    <div class="formulation-rule">
-      <div><h4>Uma entrada e uma saída</h4><span class="math"><span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ji</sub></span> = <span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ij</sub></span> = z<span class="ss"><sup>d</sup><sub>i</sub></span></span></div>
-    </div>
-    <div class="formulation-rule">
-      <div><h4>Até 4 atrações/dia</h4><span class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> ≤ 4</span></div>
+    <h3>Sujeito às regras <small>restringem as decisões</small></h3>
+    <div class="formulation-rule"><div>
+      <div><h4>Visitar ou excluir</h4><p>Liga z a y</p></div>
+      <span class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> + y<sub>i</sub> = 1</span>
+    </div></div>
+    <div class="formulation-rule"><div>
+      <div><h4>Uma entrada e uma saída</h4><p>Liga x a z</p></div>
+      <span class="math"><span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ji</sub></span> = <span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ij</sub></span> = z<span class="ss"><sup>d</sup><sub>i</sub></span></span>
+    </div></div>
+    <div class="formulation-rule"><div>
+      <div><h4>Até 4 atrações/dia</h4><p>Limita z em cada dia</p></div>
+      <span class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> ≤ 4</span>
+    </div></div>
+    <div class="formulation-example">
+      <h4>Recorte do dia 2</h4>
+      <div class="formulation-route" role="img" aria-label="Recorte do dia 2: almoço, Central Park e hotel. Os dois trechos têm x igual a um. A visita ao Central Park tem z igual a um e exclusão y igual a zero.">
+        <span>Almoço</span><span class="route-link"><small>x = 1</small><span>⟶</span></span>
+        <b class="route-stop">Central Park<small><span><i>z = 1</i> visita no dia</span><span><i>y = 0</i> não excluído</span></small></b>
+        <span class="route-link"><small>x = 1</small><span>⟶</span></span><span>Hotel</span>
+      </div>
     </div>
   </div>
   <div class="formulation-phi" data-build="3">
-    <h3>Pesos de Φ <small>unidades de custo</small></h3>
+    <h3>Custos de Φ <small>pesos em unidades de custo</small></h3>
     <table class="phi-costs"><tbody>
-      <tr><th>Duração</th><td><b>1/s</b> (+<b>40/s</b> após 9 h)</td></tr>
+      <tr><th>Duração</th><td><b>1/s</b> (+ <b>40/s</b> após 9 h)</td></tr>
       <tr><th>Início vs. referência</th><td><b>2/s</b> antes, <b>30/s</b> depois</td></tr>
       <tr><th>Atraso na preferência</th><td><b>500/s</b> forte, <b>20/s</b> suave</td></tr>
       <tr><th>Atrações/dia (meta 2–3)</th><td><b>10 mil</b>/excedente<br><b>20 milhões</b>/faltante</td></tr>
@@ -656,33 +667,37 @@
 </div>
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-<p>A função no alto do slide é minimizada. Ela soma o tempo dos deslocamentos usados, o custo das atrações excluídas e os custos de Φ, listados na tabela. t é o tempo entre duas paradas e π é o custo de excluir uma atração.</p>
-<p>O exemplo mostra um recorte do segundo dia: almoço, Central Park e hotel. Cada seta tem x igual a um porque aquele trecho é usado na solução. No Central Park, z igual a um significa que a visita acontece nesse dia. y igual a zero significa que o parque não foi excluído da viagem. Por isso, o termo π vezes y não cobra exclusão do Central Park.</p>
-<p>A primeira regra exige visitar ou excluir. Somamos as visitas de uma atração em todos os dias e a decisão de exclusão. Para o Central Park, uma visita e nenhuma exclusão dão um mais zero, igual a um.</p>
-<p>A segunda regra conecta a visita aos trechos. Como z vale um, deve haver uma entrada e uma saída. No desenho, a entrada vem do almoço e a saída segue para o hotel. A terceira regra limita o dia inteiro a quatro atrações. Almoço e hotel não entram nessa contagem.</p>
-<p>Na tabela, Φ reúne os custos de duração, início, atraso na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. A meta de duas a três atrações admite desvios com custo. O limite de quatro da equação é obrigatório.</p>
-<details class="notes-study"><summary>Leitura dos símbolos e das regras exibidas</summary>
-<h4>Índices das fórmulas</h4>
-<p>d identifica um dia e D é o conjunto dos dias da viagem. i e j identificam paradas. Eᵈ é o conjunto das ligações possíveis no dia d. Vₐ é o conjunto das atrações. O sobrescrito d indica o dia. O símbolo ∑ significa somar os termos indicados abaixo dele, ∈ significa pertencer a um conjunto, e min pede o menor custo.</p>
-<h4>Decisões com valor zero ou um</h4>
-<ul>
-<li><b>xᵈᵢⱼ</b>: um quando o trecho de i para j é usado no dia d, zero quando não é. No desenho, as duas setas são usadas no segundo dia, portanto cada x vale um.</li>
-<li><b>zᵈᵢ</b>: um quando a parada i é visitada no dia d, zero quando não é visitada naquele dia. No desenho, a visita ao Central Park acontece no segundo dia, portanto z vale um.</li>
-<li><b>yᵢ</b>: um quando a atração i é excluída da viagem, zero quando é incluída. O Central Park está incluído, portanto y vale zero.</li>
-</ul>
-<h4>Como as decisões entram no objetivo</h4>
-<p>tᵢⱼ é o tempo de deslocamento de i para j. Multiplicar por xᵈᵢⱼ conta esse tempo somente se o trecho for usado. πᵢ é o custo de excluir a atração i. Multiplicar por yᵢ cobra esse custo somente se ela for excluída. No exemplo, os dois trechos contribuem com seus tempos, e o Central Park não contribui com custo de exclusão. Os valores do desenho representam a sequência registrada na resposta do solver.</p>
-<h4>As três restrições</h4>
-<p><b>Visitar ou excluir:</b> a soma das visitas de uma atração nos dias, mais a exclusão, deve ser um. Isso permite uma visita em um único dia ou a exclusão da viagem. Para o Central Park, z vale um no segundo dia e zero nos outros, enquanto y vale zero.</p>
-<p><b>Uma entrada e uma saída:</b> na soma da esquerda, j é a parada anterior e i é a parada visitada. Na soma do meio, i é a parada visitada e j é a seguinte. Ambas as somas devem ser iguais a z. Como a visita ao Central Park está ativa, uma seta entra e uma sai. Se a visita não estivesse ativa nesse dia, as duas somas seriam zero.</p>
-<p><b>Até quatro atrações por dia:</b> somar z apenas para as atrações de Vₐ deve resultar em no máximo quatro. Esse é o limite do perfil usado no exemplo. A equação se aplica ao dia inteiro, e o desenho mostra apenas seu trecho final.</p>
-<h4>Condições dos pesos de Φ</h4>
-<p><b>Duração:</b> uma unidade por segundo do dia, incluindo visitas e esperas, com mais quarenta por segundo além de nove horas. <b>Início:</b> duas unidades por segundo antes da referência e trinta depois. A referência é nove horas ou o fim da janela de saída, caso termine antes. <b>Atraso na preferência:</b> quinhentas unidades por segundo na preferência forte e vinte na suave, somente após o fim da faixa preferida.</p>
-<p><b>Atrações por dia:</b> nesta entrada, a faixa de referência é duas a três. Cada atração acima de três custa dez mil, e cada uma abaixo de duas custa vinte milhões. O piso não é cobrado em dias sem nenhuma visita. <b>Refeição omitida:</b> excluir todas as alternativas de um grupo custa cem mil para pausa automática ou um bilhão para local escolhido.</p>
-<p><b>Cafés e restaurantes:</b> duzentos mil por parada acima do teto diário da categoria. Esse teto é a quantidade de locais distintos escolhidos na categoria dividida pelos dias, arredondada para cima. Aplica-se quando há mais de um local e mais de um dia. Esses pesos são unidades de comparação entre agendas.</p>
+<p>A expressão no alto pede ao solver que escolha os trechos x, as exclusões y, as visitas por dia z e os horários T. Essas decisões definem uma agenda e seu custo total C. Minimizar significa buscar decisões viáveis que produzam o menor custo total. Cada agenda candidata tem seu próprio valor de C.</p>
+<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi) quando y vale um, indicando exclusão. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
+<p>As regras abaixo são o “sujeito a” dessa minimização. A primeira liga z a y: cada atração deve ser visitada uma vez ou excluída. A segunda liga x a z: uma visita ativa precisa de entrada e saída no mesmo dia. A terceira limita a quatro atrações por dia. Uma combinação que descumpra uma dessas regras não é uma solução viável, mesmo que pareça barata.</p>
+<p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários completam as restrições, como veremos no próximo slide.</p>
+<p>Φ (fi) soma os custos que variam conforme a agenda: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros produzidos. Eles expressam as preferências adotadas no projeto; não foram calibrados formalmente com participantes. A meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro é obrigatório.</p>
+<details class="notes-study"><summary>Leitura da minimização, das somas e das regras</summary>
+<h4>O que é C e quais são as variáveis?</h4>
+<p>C(x,y,z,T) é uma função escalar: recebe uma combinação de decisões e produz um único número, o custo total daquela agenda. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min com x, y, z e T abaixo significa minimizar em relação a essas decisões. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
+<h4>Como min se relaciona com um array?</h4>
+<p>Em programação, min pode receber uma coleção pronta de números. Aqui, a notação descreve um problema de otimização: cada combinação viável de decisões produz um valor de C, e procuramos o menor desses valores. O comparativo é entre custos totais de agendas diferentes. Não se escolhe o menor dos três componentes de uma mesma agenda. Também não se aplica min a um único total já fixado: as decisões ainda podem mudar.</p>
+<p>O OR-Tools gera e modifica soluções durante a busca, mantendo a melhor encontrada dentro do prazo. Ele não precisa montar previamente um array com os custos de todas as agendas. A escrita matemática expressa o objetivo; a busca com prazo não fornece uma prova de que o mínimo global foi alcançado.</p>
+<h4>Por que há três sinais de somatório no custo?</h4>
+<p>Os dois primeiros são aninhados e formam juntos o custo de deslocamento. Leia primeiro a soma de dentro: para um dia d fixado, percorra as ligações permitidas de i para j e some tᵢⱼ vezes xᵈᵢⱼ. Depois, a soma de fora percorre todos os dias d em D e reúne seus custos. O terceiro somatório percorre as atrações de Vₐ e soma πᵢ (pi) vezes yᵢ. Φ (fi) já é o agregado dos outros custos aplicáveis, mostrado como uma função das mesmas decisões.</p>
+<h4>Índices e dados das fórmulas</h4>
+<p>d é um dia e D é o conjunto dos dias. i e j identificam paradas; Eᵈ reúne as ligações permitidas no dia d. Vₐ contém apenas as atrações, excluindo almoço e hospedagem. ∑ significa somar sobre os índices indicados, e ∈ significa pertencer a um conjunto. tᵢⱼ é um tempo de deslocamento fixado pela matriz. πᵢ (pi) é o custo previamente calculado para excluir a atração i.</p>
+<h4>Como cada regra afeta o objetivo?</h4>
+<p><b>Visitar ou excluir:</b> para cada ponto opcional, a soma de z nos dias mais y deve ser um. Não é permitido marcar uma atração como não visitada em todos os dias e ainda usar y igual a zero para escapar da penalidade. Se ela for excluída, y vale um e seu custo π (pi) entra na soma de exclusões.</p>
+<p><b>Uma entrada e uma saída:</b> para cada ponto opcional e dia, a soma dos trechos de entrada e a soma dos de saída devem ser iguais a z. Os índices j percorrem as ligações permitidas. Assim, uma visita ativa exige deslocamentos ativos em x, que participam do primeiro termo do custo. Se z for zero naquele dia, as somas de entrada e saída também devem ser zero.</p>
+<p><b>Até quatro atrações:</b> para cada dia, a soma de z somente das atrações deve ser no máximo quatro. As visitas que não couberem precisam mudar de dia ou ser excluídas. Isso altera as rotas, as exclusões e possivelmente Φ (fi). As três equações restringem as decisões; elas não são parcelas adicionais de C nem são somadas como multas.</p>
+<p>Essas são três regras destacadas do modelo, não sua formulação completa. A conectividade das rotas, a saída e o retorno à base, as janelas e o calendário também restringem as soluções. O slide seguinte detalha a relação com T. No código, as decisões são representadas por sucessores de rota, veículos e dimensões do OR-Tools.</p>
+<h4>Por que Φ (fi) depende das decisões?</h4>
+<p>Os pesos da tabela são constantes, mas as quantidades cobradas mudam. O horário de saída e retorno define a duração do dia; T também determina os atrasos. z define a distribuição de visitas. As escolhas de rota e exclusão determinam se uma refeição fica de fora. Por isso Φ (fi) é calculado a partir da agenda, em vez de ser um número constante acrescentado a todas as soluções.</p>
+<h4>Como explicar os pesos de Φ (fi)</h4>
+<p>“Definimos valores iniciais conforme a importância que queríamos dar a cada comportamento e os ajustamos ao longo do desenvolvimento, executando testes e observando os roteiros resultantes. São escolhas exploratórias do projeto. A comparação de estratégias mantém os pesos fixos e não mede isoladamente o efeito de cada um. Não realizamos calibração formal com os participantes nem demonstramos que esses valores sejam ideais.” A avaliação com participantes examina o uso e os resultados, sem constituir um ajuste estatístico desses coeficientes.</p>
+<h4>Condições dos valores da tabela</h4>
+<p><b>Duração:</b> uma unidade por segundo da agenda diária, incluindo visitas e esperas, e mais quarenta por segundo além de nove horas. <b>Início:</b> duas por segundo antes da referência e trinta depois; a referência é nove horas ou o fim da janela de saída, caso termine antes. <b>Atraso na preferência:</b> quinhentas por segundo na preferência forte e vinte na suave, somente depois do fim da faixa preferida.</p>
+<p><b>Atrações por dia:</b> nesta entrada, a referência é duas a três. Cada atração acima de três custa dez mil, e cada uma abaixo de duas custa vinte milhões. O piso não é cobrado em dias sem nenhuma visita. <b>Refeição omitida:</b> excluir todas as alternativas de um grupo custa cem mil para pausa automática ou um bilhão para local escolhido.</p>
+<p><b>Cafés e restaurantes:</b> duzentos mil por parada acima do teto diário da categoria. Esse teto é a quantidade de locais distintos escolhidos na categoria dividida pelos dias, arredondada para cima, quando há mais de um local e mais de um dia. As parcelas de C são unidades internas de custo, sem valor monetário.</p>
 </details>
 <details class="notes-support"><summary>Fontes do modelo e do recorte</summary><ul>
-<li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, modelagem matemática, páginas 63–65</a></li>
+<li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia: decisões, função objetivo, condições e escolha dos coeficientes</a></li>
 <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Restrições e pesos dos custos</a></li>
 <li><a href="data/solver-request.json">Entrada do solver</a></li>
 <li><a href="data/solver-response.json">Resposta do solver, recorte do dia 2</a></li>
