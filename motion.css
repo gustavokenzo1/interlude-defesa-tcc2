@@ -1532,3 +1532,52 @@ pre.syntax-block code, .search-simple pre.syntax-block code { display: block; fo
 #slide-15 .pen-step h4 code { font-size: 18px; }
 #slide-18 .timeline { height: 480px; margin-top: 38px; }
 #slide-18 .gloss { margin-top: 36px !important; }
+
+/* Slide 19: inserções e soluções de uma execução reduzida do OR-Tools. */
+.demo-phases { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 23px; }
+.demo-phase { display: flex; gap: 16px; align-items: center; border-top: 3px solid var(--hairline); padding-top: 12px; color: var(--ink-soft); }
+.demo-phase > span { font: 600 28px var(--display); }
+.demo-phase b { display: block; font: 700 25px var(--display); }
+.demo-phase small { display: block; margin-top: 5px; font: 400 13px var(--mono); }
+.demo-phase.active { color: var(--pine-deep); border-color: var(--pine); }
+.solver-demo { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr); gap: 44px; margin-top: 27px; height: 499px; }
+.demo-visual { min-width: 0; }
+.demo-context { color: var(--ink-muted); font: 400 16px var(--body); margin: 0 0 12px; }
+.demo-map { display: block; width: 100%; height: 468px; overflow: visible; }
+.demo-side { min-width: 0; border-left: 1px solid var(--hairline); padding-left: 28px; }
+.demo-totals { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-bottom: 1px solid var(--hairline); padding-bottom: 18px; }
+.demo-totals span { display: block; font: 500 16px var(--body); color: var(--ink-muted); }
+.demo-totals strong { display: block; margin-top: 10px; font: 700 43px/1 var(--display); font-variant-numeric: tabular-nums; color: var(--pine-deep); }
+.demo-totals strong small { font-size: 22px; font-weight: 500; }
+.demo-totals strong.trial { color: var(--amber-ink); }
+.demo-action { margin: 20px 0 22px; }
+.demo-action > span { display: block; font: 500 13px var(--mono); color: var(--ink-muted); margin-bottom: 10px; }
+.demo-action h3 { font: 700 27px/1.2 var(--display); min-height: 33px; }
+.demo-choices h4 { font: 500 15px var(--body); color: var(--ink-muted); margin-bottom: 10px; }
+.demo-choices li { display: flex; justify-content: space-between; gap: 12px; padding: 13px 12px; border-bottom: 1px solid var(--hairline); font: 400 17px/1.35 var(--body); }
+.demo-choices li b { white-space: nowrap; font: 600 19px/1.2 var(--display); font-variant-numeric: tabular-nums; }
+.demo-choices li small { font-size: 14px; font-weight: 400; }
+.demo-choices li.chosen { background: var(--pine-soft); color: var(--pine-deep); }
+.demo-saving { color: var(--pine-deep); font: 700 36px var(--display); margin-top: 22px; }
+.demo-saving small { display: block; color: var(--ink-muted); font: 400 16px var(--body); margin-top: 5px; }
+.demo-controls { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+.demo-controls button { appearance: none; border: 1px solid #CCD1CC; border-radius: 5px; padding: 9px 15px; color: var(--ink); background: var(--paper); font: 500 15px var(--body); cursor: pointer; }
+.demo-controls button:hover { border-color: var(--pine); color: var(--pine); }
+.demo-controls button:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.demo-controls button:disabled { opacity: .4; cursor: default; }
+.demo-edge { fill: none; stroke-width: 5; stroke-linecap: round; }
+.demo-edge-route { stroke: var(--pine); stroke-dasharray: 1; animation: demoTrace .8s var(--ease) both; }
+.demo-edge-trial { stroke: var(--amber); stroke-dasharray: 1; animation: demoTrace .8s var(--ease) both; }
+.demo-edge-old { stroke: #BFC7C2; stroke-width: 3; stroke-dasharray: 8 8; }
+.demo-arrow { stroke-width: 2.4; }
+.demo-arrow-route { stroke: var(--pine); }
+.demo-arrow-trial { stroke: var(--amber); }
+.demo-arrow-old { stroke: #BFC7C2; }
+.demo-edge-time { font: 500 20px var(--mono); fill: var(--ink); text-anchor: middle; paint-order: stroke; stroke: var(--surface); stroke-width: 8px; stroke-linejoin: round; }
+.demo-node circle, .demo-node rect { fill: var(--pine); stroke: var(--surface); stroke-width: 5; }
+.demo-node.pending circle { fill: #C7CFC9; }
+.demo-node.selected circle { stroke: var(--amber); stroke-width: 6; }
+.demo-node-letter { fill: white; text-anchor: middle; font: 700 24px var(--body); }
+.demo-node-name { fill: var(--ink); text-anchor: middle; font: 600 24px var(--display); }
+@keyframes demoTrace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .demo-edge { animation: none; } }

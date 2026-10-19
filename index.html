@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=52" />
+  <link rel="stylesheet" href="motion.css?v=53" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -729,56 +729,47 @@
 </template>
 </section>
 
-<section class="slide" id="slide-19" data-title="Etapa 6 — Estratégias de busca" data-stage="6">
-<h2 class="title" data-a="up">Etapa 6 — Estratégias de busca do solver</h2><div class="search-implementation search-simple" data-a="up">
-<figure><figcaption>Python, construção e busca local</figcaption><pre class="search-code syntax-block" data-language="python"><code>solution = self._solve_with_strategy(
-    routing,
-    routing_enums_pb2.FirstSolutionStrategy
-        .PARALLEL_CHEAPEST_INSERTION,
-    primary_time_limit,
-)
-
-# Dentro de _solve_with_strategy:
-params.first_solution_strategy = strategy
-params.local_search_metaheuristic = (
-    routing_enums_pb2.LocalSearchMetaheuristic
-        .GUIDED_LOCAL_SEARCH
-)
-return routing.SolveWithParameters(params)</code></pre></figure>
-<figure><figcaption>JSON, total e dia 1</figcaption><pre class="search-json syntax-block" data-language="json"><code>{
-  "total_distance_meters": 62379,
-  "days": [
-    {
-      "day_index": 0,
-      "distance_meters": 15736,
-      "total_time_seconds": 31937
-    }
-  ],
-  "unassigned": []
-}</code></pre></figure>
-</div><template class="speaker-notes">
+<section class="slide solver-demo-slide" id="slide-19" data-title="Etapa 6 — Construção e melhoria da rota" data-stage="6" data-scene="solverDemo">
+<h2 class="title" data-a="up">Etapa 6 — Construção e melhoria da rota</h2>
+<div class="demo-phases" aria-label="Etapas da busca">
+  <div id="demoPhaseBuild" class="demo-phase"><span>01</span><div><b>Construção inicial</b><small>PARALLEL_CHEAPEST_INSERTION</small></div></div>
+  <div id="demoPhaseSearch" class="demo-phase"><span>02</span><div><b>Busca local guiada</b><small>GUIDED_LOCAL_SEARCH</small></div></div>
+</div>
+<div class="solver-demo">
+  <div class="demo-visual">
+    <div class="demo-context">Recorte didático, 1 dia, 4 atrações, só deslocamentos em segundos</div>
+    <svg id="solverDemoMap" class="demo-map" viewBox="0 0 900 510" role="img" aria-label="Simulação de inserções de quatro atrações e melhoria da ordem da rota"></svg>
+  </div>
+  <aside class="demo-side">
+    <div class="demo-totals"><div><span>Rota atual</span><strong id="demoCurrent">0 <small>s</small></strong></div><div><span>Melhor completa</span><strong id="demoBest">—</strong></div></div>
+    <div class="demo-action"><span id="demoStep">01 / 09</span><h3 id="demoAction">Escolher a primeira visita</h3></div>
+    <div id="demoChoices" class="demo-choices"></div>
+  </aside>
+</div>
+<div class="demo-controls"><button id="demoReplay" type="button">Repetir</button><button id="demoPause" type="button">Pausar</button><button id="demoNext" type="button">Próximo passo →</button></div>
+<template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>O código mostra duas escolhas da busca. Primeiro, passamos Parallel Cheapest Insertion como estratégia de construção da solução inicial.</p>
-  <p>Essa heurística compara onde inserir uma parada nas rotas em formação. Ela avalia o acréscimo de custo dos trechos e os encaixes permitidos pelas restrições. Como cada rota representa um dia, a construção também distribui as visitas pelos dias. Paralelo se refere à construção das rotas.</p>
-  <p>Dentro do método, first_solution_strategy recebe essa escolha. Depois, local_search_metaheuristic ativa a Guided Local Search, e SolveWithParameters executa a busca.</p>
-  <p>A busca local explora mudanças na ordem e na distribuição das visitas. A GLS usa penalidades internas para sair de mínimos locais e procurar alternativas. Essas penalidades orientam a exploração; a penalidade de exclusão do modelo continua expressando o custo de omitir uma atração.</p>
-  <p>À direita está um recorte da resposta registrada. total_distance_meters descreve toda a viagem. O objeto de índice zero traz a distância e o tempo do primeiro dia. unassigned vazio informa que nenhuma atração ficou de fora. O limite desta busca é de cinco segundos, e o resultado é a melhor solução encontrada, sem prova de ótimo. A próxima animação mostra as melhorias registradas em outra execução com a mesma entrada.</p>
-  <details class="notes-study">
-    <summary>Estudo do conteúdo exibido</summary>
-    <h4>Construção inicial</h4>
-    <p>PARALLEL_CHEAPEST_INSERTION significa “inserção mais barata em paralelo”. Inserir uma parada entre duas existentes substitui um trecho por dois. A heurística compara os custos desses encaixes e verifica as restrições das rotas. A construção paralela das rotas não indica uso de várias threads.</p>
-    <h4>Busca local guiada</h4>
-    <p>GUIDED_LOCAL_SEARCH significa “busca local guiada”. Um mínimo local ocorre quando os movimentos considerados não melhoram imediatamente a solução atual. As penalidades internas da GLS alteram o que a busca favorece, permitindo continuar a exploração.</p>
-    <h4>Leitura do código</h4>
-    <p>routing representa o modelo de roteamento. _solve_with_strategy recebe a estratégia e primary_time_limit. params reúne as opções. first_solution_strategy configura a construção inicial, local_search_metaheuristic configura a melhoria posterior e SolveWithParameters executa o solver.</p>
-    <h4>Leitura do JSON</h4>
-    <p>day_index começa em zero. A distância total é 62.379 metros; a do primeiro dia é 15.736 metros. total_time_seconds igual a 31.937 corresponde a 8h52min17s nesse dia, incluindo o tempo da agenda. unassigned é a lista de atrações não alocadas e está vazia. O recorte omite os outros dias e suas paradas.</p>
+  <p>Aqui acompanhamos um exemplo pequeno para entender as duas estratégias. Usamos o hotel e quatro atrações de Nova Iorque, com os mesmos tempos da matriz. Neste recorte, todas as visitas são obrigatórias e comparamos apenas os deslocamentos. As janelas, as durações e as outras parcelas do custo voltam na execução completa do próximo slide.</p>
+  <p>Primeiro, a inserção mais barata constrói a rota. Empire State é a primeira visita porque acrescenta oitocentos e quarenta e sete segundos, incluindo a volta ao hotel. Depois comparamos onde encaixar São Patrício: entre hotel e Empire State acrescenta quinhentos e oitenta e quatro segundos; no outro encaixe, mil setecentos e cinquenta e um. A animação destaca a opção escolhida. Um trecho é substituído por dois, então o acréscimo desconta o trecho removido.</p>
+  <p>O processo continua com Metropolitan e Central Park. Cada passo mantém as visitas já inseridas e escolhe um encaixe barato para a próxima. Ao incluir as quatro, a primeira rota soma quatro mil e setenta e quatro segundos de transporte. Em uma viagem com vários dias, a estratégia compara encaixes nas rotas em construção; “paralelo” não significa necessariamente várias threads.</p>
+  <p>A segunda etapa já pode mudar a ordem das visitas inseridas. Nesta execução reduzida do OR-Tools, inverter a sequência São Patrício, Metropolitan e Central Park leva a três mil quinhentos e cinquenta e quatro segundos, uma redução de quinhentos e vinte segundos. Isso mostra por que uma construção barata passo a passo ainda pode ser melhorada depois.</p>
+  <p>A busca continua explorando. Surge uma rota de quatro mil quatrocentos e cinquenta e dois segundos, mas a melhor completa continua guardada em três mil quinhentos e cinquenta e quatro. A Guided Local Search usa penalidades internas para favorecer outras alternativas quando a busca fica presa em um mínimo local. Essas penalidades não são a penalidade de exclusão π (pi) do nosso modelo. Ao terminar o prazo, devolvemos a melhor encontrada, sem uma garantia geral de ótimo.</p>
+  <details class="notes-study"><summary>Como ler os passos da animação</summary>
+    <h4>Dados e escopo</h4>
+    <p>Os números são segundos de transporte, não o custo C completo do slide 17 nem a duração total do dia. O desenho é um grafo esquemático, sem escala geográfica. H é hotel; E, Empire State; S, São Patrício; M, Metropolitan; C, Central Park. Os nomes aparecem junto aos nós. Os sentidos importam porque a matriz é assimétrica.</p>
+    <h4>As quatro inserções</h4>
+    <p>A primeira rota é hotel, Empire State, hotel: 773 + 74 = 847. São Patrício entra antes de Empire State: o acréscimo é 741 + 616 − 773 = 584, e o total passa a 1.431. Metropolitan entra entre São Patrício e Empire State: 1.051 + 1.344 − 616 = 1.779, total de 3.210. Central Park entra entre Metropolitan e Empire State: 559 + 1.649 − 1.344 = 864, total de 4.074.</p>
+    <p>Na primeira comparação, o quadro mostra o custo de inserir cada atração na rota vazia. Nas seguintes, mostra os encaixes possíveis para a atração escolhida. A implementação didática calculou os encaixes pelo custo dos arcos, e a rota completa coincide com a primeira solução registrada do OR-Tools nesse modelo reduzido.</p>
+    <h4>Ordem e melhor solução</h4>
+    <p>A rota inicial é H → S → M → C → E → H, com 4.074 s. A melhoria é H → C → M → S → E → H: 1.376 + 519 + 969 + 616 + 74 = 3.554 s. A alternativa seguinte é H → M → C → S → E → H, com 4.452 s. As três são as primeiras soluções aceitas registradas na execução reduzida. A animação desacelera esses eventos e termina exibindo a melhor rota armazenada.</p>
+    <h4>Construção e GLS</h4>
+    <p>PARALLEL_CHEAPEST_INSERTION constrói a solução inicial usando custos de inserção baseados nos arcos. A mudança que reduz 520 s é uma melhoria de busca local observada com GUIDED_LOCAL_SEARCH configurada; ela não demonstra, isoladamente, que as penalidades da GLS foram necessárias para obter essa melhoria. A rota pior ilustra a diferença entre explorar uma solução e atualizar a melhor encontrada.</p>
+    <h4>Controles</h4>
+    <p>A reprodução avança automaticamente. Pausar mantém o quadro para explicar o encaixe. Próximo passo avança um quadro e pausa. Repetir reinicia a sequência. A seta de avanço da apresentação conclui a animação antes de passar ao slide seguinte.</p>
   </details>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>Os dois blocos de Python pertencem à implementação: a chamada do método e o recorte de sua configuração interna. O trecho omite a criação de params e a atribuição do limite. O JSON mantém campos da resposta registrada e somente o primeiro elemento de days.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação das estratégias e orçamento adaptativo</a></li><li><a href="data/solver-response.json">Resposta completa registrada</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: estratégias iniciais e busca local</a></li></ul>
+  <details class="notes-support"><summary>Execução reduzida e fontes</summary>
+    <p>Recorte executado em 19/10/2026 com OR-Tools 9.10.4067, uma rota e quatro visitas obrigatórias. Estratégias PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. Os tempos vêm de timeMatrix, sem arredondamento. A animação não representa o registro completo de cinco dias, mostrado no slide 20.</p>
+    <ul><li><a href="search-demo.js">Matriz, encaixes, soluções registradas e proveniência do exemplo</a></li><li><a href="data/busca-animada.json">Registro da execução completa do próximo slide</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Configuração das estratégias no aplicativo</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: inserção mais barata e busca local guiada</a></li></ul>
   </details>
 </template>
 </section>
@@ -1055,6 +1046,7 @@ return routing.SolveWithParameters(params)</code></pre></figure>
 
 <script src="data.js?v=41"></script>
 <script src="motion.js?v=42"></script>
-<script src="scenes.js?v=52"></script>
+<script src="search-demo.js?v=53"></script>
+<script src="scenes.js?v=53"></script>
 </body>
 </html>

@@ -540,6 +540,118 @@
     },
   };
 
+  // ---------- 19 Construção e melhoria: execução reduzida com tempos reais ----------
+  Scenes.solverDemo = {
+    init(slide) {
+      this.slide = slide;
+      this.demo = window.INTERLUDE_SEARCH_DEMO;
+      const { names, matrix, construction, search } = this.demo;
+      const firstChoices = names.slice(1).map((name, i) => ({ label: name, value: matrix[0][i + 1] + matrix[i + 1][0], chosen: i === 0 })).sort((a, b) => a.value - b.value);
+      this.frames = [{ phase: 0, title: "Escolher a primeira visita", route: [0, 0], before: [], current: 0, best: null, focus: 1, choices: firstChoices, choiceTitle: "Acréscimo por visita" }];
+      let before = [0, 0];
+      construction.forEach((step, i) => {
+        const choices = i === 0 ? firstChoices : step.choices.map((c, k) => ({ label: `${names[before[c.position - 1]]} → ${names[before[c.position]]}`, value: c.delta, chosen: k === 0 }));
+        this.frames.push({ phase: 0, title: `Inserir ${names[step.insert]}`, route: step.route, before, current: step.cost, best: i === 3 ? step.cost : null, focus: step.insert, choices, choiceTitle: i === 0 ? "Acréscimo por visita" : "Acréscimo por encaixe" });
+        before = step.route;
+      });
+      const initial = search[0], improved = search[1], exploring = search[2];
+      const comparison = [{ label: "Ordem inicial", value: initial.cost }, { label: "Outra ordem", value: improved.cost, chosen: true }];
+      this.frames.push(
+        { phase: 1, title: "Testar outra ordem", route: improved.route, before: initial.route, current: improved.cost, best: initial.cost, choices: comparison, choiceTitle: "Deslocamento total", trial: true },
+        { phase: 1, title: "Guardar a melhoria", route: improved.route, before: initial.route, current: improved.cost, best: improved.cost, choices: comparison, choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost },
+        { phase: 1, title: "Continuar explorando", route: exploring.route, before: improved.route, current: exploring.cost, best: improved.cost, choices: [{ label: "Rota em exploração", value: exploring.cost }, { label: "Melhor guardada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", trial: true },
+        { phase: 1, title: "Devolver a melhor encontrada", route: improved.route, before: [], current: improved.cost, best: improved.cost, choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Melhor encontrada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost }
+      );
+      slide.querySelector("#demoReplay").addEventListener("click", () => this.enter(slide));
+      slide.querySelector("#demoPause").addEventListener("click", () => {
+        if (this.running) { this.stop(); this.buttons(); }
+        else if (this.index < this.frames.length - 1) { this.running = true; this.buttons(); this.schedule(); }
+      });
+      slide.querySelector("#demoNext").addEventListener("click", () => {
+        this.stop(); this.index = Math.min(this.index + 1, this.frames.length - 1); this.render();
+      });
+      this.index = this.frames.length - 1;
+      this.running = false;
+      this.render();
+    },
+    stop() { clearTimeout(this.timer); this.timer = null; this.running = false; },
+    schedule() {
+      clearTimeout(this.timer);
+      if (!this.running) return;
+      this.timer = setTimeout(() => {
+        this.index++;
+        if (this.index >= this.frames.length - 1) this.stop();
+        this.render();
+        this.schedule();
+      }, 4200);
+    },
+    enter(slide, instant = false) {
+      this.stop();
+      this.index = instant || reduced() ? this.frames.length - 1 : 0;
+      this.running = !instant && !reduced();
+      this.render(); this.schedule();
+    },
+    leave() { this.stop(); },
+    busy() { return this.index < this.frames.length - 1; },
+    finish() { this.stop(); this.index = this.frames.length - 1; this.render(); },
+    buttons() {
+      const final = this.index === this.frames.length - 1;
+      const pause = this.slide.querySelector("#demoPause");
+      pause.textContent = this.running ? "Pausar" : "Continuar";
+      pause.disabled = final;
+      this.slide.querySelector("#demoNext").disabled = final;
+    },
+    render() {
+      const slide = this.slide, frame = this.frames[this.index];
+      const { names, matrix } = this.demo;
+      const svg = slide.querySelector("#solverDemoMap");
+      svg.replaceChildren();
+      svg.setAttribute("aria-label", `${frame.title}. Rota atual: ${frame.route.map((i) => names[i]).join(", ")}. ${fmt(frame.current)} segundos de deslocamento. Melhor rota completa: ${frame.best === null ? "ainda não construída" : fmt(frame.best) + " segundos"}.`);
+      const pos = [[130, 425], [750, 425], [730, 245], [650, 75], [260, 75]];
+      const initials = ["H", "E", "S", "M", "C"];
+      const defs = svgEl("defs", {}, svg);
+      ["route", "trial", "old"].forEach((kind) => {
+        const marker = svgEl("marker", { id: `demoArrow-${kind}`, viewBox: "0 0 12 12", refX: 10, refY: 6, markerWidth: 13, markerHeight: 13, markerUnits: "userSpaceOnUse", orient: "auto" }, defs);
+        svgEl("path", { d: "M1,1 L10,6 L1,11", fill: "none", class: `demo-arrow demo-arrow-${kind}` }, marker);
+      });
+      const active = svgEl("g", {}, svg), labels = [];
+      const edges = (route) => route.slice(1).map((b, k) => [route[k], b]).filter(([a, b]) => a !== b);
+      const currentEdges = new Set(edges(frame.route).map((e) => e.join("-")));
+      const draw = (a, b, kind) => {
+        const [ax, ay] = pos[a], [bx, by] = pos[b], dx = bx - ax, dy = by - ay;
+        const len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+        const sx = ax + ux * 34, sy = ay + uy * 34, ex = bx - ux * 38, ey = by - uy * 38;
+        const cx = (ax + bx) / 2 - dy * .09, cy = (ay + by) / 2 + dx * .09;
+        svgEl("path", { d: `M${sx},${sy} Q${cx},${cy} ${ex},${ey}`, class: `demo-edge demo-edge-${kind}`, ...(kind !== "old" ? { pathLength: 1 } : {}), "marker-end": `url(#demoArrow-${kind})` }, active);
+        if (kind !== "old") {
+          const hotelToCathedral = a === 0 && b === 2;
+          const t = hotelToCathedral ? .35 : .5, q = 1 - t, offset = hotelToCathedral ? -18 : 13;
+          labels.push({ x: q * q * sx + 2 * q * t * cx + t * t * ex - uy * offset, y: q * q * sy + 2 * q * t * cy + t * t * ey + ux * offset, value: matrix[a][b] });
+        }
+      };
+      edges(frame.before).forEach(([a, b]) => { if (!currentEdges.has(`${a}-${b}`)) draw(a, b, "old"); });
+      edges(frame.route).forEach(([a, b]) => draw(a, b, frame.trial ? "trial" : "route"));
+      labels.forEach((label) => svgEl("text", { x: label.x, y: label.y + 7, class: "demo-edge-time", text: fmt(label.value) }, svg));
+      const included = new Set(frame.route);
+      pos.forEach(([x, y], i) => {
+        const pending = !included.has(i), focus = i === frame.focus;
+        const group = svgEl("g", { class: `demo-node${pending ? " pending" : ""}${focus ? " selected" : ""}` }, svg);
+        svgEl(i === 0 ? "rect" : "circle", i === 0 ? { x: x - 28, y: y - 28, width: 56, height: 56, rx: 8 } : { cx: x, cy: y, r: 28 }, group);
+        svgEl("text", { x, y: y + 8, class: "demo-node-letter", text: initials[i] }, group);
+        svgEl("text", { x: i === 2 ? x - 48 : x, y: i === 2 ? y + 8 : i === 0 || i === 1 ? y + 65 : y - 43, class: "demo-node-name", ...(i === 2 ? { style: { textAnchor: "end" } } : {}), text: names[i] }, group);
+      });
+      slide.querySelector("#demoPhaseBuild").classList.toggle("active", frame.phase === 0);
+      slide.querySelector("#demoPhaseSearch").classList.toggle("active", frame.phase === 1);
+      slide.querySelector("#demoCurrent").innerHTML = `${fmt(frame.current)} <small>s</small>`;
+      slide.querySelector("#demoCurrent").classList.toggle("trial", !!frame.trial);
+      slide.querySelector("#demoBest").innerHTML = frame.best === null ? "—" : `${fmt(frame.best)} <small>s</small>`;
+      slide.querySelector("#demoStep").textContent = `${String(this.index + 1).padStart(2, "0")} / ${String(this.frames.length).padStart(2, "0")}`;
+      slide.querySelector("#demoAction").textContent = frame.title;
+      slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : ""}"><span>${choice.label}</span><b>${frame.phase === 0 ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
+      this.buttons();
+    },
+  };
+
   // ---------- 18 Busca ----------
   Scenes.search = {
     init(slide) {
