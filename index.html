@@ -746,7 +746,7 @@
     <div id="demoChoices" class="demo-choices"></div>
   </aside>
 </div>
-<div class="demo-controls"><button id="demoReplay" type="button">Repetir</button><button id="demoPause" type="button">Pausar</button><button id="demoNext" type="button">Próximo passo →</button></div>
+<div class="demo-controls"><button id="demoReplay" type="button">Repetir</button><button id="demoNext" type="button">Próximo passo →</button></div>
 <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>Aqui acompanhamos um exemplo pequeno para entender as duas estratégias. Usamos o hotel e quatro atrações de Nova Iorque, com os mesmos tempos da matriz. Neste recorte, todas as visitas são obrigatórias e comparamos apenas os deslocamentos. As janelas, as durações e as outras parcelas do custo voltam na execução completa do próximo slide.</p>
@@ -765,7 +765,7 @@
     <h4>Construção e GLS</h4>
     <p>PARALLEL_CHEAPEST_INSERTION constrói a solução inicial usando custos de inserção baseados nos arcos. A mudança que reduz 520 s é uma melhoria de busca local observada com GUIDED_LOCAL_SEARCH configurada; ela não demonstra, isoladamente, que as penalidades da GLS foram necessárias para obter essa melhoria. A rota pior ilustra a diferença entre explorar uma solução e atualizar a melhor encontrada.</p>
     <h4>Controles</h4>
-    <p>A reprodução avança automaticamente. Pausar mantém o quadro para explicar o encaixe. Próximo passo avança um quadro e pausa. Repetir reinicia a sequência. A seta de avanço da apresentação conclui a animação antes de passar ao slide seguinte.</p>
+    <p>Cada toque na seta direita avança um quadro. A seta esquerda volta um quadro. O botão Próximo passo também avança um quadro, e Repetir reinicia a sequência. Os passos ficam parados até o próximo comando, inclusive quando o avanço parte do modo do apresentador. Após o último quadro, a próxima seta direita abre o slide seguinte.</p>
   </details>
   <details class="notes-support"><summary>Execução reduzida e fontes</summary>
     <p>Recorte executado em 19/10/2026 com OR-Tools 9.10.4067, uma rota e quatro visitas obrigatórias. Estratégias PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. Os tempos vêm de timeMatrix, sem arredondamento. A animação não representa o registro completo de cinco dias, mostrado no slide 20.</p>
@@ -1045,8 +1045,8 @@
 </section>
 
 <script src="data.js?v=41"></script>
-<script src="motion.js?v=42"></script>
+<script src="motion.js?v=54"></script>
 <script src="search-demo.js?v=53"></script>
-<script src="scenes.js?v=53"></script>
+<script src="scenes.js?v=54"></script>
 </body>
 </html>

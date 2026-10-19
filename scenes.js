@@ -562,43 +562,23 @@
         { phase: 1, title: "Continuar explorando", route: exploring.route, before: improved.route, current: exploring.cost, best: improved.cost, choices: [{ label: "Rota em exploração", value: exploring.cost }, { label: "Melhor guardada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", trial: true },
         { phase: 1, title: "Devolver a melhor encontrada", route: improved.route, before: [], current: improved.cost, best: improved.cost, choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Melhor encontrada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost }
       );
-      slide.querySelector("#demoReplay").addEventListener("click", () => this.enter(slide));
-      slide.querySelector("#demoPause").addEventListener("click", () => {
-        if (this.running) { this.stop(); this.buttons(); }
-        else if (this.index < this.frames.length - 1) { this.running = true; this.buttons(); this.schedule(); }
-      });
-      slide.querySelector("#demoNext").addEventListener("click", () => {
-        this.stop(); this.index = Math.min(this.index + 1, this.frames.length - 1); this.render();
-      });
+      slide.querySelector("#demoReplay").addEventListener("click", () => window.Deck.replay());
+      slide.querySelector("#demoNext").addEventListener("click", () => window.Deck.next());
       this.index = this.frames.length - 1;
-      this.running = false;
       this.render();
     },
-    stop() { clearTimeout(this.timer); this.timer = null; this.running = false; },
-    schedule() {
-      clearTimeout(this.timer);
-      if (!this.running) return;
-      this.timer = setTimeout(() => {
-        this.index++;
-        if (this.index >= this.frames.length - 1) this.stop();
-        this.render();
-        this.schedule();
-      }, 4200);
+    get stepCount() { return this.frames.length; },
+    setStep(step) {
+      this.index = Math.max(0, Math.min(step, this.frames.length - 1));
+      this.render();
     },
     enter(slide, instant = false) {
-      this.stop();
-      this.index = instant || reduced() ? this.frames.length - 1 : 0;
-      this.running = !instant && !reduced();
-      this.render(); this.schedule();
+      this.setStep(instant ? this.frames.length - 1 : 0);
     },
-    leave() { this.stop(); },
     busy() { return this.index < this.frames.length - 1; },
-    finish() { this.stop(); this.index = this.frames.length - 1; this.render(); },
+    finish() { this.setStep(this.frames.length - 1); },
     buttons() {
       const final = this.index === this.frames.length - 1;
-      const pause = this.slide.querySelector("#demoPause");
-      pause.textContent = this.running ? "Pausar" : "Continuar";
-      pause.disabled = final;
       this.slide.querySelector("#demoNext").disabled = final;
     },
     render() {

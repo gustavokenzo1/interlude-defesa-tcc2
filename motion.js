@@ -149,6 +149,7 @@
   const channel = "BroadcastChannel" in window ? new BroadcastChannel("interlude-tcc2-motion") : null;
   const Scenes = (window.Scenes = window.Scenes || {});
   const buildLevel = new Array(total).fill(0);
+  const sceneStep = new Array(total).fill(0);
   let current = -1;
   let buildTimer = null;
   let startTimer = null;
@@ -178,6 +179,12 @@
     applyBuild(i, instant);
     renderPresenter();
     if (channel) channel.postMessage({ type: "build", index: i, level });
+  }
+
+  function setSceneStep(step, broadcast = true) {
+    sceneStep[current] = step;
+    if (!isPresenter) sceneOf(current)?.setStep?.(step);
+    if (broadcast && channel) channel.postMessage({ type: "scene-step", index: current, step });
   }
 
   // Um avanço revela a sequência inteira, um passo por intervalo. Um segundo
@@ -212,6 +219,7 @@
     }
     stopPlayback();
     current = index;
+    sceneStep[current] = instant ? (sceneOf(current)?.stepCount || 1) - 1 : 0;
     const slide = slides[current];
     slide.classList.add("active");
     if (!isPresenter) {
@@ -230,12 +238,13 @@
     document.title = `${pad(current + 1)} — ${slide.dataset.title} — Interlude`;
     renderPresenter();
     if (scriptDialog.open) openScript();
-    if (broadcast && channel) channel.postMessage({ type: "slide", index: current });
+    if (broadcast && channel) channel.postMessage({ type: "slide", index: current, instant });
   }
 
   function next() {
-    if (isPresenter) { show(current + 1); return; }
     const scene = sceneOf(current);
+    if (scene?.stepCount && sceneStep[current] < scene.stepCount - 1) { setSceneStep(sceneStep[current] + 1); return; }
+    if (isPresenter) { show(current + 1); return; }
     if (scene?.busy?.()) { scene.finish(slides[current]); return; }
     const totalSteps = maxBuild(current);
     if (buildLevel[current] < totalSteps) { stopPlayback(); setLevel(current, totalSteps, true); return; }
@@ -245,6 +254,7 @@
   }
 
   function previous() {
+    if (sceneOf(current)?.stepCount && sceneStep[current] > 0) { setSceneStep(sceneStep[current] - 1); return; }
     if (current <= 0) return;
     const target = current - 1;
     buildLevel[target] = maxBuild(target);
@@ -445,7 +455,9 @@
 
     channel?.addEventListener("message", (e) => {
       const d = e.data;
-      if (d?.type === "slide") { buildLevel[d.index] = 0; show(d.index, { broadcast: false }); }
+      if (d?.type === "slide") { buildLevel[d.index] = 0; show(d.index, { broadcast: false, instant: !!d.instant }); }
+      else if (d?.type === "scene-step" && d.index === current && sceneOf(current)?.stepCount) setSceneStep(d.step, false);
+      else if (d?.type === "request-scene-step" && d.index === current && sceneOf(current)?.stepCount) channel.postMessage({ type: "scene-step", index: current, step: sceneStep[current] });
       else if (!isPresenter && d?.type === "build" && d.index === current) { buildLevel[d.index] = d.level; applyBuild(d.index); }
     });
 
@@ -461,10 +473,13 @@
 
     fit();
     const fromHash = Number(location.hash.replace(/\D/g, ""));
-    document.fonts?.ready.then(() => show(fromHash >= 1 && fromHash <= total ? fromHash - 1 : 0, { broadcast: false }));
+    document.fonts?.ready.then(() => {
+      show(fromHash >= 1 && fromHash <= total ? fromHash - 1 : 0, { broadcast: false });
+      if (sceneOf(current)?.stepCount) channel?.postMessage({ type: "request-scene-step", index: current });
+    });
     showControls();
   }
 
-  window.Deck = { fillIcons, formatNumber, get current() { return current; }, slides, reduced };
+  window.Deck = { fillIcons, formatNumber, get current() { return current; }, slides, reduced, next, replay };
   addEventListener("DOMContentLoaded", start);
 })();
