@@ -183,7 +183,12 @@
 
   function setSceneStep(step, broadcast = true) {
     sceneStep[current] = step;
-    if (!isPresenter) sceneOf(current)?.setStep?.(step);
+    sceneOf(current)?.setStep?.(step);
+    if (isPresenter) {
+      const frame = document.getElementById("pCurrent");
+      frame.replaceChildren(presenterSlide(current, "pCurrent"));
+      fitFrame(frame);
+    }
     if (broadcast && channel) channel.postMessage({ type: "scene-step", index: current, step });
   }
 
@@ -222,6 +227,10 @@
     sceneStep[current] = instant ? (sceneOf(current)?.stepCount || 1) - 1 : 0;
     const slide = slides[current];
     slide.classList.add("active");
+    if (isPresenter && sceneOf(current)?.stepCount) {
+      sceneOf(current).setStep(sceneStep[current]);
+      presenterIndex = -1;
+    }
     if (!isPresenter) {
       if (instant) slide.classList.add("play");
       else play(slide);
@@ -315,10 +324,11 @@
   const presenterSlides = new Map();
   let presenterIndex = -1;
 
-  // Prepara cada cena uma vez, já completa. As prévias não acompanham os
-  // passos da animação da banca nem recriam o roteiro durante sua leitura.
+  // As cenas automáticas ficam completas na prévia. A cena manual atual
+  // acompanha o passo da banca sem recriar o roteiro durante sua leitura.
   function presenterSlide(index, frameId) {
-    if (!presenterSlides.has(index)) {
+    const manualCurrent = index === current && sceneOf(index)?.stepCount;
+    if (!manualCurrent && !presenterSlides.has(index)) {
       const source = slides[index];
       source.classList.add("active", "play");
       buildLevel[index] = maxBuild(index);
@@ -328,7 +338,7 @@
       presenterSlides.set(index, source.cloneNode(true));
       if (index !== current) source.classList.remove("active", "play");
     }
-    const clone = presenterSlides.get(index).cloneNode(true);
+    const clone = (manualCurrent ? slides[index] : presenterSlides.get(index)).cloneNode(true);
     clone.removeAttribute("id");
     clone.classList.add("active", "play");
     clone.querySelectorAll("animate, animateMotion, animateTransform, set, .pkt").forEach((el) => el.remove());

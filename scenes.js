@@ -393,48 +393,24 @@
     init(slide) {
       const svg = slide.querySelector("#penChart");
       const items = nodes.filter((n) => !n.depot).sort((a, b) => a.priority - b.priority);
-      const N = items.length;
-      this.rows = items.map((n, order) => {
-        const rho = (N - order) / N;
-        const iota = Math.max(0, Math.min(1, n.importance));
-        const sigma = 0.5 + 0.5 * Math.max(0, Math.min(1, n.suitability));
-        return { n, steps: [5e6, 5e6, 5e6 * (1 + 4 * rho), 5e6 * (1 + 4 * rho) * (1 + 0.5 * iota), Math.floor(5e6 * (1 + 4 * rho) * (1 + 0.5 * iota) * sigma)] };
-      });
-      const L = 170, R = 900 - 110, top = 8, rowH = 33, MAX = 40e6;
-      this.sx = (v) => ((R - L) * v) / MAX;
+      const left = 210, top = 12, rowH = 35, scale = (v) => v / 40e6 * 730;
       const grid = svgEl("g", { class: "grid" }, svg);
       [0, 10e6, 20e6, 30e6, 40e6].forEach((v) => {
-        svgEl("line", { x1: L + this.sx(v), x2: L + this.sx(v), y1: 0, y2: top + N * rowH }, grid);
-        svgEl("text", { class: "ax", x: L + this.sx(v), y: top + N * rowH + 18, "text-anchor": "middle", text: v === 0 ? "0" : `${v / 1e6} mi` }, grid);
+        svgEl("line", { x1: left + scale(v), x2: left + scale(v), y1: 0, y2: 436 }, grid);
+        svgEl("text", { class: "ax", x: left + scale(v), y: 464, "text-anchor": "middle", text: v ? `${v / 1e6} mi` : "0" }, grid);
       });
-      this.bars = this.rows.map((row, i) => {
-        const y = top + i * rowH;
-        svgEl("text", { class: "bl", x: L - 12, y: y + 21, "text-anchor": "end", text: `${row.n.priority}  ${row.n.name}` }, svg);
-        const rect = svgEl("rect", { x: L, y: y + 5, height: rowH - 11, rx: 4, width: 0, style: { fill: "#8FD3B6" } }, svg);
-        const label = svgEl("text", { class: "bv", x: L + 8, y: y + 21, text: "" }, svg);
-        return { rect, label, value: 0 };
-      });
-      this.colors = ["var(--day-1)", "var(--day-1)", "var(--day-2)", "var(--day-4)", "var(--day-5)"];
-    },
-    build(slide, level, instant) {
-      slide.querySelectorAll(".pen-step").forEach((s, i) => s.classList.toggle("current", i + 1 === level));
-      this.stop?.();
-      const from = this.bars.map((b) => b.value);
-      const to = this.rows.map((r) => (level === 0 ? 0 : r.steps[Math.min(level, 4)]));
-      const color = this.colors[Math.min(level, 4)];
-      this.bars.forEach((b) => (b.rect.style.fill = color));
-      const draw = (p) => {
-        const e = easeInOut(p);
-        this.bars.forEach((b, i) => {
-          const v = from[i] + (to[i] - from[i]) * e;
-          b.value = v;
-          const w = this.sx(v);
-          b.rect.setAttribute("width", Math.max(0, w));
-          b.label.setAttribute("x", 170 + w + 8);
-          b.label.textContent = v > 0 ? fmt(v) : "";
+      items.forEach((n, i) => {
+        const base = 5e6, position = base * (1 + 4 * (items.length - i) / items.length);
+        const iconic = position * (1 + .5 * Math.max(0, Math.min(1, n.importance)));
+        const seasonal = .5 + .5 * Math.max(0, Math.min(1, n.suitability));
+        const total = Math.floor(iconic * seasonal), y = top + i * rowH;
+        svgEl("text", { class: "bl", x: left - 14, y: y + 22, "text-anchor": "end", text: `${n.priority}  ${n.name}` }, svg);
+        const limits = [0, base, position, iconic];
+        ["#A6B0AA", "var(--pine)", "var(--amber)"].forEach((color, k) => {
+          svgEl("rect", { x: left + scale(limits[k]), y: y + 5, width: scale(limits[k + 1] - limits[k]), height: 25, fill: color }, svg);
         });
-      };
-      if (instant) draw(1); else this.stop = tween(600, draw);
+        svgEl("text", { class: "bv", x: left + scale(total) + 10, y: y + 23, text: dec(total / 1e6, 1) + " mi" }, svg);
+      });
     },
   };
 
@@ -473,6 +449,37 @@
       const name = (n) => n.depot ? "Hotel" : n.name;
       const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
       slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+    },
+  };
+
+  Scenes.timeInstance = {
+    init(slide) {
+      Scenes.instance.matrix(slide);
+      const win = slide.querySelector("#winGrid");
+      win.setAttribute("viewBox", "0 0 760 290");
+      const x = (h) => 220 + (h - 9) / 9 * 505;
+      [9, 12, 15, 18].forEach((h) => {
+        svgEl("line", { x1: x(h), x2: x(h), y1: 43, y2: 251, class: "instance-grid" }, win);
+        svgEl("text", { x: x(h), y: 26, "text-anchor": "middle", class: "instance-tick", text: `${h}h` }, win);
+      });
+      [{ label: "Funcionamento", start: 10, end: 17, y: 88, color: "#ABB4AE", a: "10:00", b: "17:00" },
+       { label: "Início permitido", start: 10, end: 13.75, y: 191, color: "var(--pine)", a: "10:00", b: "13:45" }].forEach((r) => {
+        svgEl("text", { x: 196, y: r.y + 8, "text-anchor": "end", class: "instance-lane", text: r.label }, win);
+        svgEl("rect", { x: x(r.start), y: r.y - 15, width: x(r.end) - x(r.start), height: 32, rx: 3, fill: r.color }, win);
+        [r.start, r.end].forEach((h, i) => svgEl("text", { x: x(h), y: r.y + 47, "text-anchor": "middle", class: "instance-tick", text: i ? r.b : r.a }, win));
+      });
+      const svg = slide.querySelector("#timeSequence");
+      const marks = [{ x: 90, time: "09:12:21", label: "Saint Patrick" }, { x: 720, time: "09:42:21", label: "Fim da visita" }, { x: 1120, time: "09:59:52", label: "Chegada" }, { x: 1330, time: "10:00:00", label: "The MET" }];
+      const segments = [{ a: 90, b: 720, color: "var(--pine)", label: "sᵢ = 30 min" }, { a: 720, b: 1120, color: "var(--day-3)", label: "tᵢⱼ = 17 min 31 s" }, { a: 1120, b: 1330, color: "var(--amber)", label: "espera: 8 s" }];
+      segments.forEach((r) => {
+        svgEl("rect", { x: r.a, y: 91, width: r.b - r.a, height: 38, fill: r.color }, svg);
+        svgEl("text", { x: (r.a + r.b) / 2, y: 116, "text-anchor": "middle", class: "time-segment-label", style: { fill: r.color === "var(--amber)" ? "var(--ink)" : "#fff" }, text: r.label }, svg);
+      });
+      marks.forEach((m) => {
+        svgEl("line", { x1: m.x, x2: m.x, y1: 77, y2: 144, stroke: "var(--surface)", "stroke-width": 3 }, svg);
+        svgEl("text", { x: m.x, y: 59, "text-anchor": "middle", class: "time-clock", text: m.time }, svg);
+        svgEl("text", { x: m.x, y: 178, "text-anchor": "middle", class: "time-point-label", text: m.label }, svg);
+      });
     },
   };
 
@@ -554,7 +561,7 @@
       };
       this.frames = [];
       let route = [0, 0];
-      construction.forEach((step) => {
+      construction.forEach((step, round) => {
         const current = cost(route);
         const candidates = names.map((_, node) => node).filter((node) => node && !route.includes(node)).map((node) => {
           const slots = route.slice(1).map((_, k) => insertion(route, node, k + 1));
@@ -562,16 +569,13 @@
         }).sort((a, b) => a.delta - b.delta);
         const slots = route.slice(1).map((_, k) => insertion(route, step.insert, k + 1));
         const winning = slots.reduce((best, slot) => slot.delta < best.delta ? slot : best);
-        this.frames.push({ phase: 0, stage: "compare", title: "Comparar próximas atrações", route, current, secondary: candidates[0].delta, secondaryLabel: "Menor acréscimo", choiceTitle: "Melhor encaixe de cada atração", choices: candidates.map((c) => ({ label: names[c.node], value: c.delta })), choiceDelta: true });
-        slots.forEach((slot, k) => this.frames.push({ phase: 0, stage: "preview", title: `Testar ${names[step.insert]}`, route, current, secondary: cost(slot.route), secondaryLabel: "Custo da prévia", choiceTitle: `Encaixe ${k + 1} de ${slots.length}`, choices: slots.map((c) => ({ label: c.label, value: c.delta, active: c.position === slot.position })), choiceDelta: true, preview: slot }));
-        this.frames.push({ phase: 0, stage: "commit", title: `Confirmar ${names[step.insert]}`, route: step.route, current: step.cost, secondary: step.delta, secondaryLabel: "Acrescentado", choiceTitle: "Encaixe escolhido", choices: [{ label: winning.label, value: winning.delta, chosen: true }], choiceDelta: true, calculation: winning, previousCost: current, focus: step.insert });
+        if (!round) this.frames.push({ phase: 0, stage: "compare", title: "Comparação inicial", route, current, secondary: candidates[0].delta, secondaryLabel: "Menor acréscimo", choiceTitle: "Melhor encaixe de cada atração", choices: candidates.map((c) => ({ label: names[c.node], value: c.delta })), choiceDelta: true });
+        this.frames.push({ phase: 0, stage: "insert", title: `Inserir ${names[step.insert]}`, route: step.route, current: step.cost, secondary: step.delta, secondaryLabel: "Acréscimo escolhido", choiceTitle: "Comparação antes desta inserção", choices: candidates.map((c) => ({ label: names[c.node], value: c.delta, chosen: c.node === step.insert })), choiceDelta: true, calculation: winning, previousCost: current, focus: step.insert, slots: step.insert === 2 ? slots : null });
         route = step.route;
       });
       const initial = search[0], improved = search[1], exploring = search[2];
-      const comparison = [{ label: "Primeira rota completa", value: initial.cost }, { label: "Outra ordem", value: improved.cost }];
       this.frames.push(
-        { phase: 1, stage: "local-preview", title: "Testar outra ordem", route: improved.route, current: initial.cost, secondary: improved.cost, secondaryLabel: "Custo da prévia", choices: comparison.map((c, i) => ({ ...c, active: i === 1 })), choiceTitle: "Deslocamento total", trial: true },
-        { phase: 1, stage: "local-commit", title: "Guardar a melhoria", route: improved.route, current: improved.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: comparison.map((c, i) => ({ ...c, chosen: i === 1 })), choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost },
+        { phase: 1, stage: "improved", title: "Melhorar a ordem", route: improved.route, current: improved.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Nova ordem", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost },
         { phase: 1, stage: "explore", title: "Explorar outra alternativa", route: exploring.route, current: exploring.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: [{ label: "Rota em exploração", value: exploring.cost, active: true }, { label: "Melhor guardada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", trial: true },
         { phase: 1, stage: "final", title: "Devolver a melhor encontrada", route: improved.route, current: improved.cost, secondary: improved.cost, secondaryLabel: "Melhor guardada", choices: [{ label: "Primeira rota completa", value: initial.cost }, { label: "Melhor encontrada", value: improved.cost, chosen: true }], choiceTitle: "Deslocamento total", saving: initial.cost - improved.cost }
       );
@@ -622,7 +626,13 @@
         const group = svgEl("g", { class: `demo-node ${state}` }, svg);
         svgEl(node === 0 ? "rect" : "circle", node === 0 ? { x: x - 28, y: y - 28, width: 56, height: 56, rx: 8 } : { cx: x, cy: y, r: 28 }, group);
         svgEl("text", { x, y: y + 8, class: "demo-node-letter", text: initials[node] }, group);
-        svgEl("text", { x, y: above ? y - 46 : y + 63, class: "demo-node-name", text: names[node] }, group);
+        const labelY = above ? y - 46 : y + 63;
+        const label = svgEl("text", { x, y: labelY, class: `demo-node-name${frame.route.length === 6 && state !== "pending" ? " compact" : ""}` }, group);
+        if (frame.route.length === 6 && names[node].length > 10 && state !== "pending") {
+          const words = names[node].split(" ");
+          svgEl("tspan", { x, y: labelY, text: words[0] }, label);
+          svgEl("tspan", { x, dy: 26, text: words.slice(1).join(" ") }, label);
+        } else label.textContent = names[node];
       };
       pending.forEach((node, i) => drawNode({ node, x: 80 + (i + .5) * 740 / pending.length, y: 75 }, "pending"));
       positions.forEach((point) => drawNode(point, point.node === frame.focus ? "selected" : ""));
@@ -633,13 +643,14 @@
       slide.querySelector("#demoCurrent").innerHTML = `${fmt(frame.current)} <small>s</small>`;
       slide.querySelector("#demoCurrent").classList.toggle("trial", frame.stage === "explore");
       slide.querySelector("#demoSecondaryLabel").textContent = frame.secondaryLabel;
-      slide.querySelector("#demoBest").innerHTML = `${frame.secondaryLabel === "Acrescentado" ? "+" : ""}${fmt(frame.secondary)} <small>s</small>`;
+      slide.querySelector("#demoBest").innerHTML = `${frame.secondaryLabel === "Acréscimo escolhido" ? "+" : ""}${fmt(frame.secondary)} <small>s</small>`;
       slide.querySelector("#demoBest").classList.toggle("trial", frame.stage.includes("preview"));
       slide.querySelector("#demoStep").textContent = `${String(this.index + 1).padStart(2, "0")} / ${String(this.frames.length).padStart(2, "0")}`;
       slide.querySelector("#demoAction").textContent = frame.title;
       const calculation = frame.preview || frame.calculation;
+      const slotTable = frame.slots ? `<div class="demo-slots"><h4>Encaixes de Saint Patrick</h4>${frame.slots.map((slot) => `<p class="${slot.delta === calculation.delta ? "chosen" : ""}"><span>${slot.position === 1 ? "Hotel → Saint Patrick → Empire State" : "Empire State → Saint Patrick → Hotel"}</span><b>+${fmt(slot.delta)} s</b></p>`).join("")}</div>` : "";
       const formula = calculation ? `<div class="demo-calculation"><small>Novos trechos − trecho substituído</small><div>${fmt(calculation.terms[0])} + ${fmt(calculation.terms[1])} − ${fmt(calculation.terms[2])} = <b>+${fmt(calculation.delta)} s</b></div><p>Total: ${fmt(frame.previousCost ?? frame.current)} + ${fmt(calculation.delta)} = ${fmt((frame.previousCost ?? frame.current) + calculation.delta)} s</p></div>` : "";
-      slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : choice.active ? "active" : ""}"><span>${choice.label}</span><b>${frame.choiceDelta ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${formula}${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
+      slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : choice.active ? "active" : ""}"><span>${choice.label}</span><b>${frame.choiceDelta ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${slotTable}${formula}${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
       slide.querySelector("#demoNext").disabled = this.index === this.frames.length - 1;
     },
   };
@@ -647,6 +658,8 @@
   // ---------- 18 Busca ----------
   Scenes.search = {
     init(slide) {
+      this.slide = slide;
+      this.phase = 1;
       const svg = slide.querySelector("#searchMap");
       this.pos = project({ x: 10, y: 6, w: 540, h: 628 }, { pad: 26, minDist: 32 });
       this.routeLayer = svgEl("g", {}, svg);
@@ -696,10 +709,22 @@
       this.odo = slide.querySelector("#odoValue");
       this.odoFrame = slide.querySelector("#odoFrame");
       this.odoTime = slide.querySelector("#odoTime");
-      slide.querySelector("#searchReplay").addEventListener("click", (e) => { e.currentTarget.blur(); this.play(slide); });
+      slide.querySelector("#searchReplay").addEventListener("click", (e) => { e.currentTarget.blur(); window.Deck.replay(); });
+      slide.querySelector("#searchCompare").addEventListener("click", () => window.Deck.next());
       this.shown = -1;
       this.value = this.frames[0].objective;
       this.show(this.frames.length - 1, true);
+      this.setStep(1);
+    },
+    stepCount: 2,
+    setStep(step) {
+      this.phase = step;
+      this.slide.querySelector("#searchExecution").hidden = step === 1;
+      this.slide.querySelector("#searchComparison").hidden = step === 0;
+      this.slide.querySelector("#searchTitle").textContent = step ? "Comparação de estratégias de busca" : "Busca das rotas em execução";
+      this.slide.querySelector("#searchPhaseLabel").textContent = step ? "02 / 02" : "01 / 02";
+      this.slide.querySelector("#searchCompare").textContent = step ? "Resultado por dia →" : "Comparar estratégias →";
+      if (step) { this.stopAll(); this.show(this.frames.length - 1, true); }
     },
     show(k, instant) {
       const frame = this.frames[k];
@@ -760,6 +785,7 @@
     },
     stopAll() { (this.timers || []).forEach(clearTimeout); this.timers = []; this.running = false; },
     enter(slide, instant) {
+      this.setStep(instant ? 1 : 0);
       if (instant || reduced()) { this.stopAll(); this.show(this.frames.length - 1, true); return; }
       this.routeLayer.replaceChildren();
       this.show(0, true);
@@ -767,7 +793,7 @@
       this.play(slide);
     },
     busy() { return this.running; },
-    finish() { this.stopAll(); this.show(this.frames.length - 1, false); },
+    finish() { this.setStep(1); },
     leave() { this.stopAll(); },
   };
 

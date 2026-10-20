@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=55" />
+  <link rel="stylesheet" href="motion.css?v=57" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -295,109 +295,40 @@
 </template>
 </section>
 
-<section class="slide contract-slide discover-contract" id="slide-10" data-title="Descoberta, categorias e candidatos" data-stage="2">
-<h2 class="title" data-a="up">A descoberta transforma categorias em candidatos</h2>
-<div class="contract-full">
-<div class="api-call" data-contract-call="5"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
-  &quot;location&quot;: {
-    &quot;latitude&quot;: 40.7527316,
-    &quot;longitude&quot;: -73.9936287
-  },
-  &quot;buckets&quot;: [
-    {
-      &quot;id&quot;: &quot;nature&quot;,
-      &quot;types&quot;: [&quot;park&quot;]
-    }
-  ],
-  &quot;destinationName&quot;: &quot;Nova Iorque&quot;
-}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
-  &quot;buckets&quot;: [
-    {
-      &quot;id&quot;: &quot;nature&quot;,
-      &quot;places&quot;: [
-        {
-          &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
-          &quot;name&quot;: &quot;Central Park&quot;,
-          &quot;coordinate&quot;: {
-            &quot;latitude&quot;: 40.7825547,
-            &quot;longitude&quot;: -73.9655834
-          },
-          &quot;rating&quot;: 4.8,
-          &quot;userRatingCount&quot;: 301915,
-          &quot;primaryType&quot;: &quot;park&quot;
-        }
-      ]
-    }
-  ]
-}</code></pre></div></div></div>
-
-</div>
-<template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>A descoberta recebe a localização da hospedagem e os grupos associados aos interesses. No recorte à esquerda, o grupo nature pede lugares do tipo park.</p>
-  <p>A entrada descreve o que procurar. A resposta mantém o identificador nature e acrescenta places, a lista dos candidatos encontrados nesse grupo. O Central Park aparece com seu ID, coordenadas, nota, número de avaliações e tipo principal.</p>
-  <p>Esses dados permitem localizar e ordenar as sugestões. Ainda faltam a duração estimada e a descrição da visita. A próxima chamada acrescenta essas informações ao candidato encontrado.</p>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>O exemplo do contrato mostra uma categoria, um tipo e um candidato. buckets tem estruturas diferentes na entrada e na saída: types informa os tipos desejados, e places contém os resultados. As coordenadas coincidem com a entrada registrada do solver; nota e volume de avaliações também aparecem na captura do aplicativo.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Descoberta, ordenação e fila de enriquecimento</a></li><li><a href="references/aplicativo/backend/src/application/discover-places.ts">Busca por grupo e composição de places</a></li><li><a href="references/aplicativo/mobile/src/features/discover/anchor.ts">Coordenadas da base da busca</a></li></ul>
-  </details>
-</template>
-</section>
-
-<section class="slide contract-slide enrich-contract" id="slide-11" data-title="Enriquecimento, duração e descrição" data-stage="2">
-<h2 class="title" data-a="up">O enriquecimento acrescenta duração e descrição</h2>
-<div class="enrich-layout">
-<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png" alt="Central Park no aplicativo com nota 4,8, 301.915 avaliações, duração de duas horas e descrição" /></div></div>
-<div class="api-panel">
-<div class="api-call" data-contract-call="6"><h3><span class="call-number">06</span> POST /v1/places/enrich</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
-  &quot;places&quot;: [
-    {
-      &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
-      &quot;name&quot;: &quot;Central Park&quot;,
-      &quot;coordinate&quot;: {
-        &quot;latitude&quot;: 40.7825547,
-        &quot;longitude&quot;: -73.9655834
-      },
-      &quot;rating&quot;: 4.8,
-      &quot;userRatingCount&quot;: 301915,
-      &quot;primaryType&quot;: &quot;park&quot;
-    }
-  ],
-  &quot;includePhotos&quot;: false
-}</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
-  &quot;places&quot;: [
-    {
-      &quot;place&quot;: {
-        &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
-        &quot;name&quot;: &quot;Central Park&quot;
-      },
-      &quot;insight&quot;: {
-        &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
-        &quot;averageMinutes&quot;: 120,
-        &quot;description&quot;: &quot;Grande parque urbano com lagos, pontes, jardins, áreas arborizadas e vistas clássicas de Manhattan.&quot;
-      }
-    }
-  ]
-}</code></pre></div></div></div>
+<section class="slide contract-slide discovery-merged" id="slide-10" data-title="Descoberta e enriquecimento do Central Park" data-stage="2">
+<h2 class="title" data-a="up">Etapa 2 — Da descoberta ao card da atração</h2>
+<div class="discovery-layout">
+<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png" alt="Central Park no aplicativo, nota 4,8, 301.915 avaliações, duração de duas horas e descrição" /></div></div>
+<div class="discovery-api-panel">
+<div class="api-call"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><h4>Request · recorte de buckets</h4><pre class="syntax-block" data-language="json"><code>{
+  &quot;buckets&quot;: [{
+    &quot;id&quot;: &quot;nature&quot;,
+    &quot;types&quot;: [&quot;park&quot;]
+  }]
+}</code></pre><h4>Response · buckets[0].places[0]</h4><pre class="syntax-block" data-language="json"><code>{
+  &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+  &quot;name&quot;: &quot;Central Park&quot;,
+  &quot;rating&quot;: 4.8,
+  &quot;userRatingCount&quot;: 301915,
+  &quot;primaryType&quot;: &quot;park&quot;
+}</code></pre></div>
+<div class="api-call"><h3><span class="call-number">06</span> POST /v1/places/enrich</h3><div class="contract-handoff"><span>Request · places[0]</span><b>← candidato da descoberta</b></div><h4>Response · places[0].insight</h4><pre class="syntax-block" data-language="json"><code>{
+  &quot;placeId&quot;: &quot;ChIJ4zGFAZpYwokRGUGph3Mf37k&quot;,
+  &quot;averageMinutes&quot;: 120,
+  &quot;description&quot;: &quot;Grande parque urbano com lagos, pontes, jardins, áreas arborizadas e vistas clássicas de Manhattan.&quot;
+}</code></pre></div>
 </div></div>
 <template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>O enriquecimento recebe os candidatos da descoberta. O exemplo envia o Central Park com o mesmo identificador e os dados que já conhecemos.</p>
-  <p>Na resposta, place preserva o lugar e insight acrescenta as informações produzidas com apoio do modelo de linguagem. averageMinutes igual a cento e vinte preenche as duas horas mostradas no card. A descrição preenche o texto da atração. A duração estimada também será usada na preparação da instância do solver.</p>
-  <p>includePhotos está como false porque as fotos carregam em paralelo por uma chamada própria. O identificador permite reunir foto, dados do lugar e insight no mesmo card.</p>
-  <p>Vamos agora detalhar a ordenação dos candidatos. No fluxo do aplicativo, esse cálculo usa os dados da descoberta antes de alimentar a fila de enriquecimento.</p>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>O contrato foi reduzido a um candidato; place omite campos repetidos e a descrição mantém a primeira frase da captura. averageMinutes é uma estimativa para planejar a visita. No aplicativo, os próximos candidatos da fila são enriquecidos em lotes, e as fotos usam o endpoint próprio POST /v1/places/photos.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP usados pelo aplicativo</a></li><li><a href="references/aplicativo/backend/src/interfaces/http/routes.ts">Validação das requisições e estrutura das respostas</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Ordenação e enrich com includePhotos false em lotes</a></li><li><a href="references/aplicativo/backend/src/application/enrich-places.ts">Resposta com place, insight e foto opcional</a></li><li><a href="references/aplicativo/mobile/src/features/places/usePlacePhotos.ts">Fotos carregadas em paralelo e cacheadas no cliente</a></li><li><a href="references/aplicativo/backend/src/infrastructure/google/gemini-adapter.ts">Estimativas e descrições produzidas pelo modelo</a></li></ul>
-  </details>
+<h4>Fala <span class="speaker-name">Kenzo</span></h4>
+<p>As duas chamadas montam o card do Central Park. A descoberta recebe os tipos associados aos interesses: neste recorte, nature pede park. A resposta acrescenta places ao grupo e devolve o candidato com identificador, nota, avaliações e tipo principal.</p>
+<p>O enriquecimento recebe esse candidato em places. Na resposta, insight acrescenta a estimativa de cento e vinte minutos e a descrição. As duas horas e o texto do card vêm desses campos. O mesmo placeId permite associar as informações ao lugar encontrado.</p>
+<p>A descoberta já fornece os dados usados na ordenação. A duração estimada será usada para preparar a instância do solver. As fotos carregam em paralelo pelo endpoint próprio, por isso o enriquecimento usa includePhotos false.</p>
+<details class="notes-study"><summary>Recortes dos contratos</summary><p>À esquerda, o primeiro JSON é um recorte da requisição, com apenas buckets. A chamada também recebe location e destinationName. O segundo JSON é um único objeto de buckets[0].places[0], sem as coordenadas e os demais candidatos. O caminho escrito acima identifica exatamente o objeto exibido.</p><p>À direita, places[0] da requisição recebe o candidato completo da descoberta, incluindo coordenadas. A resposta preserva place e acrescenta insight. O JSON mostra apenas insight: o identificador reaparece, averageMinutes acrescenta a duração e description acrescenta a descrição. A descrição foi recortada na primeira frase. Os trechos não representam respostas completas.</p></details>
+<details class="notes-support"><summary>Fontes</summary><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP</a></li><li><a href="references/aplicativo/backend/src/application/discover-places.ts">Descoberta por categoria</a></li><li><a href="references/aplicativo/backend/src/application/enrich-places.ts">Composição de place e insight</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Ordenação e enriquecimento em lotes</a></li><li><a href="references/aplicativo/mobile/src/features/places/usePlacePhotos.ts">Fotos em paralelo</a></li></ul></details>
 </template>
 </section>
 
-<section class="slide" id="slide-12" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
+<section class="slide" id="slide-11" data-title="Etapa 2 — Ordenação dos candidatos" data-stage="2" data-scene="bayes">
   <h2 class="title" data-a="up">Etapa 2 — Ordenação dos candidatos</h2>
   <div class="formula" style="margin-top:22px">
     <span class="t" data-build="1"><span>S</span><sub>i</sub></span><span class="op" data-build="1">=</span>
@@ -446,7 +377,7 @@
 </template>
 </section>
 
-<section class="slide" id="slide-13" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
+<section class="slide" id="slide-12" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
   <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
   <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das mesmas atrações. The MET, 9/11 Memorial e Brooklyn Bridge sobem três posições do produto simples ao escore completo, Empire State, Statue of Liberty e Bryant Park descem três."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
@@ -472,63 +403,27 @@
 </template>
 </section>
 
-<section class="slide" id="slide-14" data-title="Etapa 3 — Seleção e priorização" data-stage="3" data-scene="prio">
-  <h2 class="title" data-a="up">Etapa 3 — Seleção e priorização</h2>
-  <div class="step" style="grid-template-columns:560px 1fr">
-    <div><div class="pair"><div class="phone" data-a="phone" style="--d:150ms"><div class="screen-name-layer"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes das atrações padronizados para a apresentação"><rect x="292" y="911" width="440" height="85" fill="#fff"/><text x="296" y="947">The MET</text><rect x="292" y="1104" width="440" height="94" fill="#fff"/><text x="296" y="1143">9/11 Memorial</text><rect x="292" y="1304" width="440" height="74" fill="#fff"/><text x="296" y="1343">Brooklyn Bridge</text></svg></div></div><div class="phone" data-a="phone" style="--d:300ms"><div class="screen-name-layer"><img src="assets/app/poi-priority-2.png" alt="Continuação da lista de priorização mostrando as atrações de número 8 a 12" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes das atrações padronizados para a apresentação"><rect x="292" y="858" width="440" height="65" fill="#fff"/><text x="296" y="894">Statue of Liberty</text><rect x="292" y="1408" width="440" height="62" fill="#fff"/><text x="296" y="1447">Bryant Park</text></svg></div></div></div></div>
-    <div class="step-body">
-      <div class="prio" data-a="up" style="--d:400ms">
-        <div class="prio-head"><span>Ordem definida pelo usuário</span><span>fator de posição <span class="math">1 + 4ρ<sub>i</sub></span></span></div>
-        <ol id="prioList"></ol>
-      </div>
-    </div>
+<section class="slide priority-penalty" id="slide-13" data-title="Etapa 3 — Prioridade e penalidade de exclusão" data-stage="3" data-scene="penalty">
+<h2 class="title" data-a="up">Etapa 3 — Prioridade e penalidade de exclusão</h2>
+<div class="priority-penalty-layout"><div class="phone" data-a="phone"><div class="screen-name-layer"><img src="assets/app/poi-priority.png" alt="Lista de priorização com as seis primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes das atrações padronizados para a apresentação"><rect x="292" y="911" width="440" height="85" fill="#fff"/><text x="296" y="947">The MET</text><rect x="292" y="1104" width="440" height="94" fill="#fff"/><text x="296" y="1143">9/11 Memorial</text><rect x="292" y="1304" width="440" height="74" fill="#fff"/><text x="296" y="1343">Brooklyn Bridge</text></svg></div></div><div class="priority-cost">
+<div class="formula penalty-formula">
+    <span class="t">π<sub>i</sub></span><span class="op">=</span>
+    <span class="t c1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
+    <span class="t c2"><span style="font-style:normal">× (1 + 4</span>ρ<sub>i</sub><span style="font-style:normal">)</span></span>
+    <span class="t c3"><span style="font-style:normal">× (1 + 0,5</span>ι<sub>i</sub><span style="font-style:normal">)</span></span>
+    <span class="t c4"><span style="font-style:normal">× (0,5 + 0,5</span>σ<sub>i</sub><span style="font-style:normal">)⌋</span></span>
   </div>
-  <template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Bruno</span></h4>
-  <p>O viajante escolhe as atrações e arrasta a lista para indicar suas prioridades. A lista à direita mostra a ordem definida para as doze atrações deste exemplo.</p>
-  <p>O fator de posição é maior no início da lista. Para o Central Park, que está em primeiro, vale cinco. Para o Bryant Park, em último, fica próximo de um vírgula trinta e três. Esse fator aumenta o custo de excluir os lugares mais prioritários.</p>
-  <p>A posição expressa o que o viajante quer preservar. O solver ainda precisa decidir o dia e a sequência das visitas conforme horários e deslocamentos. A próxima fórmula combina esse fator com os demais componentes da penalidade de exclusão.</p>
-  <details class="notes-study">
-    <summary>Estudo do conteúdo exibido</summary>
-    <h4>Fator de posição 1 + 4ρᵢ (rô)</h4>
-    <p>Leia “um mais quatro vezes ρ (rô) índice i”. i identifica a atração e ρᵢ (rô) representa sua posição normalizada, com valor maior para prioridades mais altas. Na lista mostrada, o primeiro fator vale 5 e o último aproximadamente 1,33. O fator expressa a prioridade na exclusão; a sequência cronológica será calculada pelo solver.</p>
-  </details>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>Os nomes das atrações nas capturas foram padronizados como rótulos da apresentação: The MET, 9/11 Memorial, Brooklyn Bridge, Statue of Liberty e Bryant Park. A ordem, os dados e as imagens dos lugares permanecem os da captura.</p>
-    <p>A priorização atualiza o rascunho local antes do envio para geração. Uma prioridade alta aumenta o custo de exclusão, sem garantir inclusão quando as restrições impedem a visita.</p>
-    <h4>Fontes</h4>
-    <ul>
-<li><a href="references/aplicativo/mobile/src/app/trip/attractions-summary.tsx">Tela de priorização</a></li>
-<li><a href="data/solver-request.json">Campo priority no payload real</a></li>
-</ul>
-  </details>
-</template>
-</section>
+<div class="pen-factor-key"><span>ρ = (N − ordem)/N</span><span>ι = mín(1, log₁₀(1+n)/5)</span><span>σ ∈ {0,6 ou 1}</span></div>
+<svg id="penChart" viewBox="0 0 1080 475" role="img" aria-label="Penalidades das doze atrações, com segmentos de base, aumento por posição e aumento por iconicidade"></svg>
+<div class="pen-legend"><span><i class="base"></i>Base</span><span><i class="position"></i>Posição</span><span><i class="iconic"></i>Iconicidade</span><span class="season">Sazonalidade ×1</span></div>
+</div></div>
+<template class="speaker-notes">
 
-<section class="slide" id="slide-15" data-title="Etapa 3 — Penalidade de exclusão" data-stage="3" data-scene="penalty">
-  <h2 class="title" data-a="up">Etapa 3 — Penalidade de exclusão</h2>
-  <div class="formula penalty-formula">
-    <span class="t" data-build="1">π<sub>i</sub></span><span class="op" data-build="1">=</span>
-    <span class="t c1" data-build="1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
-    <span class="t c2" data-build="2"><span style="font-style:normal">× (1 + 4</span>ρ<sub>i</sub><span style="font-style:normal">)</span></span>
-    <span class="t c3" data-build="3"><span style="font-style:normal">× (1 + 0,5</span>ι<sub>i</sub><span style="font-style:normal">)</span></span>
-    <span class="t c4" data-build="4"><span style="font-style:normal">× (0,5 + 0,5</span>σ<sub>i</sub><span style="font-style:normal">)⌋</span></span>
-  </div>
-  <div class="pen-wrap">
-    <div class="pen-chart" data-a="fade" style="--d:300ms"><svg id="penChart" viewBox="0 0 900 430" role="img" aria-label="Penalidade de exclusão de cada uma das doze atrações, calculada com a fórmula e os dados da execução"></svg></div>
-    <div class="pen-steps">
-      <div class="pen-step c1" data-build="1"><h4>Base <code>5.000.000</code></h4></div>
-      <div class="pen-step c2" data-build="2"><h4>Posição do usuário <code>ρ = (N − ordem)/N</code></h4></div>
-      <div class="pen-step c3" data-build="3"><h4>Iconicidade <code>ι = mín(1, log₁₀(1+n)/5)</code></h4></div>
-      <div class="pen-step c4" data-build="4"><h4>Sazonalidade <code>σ ∈ {0,6 ou 1}</code></h4></div>
-    </div>
-  </div>
-  <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
+  <p>O viajante seleciona as atrações e arrasta a lista para indicar prioridades. A ordem da captura define o fator de posição, sem determinar a sequência cronológica das visitas.</p>
   <p>Esta fórmula calcula o custo de deixar uma atração de fora. Partimos da base de cinco milhões e multiplicamos pelos fatores de posição, iconicidade e sazonalidade.</p>
   <p>A posição usa a ordem definida pelo viajante. A iconicidade usa o número de avaliações e pode inverter os custos entre posições próximas. A sazonalidade reduz o custo de exclusão quando o lugar é menos adequado à época da viagem. Nesta entrada, todas as atrações têm esse valor igual a um.</p>
-  <p>Ao avançar os componentes, as barras mostram como o custo se forma. Para o Central Park, os fatores são cinco, um vírgula cinco e um. O resultado é trinta e sete milhões e meio de unidades de custo.</p>
+  <p>As cores das barras mostram aumentos sucessivos: a base, o acréscimo após multiplicar pela posição e o acréscimo após multiplicar pela iconicidade. Os segmentos são diferenças entre os produtos sucessivos, e não fatores independentes somados. Para o Central Park, os fatores são cinco, um vírgula cinco e um. O resultado é trinta e sete milhões e meio de unidades de custo.</p>
   <p>Esse valor só será cobrado se a atração for excluída. A busca compara essa penalidade com os demais custos da agenda, respeitando as restrições obrigatórias.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
@@ -540,6 +435,7 @@
     <p>Leia “ι (iota) índice i é o mínimo entre um e o logaritmo na base dez de um mais ene, dividido por cinco”. n é a quantidade de avaliações, diferente de N, que conta atrações. O fator resultante fica entre um e um vírgula cinco.</p>
     <h4>Sazonalidade σᵢ (sigma)</h4>
     <p>Leia “σ (sigma) índice i pertence ao conjunto zero vírgula seis ou um”. Com σ (sigma) igual a 0,6, o fator 0,5 + 0,5σ (sigma) vale 0,8, uma redução de 20%. Com σ (sigma) igual a um, o fator vale um e mantém o produto.</p>
+    <h4>Como ler as cores</h4><p>No Central Park, a base cinza vale 5 milhões. O fator de posição ×5 leva a 25 milhões: o segmento verde acrescenta 20 milhões. A iconicidade ×1,5 leva a 37,5 milhões: o segmento âmbar acrescenta 12,5 milhões. A sazonalidade ×1 não altera o total nesta entrada, portanto não há segmento de aumento para ela. Com σ (sigma) igual a 0,6, o fator seria 0,8 e reduziria o produto em 20%.</p>
     <h4>Primeira barra</h4>
     <p>Central Park: cinco milhões vezes cinco vezes um vírgula cinco vezes um resulta em 37.500.000. O gráfico mostra o custo potencial de exclusão, antes de decidir se cada atração será incluída.</p>
   </details>
@@ -552,44 +448,26 @@
 <li><a href="data/solver-response.json">Resposta real com unassigned vazio</a></li>
 </ul>
   </details>
+
 </template>
 </section>
 
-
-<section class="slide" id="slide-16" data-title="Etapa 4 — Construção da instância" data-stage="4" data-scene="instance">
-<h2 class="title" data-a="up">Etapa 4 — Construção da instância</h2><div class="instance-examples">
- <figure data-a="up"><figcaption><b>Janela de início da visita</b><span>The MET, 15/09, visita estimada em 3h15</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="The MET: funcionamento das 10h às 17h. Início da visita entre 10h e 13h45"></svg></figure>
- <figure data-a="up"><figcaption><b>Matriz de deslocamentos</b><span>Google Routes API, travelMode: TRANSIT, minutos</span></figcaption><div id="instanceMatrix"></div></figure>
-</div>
+<section class="slide time-instance" id="slide-14" data-title="Etapa 4 — Tempos e janelas de visita" data-stage="4" data-scene="timeInstance">
+<h2 class="title" data-a="up">Etapa 4 — Tempos e janelas de visita</h2>
+<div class="time-inputs"><figure><figcaption><b>The MET · visita de 3h15</b><span>15/09</span></figcaption><svg id="winGrid" viewBox="0 0 760 420" role="img" aria-label="The MET aberto das 10h às 17h, com início permitido até 13h45"></svg></figure><figure><figcaption><b>Matriz de deslocamentos</b><span>Google Routes API · TRANSIT · minutos</span></figcaption><div id="instanceMatrix"></div></figure></div>
+<div class="time-sequence"><div class="time-sequence-head"><h3>Saint Patrick → The MET · dia 2</h3><span class="math">x<span class="ss"><sup>d</sup><sub>ij</sub></span> = 1 ⇒ T<sub>j</sub> ≥ T<sub>i</sub> + s<sub>i</sub> + t<sub>ij</sub></span></div><svg id="timeSequence" viewBox="0 0 1432 218" role="img" aria-label="Saint Patrick inicia às 09h12min21s, visita de 30 minutos, transporte de 17min31s, espera de 8 segundos e início do The MET às 10h"></svg></div>
 <template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>O backend transforma os dados dos lugares em uma entrada numérica para o solver. O slide mostra uma janela de visita e um recorte da matriz de deslocamentos.</p>
-  <p>À esquerda, o The MET funciona das dez às dezessete horas no dia quinze de setembro, e a visita estimada dura três horas e quinze minutos. A faixa verde permite iniciar até treze e quarenta e cinco. A faixa inferior mostra o último encaixe: começar nesse horário permite terminar às dezessete.</p>
-  <p>A matriz vem da Google Routes API, pelo método computeRouteMatrix. O aplicativo usa o valor transit, convertido pelo backend em travelMode TRANSIT para consultar o transporte público. Na tabela, a linha é a origem e a coluna é o destino. Do hotel ao The MET são cerca de trinta e dois minutos; na volta, vinte e oito. Cada sentido precisa ser considerado separadamente.</p>
-  <p>O solver usará a matriz, as durações e as janelas para verificar se uma visita pode suceder a outra.</p>
-  <details class="notes-study">
-    <summary>Estudo do conteúdo exibido</summary>
-    <h4>Janela de início</h4>
-    <p>17h menos 3h15 resulta em 13h45. Esse é o último início que permite concluir a visita até o fechamento. Começar às 13h45 e somar 3h15 leva às 17h.</p>
-    <h4>Matriz dirigida</h4>
-    <p>Leia cada célula cruzando a origem da linha com o destino da coluna. Hotel para The MET usa uma célula, e The MET para Hotel usa outra. O traço na diagonal marca o deslocamento de um lugar para ele mesmo, sem exibir um tempo.</p>
-  </details>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>A tabela mostra quatro lugares da matriz por transporte público, com tempos arredondados em minutos. As janelas indicam horários permitidos para iniciar a visita, já descontada sua duração do fechamento.</p>
-    <h4>Fontes</h4>
-    <ul>
-<li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem do payload</a></li>
-<li><a href="references/aplicativo/backend/src/infrastructure/google/routes-adapter.ts">Matriz, deduplicação e cache</a></li>
-<li><a href="https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRouteMatrix">Google Routes API: computeRouteMatrix e travelMode</a></li>
-<li><a href="data/solver-request.json">Payload completo desta execução</a></li>
-<li><a href="diagrams/pipeline-geracao.drawio">Diagrama editável no draw.io</a></li>
-</ul>
-  </details>
+<h4>Fala <span class="speaker-name">Kenzo</span></h4>
+<p>O backend reúne a duração, as janelas e a matriz para preparar a entrada do solver. The MET abre das dez às dezessete. Descontar a visita estimada de três horas e quinze dá o último início permitido às treze e quarenta e cinco.</p>
+<p>A matriz vem de computeRouteMatrix da Google Routes API, com travelMode TRANSIT. O aplicativo envia transit, convertido pelo backend. As linhas são origens e as colunas, destinos. Os sentidos podem ter tempos diferentes, como hotel para The MET e a volta.</p>
+<p>A linha inferior aplica esses dados ao segundo dia. Saint Patrick começa às nove, doze minutos e vinte e um segundos. Depois de trinta minutos de visita e dezessete minutos e trinta e um segundos de transporte, a chegada ao The MET seria às nove, cinquenta e nove e cinquenta e dois. A janela só abre às dez: há oito segundos de espera.</p>
+<p>A regra escrita ao lado usa x igual a um para ativar o trecho. T é o início da visita, s é sua duração e t é o deslocamento da matriz. A próxima visita precisa começar depois de terminar a anterior e chegar ao destino. As janelas ainda limitam esse início. A desigualdade permite a espera quando chegamos cedo.</p>
+<details class="notes-study"><summary>Dados e regra temporal</summary><p>Os horários internos usam segundos desde as 06h. No exemplo, Tᵢ = 11.541, sᵢ = 1.800 e tᵢⱼ = 1.051. A soma dá 14.392, enquanto Tⱼ = 14.400. A diferença de oito segundos é espera. O desenho separa a espera por um marcador para torná-la visível, sem representar sua duração em escala.</p><p>A matriz exibe minutos arredondados. O cálculo da linha usa os segundos originais, sem arredondamento. O traço na diagonal representa a mesma origem e destino. A fórmula destaca uma implicação, não uma parcela adicional do custo. Dias permitidos e horários de funcionamento restringem soluções. Preferências de horário podem acrescentar custo ao atraso.</p></details>
+<details class="notes-support"><summary>Fontes</summary><ul><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Montagem da instância</a></li><li><a href="references/aplicativo/backend/src/infrastructure/google/routes-adapter.ts">Matriz, modo e cache</a></li><li><a href="data/solver-request.json">Janelas, durações e matriz registradas</a></li><li><a href="data/solver-response.json">Horários da resposta original</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Restrições temporais</a></li></ul></details>
 </template>
 </section>
 
-<section class="slide formulation-explained" id="slide-17" data-title="Etapa 5 — Formulação do problema" data-stage="5">
+<section class="slide formulation-explained" id="slide-15" data-title="Etapa 5 — Formulação do problema" data-stage="5">
 <h2 class="title" data-a="up">Etapa 5 — Formulação do problema</h2>
 <div class="formulation-choice" data-build="1">
   <div class="math"><span class="formulation-min">min</span> <i>C</i></div>
@@ -652,10 +530,10 @@
 </div>
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-<p>No alto, min C pede a agenda viável com o menor custo total. A linha seguinte define esse custo. Para apresentar as decisões, leio sempre na mesma ordem: x liga os pontos, y exclui uma atração, z marca a visita em um dia. Cada agenda candidata tem suas próprias escolhas e, portanto, seu próprio valor de C. Os horários serão detalhados no próximo slide.</p>
+<p>No alto, min C pede a agenda viável com o menor custo total. A linha seguinte define esse custo. Para apresentar as decisões, leio sempre na mesma ordem: x liga os pontos, y exclui uma atração, z marca a visita em um dia. Cada agenda candidata tem suas próprias escolhas e, portanto, seu próprio valor de C. A relação entre os horários foi mostrada no slide anterior.</p>
 <p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi), já calculado na etapa de penalidade de exclusão, quando y vale um. Essa exclusão vale para a viagem inteira e é cobrada uma única vez por atração. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
 <p>As regras abaixo são o “sujeito a” dessa minimização. A primeira liga z a y: cada atração deve ser visitada uma vez ou excluída. A segunda liga x a z: uma visita ativa precisa de entrada e saída no mesmo dia. A terceira limita a quatro atrações por dia. Uma combinação que descumpra uma dessas regras não é uma solução viável, mesmo que pareça barata.</p>
-<p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários completam as restrições, como veremos no próximo slide.</p>
+<p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários do slide anterior completam as restrições.</p>
 <p>Φ (fi) soma os custos que variam conforme a agenda: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros produzidos. Eles expressam as preferências adotadas no projeto; não foram calibrados formalmente com participantes. A meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro é obrigatório.</p>
 <details class="notes-study"><summary>Leitura da minimização, das somas e das regras</summary>
 <h4>O que é C e quais são as variáveis?</h4>
@@ -675,7 +553,7 @@
 <p><b>Visitar ou excluir:</b> para cada ponto opcional, a soma de z nos dias mais y deve ser um. Não é permitido marcar uma atração como não visitada em todos os dias e ainda usar y igual a zero para escapar da penalidade. Se ela for excluída, y vale um e seu custo π (pi) entra na soma de exclusões.</p>
 <p><b>Uma entrada e uma saída:</b> para cada ponto opcional e dia, a soma dos trechos de entrada e a soma dos de saída devem ser iguais a z. Os índices j percorrem as ligações permitidas. Assim, uma visita ativa exige deslocamentos ativos em x, que participam do primeiro termo do custo. Se z for zero naquele dia, as somas de entrada e saída também devem ser zero.</p>
 <p><b>Até quatro atrações:</b> para cada dia, a soma de z somente das atrações deve ser no máximo quatro. As visitas que não couberem precisam mudar de dia ou ser excluídas. Isso altera as rotas, as exclusões e possivelmente Φ (fi). As três equações restringem as decisões; elas não são parcelas adicionais de C nem são somadas como multas.</p>
-<p>Essas são três regras destacadas do modelo, não sua formulação completa. A conectividade das rotas, a saída e o retorno à base, as janelas e o calendário também restringem as soluções. O slide seguinte detalha a relação com T. No código, as decisões são representadas por sucessores de rota, veículos e dimensões do OR-Tools.</p>
+<p>Essas são três regras destacadas do modelo, não sua formulação completa. A conectividade das rotas, a saída e o retorno à base, as janelas e o calendário também restringem as soluções. O slide anterior mostrou a relação com T. No código, as decisões são representadas por sucessores de rota, veículos e dimensões do OR-Tools.</p>
 <h4>Por que Φ (fi) depende das decisões?</h4>
 <p>Os pesos da tabela são constantes, mas as quantidades cobradas mudam. O horário de saída e retorno define a duração do dia; T também determina os atrasos. z define a distribuição de visitas. As escolhas de rota e exclusão determinam se uma refeição fica de fora. Por isso Φ (fi) é calculado a partir da agenda, em vez de ser um número constante acrescentado a todas as soluções.</p>
 <h4>Como explicar os pesos de Φ (fi)</h4>
@@ -694,43 +572,7 @@
 </template>
 </section>
 
-
-<section class="slide" id="slide-18" data-title="Etapa 5 — Propagação temporal" data-stage="5" data-scene="temporal" data-step-ms="1300">
-  <h2 class="title" data-a="up">Etapa 5 — Propagação temporal e janelas</h2>
-  <div class="timeline"><svg id="tlSvg" viewBox="0 0 1432 390" role="img" aria-label="Linha do tempo real: início em Saint Patrick, visita, deslocamento, espera até a abertura da janela do The MET e início do atendimento"></svg></div>
-  <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span><span class="signal" data-build="3"></span><span class="signal" data-build="4"></span><span class="signal" data-build="5"></span><span class="signal" data-build="6"></span>
-
-  <div class="gloss" data-build="7" style="margin-top:14px"><b>Onde</b><span><span class="math">T<span class="ss"><sup>d</sup><sub>i</sub></span></span>início da visita, desde as 06:00</span><span><span class="math">s<sub>i</sub></span>duração da visita</span><span><span class="math">t<sub>ij</sub></span>tempo de deslocamento</span></div>
-  <template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>A linha do tempo aplica a regra de que a próxima visita começa depois de terminar a visita anterior e concluir o deslocamento.</p>
-  <p>No segundo dia, a Saint Patrick começa às nove e doze, com onze mil quinhentos e quarenta e um segundos desde as seis da manhã. Somamos mil e oitocentos segundos de visita e mil e cinquenta e um de transporte. O resultado é quatorze mil trezentos e noventa e dois segundos.</p>
-  <p>The MET só permite iniciar às dez, equivalentes a quatorze mil e quatrocentos segundos. Por isso aparecem oito segundos de espera. A desigualdade admite essa espera entre a chegada e o início da visita.</p>
-  <p>Além da sequência temporal ilustrada, o modelo restringe os dias permitidos e considera a preferência de horário. Fechamentos retiram opções de visita; a preferência acrescenta custo ao atraso. Todos os horários usam a mesma origem às seis da manhã.</p>
-  <details class="notes-study">
-    <summary>Estudo do conteúdo exibido</summary>
-    <h4>Regra temporal</h4>
-    <p>xᵈᵢⱼ igual a um significa que o trecho de i para j é usado no dia d. A seta ⇒ lê-se “implica”. T é o início da visita, s é a duração e t é o deslocamento. O sinal ≥ lê-se “maior ou igual”. Os T do desenho se referem ao mesmo dia, com o sobrescrito omitido.</p>
-    <h4>Soma do exemplo</h4>
-    <p>11.541 + 1.800 + 1.051 = 14.392. O início seguinte vale 14.400, portanto a diferença é de oito segundos. A janela do The MET vai das 10h às 13h45 para o início da visita.</p>
-    <h4>Origem do relógio</h4>
-    <p>A origem é 06h. Somar 61.200 segundos leva às 23h, e somar 28.800 segundos leva às 14h. São valores relativos à origem, usados para preparar e depois exibir os horários.</p>
-    <h4>Funcionamento e preferência</h4>
-    <p>Dias e janelas permitidos delimitam a viabilidade. Começar depois da faixa preferida pode ser aceito com custo: 500 unidades por segundo na preferência forte ou 20 na suave. A antecipação em relação à preferência não recebe essa penalidade.</p>
-  </details>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>A linha do tempo usa os valores exatos do segundo dia registrado. Os rótulos em horas e minutos omitem os segundos; a soma em segundos permite conferir os oito segundos de espera.</p>
-    <h4>Fontes</h4>
-    <ul>
-<li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Dimensão de tempo, janelas e custos suaves</a></li>
-<li><a href="data/solver-request.json">day_time_windows e preferred_time_window no payload real</a></li>
-</ul>
-  </details>
-</template>
-</section>
-
-<section class="slide solver-demo-slide" id="slide-19" data-title="Etapa 6 — Construção e melhoria da rota" data-stage="6" data-scene="solverDemo">
+<section class="slide solver-demo-slide" id="slide-16" data-title="Etapa 6 — Construção e melhoria da rota" data-stage="6" data-scene="solverDemo">
 <h2 class="title" data-a="up">Etapa 6 — Construção e melhoria da rota</h2>
 <div class="demo-phases" aria-label="Etapas da busca">
   <div id="demoPhaseBuild" class="demo-phase"><span>01</span><div><b>Construção inicial</b><small>PARALLEL_CHEAPEST_INSERTION</small></div></div>
@@ -743,52 +585,30 @@
   </div>
   <aside class="demo-side">
     <div class="demo-totals"><div><span>Rota atual</span><strong id="demoCurrent">0 <small>s</small></strong></div><div><span id="demoSecondaryLabel">Menor acréscimo</span><strong id="demoBest">—</strong></div></div>
-    <div class="demo-action"><span id="demoStep">01 / 22</span><h3 id="demoAction">Escolher a primeira visita</h3></div>
+    <div class="demo-action"><span id="demoStep">01 / 08</span><h3 id="demoAction">Escolher a primeira visita</h3></div>
     <div id="demoChoices" class="demo-choices"></div>
   </aside>
 </div>
 <div class="demo-controls"><button id="demoReplay" type="button">Repetir</button><button id="demoNext" type="button">Próximo passo →</button></div>
 <template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-  <p>Este recorte usa quatro atrações obrigatórias e só os tempos de deslocamento, em segundos. O hotel aparece nas duas pontas porque saímos dele e voltamos para ele. A posição no desenho indica a ordem das visitas, sem escala geográfica. Cada seta do teclado avança uma comparação, um teste ou uma confirmação.</p>
-  <p>Na construção inicial existem duas perguntas: qual atração acrescentar e em qual trecho encaixá-la. Para cada atração que falta, calculamos todos os encaixes e guardamos o mais barato. A tabela “Melhor encaixe de cada atração” compara esses mínimos. Portanto, a próxima atração não está predeterminada e não é escolhida só pela distância ao hotel.</p>
-  <p>Na primeira comparação a rota está vazia. Inserir Empire State custa 773 segundos para ir e 74 para voltar: 847 ao todo. É o menor acréscimo entre as quatro opções. O próximo quadro mostra esse encaixe em âmbar, antes de alterar a rota. Só no quadro “Confirmar Empire State” ele entra na rota verde.</p>
-  <p>Agora vem a comparação que explica a segunda escolha. Com Empire State já incluído, o melhor encaixe de Saint Patrick acrescenta 584 segundos. O melhor de Central Park acrescentaria 2.252 e o de The MET, 2.500. Saint Patrick é o segundo porque tem o menor acréscimo sobre a rota atual. Esses números mudaram em relação à primeira tabela porque agora podemos aproveitar trechos que já existem.</p>
-  <p>Vamos testar os dois encaixes de Saint Patrick antes de confirmar. Hotel → Saint Patrick → Empire State substitui o trecho hotel → Empire State. Entram 741 e 616 segundos, e saem os 773 do trecho substituído: 741 + 616 − 773 = 584. O total da prévia é 847 + 584 = 1.431 segundos. No outro teste, Empire State → Saint Patrick → hotel, o acréscimo é 936 + 889 − 74 = 1.751. A confirmação guarda o primeiro encaixe, por ser mais barato. As linhas da tabela agora escrevem o nome da atração entre a origem e o destino; a linha tracejada é o trecho que seria substituído.</p>
-  <p>Depois comparamos as duas atrações restantes. The MET tem um encaixe de 1.779 segundos, menor que os 1.909 de Central Park. Por isso The MET vem em seguida. Testamos os três trechos disponíveis e confirmamos Saint Patrick → The MET → Empire State: 1.051 + 1.344 − 616 = 1.779. A rota passa de 1.431 para 3.210 segundos.</p>
-  <p>Resta Central Park. Agora não precisamos escolher entre atrações, mas ainda precisamos escolher entre quatro encaixes. Testamos os quatro. O mais barato fica entre The MET e Empire State: 559 + 1.649 − 1.344 = 864. A primeira rota completa fica hotel, Saint Patrick, The MET, Central Park, Empire State, hotel, com 4.074 segundos. Assim, a posição de Central Park foi escolhida pelo custo do encaixe, não pela ordem em que aparece no mapa.</p>
-  <p>Na busca local, a ordem das visitas já inseridas pode mudar. Primeiro aparece uma prévia da ordem hotel, Central Park, The MET, Saint Patrick, Empire State, hotel, com 3.554 segundos. O quadro seguinte guarda essa melhoria, de 520 segundos. A construção por inserções baratas ainda permitia uma melhoria posterior.</p>
-  <p>A busca continua e explora uma rota de 4.452 segundos, mas mantém a melhor guardada em 3.554. A Guided Local Search usa penalidades internas para favorecer outras alternativas quando fica presa em um mínimo local. Essas penalidades não são a penalidade de exclusão π (pi) do modelo. Ao terminar o prazo, devolvemos a melhor encontrada. A execução completa com vários dias, janelas, durações e as demais parcelas do custo aparece no próximo slide.</p>
-  <details class="notes-study"><summary>Comparações e passos da simulação</summary>
-    <h4>Escolher uma atração e escolher um encaixe</h4>
-    <p>Para cada atração ainda ausente, enumeramos os trechos da rota atual e calculamos o acréscimo ao substituir um trecho por dois. Comparamos o menor acréscimo de cada atração. Depois mostramos os encaixes da atração vencedora, um por quadro, antes de confirmá-la. O quadro em âmbar é uma prévia: o custo atual permanece igual até a confirmação. Verde indica a rota confirmada; tracejado indica o trecho substituído no teste.</p>
-    <h4>As quatro rodadas</h4>
-    <table><thead><tr><th>Rota atual (s)</th><th>Menor acréscimo de cada atração (s)</th><th>Confirmar</th></tr></thead><tbody>
-      <tr><td>0</td><td>Empire State 847; Saint Patrick 1.630; Central Park 2.770; The MET 3.604</td><td>Empire State</td></tr>
-      <tr><td>847</td><td>Saint Patrick 584; Central Park 2.252; The MET 2.500</td><td>Saint Patrick</td></tr>
-      <tr><td>1.431</td><td>The MET 1.779; Central Park 1.909</td><td>The MET</td></tr>
-      <tr><td>3.210</td><td>Central Park 864</td><td>Central Park</td></tr>
-    </tbody></table>
-    <p>Os encaixes de Saint Patrick acrescentam 584 ou 1.751 s. Os de The MET, na ordem dos trechos da rota, acrescentam 2.157, 1.779 ou 3.362 s. Os de Central Park acrescentam 1.909, 914, 864 ou 3.476 s. O cálculo desconta o trecho substituído; não soma apenas os dois novos deslocamentos.</p>
-    <h4>Ordem e melhor solução</h4>
-    <p>A primeira rota completa custa 4.074 s. A melhoria custa 1.376 + 519 + 969 + 616 + 74 = 3.554 s. A alternativa seguinte, hotel → The MET → Central Park → Saint Patrick → Empire State → hotel, custa 4.452 s. São as três primeiras soluções aceitas registradas na execução reduzida do OR-Tools. A animação mostra os eventos em passos manuais e termina na melhor rota guardada.</p>
-    <h4>Escopo e estratégias</h4>
-    <p>Os números são segundos de transporte, não o custo C completo do slide 17 nem a duração total do dia. A matriz é assimétrica. Neste recorte todas as atrações são obrigatórias, sem janelas, durações, exclusões ou preferências. A construção didática calcula os encaixes pelos custos dos arcos e sua primeira rota completa coincide com a primeira solução registrada no OR-Tools. Em vários dias, PARALLEL_CHEAPEST_INSERTION compara encaixes nas rotas em construção; “paralelo” não implica necessariamente várias threads.</p>
-    <p>A redução de 520 s é uma melhoria de busca local observada com GUIDED_LOCAL_SEARCH configurada. Ela não demonstra, isoladamente, que as penalidades da GLS foram necessárias para essa melhoria. Explorar uma rota pior é diferente de atualizar a melhor solução, e não há garantia geral de ótimo.</p>
-    <h4>Controles</h4>
-    <p>Seta direita avança um quadro e seta esquerda retorna um quadro. Repetir reinicia a sequência. O modo do apresentador envia os passos à tela da banca. Depois do último quadro, a próxima seta direita abre o slide seguinte.</p>
-  </details>
-  <details class="notes-support"><summary>Execução reduzida e fontes</summary>
-    <p>Recorte executado em 19/10/2026 com OR-Tools 9.10.4067, uma rota e quatro visitas obrigatórias. Estratégias PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. Tempos da timeMatrix, sem arredondamento. As comparações intermediárias são calculadas sobre a mesma matriz para tornar cada inserção visível; o registro completo de cinco dias está no slide 20.</p>
-    <ul><li><a href="search-demo.js">Matriz, encaixes, soluções registradas e proveniência</a></li><li><a href="data/busca-animada.json">Registro da execução completa</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Configuração das estratégias no aplicativo</a></li><li><a href="https://developers.google.com/optimization/routing/routing_options">OR-Tools: inserção mais barata e busca local guiada</a></li></ul>
-  </details>
+<h4>Fala <span class="speaker-name">Kenzo</span></h4>
+<p>São oito quadros manuais de um recorte com quatro atrações obrigatórias, um dia e apenas deslocamentos em segundos. O hotel aparece nas duas pontas. A posição no desenho indica a ordem da rota. Os custos da tabela já foram calculados a partir da matriz para a rota daquele momento.</p>
+<p><b>1. Comparação inicial.</b> Para cada atração ainda ausente, a construção considera os encaixes admissíveis e compara o menor acréscimo. Começando no hotel, Empire State custa 773 para ir e 74 para voltar: 847. É o menor entre as quatro opções.</p>
+<p><b>2. Empire State inserido.</b> Uma seta aplica a escolha e mostra a nova rota. A tabela mantém a comparação que justificou a decisão. Não há um passo separado para confirmar. Na implementação, o algoritmo administra candidatos em filas de prioridade e atualiza os custos afetados pela inserção.</p>
+<p><b>3. Saint Patrick inserida.</b> Agora seu melhor encaixe acrescenta 584 segundos, contra 2.252 de Central Park e 2.500 de The MET. Abaixo aparecem os dois encaixes de Saint Patrick: entrar antes de Empire State custa 741 + 616 − 773 = 584; depois dele, 936 + 889 − 74 = 1.751. Subtraímos o trecho substituído. O total passa de 847 para 1.431.</p>
+<p><b>4. The MET inserido.</b> Na rota atual, seu melhor acréscimo é 1.779, menor que os 1.909 de Central Park. Entra entre Saint Patrick e Empire State: 1.051 + 1.344 − 616. A rota chega a 3.210 segundos.</p>
+<p><b>5. Central Park inserido.</b> O melhor encaixe fica entre The MET e Empire State, acrescentando 864. A primeira rota completa custa 4.074 segundos. “Mais barato” significa menor acréscimo à rota existente, e não menor distância isolada ao hotel.</p>
+<p><b>6. Melhoria da ordem.</b> A busca local encontra hotel, Central Park, The MET, Saint Patrick, Empire State, hotel: 3.554 segundos, redução de 520.</p>
+<p><b>7. Exploração.</b> Uma alternativa custa 4.452, mas a melhor guardada continua em 3.554. Explorar uma rota pior não substitui a melhor solução. A Guided Local Search usa penalidades internas para estimular outras alternativas. Elas são diferentes da penalidade de exclusão π (pi).</p>
+<p><b>8. Resultado.</b> Ao terminar o prazo, devolvemos a melhor encontrada. O próximo slide mostra a execução completa de cinco dias e a comparação das estratégias.</p>
+<details class="notes-study"><summary>Encaixes e implementação</summary><p>Na primeira rodada os mínimos são Empire State 847, Saint Patrick 1.630, Central Park 2.770 e The MET 3.604. Depois de Empire State: Saint Patrick 584, Central Park 2.252 e The MET 2.500. Depois de Saint Patrick: The MET 1.779 e Central Park 1.909. Por fim, Central Park entra com 864.</p><p>O algoritmo avalia possibilidades de inserção, mas isso não significa executar uma agenda completa por célula da tabela. O OR-Tools mantém candidatos em filas de prioridade e atualiza os afetados pelas mudanças. Custos dos arcos vêm da matriz. A escolha depende da rota e das restrições, por isso o melhor encaixe muda após cada inserção. A apresentação agrupa cálculo, comparação e aplicação em um avanço por inserção.</p><p>Os encaixes de The MET custam 2.157, 1.779 e 3.362. Os de Central Park custam 1.909, 914, 864 e 3.476. O custo é sempre novos trechos menos trecho substituído.</p><p>A primeira rota completa (4.074), a melhoria (3.554) e a exploração seguinte (4.452) correspondem às três primeiras soluções aceitas registradas na execução reduzida. A melhoria isolada não prova que as penalidades da GLS foram necessárias. O custo aqui é só transporte, diferente de C do slide 15. Todas as atrações são obrigatórias, sem janelas, durações, exclusões ou preferências. Não há garantia geral de ótimo.</p><p>Seta direita avança um quadro, esquerda retorna e Repetir reinicia. O modo do apresentador controla os mesmos passos na tela da banca. Após o oitavo quadro, a próxima seta abre o slide seguinte.</p></details>
+<details class="notes-support"><summary>Execução reduzida e fontes</summary><p>Execução de 19/10/2026 com OR-Tools 9.10.4067, uma rota, quatro visitas obrigatórias, PARALLEL_CHEAPEST_INSERTION e GUIDED_LOCAL_SEARCH, prazo de 200 ms. As comparações intermediárias são uma reconstrução didática calculada com a matriz real, não um registro de cada operação interna. A primeira rota reconstruída coincide com a primeira solução registrada.</p><ul><li><a href="search-demo.js">Matriz, encaixes e soluções registradas</a></li><li><a href="https://github.com/google/or-tools/blob/v9.10/ortools/constraint_solver/routing_search.cc#L1863">OR-Tools 9.10: fila de candidatos e atualização dos encaixes</a></li><li><a href="data/busca-animada.json">Execução completa de cinco dias</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Configuração das estratégias</a></li></ul></details>
 </template>
 </section>
 
-
-<section class="slide" id="slide-20" data-title="Busca das rotas em execução" data-stage="6" data-scene="search">
-  <h2 class="title" data-a="up" style="margin-bottom:10px">Busca das rotas em execução</h2>
-  <div class="search">
+<section class="slide search-review" id="slide-17" data-title="Busca real e comparação de estratégias" data-stage="6" data-scene="search">
+  <h2 id="searchTitle" class="title" data-a="up" style="margin-bottom:10px">Busca das rotas em execução</h2>
+  <div class="search" id="searchExecution">
     <div class="search-map"><svg id="searchMap" viewBox="0 0 560 640" role="img" aria-label="Mapa com as posições reais das atrações, as rotas por dia mudam a cada melhoria encontrada pelo solver"></svg></div>
     <div class="search-side">
       <div class="odo" data-a="up" style="--d:200ms"><small>Custo da melhor solução</small><strong id="odoValue">41.494.118</strong><div class="meta"><span>melhoria <b id="odoFrame">1</b> / 41</span><span>registro aos <b id="odoTime">0,0126 s</b></span></div></div>
@@ -797,12 +617,25 @@
       <button class="replay" type="button" id="searchReplay" data-a="fade" style="--d:500ms"><svg data-i="rotate-ccw"></svg>Repetir animação</button>
     </div>
   </div>
+  <div id="searchComparison" class="search-comparison" hidden><p class="lead">12 atrações, 5 dias</p><table class="strategy-table"><colgroup><col style="width:30%"><col style="width:25%"><col style="width:17%"><col style="width:17%"><col style="width:11%"></colgroup>
+<thead><tr><th>Solução inicial</th><th>Busca local</th><th>Parada / limite</th><th>Custo do objetivo</th><th>Atrações</th></tr></thead>
+<tbody>
+<tr><td><code>PATH_CHEAPEST_ARC</code></td><td>—</td><td>Primeira solução</td><td class="objective">96.495.574</td><td>10 / 12</td></tr>
+<tr><td rowspan="5"><code>PARALLEL_CHEAPEST_<wbr>INSERTION</code></td><td>—</td><td>Primeira solução</td><td class="objective">41.494.118</td><td>12 / 12</td></tr>
+<tr><td><code>GREEDY_DESCENT</code></td><td>Até parar</td><td class="objective">155.336</td><td>12 / 12</td></tr>
+<tr class="best-strategy"><td><code>GUIDED_LOCAL_SEARCH</code></td><td>2 a 600 s</td><td class="objective"><b>154.192</b></td><td><b>12 / 12</b></td></tr>
+<tr><td><code>SIMULATED_ANNEALING</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
+<tr><td><code>TABU_SEARCH</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
+</tbody></table></div>
+  <div class="search-phase-controls"><span id="searchPhaseLabel">01 / 02</span><button id="searchCompare" type="button">Comparar estratégias →</button></div>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
   <p>A animação reproduz uma nova execução com a mesma entrada de Nova Iorque. Cada quadro corresponde a uma melhoria registrada da melhor solução completa encontrada até aquele momento.</p>
   <p>Os números identificam as atrações pela prioridade e as cores distinguem os dias. O custo cai de cerca de quarenta e um milhões para cento e cinquenta e quatro mil unidades. As refeições participam do cálculo, mas ficam ocultas neste mapa.</p>
   <p>A reprodução foi desacelerada. O contador de tempo mostra o instante real de cada registro. O gráfico usa escalas logarítmicas: cada intervalo igual representa uma multiplicação, como de zero vírgula um para um segundo.</p>
   <p>A última melhora foi registrada aos zero vírgula quatro seis sete nove segundo. Cinco segundos é o limite configurado da busca; o arquivo não mede o instante exato de retorno. O trecho tracejado prolonga o último custo até essa marca. Esses tempos dizem respeito ao solver. A geração no aplicativo também consulta APIs e prepara os dados.</p>
+  <p>Uma seta avança para a comparação de estratégias com a mesma entrada completa. A seta esquerda retorna à busca.</p>
+  <h4>Geração no aplicativo e tempo do solver</h4><p>Os cerca de trinta segundos percebidos no aplicativo cobrem o fluxo inteiro, não apenas as melhorias do solver. A tela de geração pode enriquecer refeições pendentes; o backend prepara e consulta a matriz, com cache quando disponível, e chama o solver por cidade. Depois, o aplicativo aguarda fotos de capa e salvamento antes de abrir o resultado. Não medimos cada etapa deste percurso, portanto não podemos atribuir os trinta segundos a uma chamada específica.</p><p>O registro da animação marca a última melhoria aos 0,4679 s, não o retorno da busca. O prazo desta entrada é de 5 s. Na execução original usada no TCC, o tempo registrado do solver foi de aproximadamente 5,032 s. São execuções distintas da mesma entrada.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
     <h4>Contadores e gráfico</h4>
@@ -815,11 +648,25 @@
     <p>O registro contém 41 melhorias, com objetivo de 41.494.118 no primeiro quadro e 154.192 no último. A animação mostra as melhores soluções registradas e omite os candidatos rejeitados. O arquivo informa a proveniência da execução. A agenda detalhada do slide seguinte vem da resposta original de cinco dias.</p>
     <h4>Fontes</h4>
     <ul><li><a href="data/busca-animada.json">Registro completo das melhorias e proveniência</a></li><li><a href="scripts/registrar_busca.py">Instrumentação da execução para os slides</a></li><li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">Implementação OR-Tools utilizada</a></li></ul>
+    <ul><li><a href="references/aplicativo/mobile/src/app/trip/generating.tsx">Etapas aguardadas pela tela de geração</a></li><li><a href="references/aplicativo/backend/src/application/generate-itinerary.ts">Matriz e chamada do solver por cidade</a></li></ul>
   </details>
+
+  <h4>Quadro 2 · Comparação <span class="speaker-name">Bruno</span></h4>
+  <p>Comparamos as estratégias usando a mesma entrada, com doze atrações em cinco dias. As duas primeiras colunas distinguem a construção inicial da busca local. As linhas inferiores continuam usando Parallel Cheapest Insertion como construção inicial.</p>
+  <p>O custo reúne os termos da função objetivo, e a última coluna conta as atrações incluídas. Path Cheapest Arc entrega uma primeira solução com dez atrações. Parallel Cheapest Insertion inclui as doze, mas ainda deixa um custo alto.</p>
+  <p>A busca local reduz esse custo mesmo mantendo as doze visitas. Guided Local Search encontrou o menor valor observado, cento e cinquenta e quatro mil cento e noventa e dois. Ampliar seu limite de dois para seiscentos segundos manteve o resultado. Greedy Descent, Simulated Annealing e Tabu Search ficaram em cento e cinquenta e cinco mil trezentos e trinta e seis.</p>
+  <p>A comparação sustenta a escolha da GLS para esta entrada. O experimento não comprova o ótimo nem estabelece qual estratégia venceria em qualquer viagem.</p>
+  <details class="notes-support">
+    <summary>Apoio técnico e fontes</summary>
+    <p>O traço na coluna de busca local indica que foi registrada somente a primeira solução. Até parar corresponde à condição de parada do Greedy Descent. Os demais prazos são limites configurados. Menor custo significa melhor segundo os pesos do modelo. O registro completo permite conferir as agendas e repetições da comparação.</p>
+    <h4>Fontes</h4>
+    <ul><li><a href="references/tcc/fontes/qualidade-solver/resultados.md">Resultados originais e agendas</a></li><li><a href="references/tcc/fontes/qualidade-solver/verificacao-20260923/resultados.json">Reprodução das 21 execuções e proveniência</a></li><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.8.3</a></li></ul>
+  </details>
+
 </template>
 </section>
 
-<section class="slide" id="slide-21" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
+<section class="slide" id="slide-18" data-title="Etapa 7 — Resultado por dia" data-stage="7" data-scene="dailyResults">
   <h2 class="title" data-a="up">Etapa 7 — As visitas distribuídas pelos cinco dias</h2>
   <div class="route-summary" data-a="up" style="--d:100ms"><p><b>12 de 12 atrações incluídas</b>, 62,4 km de deslocamento no total</p><span>Nova Iorque, 14 a 18 de setembro</span></div>
   <div class="daily-results" id="dailyResults"></div>
@@ -841,54 +688,7 @@
 </template>
 </section>
 
-<section class="slide" id="slide-22" data-title="Comparação de estratégias de busca">
-<h2 class="title" data-a="up">Comparação de estratégias de busca</h2><p class="lead" data-a="up">12 atrações, 5 dias</p>
-<table class="strategy-table" data-a="up"><colgroup><col style="width:30%"><col style="width:25%"><col style="width:17%"><col style="width:17%"><col style="width:11%"></colgroup>
-<thead><tr><th>Solução inicial</th><th>Busca local</th><th>Parada / limite</th><th>Custo do objetivo</th><th>Atrações</th></tr></thead>
-<tbody>
-<tr><td><code>PATH_CHEAPEST_ARC</code></td><td>—</td><td>Primeira solução</td><td class="objective">96.495.574</td><td>10 / 12</td></tr>
-<tr><td rowspan="5"><code>PARALLEL_CHEAPEST_<wbr>INSERTION</code></td><td>—</td><td>Primeira solução</td><td class="objective">41.494.118</td><td>12 / 12</td></tr>
-<tr><td><code>GREEDY_DESCENT</code></td><td>Até parar</td><td class="objective">155.336</td><td>12 / 12</td></tr>
-<tr class="best-strategy"><td><code>GUIDED_LOCAL_SEARCH</code></td><td>2 a 600 s</td><td class="objective"><b>154.192</b></td><td><b>12 / 12</b></td></tr>
-<tr><td><code>SIMULATED_ANNEALING</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
-<tr><td><code>TABU_SEARCH</code></td><td>60 s</td><td class="objective">155.336</td><td>12 / 12</td></tr>
-</tbody></table><template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Bruno</span></h4>
-  <p>Comparamos as estratégias usando a mesma entrada, com doze atrações em cinco dias. As duas primeiras colunas distinguem a construção inicial da busca local. As linhas inferiores continuam usando Parallel Cheapest Insertion como construção inicial.</p>
-  <p>O custo reúne os termos da função objetivo, e a última coluna conta as atrações incluídas. Path Cheapest Arc entrega uma primeira solução com dez atrações. Parallel Cheapest Insertion inclui as doze, mas ainda deixa um custo alto.</p>
-  <p>A busca local reduz esse custo mesmo mantendo as doze visitas. Guided Local Search encontrou o menor valor observado, cento e cinquenta e quatro mil cento e noventa e dois. Ampliar seu limite de dois para seiscentos segundos manteve o resultado. Greedy Descent, Simulated Annealing e Tabu Search ficaram em cento e cinquenta e cinco mil trezentos e trinta e seis.</p>
-  <p>A comparação sustenta a escolha da GLS para esta entrada. O experimento não comprova o ótimo nem estabelece qual estratégia venceria em qualquer viagem.</p>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>O traço na coluna de busca local indica que foi registrada somente a primeira solução. Até parar corresponde à condição de parada do Greedy Descent. Os demais prazos são limites configurados. Menor custo significa melhor segundo os pesos do modelo. O registro completo permite conferir as agendas e repetições da comparação.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="references/tcc/fontes/qualidade-solver/resultados.md">Resultados originais e agendas</a></li><li><a href="references/tcc/fontes/qualidade-solver/verificacao-20260923/resultados.json">Reprodução das 21 execuções e proveniência</a></li><li><a href="references/tcc/latex/editaveis/propostasolucao.tex">Monografia, seção 5.8.3</a></li></ul>
-  </details>
-</template>
-</section>
-
-<section class="slide" id="slide-23" data-title="Validação do aplicativo">
-<h2 class="title" data-a="up">Validação funcional do aplicativo</h2><dl class="validation-summary">
-<div data-a="up"><dt>Regras e regressões</dt><dd>Solver, backend, aplicativo e verificações de tipos e compilação.</dd></div>
-<div data-a="up"><dt>Geração e consulta</dt><dd>Roteiro integrado, agenda, mapas 2D/3D e grafo do solver.</dd></div>
-<div data-a="up"><dt>Acesso e persistência</dt><dd>Instalação, login, reabertura offline e restauração das viagens.</dd></div>
-<div data-a="up"><dt>Colaboração</dt><dd>Permissões, despesas, Memórias e exportação.</dd></div>
-</dl><template class="speaker-notes">
-  <h4>Fala <span class="speaker-name">Bruno</span></h4>
-  <p>A validação combinou testes automatizados e verificações no aplicativo após a integração e a publicação.</p>
-  <p>O primeiro bloco reúne as regras do solver, as suítes do backend e do aplicativo, além das verificações de tipos e compilação. Esses controles ajudam a detectar regressões nas regras e nos fluxos testados.</p>
-  <p>Os demais blocos acompanham o uso instalado. Verificamos a geração, a agenda, os mapas em duas e três dimensões e o grafo do solver. Também conferimos instalação, login, reabertura offline e restauração das viagens.</p>
-  <p>Na colaboração, verificamos permissões de acesso, despesas, conclusão em Memórias e exportação. A avaliação com participantes acrescentou situações reais de uso e encontrou problemas na agenda. Vamos examinar esses resultados a seguir.</p>
-  <details class="notes-support">
-    <summary>Apoio técnico e fontes</summary>
-    <p>O README reúne os registros dos testes e das verificações funcionais. Cada verificação vale para as condições exercitadas. Os testes controlados do solver e a avaliação com participantes são evidências distintas; os dados dos participantes foram coletados no uso do aplicativo.</p>
-    <h4>Fontes</h4>
-    <ul><li><a href="references/README.md">Validações realizadas e verificações posteriores à publicação</a></li></ul>
-  </details>
-</template>
-</section>
-
-<section class="slide" id="slide-24" data-title="Avaliação com participantes">
+<section class="slide" id="slide-19" data-title="Avaliação com participantes">
   <h2 class="title" data-a="up">Avaliação com participantes</h2>
   <p class="lead" data-a="up" style="--d:100ms">6 participantes, 5 tarefas por participante</p>
   <div class="eval">
@@ -946,7 +746,7 @@
 </template>
 </section>
 
-<section class="slide" id="slide-25" data-title="Custos estimados por geração">
+<section class="slide" id="slide-20" data-title="Custos estimados por geração">
 <h2 class="title" data-a="up">Quanto custa gerar um roteiro?</h2><p class="lead" data-a="up">5 dias, 12 atrações, 1 hospedagem. <b>US$ por geração em APIs.</b></p>
 <div class="cost-scenarios">
 <article data-a="up"><span class="scenario-index">CENÁRIO A</span><h3>Sem dados<br>reaproveitados</h3><strong>US$ 1,38</strong></article>
@@ -986,7 +786,7 @@
 </template>
 </section>
 
-<section class="slide" id="slide-26" data-title="Limitações do trabalho">
+<section class="slide" id="slide-21" data-title="Limitações do trabalho">
 <h2 class="title" data-a="up">Limitações do trabalho</h2><ol class="limitations-list limitations-short">
 <li data-a="up"><b>Passeios de dia inteiro</b> podem dividir o dia com outras visitas e ficar <b>sem almoço</b>.</li>
 <li data-a="up"><b>Durações estimadas</b> e <b>deslocamentos fixos</b> podem divergir das condições da viagem.</li>
@@ -1007,7 +807,7 @@
 </template>
 </section>
 
-<section class="slide dark conclusion" id="slide-27" data-title="Agradecimento e perguntas">
+<section class="slide dark conclusion" id="slide-22" data-title="Agradecimento e perguntas">
   <div class="thanks-body"><span class="thanks-kicker" data-a="fade">Interlude, Defesa de TCC2</span><h2 data-a="up" style="--d:100ms">Obrigado!</h2><div class="thanks-authors" data-a="up" style="--d:400ms"><b>Gustavo Kenzo Araki Takechi</b><b>Bruno Medeiros de Oliveira</b><span>Universidade de Brasília, FCTE</span></div><img data-a="fade" style="--d:500ms" src="assets/unb-logo.jpg" alt="Universidade de Brasília" /></div>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Kenzo</span></h4>
@@ -1028,7 +828,7 @@
 
 <nav class="controls" aria-label="Controles da apresentação">
   <button id="prevBtn" title="Anterior (←)"><svg data-i="chevron-left"></svg></button>
-  <span class="counter" id="counter">01 / 27</span>
+  <span class="counter" id="counter">01 / 22</span>
   <button id="nextBtn" title="Próximo (→)"><svg data-i="chevron-right"></svg></button>
   <button id="scriptBtn" title="Roteiro de fala (N)"><svg data-i="file-text"></svg></button>
   <button id="overviewBtn" title="Visão geral (O)"><svg data-i="layout-grid"></svg></button>
@@ -1050,14 +850,14 @@
 <dialog id="overviewDialog"><div class="dlg-head"><b>Visão geral</b><button id="closeOverview">Fechar</button></div><div class="overview-grid" id="overviewGrid"></div></dialog>
 
 <section class="presenter" id="presenter" hidden>
-  <div class="p-top"><span id="pCounter">01 / 27</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
+  <div class="p-top"><span id="pCounter">01 / 22</span><span class="p-clock" id="pClock"></span><div><button id="pPrev">Anterior</button><button id="pNext">Próximo</button><button id="pAudience">Abrir tela da banca</button></div></div>
   <div class="p-left"><div class="p-frame" id="pCurrent"></div><div class="p-frame p-next" id="pNextFrame"></div></div>
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=55"></script>
-<script src="motion.js?v=54"></script>
-<script src="search-demo.js?v=55"></script>
-<script src="scenes.js?v=55"></script>
+<script src="data.js?v=57"></script>
+<script src="motion.js?v=57"></script>
+<script src="search-demo.js?v=57"></script>
+<script src="scenes.js?v=57"></script>
 </body>
 </html>
