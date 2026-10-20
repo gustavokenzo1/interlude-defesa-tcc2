@@ -1,46 +1,46 @@
-// Recorte executado no OR-Tools; proveniência ao final do objeto.
+// Execução reduzida e reconstrução dos encaixes; proveniência no objeto.
 window.INTERLUDE_SEARCH_DEMO = {
   "names": [
     "Hotel",
     "Empire State",
-    "Saint Patrick",
+    "Bryant Park",
     "The MET",
     "Central Park"
   ],
   "matrix": [
     [
       0,
-      773,
-      741,
-      1929,
-      1376
+      587,
+      691,
+      1504,
+      1417
     ],
     [
-      74,
+      567,
       0,
-      936,
-      1761,
-      2156
+      579,
+      1549,
+      1656
     ],
     [
-      889,
-      616,
+      730,
+      508,
       0,
-      1051,
-      1446
+      1824,
+      1386
     ],
     [
-      1675,
-      1344,
-      969,
+      1834,
+      959,
+      1779,
       0,
-      559
+      561
     ],
     [
-      1394,
-      1649,
-      1274,
-      519,
+      1271,
+      1260,
+      1235,
+      521,
       0
     ]
   ],
@@ -52,11 +52,11 @@ window.INTERLUDE_SEARCH_DEMO = {
         1,
         0
       ],
-      "cost": 847,
-      "delta": 847,
+      "cost": 1154,
+      "delta": 1154,
       "choices": [
         {
-          "delta": 847,
+          "delta": 1154,
           "position": 1,
           "route": [
             0,
@@ -74,11 +74,11 @@ window.INTERLUDE_SEARCH_DEMO = {
         1,
         0
       ],
-      "cost": 1431,
-      "delta": 584,
+      "cost": 1766,
+      "delta": 612,
       "choices": [
         {
-          "delta": 584,
+          "delta": 612,
           "position": 1,
           "route": [
             0,
@@ -88,59 +88,12 @@ window.INTERLUDE_SEARCH_DEMO = {
           ]
         },
         {
-          "delta": 1751,
+          "delta": 742,
           "position": 2,
           "route": [
             0,
             1,
             2,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      "insert": 3,
-      "route": [
-        0,
-        2,
-        3,
-        1,
-        0
-      ],
-      "cost": 3210,
-      "delta": 1779,
-      "choices": [
-        {
-          "delta": 1779,
-          "position": 2,
-          "route": [
-            0,
-            2,
-            3,
-            1,
-            0
-          ]
-        },
-        {
-          "delta": 2157,
-          "position": 1,
-          "route": [
-            0,
-            3,
-            2,
-            1,
-            0
-          ]
-        },
-        {
-          "delta": 3362,
-          "position": 3,
-          "route": [
-            0,
-            2,
-            1,
-            3,
             0
           ]
         }
@@ -150,60 +103,107 @@ window.INTERLUDE_SEARCH_DEMO = {
       "insert": 4,
       "route": [
         0,
-        2,
-        3,
         4,
+        2,
         1,
         0
       ],
-      "cost": 4074,
-      "delta": 864,
+      "cost": 3727,
+      "delta": 1961,
       "choices": [
         {
-          "delta": 864,
-          "position": 3,
-          "route": [
-            0,
-            2,
-            3,
-            4,
-            1,
-            0
-          ]
-        },
-        {
-          "delta": 914,
-          "position": 2,
-          "route": [
-            0,
-            2,
-            4,
-            3,
-            1,
-            0
-          ]
-        },
-        {
-          "delta": 1909,
+          "delta": 1961,
           "position": 1,
           "route": [
             0,
             4,
             2,
+            1,
+            0
+          ]
+        },
+        {
+          "delta": 2138,
+          "position": 2,
+          "route": [
+            0,
+            2,
+            4,
+            1,
+            0
+          ]
+        },
+        {
+          "delta": 2360,
+          "position": 3,
+          "route": [
+            0,
+            2,
+            1,
+            4,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "insert": 3,
+      "route": [
+        0,
+        3,
+        4,
+        2,
+        1,
+        0
+      ],
+      "cost": 4375,
+      "delta": 648,
+      "choices": [
+        {
+          "delta": 648,
+          "position": 1,
+          "route": [
+            0,
+            3,
+            4,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "delta": 1065,
+          "position": 2,
+          "route": [
+            0,
+            4,
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "delta": 2275,
+          "position": 3,
+          "route": [
+            0,
+            4,
+            2,
             3,
             1,
             0
           ]
         },
         {
-          "delta": 3476,
+          "delta": 2816,
           "position": 4,
           "route": [
             0,
-            2,
-            3,
-            1,
             4,
+            2,
+            1,
+            3,
             0
           ]
         }
@@ -214,85 +214,157 @@ window.INTERLUDE_SEARCH_DEMO = {
     {
       "route": [
         0,
-        2,
         3,
         4,
+        2,
         1,
         0
       ],
-      "cost": 4074,
-      "best": 4074
+      "cost": 4375,
+      "best": 4375
+    },
+    {
+      "route": [
+        0,
+        2,
+        4,
+        3,
+        1,
+        0
+      ],
+      "cost": 4124,
+      "best": 4124
+    },
+    {
+      "route": [
+        0,
+        4,
+        2,
+        3,
+        1,
+        0
+      ],
+      "cost": 6002,
+      "best": 4124
+    },
+    {
+      "route": [
+        0,
+        2,
+        4,
+        3,
+        1,
+        0
+      ],
+      "cost": 4124,
+      "best": 4124
     },
     {
       "route": [
         0,
         4,
         3,
-        2,
         1,
+        2,
         0
       ],
-      "cost": 3554,
-      "best": 3554
+      "cost": 4206,
+      "best": 4124
+    },
+    {
+      "route": [
+        0,
+        3,
+        1,
+        4,
+        2,
+        0
+      ],
+      "cost": 6084,
+      "best": 4124
+    },
+    {
+      "route": [
+        0,
+        1,
+        3,
+        4,
+        2,
+        0
+      ],
+      "cost": 4662,
+      "best": 4124
     },
     {
       "route": [
         0,
         3,
         4,
-        2,
         1,
+        2,
         0
       ],
-      "cost": 4452,
-      "best": 3554
+      "cost": 4634,
+      "best": 4124
     },
     {
       "route": [
         0,
         4,
         3,
-        2,
         1,
+        2,
         0
       ],
-      "cost": 3554,
-      "best": 3554
+      "cost": 4206,
+      "best": 4124
     },
     {
       "route": [
         0,
-        3,
-        4,
         2,
+        4,
+        3,
         1,
         0
       ],
-      "cost": 4452,
-      "best": 3554
+      "cost": 4124,
+      "best": 4124
     },
     {
       "route": [
         0,
         4,
-        3,
         2,
+        3,
         1,
         0
       ],
-      "cost": 3554,
-      "best": 3554
+      "cost": 6002,
+      "best": 4124
+    },
+    {
+      "route": [
+        0,
+        2,
+        4,
+        3,
+        1,
+        0
+      ],
+      "cost": 4124,
+      "best": 4124
     }
   ],
   "provenance": {
-    "date": "2026-10-19",
+    "date": "2026-10-20",
     "ortools": "9.10.4067",
-    "source": "Recorte da timeMatrix de data.js, entrada registrada de Nova Iorque",
-    "model": "Uma rota, quatro visitas obrigatórias, custo apenas de deslocamento em segundos; sem janelas, durações, exclusões ou preferências",
+    "source": "Recorte da matriz atual de três dias; índices [0, 37, 39, 31, 29]",
+    "model": "Uma rota, quatro visitas obrigatórias, somente deslocamento; sem janelas, durações, exclusões ou preferências.",
     "firstSolution": "PARALLEL_CHEAPEST_INSERTION",
     "localSearch": "GUIDED_LOCAL_SEARCH",
     "timeLimitMs": 200,
-    "construction": "Encaixes mínimos calculados sobre a matriz e primeira rota conferida contra o OR-Tools",
-    "search": "Primeiras seis soluções aceitas registradas por AddAtSolutionCallback; a animação usa as três primeiras e retorna à melhor"
+    "construction": "Reconstrução didática dos encaixes mínimos, primeira rota conferida contra o OR-Tools.",
+    "search": "Soluções aceitas de AddAtSolutionCallback; a animação usa as três primeiras."
   }
 };

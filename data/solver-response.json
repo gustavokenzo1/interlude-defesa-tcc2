@@ -1,1 +1,241 @@
-{"total_distance_meters":62379,"total_time_seconds":133495,"days":[{"day_index":0,"distance_meters":15736,"total_time_seconds":31937,"steps":[{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":0,"arrival_seconds":10800,"departure_seconds":10800,"is_depot":true,"is_meal":false},{"stop_id":"ChIJK3vOQyNawokRXEa9errdJiU","name":"Ponte do Brooklyn","latitude":40.7060855,"longitude":-73.9968643,"order":1,"arrival_seconds":28800,"departure_seconds":32400,"is_depot":false,"is_meal":false},{"stop_id":"ChIJRcvoOxpawokR7R4dQMXMMPQ","name":"Memorial & Museu Nacional do 11 de Setembro","latitude":40.7115776,"longitude":-74.0133362,"order":2,"arrival_seconds":33655,"departure_seconds":41755,"is_depot":false,"is_meal":false},{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":3,"arrival_seconds":42737,"departure_seconds":42737,"is_depot":true,"is_meal":false}]},{"day_index":1,"distance_meters":10941,"total_time_seconds":28953,"steps":[{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":0,"arrival_seconds":10800,"departure_seconds":10800,"is_depot":true,"is_meal":false},{"stop_id":"ChIJUW4vEPxYwokRW6o24DU0YIg","name":"Catedral de São Patrício","latitude":40.758611699999996,"longitude":-73.9761953,"order":1,"arrival_seconds":11541,"departure_seconds":13341,"is_depot":false,"is_meal":false},{"stop_id":"ChIJb8Jg9pZYwokR-qHGtvSkLzs","name":"Metropolitan Museum of Art","latitude":40.7794366,"longitude":-73.963244,"order":2,"arrival_seconds":14400,"departure_seconds":26100,"is_depot":false,"is_meal":false},{"stop_id":"__meal_filler__l0__d1__lunch__h2__","name":"Almoço","latitude":40.7794366,"longitude":-73.963244,"order":3,"arrival_seconds":26100,"departure_seconds":30600,"is_depot":false,"is_meal":true},{"stop_id":"ChIJ4zGFAZpYwokRGUGph3Mf37k","name":"Central Park","latitude":40.7825547,"longitude":-73.9655834,"order":4,"arrival_seconds":31159,"departure_seconds":38359,"is_depot":false,"is_meal":false},{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":5,"arrival_seconds":39753,"departure_seconds":39753,"is_depot":true,"is_meal":false}]},{"day_index":2,"distance_meters":23293,"total_time_seconds":31982,"steps":[{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":0,"arrival_seconds":10800,"departure_seconds":10800,"is_depot":true,"is_meal":false},{"stop_id":"ChIJPTacEpBQwokRKwIlDXelxkA","name":"Estatua da Liberdade","latitude":40.6892494,"longitude":-74.04450039999999,"order":1,"arrival_seconds":14550,"departure_seconds":27150,"is_depot":false,"is_meal":false},{"stop_id":"__meal_filler__l0__d2__lunch__h9__","name":"Almoço","latitude":40.6892494,"longitude":-74.04450039999999,"order":2,"arrival_seconds":27150,"departure_seconds":31650,"is_depot":false,"is_meal":true},{"stop_id":"ChIJaXQRs6lZwokRY6EFpJnhNNE","name":"Empire State Building","latitude":40.7484405,"longitude":-73.98566439999999,"order":3,"arrival_seconds":35508,"departure_seconds":42708,"is_depot":false,"is_meal":false},{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":4,"arrival_seconds":42782,"departure_seconds":42782,"is_depot":true,"is_meal":false}]},{"day_index":3,"distance_meters":6822,"total_time_seconds":30395,"steps":[{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":0,"arrival_seconds":10800,"departure_seconds":10800,"is_depot":true,"is_meal":false},{"stop_id":"ChIJN6W-X_VYwokRTqwcBnTw1Uk","name":"Lincoln Center","latitude":40.7724641,"longitude":-73.9834889,"order":1,"arrival_seconds":11781,"departure_seconds":21981,"is_depot":false,"is_meal":false},{"stop_id":"__meal_filler__l0__d3__lunch__h11__","name":"Almoço","latitude":40.7724641,"longitude":-73.9834889,"order":2,"arrival_seconds":21981,"departure_seconds":26481,"is_depot":false,"is_meal":true},{"stop_id":"ChIJPS8b1vhYwokRldqq2YHmxJI","name":"Radio City Music Hall","latitude":40.759975999999995,"longitude":-73.9799772,"order":3,"arrival_seconds":27320,"departure_seconds":37520,"is_depot":false,"is_meal":false},{"stop_id":"ChIJmQJIxlVYwokRLgeuocVOGVU","name":"Times Square","latitude":40.7579747,"longitude":-73.9855426,"order":4,"arrival_seconds":37968,"departure_seconds":40668,"is_depot":false,"is_meal":false},{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":5,"arrival_seconds":41195,"departure_seconds":41195,"is_depot":true,"is_meal":false}]},{"day_index":4,"distance_meters":5587,"total_time_seconds":10228,"steps":[{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":0,"arrival_seconds":10800,"departure_seconds":10800,"is_depot":true,"is_meal":false},{"stop_id":"ChIJ9U1mz_5YwokRosza1aAk0jM","name":"Rockefeller Center","latitude":40.7587402,"longitude":-73.9786736,"order":1,"arrival_seconds":11661,"departure_seconds":17061,"is_depot":false,"is_meal":false},{"stop_id":"ChIJvbGg56pZwokRp_E3JbivnLQ","name":"Parque Bryant","latitude":40.7535367,"longitude":-73.9829529,"order":2,"arrival_seconds":17490,"departure_seconds":20190,"is_depot":false,"is_meal":false},{"stop_id":"__lodging_0_lodging-1788485545307-qqa3__","name":"Wyndham New Yorker Hotel","latitude":40.7527316,"longitude":-73.9936287,"order":3,"arrival_seconds":21028,"departure_seconds":21028,"is_depot":true,"is_meal":false}]}],"unassigned":[]}
+{
+  "total_distance_meters": 52992,
+  "total_time_seconds": 99622,
+  "days": [
+    {
+      "day_index": 0,
+      "distance_meters": 18111,
+      "total_time_seconds": 30890,
+      "steps": [
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day0__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 0,
+          "arrival_seconds": 28800,
+          "departure_seconds": 28800,
+          "is_depot": true,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJjaFpo0ZawokRBcOFUZ13CaE",
+          "name": "Parque da Ponte do Brooklyn",
+          "latitude": 40.7022422,
+          "longitude": -73.9958601,
+          "order": 1,
+          "arrival_seconds": 30415,
+          "departure_seconds": 37615,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJK3vOQyNawokRXEa9errdJiU",
+          "name": "Ponte do Brooklyn",
+          "latitude": 40.7060855,
+          "longitude": -73.9968643,
+          "order": 2,
+          "arrival_seconds": 39083,
+          "departure_seconds": 42683,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJy7cGfBlawokR5l2e93hsoEA",
+          "name": "One World Trade Center",
+          "latitude": 40.7127431,
+          "longitude": -74.0133795,
+          "order": 3,
+          "arrival_seconds": 43980,
+          "departure_seconds": 50580,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+          "name": "Empire State Building",
+          "latitude": 40.7484405,
+          "longitude": -73.98566439999999,
+          "order": 4,
+          "arrival_seconds": 51923,
+          "departure_seconds": 59123,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day0__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 5,
+          "arrival_seconds": 59690,
+          "departure_seconds": 59690,
+          "is_depot": true,
+          "is_meal": false
+        }
+      ]
+    },
+    {
+      "day_index": 1,
+      "distance_meters": 24241,
+      "total_time_seconds": 35103,
+      "steps": [
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day1__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 0,
+          "arrival_seconds": 10800,
+          "departure_seconds": 10800,
+          "is_depot": true,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJvbGg56pZwokRp_E3JbivnLQ",
+          "name": "Parque Bryant",
+          "latitude": 40.7535367,
+          "longitude": -73.9829529,
+          "order": 1,
+          "arrival_seconds": 11491,
+          "departure_seconds": 14191,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJmQJIxlVYwokRLgeuocVOGVU",
+          "name": "Times Square",
+          "latitude": 40.7579747,
+          "longitude": -73.9855426,
+          "order": 2,
+          "arrival_seconds": 14795,
+          "departure_seconds": 17495,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJPTacEpBQwokRKwIlDXelxkA",
+          "name": "Estatua da Liberdade",
+          "latitude": 40.6892494,
+          "longitude": -74.04450039999999,
+          "order": 3,
+          "arrival_seconds": 21384,
+          "departure_seconds": 33984,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJRcvoOxpawokR7R4dQMXMMPQ",
+          "name": "Memorial & Museu Nacional do 11 de Setembro",
+          "latitude": 40.7115776,
+          "longitude": -74.0133362,
+          "order": 4,
+          "arrival_seconds": 36576,
+          "departure_seconds": 44676,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day1__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 5,
+          "arrival_seconds": 45903,
+          "departure_seconds": 45903,
+          "is_depot": true,
+          "is_meal": false
+        }
+      ]
+    },
+    {
+      "day_index": 2,
+      "distance_meters": 10640,
+      "total_time_seconds": 33629,
+      "steps": [
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day2__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 0,
+          "arrival_seconds": 10800,
+          "departure_seconds": 10800,
+          "is_depot": true,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+          "name": "Central Park",
+          "latitude": 40.7825547,
+          "longitude": -73.9655834,
+          "order": 1,
+          "arrival_seconds": 12217,
+          "departure_seconds": 19417,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJb8Jg9pZYwokR-qHGtvSkLzs",
+          "name": "Metropolitan Museum of Art",
+          "latitude": 40.7794366,
+          "longitude": -73.963244,
+          "order": 2,
+          "arrival_seconds": 19938,
+          "departure_seconds": 31638,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJ9U1mz_5YwokRosza1aAk0jM",
+          "name": "Rockefeller Center",
+          "latitude": 40.7587402,
+          "longitude": -73.9786736,
+          "order": 3,
+          "arrival_seconds": 32387,
+          "departure_seconds": 37787,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "ChIJe7vKMf9YwokRIMYfDz7iF9o",
+          "name": "Top of the Rock",
+          "latitude": 40.7593495,
+          "longitude": -73.9794087,
+          "order": 4,
+          "arrival_seconds": 37888,
+          "departure_seconds": 43588,
+          "is_depot": false,
+          "is_meal": false
+        },
+        {
+          "stop_id": "__lodging_0_lodging-1792497394867-em59_day2__",
+          "name": "Wyndham New Yorker Hotel",
+          "latitude": 40.7527316,
+          "longitude": -73.9936287,
+          "order": 5,
+          "arrival_seconds": 44429,
+          "departure_seconds": 44429,
+          "is_depot": true,
+          "is_meal": false
+        }
+      ]
+    }
+  ],
+  "unassigned": [
+    {
+      "stop_id": "__meal_filler__l0__d1__lunch__h0__",
+      "name": "Almoço",
+      "latitude": 40.7527316,
+      "longitude": -73.9936287,
+      "priority": 1
+    },
+    {
+      "stop_id": "__meal_filler__l0__d2__lunch__h0__",
+      "name": "Almoço",
+      "latitude": 40.7527316,
+      "longitude": -73.9936287,
+      "priority": 1
+    }
+  ]
+}

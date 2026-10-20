@@ -1109,7 +1109,7 @@ body.presenter-mode .viewport, body.presenter-mode .controls, body.presenter-mod
 .route-summary { display: flex; justify-content: space-between; align-items: baseline; margin-top: 8px; gap: 20px; }
 .route-summary p { font-size: 23px; }
 .route-summary > span { font-size: 17px; color: var(--ink-muted); }
-.daily-results { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; margin-top: 26px; }
+.daily-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 26px; }
 .daily-result { border-top: 2px solid var(--hairline); }
 .daily-result header { display: flex; justify-content: space-between; align-items: baseline; padding-top: 12px; }
 .daily-result h3 { font: 700 26px var(--display); }

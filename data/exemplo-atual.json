@@ -1,0 +1,112 @@
+{
+  "recordedOn": "2026-10-20",
+  "startDate": "2026-10-27",
+  "endDate": "2026-10-29",
+  "datesFlexible": true,
+  "pace": "moderate",
+  "travelMode": "transit",
+  "interests": {
+    "culture": 2,
+    "nature": 2
+  },
+  "ranking": [
+    {
+      "name": "Central Park",
+      "rating": 4.8,
+      "count": 303282,
+      "product": 1455.7535999999998,
+      "bayes": 4.7986832662896415,
+      "score": 5.398683266289641
+    },
+    {
+      "name": "9/11 Memorial",
+      "rating": 4.8,
+      "count": 95782,
+      "product": 459.75359999999995,
+      "bayes": 4.795845537068195,
+      "score": 5.091017919566842
+    },
+    {
+      "name": "The MET",
+      "rating": 4.8,
+      "count": 95537,
+      "product": 458.57759999999996,
+      "bayes": 4.795834938617408,
+      "score": 5.090329965906145
+    },
+    {
+      "name": "Brooklyn Bridge",
+      "rating": 4.8,
+      "count": 94258,
+      "product": 452.43839999999994,
+      "bayes": 4.795778720530192,
+      "score": 5.086709231798216
+    },
+    {
+      "name": "Times Square",
+      "rating": 4.7,
+      "count": 249647,
+      "product": 1173.3409000000001,
+      "bayes": 4.6986008227162435,
+      "score": 5.247130385757561
+    },
+    {
+      "name": "Brooklyn Bridge Park",
+      "rating": 4.8,
+      "count": 43796,
+      "product": 210.2208,
+      "bayes": 4.790969839263139,
+      "score": 4.879186142623013
+    },
+    {
+      "name": "Rockefeller",
+      "rating": 4.7,
+      "count": 202793,
+      "product": 953.1271,
+      "bayes": 4.698278347016376,
+      "score": 5.191834039625887
+    },
+    {
+      "name": "One World Trade Center",
+      "rating": 4.8,
+      "count": 31374,
+      "product": 150.59519999999998,
+      "bayes": 4.787450586685072,
+      "score": 4.787450586685072
+    },
+    {
+      "name": "Empire State",
+      "rating": 4.7,
+      "count": 130722,
+      "product": 614.3934,
+      "bayes": 4.697332764323056,
+      "score": 5.074755300110781
+    },
+    {
+      "name": "Statue of Liberty",
+      "rating": 4.7,
+      "count": 112747,
+      "product": 529.9109,
+      "bayes": 4.696909410403808,
+      "score": 5.035209556129309
+    },
+    {
+      "name": "Bryant Park",
+      "rating": 4.7,
+      "count": 108810,
+      "product": 511.407,
+      "bayes": 4.696798097154881,
+      "score": 5.025698098348906
+    },
+    {
+      "name": "Top of the Rock",
+      "rating": 4.7,
+      "count": 93338,
+      "product": 438.6886,
+      "bayes": 4.696270167735886,
+      "score": 4.984606643588974
+    }
+  ],
+  "rankingScope": "Recálculo didático sobre as mesmas 12 atrações selecionadas; normalização relativa a este recorte, sem desconto de distância. A lista real usa o conjunto descoberto completo e intercala categorias após os primeiros oito itens.",
+  "capture": "iPhone 18 Pro Max, iOS 27, build TCC. Fluxo real no app com APIs atuais; geração instrumentada localmente com o backend e solver atuais. Pausas livres, sem restaurante escolhido."
+}

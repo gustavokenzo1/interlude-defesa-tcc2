@@ -1,0 +1,333 @@
+{
+  "recorded_on": "2026-10-20",
+  "ortools": "9.10.4067",
+  "request_sha256": "58d7761f2c72fb0ca2e95536ba0a3aefbeed12a12cba04cab336bce7c27d23a5",
+  "description": "Nova execução para os slides; uma repetição por estratégia, mesma entrada atual de três dias, até cinco segundos.",
+  "results": [
+    {
+      "metodo": "PATH_CHEAPEST_ARC",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 68919286,
+          "busca_s": 0.012,
+          "atracoes_visitadas": 10,
+          "atracoes_total": 12,
+          "excluidas": [
+            {
+              "nome": "Metropolitan Museum of Art",
+              "prioridade": 3
+            },
+            {
+              "nome": "Estatua da Liberdade",
+              "prioridade": 10
+            }
+          ],
+          "deslocamento_min": 235,
+          "distancia_km": 49.4,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "Central Park",
+                "Ponte do Brooklyn"
+              ],
+              "refeicoes": 0,
+              "km": 24.1,
+              "horas": 4.7
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Times Square",
+                "One World Trade Center",
+                "Memorial & Museu Nacional do 11 de Setembro",
+                "Parque da Ponte do Brooklyn"
+              ],
+              "refeicoes": 1,
+              "km": 18.9,
+              "horas": 9.6
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Empire State Building",
+                "Parque Bryant",
+                "Top of the Rock",
+                "Rockefeller Center"
+              ],
+              "refeicoes": 1,
+              "km": 6.4,
+              "horas": 9.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "metodo": "PARALLEL_CHEAPEST_INSERTION",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 1424714,
+          "busca_s": 0.002,
+          "atracoes_visitadas": 12,
+          "atracoes_total": 12,
+          "excluidas": [],
+          "deslocamento_min": 391,
+          "distancia_km": 75.6,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "One World Trade Center",
+                "Parque da Ponte do Brooklyn",
+                "Rockefeller Center",
+                "Empire State Building"
+              ],
+              "refeicoes": 0,
+              "km": 20.5,
+              "horas": 8.9
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Ponte do Brooklyn",
+                "Estatua da Liberdade",
+                "Top of the Rock",
+                "Parque Bryant"
+              ],
+              "refeicoes": 1,
+              "km": 32.5,
+              "horas": 11.4
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Central Park",
+                "Metropolitan Museum of Art",
+                "Memorial & Museu Nacional do 11 de Setembro",
+                "Times Square"
+              ],
+              "refeicoes": 1,
+              "km": 22.6,
+              "horas": 11.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "metodo": "GREEDY_DESCENT",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 1043486,
+          "busca_s": 0.018,
+          "atracoes_visitadas": 12,
+          "atracoes_total": 12,
+          "excluidas": [],
+          "deslocamento_min": 340,
+          "distancia_km": 59.3,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "Parque da Ponte do Brooklyn",
+                "One World Trade Center",
+                "Rockefeller Center",
+                "Empire State Building"
+              ],
+              "refeicoes": 0,
+              "km": 21.3,
+              "horas": 8.9
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Memorial & Museu Nacional do 11 de Setembro",
+                "Estatua da Liberdade",
+                "Ponte do Brooklyn",
+                "Times Square"
+              ],
+              "refeicoes": 0,
+              "km": 26.8,
+              "horas": 10.3
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Parque Bryant",
+                "Top of the Rock",
+                "Metropolitan Museum of Art",
+                "Central Park"
+              ],
+              "refeicoes": 0,
+              "km": 11.2,
+              "horas": 8.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "metodo": "GUIDED_LOCAL_SEARCH",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 1015824,
+          "busca_s": 5.0,
+          "atracoes_visitadas": 12,
+          "atracoes_total": 12,
+          "excluidas": [],
+          "deslocamento_min": 315,
+          "distancia_km": 53.0,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "Parque da Ponte do Brooklyn",
+                "Ponte do Brooklyn",
+                "One World Trade Center",
+                "Empire State Building"
+              ],
+              "refeicoes": 0,
+              "km": 18.1,
+              "horas": 8.6
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Parque Bryant",
+                "Times Square",
+                "Estatua da Liberdade",
+                "Memorial & Museu Nacional do 11 de Setembro"
+              ],
+              "refeicoes": 0,
+              "km": 24.2,
+              "horas": 9.8
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Central Park",
+                "Metropolitan Museum of Art",
+                "Rockefeller Center",
+                "Top of the Rock"
+              ],
+              "refeicoes": 0,
+              "km": 10.6,
+              "horas": 9.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "metodo": "SIMULATED_ANNEALING",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 1043486,
+          "busca_s": 5.0,
+          "atracoes_visitadas": 12,
+          "atracoes_total": 12,
+          "excluidas": [],
+          "deslocamento_min": 340,
+          "distancia_km": 59.3,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "Parque da Ponte do Brooklyn",
+                "One World Trade Center",
+                "Rockefeller Center",
+                "Empire State Building"
+              ],
+              "refeicoes": 0,
+              "km": 21.3,
+              "horas": 8.9
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Memorial & Museu Nacional do 11 de Setembro",
+                "Estatua da Liberdade",
+                "Ponte do Brooklyn",
+                "Times Square"
+              ],
+              "refeicoes": 0,
+              "km": 26.8,
+              "horas": 10.3
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Parque Bryant",
+                "Top of the Rock",
+                "Metropolitan Museum of Art",
+                "Central Park"
+              ],
+              "refeicoes": 0,
+              "km": 11.2,
+              "horas": 8.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "metodo": "TABU_SEARCH",
+      "limite_s": 5,
+      "execucoes": [
+        {
+          "objetivo": 1015824,
+          "busca_s": 5.0,
+          "atracoes_visitadas": 12,
+          "atracoes_total": 12,
+          "excluidas": [],
+          "deslocamento_min": 315,
+          "distancia_km": 53.0,
+          "dias": [
+            {
+              "dia": 1,
+              "atracoes": [
+                "Parque da Ponte do Brooklyn",
+                "Ponte do Brooklyn",
+                "One World Trade Center",
+                "Empire State Building"
+              ],
+              "refeicoes": 0,
+              "km": 18.1,
+              "horas": 8.6
+            },
+            {
+              "dia": 2,
+              "atracoes": [
+                "Parque Bryant",
+                "Times Square",
+                "Estatua da Liberdade",
+                "Memorial & Museu Nacional do 11 de Setembro"
+              ],
+              "refeicoes": 0,
+              "km": 24.2,
+              "horas": 9.8
+            },
+            {
+              "dia": 3,
+              "atracoes": [
+                "Central Park",
+                "Metropolitan Museum of Art",
+                "Rockefeller Center",
+                "Top of the Rock"
+              ],
+              "refeicoes": 0,
+              "km": 10.6,
+              "horas": 9.3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

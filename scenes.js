@@ -41,8 +41,8 @@
   }
 
   const hhmm = (sec) => {
-    const total = 6 * 3600 + sec;
-    const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60);
+    const total = 6 * 60 + Math.round(sec / 60);
+    const h = Math.floor(total / 60), m = total % 60;
     return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
   };
 
@@ -300,7 +300,7 @@
       const demo = slide.querySelector("#bayesDemo");
       const hyp = slide.querySelector('[data-bd="hyp"]'), cp = slide.querySelector('[data-bd="cp"]');
       const B = (r, n) => (n * r + 500 * 4) / (n + 500);
-      const target = [B(5, 1), B(4.8, 301915)];
+      const target = [B(5, 1), B(4.8, 303282)];
       if (level < 4) { demo.classList.remove("after"); hyp.textContent = "5,000"; cp.textContent = "4,800"; return; }
       clearTimeout(this.t);
       const run = () => {
@@ -317,16 +317,12 @@
   };
 
   // ---------- 11 Evolução da ordenação ----------
-  const META = {
-    "Central Park": "4,8, 301.915", "Times Square": "4,7, 246.545", "Rockefeller Center": "4,7, 201.962", "Empire State Building": "4,7, 129.004",
-    "Statue of Liberty": "4,7, 112.723", "Bryant Park": "4,7, 107.557", "The MET": "4,8, 94.843", "9/11 Memorial": "4,8, 94.772",
-    "Brooklyn Bridge": "4,8, 93.288", "Saint Patrick": "4,8, 42.771", "Radio City Music Hall": "4,8, 27.658", "Lincoln Center": "4,8, 22.105",
-  };
+  const META = Object.fromEntries(D.ranking.map((p) => [p.name, `${dec(p.rating, 1)}, ${fmt(p.count)}`]));
   const COLS = [
-    { title: "Produto simples", sub: "nota × avaliações, em milhares", rows: [["Central Park", "1.449"], ["Times Square", "1.159"], ["Rockefeller Center", "949"], ["Empire State Building", "606"], ["Statue of Liberty", "530"], ["Bryant Park", "506"], ["The MET", "455"], ["9/11 Memorial", "455"], ["Brooklyn Bridge", "448"], ["Saint Patrick", "205"], ["Radio City Music Hall", "133"], ["Lincoln Center", "106"]] },
-    { title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", rows: [["Central Park", "4,799"], ["The MET", "4,796"], ["9/11 Memorial", "4,796"], ["Brooklyn Bridge", "4,796"], ["Saint Patrick", "4,791"], ["Radio City Music Hall", "4,786"], ["Lincoln Center", "4,782"], ["Times Square", "4,699"], ["Rockefeller Center", "4,698"], ["Empire State Building", "4,697"], ["Statue of Liberty", "4,697"], ["Bryant Park", "4,697"]] },
-    { title: "Escore completo", sub: "+ popularidade relativa", rows: [["Central Park", "5,399"], ["Times Square", "5,252"], ["Rockefeller Center", "5,206"], ["The MET", "5,130"], ["9/11 Memorial", "5,130"], ["Brooklyn Bridge", "5,126"], ["Empire State Building", "5,102"], ["Statue of Liberty", "5,071"], ["Bryant Park", "5,060"], ["Saint Patrick", "4,942"], ["Radio City Music Hall", "4,837"], ["Lincoln Center", "4,782"]] },
-  ];
+    {title: "Produto simples", sub: "nota × avaliações, em milhares", key: "product", digits: 0},
+    {title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", key: "bayes", digits: 3},
+    {title: "Escore completo", sub: "+ popularidade relativa no recorte", key: "score", digits: 3},
+  ].map((col) => ({...col, rows: [...D.ranking].sort((a,b) => b[col.key] - a[col.key]).map((p) => [p.name, dec(p[col.key], col.digits)])}));
   Scenes.bump = {
     init(slide) {
       const svg = slide.querySelector("#bumpChart");
@@ -445,10 +441,10 @@
       svgEl("text", { x: (x(last) + x(close)) / 2, y: 314, "text-anchor": "middle", class: "instance-duration", text: "visita de 3h15" }, svg);
     },
     matrix(slide) {
-      const order = [nodes[hotel], ...["Central Park", "The MET", "Saint Patrick"].map((name) => nodes.find((n) => n.name === name))];
+      const order = [nodes[hotel], ...["Central Park", "The MET", "Bryant Park"].map((name) => nodes.find((n) => n.name === name))];
       const name = (n) => n.depot ? "Hotel" : n.name;
       const minutes = (a, b) => Math.round(D.timeMatrix[a.node][b.node] / 60);
-      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 0 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+      slide.querySelector("#instanceMatrix").innerHTML = `<table class="instance-matrix"><thead><tr><th>De / para</th>${order.map((n) => `<th>${name(n)}</th>`).join("")}</tr></thead><tbody>${order.map((a, i) => `<tr><th>${name(a)}</th>${order.map((b, j) => `<td class="${i === 1 && j === 2 ? "matrix-highlight" : ""}">${i === j ? "—" : minutes(a, b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
     },
   };
 
@@ -469,8 +465,8 @@
         [r.start, r.end].forEach((h, i) => svgEl("text", { x: x(h), y: r.y + 47, "text-anchor": "middle", class: "instance-tick", text: i ? r.b : r.a }, win));
       });
       const svg = slide.querySelector("#timeSequence");
-      const marks = [{ x: 90, time: "09:12:21", label: "Saint Patrick" }, { x: 720, time: "09:42:21", label: "Fim da visita" }, { x: 1120, time: "09:59:52", label: "Chegada" }, { x: 1330, time: "10:00:00", label: "The MET" }];
-      const segments = [{ a: 90, b: 720, color: "var(--pine)", label: "sᵢ = 30 min" }, { a: 720, b: 1120, color: "var(--day-3)", label: "tᵢⱼ = 17 min 31 s" }, { a: 1120, b: 1330, color: "var(--amber)", label: "espera: 8 s" }];
+      const marks = [{x: 90, time: "09:23:37", label: "Central Park"}, {x: 850, time: "11:23:37", label: "Fim da visita"}, {x: 1330, time: "11:32:18", label: "The MET"}];
+      const segments = [{a: 90, b: 850, color: "var(--pine)", label: "sᵢ = 2 h"}, {a: 850, b: 1330, color: "var(--day-3)", label: "tᵢⱼ = 8 min 41 s"}];
       segments.forEach((r) => {
         svgEl("rect", { x: r.a, y: 91, width: r.b - r.a, height: 38, fill: r.color }, svg);
         svgEl("text", { x: (r.a + r.b) / 2, y: 116, "text-anchor": "middle", class: "time-segment-label", style: { fill: r.color === "var(--amber)" ? "var(--ink)" : "#fff" }, text: r.label }, svg);
@@ -483,71 +479,6 @@
     },
   };
 
-  // ---------- 16 Propagação temporal (dia 2: Saint Patrick → The MET) ----------
-  Scenes.temporal = {
-    init(slide) {
-      const svg = slide.querySelector("#tlSvg");
-      const cat = nodes.find((n) => n.name === "Saint Patrick"), met = nodes.find((n) => n.name === "The MET");
-      const day = D.days[1].steps;
-      const sCat = day.find((s) => s.name === "Saint Patrick"), sMet = day.find((s) => s.name === "The MET");
-      const Ti = sCat.arrival, si = sCat.departure - sCat.arrival, tij = D.timeMatrix[cat.node][met.node];
-      const ready = Ti + si + tij, Tj = sMet.arrival, wait = Tj - ready;
-      this.values = { Ti, si, tij, ready, Tj, wait };
-      const t0 = 11100, t1 = 15600, X0 = 60, X1 = 1380, Y = 150;
-      const x = (t) => X0 + ((t - t0) / (t1 - t0)) * (X1 - X0);
-      svgEl("line", { class: "tl-axis", x1: X0, x2: X1, y1: Y, y2: Y }, svg);
-      for (let t = 11700; t <= t1; t += 900) {
-        svgEl("line", { x1: x(t), x2: x(t), y1: Y - 6, y2: Y + 6, style: { stroke: "var(--ink-soft)", strokeWidth: 1.5 } }, svg);
-        svgEl("text", { class: "tl-tick", x: x(t), y: Y + 44, text: hhmm(t) }, svg);
-      }
-      const defs = svgEl("defs", {}, svg);
-      const hatch = svgEl("pattern", { id: "waitHatch", width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
-      svgEl("rect", { width: 8, height: 8, style: { fill: "#FBF4E4" } }, hatch);
-      svgEl("line", { x1: 0, y1: 0, x2: 0, y2: 8, style: { stroke: "#D9A441", strokeWidth: 3 } }, hatch);
-      const g = (n) => svgEl("g", { "data-step": n, style: { opacity: 0, transition: "opacity .6s var(--ease), transform .6s var(--ease)", transform: "translateY(10px)" } }, svg);
-      this.layers = [];
-      const node = (gx, cx, label, sub, color) => {
-        svgEl("circle", { cx, cy: Y, r: 20, style: { fill: color, stroke: "#fff", strokeWidth: 3 } }, gx);
-        svgEl("text", { x: cx, y: Y + 6, "text-anchor": "middle", style: { font: "italic 400 20px var(--math)", fill: "#fff" }, text: label }, gx);
-        svgEl("text", { class: "tl-big", x: cx, y: Y - 86 }, gx).innerHTML = sub[0];
-        svgEl("text", { class: "tl-lbl", x: cx, y: Y - 62, text: sub[1] }, gx);
-      };
-      let L = g(1); this.layers.push(L);
-      node(L, x(Ti), "i", [`T<tspan dy="6" font-size="13">i</tspan><tspan dy="-6"> = ${fmt(Ti)} s</tspan>`, `Saint Patrick, ${hhmm(Ti)}`], "var(--pine)");
-      L = g(2); this.layers.push(L);
-      const sbar = svgEl("rect", { x: x(Ti) + 22, y: Y - 18, width: Math.max(0, x(Ti + si) - x(Ti) - 22), height: 36, rx: 8, style: { fill: "var(--pine-soft)", stroke: "var(--pine)", strokeWidth: 1.6 } }, L);
-      svgEl("text", { class: "tl-math", x: (x(Ti) + x(Ti + si)) / 2 + 10, y: Y + 8, text: "" }, L).innerHTML = `s<tspan font-size="16" dy="6">i</tspan><tspan dy="-6" font-style="normal" font-family="var(--body)" font-size="15"> = ${fmt(si)} s</tspan>`;
-      svgEl("text", { class: "tl-lbl", x: (x(Ti) + x(Ti + si)) / 2 + 10, y: Y + 76, text: "visita de 30 min" }, L);
-      void sbar;
-      L = g(3); this.layers.push(L);
-      svgEl("rect", { x: x(Ti + si), y: Y - 18, width: x(ready) - x(Ti + si), height: 36, rx: 8, style: { fill: "#E6EEF7", stroke: "var(--day-3)", strokeWidth: 1.6, strokeDasharray: "6 4" } }, L);
-      svgEl("text", { class: "tl-math", x: (x(Ti + si) + x(ready)) / 2, y: Y + 8 }, L).innerHTML = `t<tspan font-size="16" dy="6">ij</tspan>`;
-      svgEl("text", { class: "tl-lbl", x: (x(Ti + si) + x(ready)) / 2, y: Y + 76, text: `${fmt(tij)} s de transporte` }, L);
-      L = g(4); this.layers.push(L);
-      svgEl("rect", { x: x(Tj), y: Y + 96, width: X1 + 40 - x(Tj), height: 34, rx: 8, style: { fill: "var(--amber-soft)", stroke: "var(--amber)", strokeWidth: 1.6 } }, L);
-      svgEl("line", { x1: x(Tj), x2: x(Tj), y1: Y + 20, y2: Y + 96, style: { stroke: "var(--amber)", strokeWidth: 1.6, strokeDasharray: "4 4" } }, L);
-      svgEl("text", { x: x(Tj) + 14, y: Y + 119, style: { font: "600 15px var(--body)", fill: "var(--amber-ink)" }, text: "janela do The MET no dia 2: 10:00 às 13:45 →" }, L);
-      L = g(5); this.layers.push(L);
-      if (wait > 0) {
-        svgEl("rect", { x: x(ready), y: Y - 18, width: x(Tj) - x(ready), height: 36, rx: 8, style: { fill: "url(#waitHatch)", stroke: "var(--amber)", strokeWidth: 1.4 } }, L);
-        svgEl("text", { class: "tl-lbl", x: (x(ready) + x(Tj)) / 2, y: Y - 30, style: { fill: "var(--amber-ink)" }, text: `espera ${fmt(wait)} s` }, L);
-      }
-      node(L, x(Tj), "j", [`T<tspan dy="6" font-size="13">j</tspan><tspan dy="-6"> = ${fmt(Tj)} s</tspan>`, `The MET, ${hhmm(Tj)}`], "var(--day-3)");
-      L = g(6); this.layers.push(L);
-      const eq = svgEl("text", { class: "tl-eq", x: 716, y: 320 }, L);
-      eq.innerHTML = `x<tspan font-size="22" dy="8">ij</tspan><tspan font-size="22" dy="-18">d</tspan><tspan dy="10" font-style="normal"> = 1  ⇒  </tspan>T<tspan font-size="22" dy="8">j</tspan><tspan dy="-8" font-style="normal"> ≥ </tspan>T<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>s<tspan font-size="22" dy="8">i</tspan><tspan dy="-8" font-style="normal"> + </tspan>t<tspan font-size="22" dy="8">ij</tspan>`;
-      svgEl("text", { x: 716, y: 365, "text-anchor": "middle", style: { font: "400 22px var(--mono)", fill: "var(--ink-muted)" }, text: `${fmt(Tj)} ≥ ${fmt(Ti)} + ${fmt(si)} + ${fmt(tij)} = ${fmt(ready)}` }, L);
-    },
-    build(slide, level) {
-      this.layers.forEach((L, i) => {
-        const on = level >= i + 1;
-        L.style.opacity = on ? 1 : 0;
-        L.style.transform = on ? "none" : "translateY(10px)";
-      });
-    },
-  };
-
-  // ---------- 19 Construção e melhoria: execução reduzida com tempos reais ----------
   Scenes.solverDemo = {
     init(slide) {
       this.slide = slide;
@@ -600,7 +531,7 @@
         const marker = svgEl("marker", { id: `demoArrow-${kind}`, viewBox: "0 0 16 14", refX: 14, refY: 7, markerWidth: 16, markerHeight: 14, markerUnits: "userSpaceOnUse", orient: "auto" }, defs);
         svgEl("path", { d: "M0,0 L14,7 L0,14 Z", class: `demo-arrow demo-arrow-${kind}` }, marker);
       });
-      const initials = ["H", "E", "S", "M", "C"];
+      const initials = ["H", "E", "B", "M", "C"];
       const labels = [], active = svgEl("g", {}, svg);
       const drawEdge = (a, b, from, to, kind) => {
         if (a === b) return;
@@ -648,7 +579,7 @@
       slide.querySelector("#demoStep").textContent = `${String(this.index + 1).padStart(2, "0")} / ${String(this.frames.length).padStart(2, "0")}`;
       slide.querySelector("#demoAction").textContent = frame.title;
       const calculation = frame.preview || frame.calculation;
-      const slotTable = frame.slots ? `<div class="demo-slots"><h4>Encaixes de Saint Patrick</h4>${frame.slots.map((slot) => `<p class="${slot.delta === calculation.delta ? "chosen" : ""}"><span>${slot.position === 1 ? "Hotel → Saint Patrick → Empire State" : "Empire State → Saint Patrick → Hotel"}</span><b>+${fmt(slot.delta)} s</b></p>`).join("")}</div>` : "";
+      const slotTable = frame.slots ? `<div class="demo-slots"><h4>Encaixes de ${names[calculation.node]}</h4>${frame.slots.map((slot) => `<p class="${slot.delta === calculation.delta ? "chosen" : ""}"><span>${slot.label}</span><b>+${fmt(slot.delta)} s</b></p>`).join("")}</div>` : "";
       const formula = calculation ? `<div class="demo-calculation"><small>Novos trechos − trecho substituído</small><div>${fmt(calculation.terms[0])} + ${fmt(calculation.terms[1])} − ${fmt(calculation.terms[2])} = <b>+${fmt(calculation.delta)} s</b></div><p>Total: ${fmt(frame.previousCost ?? frame.current)} + ${fmt(calculation.delta)} = ${fmt((frame.previousCost ?? frame.current) + calculation.delta)} s</p></div>` : "";
       slide.querySelector("#demoChoices").innerHTML = `<h4>${frame.choiceTitle}</h4><ol>${frame.choices.map((choice) => `<li class="${choice.chosen ? "chosen" : choice.active ? "active" : ""}"><span>${choice.label}</span><b>${frame.choiceDelta ? "+" : ""}${fmt(choice.value)} <small>s</small></b></li>`).join("")}</ol>${slotTable}${formula}${frame.saving ? `<div class="demo-saving">−${fmt(frame.saving)} s <small>em relação à primeira rota</small></div>` : ""}`;
       slide.querySelector("#demoNext").disabled = this.index === this.frames.length - 1;
@@ -679,11 +610,11 @@
       this.frames = D.frames;
       const conv = slide.querySelector("#convChart");
       const W = 860, H = 260, L = 88, B = 197, T = 36, R = 825
-      const tmin = Math.log10(0.01), tmax = Math.log10(5), omin = 5, omax = 8
+      const tmin = Math.log10(0.01), tmax = Math.log10(D.searchLimit), omin = 6, omax = Math.log10(1.5e6)
       this.cx = (t) => L + ((Math.log10(t) - tmin) / (tmax - tmin)) * (R - L)
       this.cy = (o) => B - ((Math.log10(o) - omin) / (omax - omin)) * (B - T)
       const grid = svgEl("g", { class: "grid" }, conv)
-      const costTicks = [[1e5, "100 mil"], [1e6, "1 milhão"], [1e7, "10 milhões"], [1e8, "100 milhões"]]
+      const costTicks = [[1e6, "1 milhão"], [1.15e6, "1,15 mi"], [1.3e6, "1,3 mi"], [1.5e6, "1,5 mi"]]
       costTicks.forEach(([o, label]) => {
         svgEl("line", { x1: L, x2: R, y1: this.cy(o), y2: this.cy(o) }, grid)
         svgEl("text", { class: "ax", x: L - 10, y: this.cy(o) + 4, "text-anchor": "end", text: label }, grid)
@@ -704,7 +635,7 @@
       this.convPath = svgEl("path", { style: { fill: "none", stroke: "var(--pine)", strokeWidth: 2.4, strokeLinejoin: "round" } }, conv);
       this.convDot = svgEl("circle", { r: 6, style: { fill: "#fff", stroke: "var(--pine)", strokeWidth: 3 } }, conv);
       const chips = slide.querySelector("#dayChips");
-      chips.innerHTML = DAY.map((c, d) => `<div style="--c:${c}"><small>Dia ${d + 1}</small><b data-day="${d}">0</b><span>atrações</span></div>`).join("");
+      chips.innerHTML = DAY.slice(0, D.days.length).map((c, d) => `<div style="--c:${c}"><small>Dia ${d + 1}</small><b data-day="${d}">0</b><span>atrações</span></div>`).join("");
       this.chipEls = [...chips.querySelectorAll("b")];
       this.odo = slide.querySelector("#odoValue");
       this.odoFrame = slide.querySelector("#odoFrame");
@@ -809,9 +740,9 @@
           return `<li class="${s.meal ? "meal" : ""}"><b class="visit-number">${number}</b><div><strong>${names[s.name] || s.name}</strong><span>${hhmm(s.arrival)}–${hhmm(s.departure)}</span></div></li>`;
         }).join("");
         const first = day.steps[0], last = day.steps[day.steps.length - 1];
-        return `<article class="daily-result" data-a="up" style="--d:${150 + d * 100}ms;--c:${DAY[d]}"><header><h3>Dia ${d + 1}</h3><span>${14 + d}/09</span></header><svg class="daily-map" viewBox="0 0 260 250" data-day="${d}" role="img" aria-label="Pontos visitados no dia ${d + 1}, numerados na ordem da agenda"></svg><ol>${stops}</ol><footer><b>${dec(day.distance / 1000, 1)} km</b> de deslocamento<span>Hotel: ${hhmm(first.departure)} → ${hhmm(last.arrival)}</span></footer></article>`;
+        return `<article class="daily-result" data-a="up" style="--d:${150 + d * 100}ms;--c:${DAY[d]}"><header><h3>Dia ${d + 1}</h3><span>${Number(D.startDate.slice(8)) + d}/${D.startDate.slice(5,7)}</span></header><svg class="daily-map" viewBox="0 0 260 250" data-day="${d}" role="img" aria-label="Pontos visitados no dia ${d + 1}, numerados na ordem da agenda"></svg><ol>${stops}</ol><footer><b>${dec(day.distance / 1000, 1)} km</b> de deslocamento<span>Hotel: ${hhmm(first.departure)} → ${hhmm(last.arrival)}</span></footer></article>`;
       }).join("");
-      // A projeção é comum aos cinco dias para permitir comparar as distâncias.
+      // A projeção é comum aos três dias para permitir comparar as distâncias.
       const pos = project({ x: 0, y: 0, w: 260, h: 250 }, { pad: 24, minDist: 17 });
       grid.querySelectorAll("svg.daily-map").forEach((svg) => {
         const d = Number(svg.dataset.day), seq = solutionRoutes[d];
