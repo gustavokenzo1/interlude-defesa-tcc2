@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=60" />
+  <link rel="stylesheet" href="motion.css?v=61" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -160,7 +160,7 @@
 <section class="slide app-flow-slide contract-slide" id="slide-6" data-stage="1" data-title="Destino, busca por texto">
 <h2 class="title" data-a="up">A busca retorna sugestões e seus IDs</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png?v=60" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="679" width="852" height="172" rx="28"/><path d="M1015,765.0 H910 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png?v=60" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="1531" width="854" height="137" rx="28"/><path d="M1015,1599.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png?v=61" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="679" width="852" height="172" rx="28"/><path d="M1015,765.0 H910 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png?v=61" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="1531" width="854" height="137" rx="28"/><path d="M1015,1599.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="1"><h3><span class="call-number">01</span> GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>query=Nova York</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;suggestions&quot;: [
@@ -188,7 +188,7 @@
 <section class="slide app-flow-slide contract-slide destination-contract" id="slide-7" data-stage="1" data-title="Destino selecionado, localização e datas">
 <h2 class="title" data-a="up">O ID selecionado permite obter a localização</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png?v=60" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="480" width="855" height="141" rx="28"/><path d="M1015,550.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>04</span> Definir a duração</h3><div class="flow-phone"><img src="assets/app/dates-selected.png?v=60" alt="Duração de três dias selecionada, com referência a 27 de outubro"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="213" y="633" width="517" height="105" rx="28"/><path d="M1015,685.5 H744 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png?v=61" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="480" width="855" height="141" rx="28"/><path d="M1015,550.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>04</span> Definir a duração</h3><div class="flow-phone"><img src="assets/app/dates-selected.png?v=61" alt="Duração de três dias selecionada, com referência a 27 de outubro"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="213" y="633" width="517" height="105" rx="28"/><path d="M1015,685.5 H744 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="2"><h3><span class="call-number">02</span> GET /v1/places/NYC</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>purpose=location</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;place&quot;: {
@@ -223,7 +223,7 @@
 <section class="slide app-flow-slide contract-slide lodging-contract" id="slide-8" data-stage="1" data-title="Hospedagem, base das rotas">
 <h2 class="title" data-a="up">A hospedagem define a base dos deslocamentos</h2>
 <div class="app-flow api-flow one-screen">
-<div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png?v=60" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="78" y="611" width="786" height="162" rx="28"/><path d="M1015,692.0 H878 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png?v=61" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="78" y="611" width="786" height="162" rx="28"/><path d="M1015,692.0 H878 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="3"><h3><span class="call-number">03</span> POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;query&quot;: &quot;Wyndham New Yorker Nova Iorque&quot;,
@@ -263,7 +263,7 @@
 <section class="slide app-flow-slide contract-slide preferences-contract" id="slide-9" data-stage="1" data-title="Preferências, transporte e interesses">
 <h2 class="title" data-a="up">Preferências orientam a busca e os deslocamentos</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png?v=60" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="83" y="1086" width="776" height="143" rx="28"/><path d="M1015,1157.5 H873 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png?v=60" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="556" width="854" height="124" rx="28"/><path d="M1015,618.0 H911 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png?v=61" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="83" y="1086" width="776" height="143" rx="28"/><path d="M1015,1157.5 H873 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png?v=61" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="556" width="854" height="124" rx="28"/><path d="M1015,618.0 H911 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="4"><h3><span class="call-number">04</span> POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;city&quot;: &quot;Nova Iorque&quot;
@@ -299,7 +299,7 @@
 <section class="slide contract-slide discovery-merged" id="slide-10" data-title="Descoberta e enriquecimento do Central Park" data-stage="2">
 <h2 class="title" data-a="up">Etapa 2 — Da descoberta ao card da atração</h2>
 <div class="discovery-layout">
-<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png?v=60" alt="Central Park no aplicativo, nota 4,8, 303.282 avaliações, duração de duas horas e descrição" /></div></div>
+<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png?v=61" alt="Central Park no aplicativo, nota 4,8, 303.282 avaliações, duração de duas horas e descrição" /></div></div>
 <div class="discovery-api-panel">
 <div class="api-call"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><h4>Request · recorte de buckets</h4><pre class="syntax-block" data-language="json"><code>{
   &quot;buckets&quot;: [{
@@ -411,7 +411,7 @@
 
 <section class="slide priority-penalty" id="slide-13" data-title="Etapa 3 — Prioridade e penalidade de exclusão" data-stage="3" data-scene="penalty">
 <h2 class="title" data-a="up">Etapa 3 — Prioridade e penalidade de exclusão</h2>
-<div class="priority-penalty-layout"><div class="phone" data-a="phone"><div class="screen-name-layer"><img src="assets/app/poi-priority.png?v=60" alt="Lista de priorização com as sete primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes padronizados: 9/11 Memorial, The MET, Brooklyn Bridge, Brooklyn Bridge Park"><rect x="268" y="787" width="473" height="79" fill="#fff"/><text x="272" y="821">9/11 Memorial</text><rect x="268" y="981" width="473" height="42" fill="#fff"/><text x="272" y="1010">The MET</text><rect x="268" y="1150" width="473" height="41" fill="#fff"/><text x="272" y="1180">Brooklyn Bridge</text><rect x="268" y="1483" width="473" height="42" fill="#fff"/><text x="272" y="1517">Brooklyn Bridge Park</text></svg></div></div><div class="priority-cost">
+<div class="priority-penalty-layout"><div class="phone" data-a="phone"><div class="screen-name-layer"><img src="assets/app/poi-priority.png?v=61" alt="Lista de priorização com as sete primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes padronizados: 9/11 Memorial, The MET, Brooklyn Bridge, Brooklyn Bridge Park"><rect x="268" y="787" width="473" height="79" fill="#fff"/><text x="272" y="821">9/11 Memorial</text><rect x="268" y="981" width="473" height="42" fill="#fff"/><text x="272" y="1010">The MET</text><rect x="268" y="1150" width="473" height="41" fill="#fff"/><text x="272" y="1180">Brooklyn Bridge</text><rect x="268" y="1483" width="473" height="42" fill="#fff"/><text x="272" y="1517">Brooklyn Bridge Park</text></svg></div></div><div class="priority-cost">
 <div class="formula penalty-formula">
     <span class="t">π<sub>i</sub></span><span class="op">=</span>
     <span class="t c1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
@@ -646,7 +646,7 @@
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
 <p>A animação reproduz a execução instrumentada que gerou o roteiro de três dias capturado no app. Cada quadro é uma melhoria da melhor solução completa encontrada. Os números identificam prioridades e as cores distinguem os três dias.</p>
 <p>O custo cai de 1.424.714 para 1.015.824 unidades. A redução inclui deslocamentos e Φ (fi); as doze atrações já estavam incluídas na primeira solução. Alternativas de refeição participam do modelo e ficam ocultas no mapa.</p>
-<p>A reprodução está desacelerada. O contador mostra o instante real do registro e os eixos do gráfico são logarítmicos. Há dezoito melhorias, a última aos 1,8774 segundo. O solver levou 5,0182 segundos nesta execução, com prazo de busca de cinco segundos.</p>
+<p>A reprodução dá tempo para observar cada melhoria e comprime os intervalos sem novos registros. O contador mostra o instante real do registro e os eixos do gráfico são logarítmicos. Há dezoito melhorias, a última aos 1,8774 segundo. O solver levou 5,0182 segundos nesta execução, com prazo de busca de cinco segundos.</p>
 <p>Esse prazo cobre a busca do solver. A espera no aplicativo também inclui preparação, consultas às APIs, matriz, fotos e salvamento. Não medimos a latência de cada etapa nesta captura.</p>
 <p>Uma seta abre a comparação de estratégias com esta mesma entrada; a esquerda retorna à animação.</p>
 <details class="notes-study"><summary>Leitura dos tempos</summary><p>O primeiro registro foi aos 0,0261 s. A última melhoria é um instante dentro da execução, enquanto 5,0182 s é o tempo medido da chamada ao adaptador. O prazo configurado é cinco segundos, com pequena sobrecarga de preparação e extração. A linha tracejada mantém o último custo até o limite. O custo é uma unidade interna, sem valor monetário.</p></details>
@@ -839,9 +839,9 @@
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=60"></script>
-<script src="motion.js?v=60"></script>
-<script src="search-demo.js?v=60"></script>
-<script src="scenes.js?v=60"></script>
+<script src="data.js?v=61"></script>
+<script src="motion.js?v=61"></script>
+<script src="search-demo.js?v=61"></script>
+<script src="scenes.js?v=61"></script>
 </body>
 </html>

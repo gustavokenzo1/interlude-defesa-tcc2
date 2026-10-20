@@ -697,19 +697,21 @@
       this.plateau.style.opacity = k === this.frames.length - 1 ? 1 : 0;
       this.shown = k;
     },
-    // Tempo em escala log com permanência mínima por quadro: as melhorias
-    // iniciais são rápidas demais para acompanhar em tempo real.
+    // Mantém cada melhoria legível e comprime as pausas sem novos registros.
+    // Os eixos e os rótulos continuam usando os tempos reais da execução.
     play(slide) {
       this.stopAll();
       this.running = true;
       const f = this.frames;
-      const lmin = Math.log10(f[0].t), lmax = Math.log10(f[f.length - 1].t);
+      const logSpan = Math.log10(f[f.length - 1].t / f[0].t) || 1;
       let at = 900;
       const timers = [];
       this.value = f[0].objective;
       f.forEach((frame, k) => {
-        const target = 900 + ((Math.log10(frame.t) - lmin) / (lmax - lmin)) * 11000;
-        at = k === 0 ? 900 : Math.max(at + 340, target);
+        if (k) {
+          const gap = Math.log10(frame.t / f[k - 1].t) / logSpan * 11000;
+          at += Math.min(900, Math.max(340, gap));
+        }
         timers.push(setTimeout(() => { if (slide.classList.contains("active")) this.show(k, false); if (k === f.length - 1) this.running = false; }, at));
       });
       this.timers = timers;
@@ -720,7 +722,6 @@
       if (instant || reduced()) { this.stopAll(); this.show(this.frames.length - 1, true); return; }
       this.routeLayer.replaceChildren();
       this.show(0, true);
-      this.routeLayer.replaceChildren();
       this.play(slide);
     },
     busy() { return this.running; },
