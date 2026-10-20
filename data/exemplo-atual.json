@@ -15,8 +15,10 @@
       "rating": 4.8,
       "count": 303282,
       "product": 1455.7535999999998,
-      "bayes": 4.7986832662896415,
-      "score": 5.398683266289641
+      "bayes": 4.798683266289642,
+      "score": 5.398683266289642,
+      "placeId": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+      "feedPosition": 1
     },
     {
       "name": "9/11 Memorial",
@@ -24,23 +26,29 @@
       "count": 95782,
       "product": 459.75359999999995,
       "bayes": 4.795845537068195,
-      "score": 5.091017919566842
+      "score": 5.334298647219367,
+      "placeId": "ChIJRcvoOxpawokR7R4dQMXMMPQ",
+      "feedPosition": 2
     },
     {
       "name": "The MET",
       "rating": 4.8,
       "count": 95537,
       "product": 458.57759999999996,
-      "bayes": 4.795834938617408,
-      "score": 5.090329965906145
+      "bayes": 4.795834938617407,
+      "score": 5.334151285876704,
+      "placeId": "ChIJb8Jg9pZYwokR-qHGtvSkLzs",
+      "feedPosition": 3
     },
     {
       "name": "Brooklyn Bridge",
       "rating": 4.8,
       "count": 94258,
       "product": 452.43839999999994,
-      "bayes": 4.795778720530192,
-      "score": 5.086709231798216
+      "bayes": 4.795778720530193,
+      "score": 5.333375366350724,
+      "placeId": "ChIJK3vOQyNawokRXEa9errdJiU",
+      "feedPosition": 4
     },
     {
       "name": "Times Square",
@@ -48,7 +56,9 @@
       "count": 249647,
       "product": 1173.3409000000001,
       "bayes": 4.6986008227162435,
-      "score": 5.247130385757561
+      "score": 5.288208571056327,
+      "placeId": "ChIJmQJIxlVYwokRLgeuocVOGVU",
+      "feedPosition": 5
     },
     {
       "name": "Brooklyn Bridge Park",
@@ -56,15 +66,19 @@
       "count": 43796,
       "product": 210.2208,
       "bayes": 4.790969839263139,
-      "score": 4.879186142623013
+      "score": 5.287637027552284,
+      "placeId": "ChIJjaFpo0ZawokRBcOFUZ13CaE",
+      "feedPosition": 6
     },
     {
       "name": "Rockefeller",
       "rating": 4.7,
       "count": 202793,
       "product": 953.1271,
-      "bayes": 4.698278347016376,
-      "score": 5.191834039625887
+      "bayes": 4.698278347016375,
+      "score": 5.2767864752637506,
+      "placeId": "ChIJ9U1mz_5YwokRosza1aAk0jM",
+      "feedPosition": 7
     },
     {
       "name": "One World Trade Center",
@@ -72,7 +86,9 @@
       "count": 31374,
       "product": 150.59519999999998,
       "bayes": 4.787450586685072,
-      "score": 4.787450586685072
+      "score": 5.266306268424168,
+      "placeId": "ChIJy7cGfBlawokR5l2e93hsoEA",
+      "feedPosition": 8
     },
     {
       "name": "Empire State",
@@ -80,7 +96,9 @@
       "count": 130722,
       "product": 614.3934,
       "bayes": 4.697332764323056,
-      "score": 5.074755300110781
+      "score": 5.252392772385995,
+      "placeId": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+      "feedPosition": 9
     },
     {
       "name": "Statue of Liberty",
@@ -88,7 +106,9 @@
       "count": 112747,
       "product": 529.9109,
       "bayes": 4.696909410403808,
-      "score": 5.035209556129309
+      "score": 5.244070326345371,
+      "placeId": "ChIJPTacEpBQwokRKwIlDXelxkA",
+      "feedPosition": 10
     },
     {
       "name": "Bryant Park",
@@ -96,17 +116,31 @@
       "count": 108810,
       "product": 511.407,
       "bayes": 4.696798097154881,
-      "score": 5.025698098348906
+      "score": 5.242061056261745,
+      "placeId": "ChIJvbGg56pZwokRp_E3JbivnLQ",
+      "feedPosition": 11
     },
     {
       "name": "Top of the Rock",
       "rating": 4.7,
       "count": 93338,
       "product": 438.6886,
-      "bayes": 4.696270167735886,
-      "score": 4.984606643588974
+      "bayes": 4.696270167735885,
+      "score": 5.233343059136605,
+      "placeId": "ChIJe7vKMf9YwokRIMYfDz7iF9o",
+      "feedPosition": 12
     }
   ],
-  "rankingScope": "Recálculo didático sobre as mesmas 12 atrações selecionadas; normalização relativa a este recorte, sem desconto de distância. A lista real usa o conjunto descoberto completo e intercala categorias após os primeiros oito itens.",
-  "capture": "iPhone 18 Pro Max, iOS 27, build TCC. Fluxo real no app com APIs atuais; geração instrumentada localmente com o backend e solver atuais. Pausas livres, sem restaurante escolhido."
+  "rankingScope": "Escore real normalizado sobre os 49 candidatos válidos da descoberta. O gráfico exibe somente as 12 atrações selecionadas, todas dentro do raio de 50 km. Nesta captura, o recorte coincide com as primeiras 12 posições do feed, que intercala categorias após as primeiras oito sugestões.",
+  "capture": "iPhone 18 Pro Max, iOS 27, build TCC. Fluxo real no app com APIs atuais; geração instrumentada localmente com o backend e solver atuais. Pausas livres, sem restaurante escolhido.",
+  "rankingCandidateCount": 49,
+  "rankingReviewRange": [
+    3,
+    303282
+  ],
+  "rankingProvenance": {
+    "discoverySha256": "65b77ef07f214bec05cdf678a8a5a59282b8dccf19a6d33f160d8c031f28d3aa",
+    "rankingSourceSha256": "d312ade6e41ccb5abfd0def78953b16cedf73994abecf9a224d90fedfc89b3a0",
+    "interleaveSourceSha256": "b05c6a8e5b9be0c5ebd574161ed68c3871ef0dbd8e9caea2b80da900114c79a2"
+  }
 }

@@ -321,7 +321,7 @@
   const COLS = [
     {title: "Produto simples", sub: "nota × avaliações, em milhares", key: "product", digits: 0},
     {title: "Média bayesiana", sub: "ajusta notas com poucas avaliações", key: "bayes", digits: 3},
-    {title: "Escore completo", sub: "+ popularidade relativa no recorte", key: "score", digits: 3},
+    {title: "Escore completo", sub: `+ popularidade entre ${D.rankingCandidateCount} candidatos`, key: "score", digits: 3},
   ].map((col) => ({...col, rows: [...D.ranking].sort((a,b) => b[col.key] - a[col.key]).map((p) => [p.name, dec(p[col.key], col.digits)])}));
   Scenes.bump = {
     init(slide) {

@@ -1,0 +1,979 @@
+{
+  "recordedOn": "2026-10-20",
+  "description": "Recorte da resposta real de descoberta: os 49 candidatos usados pelo app na normalização. Fotos e campos não usados na ordenação omitidos.",
+  "request": {
+    "viewport": {
+      "northeast": {
+        "latitude": 40.91770499010228,
+        "longitude": -73.70016897460856
+      },
+      "southwest": {
+        "latitude": 40.4765780006847,
+        "longitude": -74.25884295708299
+      }
+    },
+    "location": {
+      "latitude": 40.7527316,
+      "longitude": -73.9936287
+    },
+    "radiusMeters": 50000,
+    "buckets": [
+      {
+        "id": "culture",
+        "types": [
+          "museum",
+          "art_museum",
+          "history_museum",
+          "art_gallery",
+          "historical_place",
+          "monument",
+          "sculpture",
+          "library"
+        ]
+      },
+      {
+        "id": "nature",
+        "types": [
+          "park",
+          "city_park",
+          "state_park",
+          "national_park",
+          "botanical_garden",
+          "garden",
+          "nature_preserve",
+          "beach",
+          "lake",
+          "river",
+          "mountain_peak",
+          "scenic_spot",
+          "observation_deck",
+          "hiking_area",
+          "woods",
+          "marina"
+        ]
+      }
+    ],
+    "includeSurprise": true,
+    "destinationName": "Nova Iorque"
+  },
+  "buckets": [
+    {
+      "id": "culture",
+      "weight": 2,
+      "places": [
+        {
+          "placeId": "ChIJ9U1mz_5YwokRosza1aAk0jM",
+          "name": "Rockefeller Center",
+          "coordinate": {
+            "latitude": 40.7587402,
+            "longitude": -73.9786736
+          },
+          "primaryType": "historical_landmark",
+          "types": [
+            "historical_landmark",
+            "tourist_attraction",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 202793
+        },
+        {
+          "placeId": "ChIJRcvoOxpawokR7R4dQMXMMPQ",
+          "name": "Memorial & Museu Nacional do 11 de Setembro",
+          "coordinate": {
+            "latitude": 40.7115776,
+            "longitude": -74.0133362
+          },
+          "primaryType": "museum",
+          "types": [
+            "park",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 95782
+        },
+        {
+          "placeId": "ChIJb8Jg9pZYwokR-qHGtvSkLzs",
+          "name": "Metropolitan Museum of Art",
+          "coordinate": {
+            "latitude": 40.7794366,
+            "longitude": -73.963244
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "art_museum",
+            "tourist_attraction",
+            "non_profit_organization",
+            "museum",
+            "association_or_organization",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 95537
+        },
+        {
+          "placeId": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+          "name": "Empire State Building",
+          "coordinate": {
+            "latitude": 40.7484405,
+            "longitude": -73.98566439999999
+          },
+          "primaryType": "observation_deck",
+          "types": [
+            "observation_deck",
+            "tourist_attraction",
+            "historical_landmark",
+            "museum",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 130722
+        },
+        {
+          "placeId": "ChIJPTacEpBQwokRKwIlDXelxkA",
+          "name": "Estatua da Liberdade",
+          "coordinate": {
+            "latitude": 40.6892494,
+            "longitude": -74.04450039999999
+          },
+          "primaryType": "historical_landmark",
+          "types": [
+            "historical_landmark",
+            "tourist_attraction",
+            "monument",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 112747
+        },
+        {
+          "placeId": "ChIJy7cGfBlawokR5l2e93hsoEA",
+          "name": "One World Trade Center",
+          "coordinate": {
+            "latitude": 40.7127431,
+            "longitude": -74.0133795
+          },
+          "primaryType": "historical_landmark",
+          "types": [
+            "historical_landmark",
+            "tourist_attraction",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 31374
+        },
+        {
+          "placeId": "ChIJnxlg1U5YwokR8T90UrZiIwI",
+          "name": "Intrepid Museum",
+          "coordinate": {
+            "latitude": 40.764880100000006,
+            "longitude": -74.0008306
+          },
+          "primaryType": "museum",
+          "types": [
+            "museum",
+            "tourist_attraction",
+            "historical_landmark",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 47652
+        },
+        {
+          "placeId": "ChIJd7I1IO5ZwokRbv7YUlgChl4",
+          "name": "SUMMIT One Vanderbilt",
+          "coordinate": {
+            "latitude": 40.7527746,
+            "longitude": -73.9787253
+          },
+          "types": [
+            "tourist_attraction",
+            "art_museum",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 37590
+        },
+        {
+          "placeId": "ChIJKxDbe_lYwokRVf__s8CPn-o",
+          "name": "The Museum of Modern Art",
+          "coordinate": {
+            "latitude": 40.7614327,
+            "longitude": -73.97762159999999
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "tourist_attraction",
+            "art_gallery",
+            "art_museum",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 61551
+        },
+        {
+          "placeId": "ChIJCXoPsPRYwokRsV1MYnKBfaI",
+          "name": "Museu Americano de História Natural",
+          "coordinate": {
+            "latitude": 40.7813241,
+            "longitude": -73.9739882
+          },
+          "primaryType": "museum",
+          "types": [
+            "tourist_attraction",
+            "historical_landmark",
+            "research_institute",
+            "planetarium",
+            "museum",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 27246
+        },
+        {
+          "placeId": "ChIJK6bycAH0wokRrSnflfrnkZE",
+          "name": "Cloisters",
+          "coordinate": {
+            "latitude": 40.8648628,
+            "longitude": -73.9317274
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "art_museum",
+            "tourist_attraction",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 9195
+        },
+        {
+          "placeId": "ChIJEYYWppJYwokRUTul6ztwlJ0",
+          "name": "Bethesda Terrace",
+          "coordinate": {
+            "latitude": 40.773952799999996,
+            "longitude": -73.97096570000001
+          },
+          "primaryType": "historical_landmark",
+          "types": [
+            "historical_landmark",
+            "tourist_attraction",
+            "scenic_spot",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 12315
+        },
+        {
+          "placeId": "ChIJyTmcRApbwokR-oXJRqpVI8Y",
+          "name": "Brooklyn Museum",
+          "coordinate": {
+            "latitude": 40.6712062,
+            "longitude": -73.9636306
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "art_museum",
+            "tourist_attraction",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 10513
+        },
+        {
+          "placeId": "ChIJqaiomQBZwokRTHOaUG7fUTs",
+          "name": "Biblioteca Pública de Nova Iorque",
+          "coordinate": {
+            "latitude": 40.753182300000006,
+            "longitude": -73.9822534
+          },
+          "primaryType": "library",
+          "types": [
+            "library",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 8786
+        },
+        {
+          "placeId": "ChIJURWoF5pYwokRIfXv4To528c",
+          "name": "Charging Bull",
+          "coordinate": {
+            "latitude": 40.7055746,
+            "longitude": -74.0134499
+          },
+          "primaryType": "sculpture",
+          "types": [
+            "sculpture",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.4,
+          "userRatingCount": 44671
+        },
+        {
+          "placeId": "ChIJZx8c96NZwokRJklw7SVhKt4",
+          "name": "Flatiron Building",
+          "coordinate": {
+            "latitude": 40.741060499999996,
+            "longitude": -73.9896986
+          },
+          "primaryType": "historical_landmark",
+          "types": [
+            "historical_landmark",
+            "tourist_attraction",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.5,
+          "userRatingCount": 15883
+        },
+        {
+          "placeId": "ChIJN3MJ6pRYwokRiXg91flSP8Y",
+          "name": "Whitney Museum of American Art",
+          "coordinate": {
+            "latitude": 40.7395877,
+            "longitude": -74.0088629
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "tourist_attraction",
+            "art_museum",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.5,
+          "userRatingCount": 15274
+        },
+        {
+          "placeId": "ChIJ3453OAdZwokRja92OOKCugM",
+          "name": "Pierpont Morgan Library",
+          "coordinate": {
+            "latitude": 40.7492258,
+            "longitude": -73.9813971
+          },
+          "primaryType": "museum",
+          "types": [
+            "museum",
+            "tourist_attraction",
+            "art_museum",
+            "library",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 5437
+        },
+        {
+          "placeId": "ChIJmZ5emqJYwokRuDz79o0coAQ",
+          "name": "Museu Solomon R. Guggenheim",
+          "coordinate": {
+            "latitude": 40.7829796,
+            "longitude": -73.9589706
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "tourist_attraction",
+            "art_museum",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.3,
+          "userRatingCount": 26954
+        },
+        {
+          "placeId": "ChIJHRH97uxYwokR6CBeDyn1jtg",
+          "name": "Coleção Frick",
+          "coordinate": {
+            "latitude": 40.7710857,
+            "longitude": -73.9673861
+          },
+          "primaryType": "art_museum",
+          "types": [
+            "art_museum",
+            "museum",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 5164
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "weight": 2,
+      "places": [
+        {
+          "placeId": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+          "name": "Central Park",
+          "coordinate": {
+            "latitude": 40.7825547,
+            "longitude": -73.9655834
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "garden",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 303282
+        },
+        {
+          "placeId": "ChIJvbGg56pZwokRp_E3JbivnLQ",
+          "name": "Parque Bryant",
+          "coordinate": {
+            "latitude": 40.7535367,
+            "longitude": -73.9829529
+          },
+          "primaryType": "city_park",
+          "types": [
+            "city_park",
+            "tourist_attraction",
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 108810
+        },
+        {
+          "placeId": "ChIJe7vKMf9YwokRIMYfDz7iF9o",
+          "name": "Top of the Rock",
+          "coordinate": {
+            "latitude": 40.7593495,
+            "longitude": -73.9794087
+          },
+          "primaryType": "observation_deck",
+          "types": [
+            "observation_deck",
+            "tourist_attraction",
+            "event_venue",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 93338
+        },
+        {
+          "placeId": "ChIJjaFpo0ZawokRBcOFUZ13CaE",
+          "name": "Parque da Ponte do Brooklyn",
+          "coordinate": {
+            "latitude": 40.7022422,
+            "longitude": -73.9958601
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "city_park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 43796
+        },
+        {
+          "placeId": "ChIJ5bQPhMdZwokRkTwKhVxhP1g",
+          "name": "High Line",
+          "coordinate": {
+            "latitude": 40.747992499999995,
+            "longitude": -74.0047649
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "non_profit_organization",
+            "tourist_attraction",
+            "association_or_organization",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 68777
+        },
+        {
+          "placeId": "ChIJraKL-BJawokREpxDmF5GcL4",
+          "name": "Battery Park",
+          "coordinate": {
+            "latitude": 40.702931199999995,
+            "longitude": -74.0153603
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 80772
+        },
+        {
+          "placeId": "ChIJo8sCS5NQwokRzK_a4MI1YL0",
+          "name": "Liberty State Park",
+          "coordinate": {
+            "latitude": 40.705753099999995,
+            "longitude": -74.04914769999999
+          },
+          "primaryType": "state_park",
+          "types": [
+            "state_park",
+            "tourist_attraction",
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 37306
+        },
+        {
+          "placeId": "ChIJL-CJmTFZwokRsPcqje_bn7w",
+          "name": "Little Island",
+          "coordinate": {
+            "latitude": 40.7420024,
+            "longitude": -74.010299
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 17995
+        },
+        {
+          "placeId": "ChIJ3aqq5Q1ZwokRb9hLO7Gyxgw",
+          "name": "Edge NYC",
+          "coordinate": {
+            "latitude": 40.753393599999995,
+            "longitude": -74.00105500000001
+          },
+          "primaryType": "tourist_attraction",
+          "types": [
+            "tourist_attraction",
+            "observation_deck",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 34127
+        },
+        {
+          "placeId": "ChIJjX494pBZwokRGH620d9eYfo",
+          "name": "Washington Square Park",
+          "coordinate": {
+            "latitude": 40.7308838,
+            "longitude": -73.997332
+          },
+          "primaryType": "city_park",
+          "types": [
+            "city_park",
+            "tourist_attraction",
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 33554
+        },
+        {
+          "placeId": "ChIJd9SPZTFawokRh9NpOTE-G5k",
+          "name": "DUMBO Manhattan Bridge View",
+          "coordinate": {
+            "latitude": 40.70331650000001,
+            "longitude": -73.9895698
+          },
+          "primaryType": "scenic_spot",
+          "types": [
+            "scenic_spot",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 9711
+        },
+        {
+          "placeId": "ChIJqygAFrRZwokRwF0VrBoXS0E",
+          "name": "Vessel",
+          "coordinate": {
+            "latitude": 40.7538073,
+            "longitude": -74.0021537
+          },
+          "primaryType": "landmark",
+          "types": [
+            "landmark",
+            "observation_deck",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 29208
+        },
+        {
+          "placeId": "ChIJhTKnW1pfwokRybwkvof4QWs",
+          "name": "Astoria Park",
+          "coordinate": {
+            "latitude": 40.7785364,
+            "longitude": -73.92283359999999
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 13100
+        },
+        {
+          "placeId": "ChIJp32RvaZZwokRfH0Zgzl9mXk",
+          "name": "Madison Square Park",
+          "coordinate": {
+            "latitude": 40.742195099999996,
+            "longitude": -73.98799919999999
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 21948
+        },
+        {
+          "placeId": "ChIJX7hLk0FZwokRFhRcjtylakg",
+          "name": "Domino Park",
+          "coordinate": {
+            "latitude": 40.7148803,
+            "longitude": -73.967851
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 6727
+        },
+        {
+          "placeId": "ChIJxf7bQyxawokRO-rs19qn3fs",
+          "name": "Pier 35",
+          "coordinate": {
+            "latitude": 40.709451699999995,
+            "longitude": -73.9884141
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "scenic_spot",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 3891
+        }
+      ]
+    },
+    {
+      "id": "__surprise__",
+      "weight": 1,
+      "places": [
+        {
+          "placeId": "ChIJmQJIxlVYwokRLgeuocVOGVU",
+          "name": "Times Square",
+          "coordinate": {
+            "latitude": 40.7579747,
+            "longitude": -73.9855426
+          },
+          "primaryType": "plaza",
+          "types": [
+            "plaza",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 249647
+        },
+        {
+          "placeId": "ChIJK3vOQyNawokRXEa9errdJiU",
+          "name": "Ponte do Brooklyn",
+          "coordinate": {
+            "latitude": 40.7060855,
+            "longitude": -73.9968643
+          },
+          "primaryType": "bridge",
+          "types": [
+            "bridge",
+            "landmark",
+            "tourist_attraction",
+            "transportation_service",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 94258
+        },
+        {
+          "placeId": "ChIJcWnnWiz0wokRCB6aVdnDQEk",
+          "name": "Yankee Stadium",
+          "coordinate": {
+            "latitude": 40.8296426,
+            "longitude": -73.9261745
+          },
+          "primaryType": "stadium",
+          "types": [
+            "stadium",
+            "tourist_attraction",
+            "sports_complex",
+            "athletic_field",
+            "event_venue",
+            "sports_activity_location",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 61579
+        },
+        {
+          "placeId": "ChIJvwJZrWH4wokRNBcFMQ0ohIE",
+          "name": "MetLife Stadium",
+          "coordinate": {
+            "latitude": 40.8135064,
+            "longitude": -74.074457
+          },
+          "primaryType": "stadium",
+          "types": [
+            "stadium",
+            "concert_hall",
+            "auditorium",
+            "tourist_attraction",
+            "sports_complex",
+            "athletic_field",
+            "live_music_venue",
+            "event_venue",
+            "sports_activity_location",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.5,
+          "userRatingCount": 27501
+        }
+      ]
+    },
+    {
+      "id": "__regional__",
+      "weight": 1,
+      "places": [
+        {
+          "placeId": "ChIJQwRohxBbwokRmHrfAMb3ixc",
+          "name": "Prospect Park",
+          "coordinate": {
+            "latitude": 40.6602037,
+            "longitude": -73.9689558
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 28725
+        },
+        {
+          "placeId": "ChIJqQI0-jpYwokRus8TLL5z3b8",
+          "name": "Hamilton Park",
+          "coordinate": {
+            "latitude": 40.771595399999995,
+            "longitude": -74.0161074
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 8798
+        },
+        {
+          "placeId": "ChIJv8mWqY9YwokRIzh7-8yBA14",
+          "name": "Theodore Roosevelt Park",
+          "coordinate": {
+            "latitude": 40.7824902,
+            "longitude": -73.9742272
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 12905
+        },
+        {
+          "placeId": "ChIJx17hjwHzwokRARFWlFCCzLI",
+          "name": "Parque Van Cortlandt",
+          "coordinate": {
+            "latitude": 40.897135399999996,
+            "longitude": -73.8860942
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.6,
+          "userRatingCount": 9190
+        },
+        {
+          "placeId": "ChIJeyMe6olL6IkRlDNF4seDH1w",
+          "name": "Fire Island National Seashore",
+          "coordinate": {
+            "latitude": 40.6868416,
+            "longitude": -72.9986804
+          },
+          "primaryType": "nature_preserve",
+          "types": [
+            "nature_preserve",
+            "park",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.8,
+          "userRatingCount": 3099
+        },
+        {
+          "placeId": "ChIJG-vyNc_9wokRZ9ntKcnS1tc",
+          "name": "Paterson Great Falls National Historical Park",
+          "coordinate": {
+            "latitude": 40.9149457,
+            "longitude": -74.1799748
+          },
+          "primaryType": "national_park",
+          "types": [
+            "national_park",
+            "historical_landmark",
+            "tourist_attraction",
+            "park",
+            "historical_place",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.5,
+          "userRatingCount": 11449
+        },
+        {
+          "placeId": "ChIJPTmIHRX2wokR9QxLoOD3rRc",
+          "name": "Morningside Park",
+          "coordinate": {
+            "latitude": 40.8060712,
+            "longitude": -73.9585391
+          },
+          "primaryType": "park",
+          "types": [
+            "park",
+            "dog_park",
+            "barbecue_area",
+            "playground",
+            "tourist_attraction",
+            "athletic_field",
+            "sports_activity_location",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.5,
+          "userRatingCount": 4516
+        },
+        {
+          "placeId": "ChIJv9WGIQ5MwokRBeOcGr-j2Oo",
+          "name": "Staten Island Greenbelt",
+          "coordinate": {
+            "latitude": 40.5884511,
+            "longitude": -74.13916669999999
+          },
+          "primaryType": "nature_preserve",
+          "types": [
+            "nature_preserve",
+            "visitor_center",
+            "tourist_information_center",
+            "tourist_attraction",
+            "tour_agency",
+            "park",
+            "travel_agency",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 341
+        },
+        {
+          "placeId": "ChIJk6BEdgBbwokRSE4n7exbh2U",
+          "name": "Echoes of Revolution - Nine Men's Morris",
+          "coordinate": {
+            "latitude": 40.7124135,
+            "longitude": -74.00672879999999
+          },
+          "primaryType": "tourist_attraction",
+          "types": [
+            "tourist_attraction",
+            "point_of_interest",
+            "establishment"
+          ],
+          "rating": 4.7,
+          "userRatingCount": 3
+        }
+      ]
+    }
+  ]
+}

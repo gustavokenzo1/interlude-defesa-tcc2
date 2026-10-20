@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=59" />
+  <link rel="stylesheet" href="motion.css?v=60" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -160,7 +160,7 @@
 <section class="slide app-flow-slide contract-slide" id="slide-6" data-stage="1" data-title="Destino, busca por texto">
 <h2 class="title" data-a="up">A busca retorna sugestões e seus IDs</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png?v=59" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="679" width="852" height="172" rx="28"/><path d="M1015,765.0 H910 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png?v=59" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="1531" width="854" height="137" rx="28"/><path d="M1015,1599.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>01</span> Criar uma viagem</h3><div class="flow-phone"><img src="assets/app/home-tcc.png?v=60" alt="Tela inicial com o botão Criar uma nova viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="679" width="852" height="172" rx="28"/><path d="M1015,765.0 H910 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>02</span> Buscar o destino</h3><div class="flow-phone"><img src="assets/app/new-york-search.png?v=60" alt="Busca por Nova York e primeiro resultado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="44" y="1531" width="854" height="137" rx="28"/><path d="M1015,1599.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="1"><h3><span class="call-number">01</span> GET /v1/places/autocomplete</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>query=Nova York</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;suggestions&quot;: [
@@ -188,7 +188,7 @@
 <section class="slide app-flow-slide contract-slide destination-contract" id="slide-7" data-stage="1" data-title="Destino selecionado, localização e datas">
 <h2 class="title" data-a="up">O ID selecionado permite obter a localização</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png?v=59" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="480" width="855" height="141" rx="28"/><path d="M1015,550.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>04</span> Definir a duração</h3><div class="flow-phone"><img src="assets/app/dates-selected.png?v=59" alt="Duração de três dias selecionada, com referência a 27 de outubro"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="213" y="633" width="517" height="105" rx="28"/><path d="M1015,685.5 H744 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>03</span> Confirmar o destino</h3><div class="flow-phone"><img src="assets/app/destination-new-york.png?v=60" alt="Nova Iorque na lista de destinos"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="480" width="855" height="141" rx="28"/><path d="M1015,550.5 H912 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>04</span> Definir a duração</h3><div class="flow-phone"><img src="assets/app/dates-selected.png?v=60" alt="Duração de três dias selecionada, com referência a 27 de outubro"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="213" y="633" width="517" height="105" rx="28"/><path d="M1015,685.5 H744 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="2"><h3><span class="call-number">02</span> GET /v1/places/NYC</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="http" data-contract-role="request"><code>purpose=location</code></pre></div><div><h4>Response</h4><pre class="syntax-block" data-language="json" data-contract-role="response"><code>{
   &quot;place&quot;: {
@@ -223,7 +223,7 @@
 <section class="slide app-flow-slide contract-slide lodging-contract" id="slide-8" data-stage="1" data-title="Hospedagem, base das rotas">
 <h2 class="title" data-a="up">A hospedagem define a base dos deslocamentos</h2>
 <div class="app-flow api-flow one-screen">
-<div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png?v=59" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="78" y="611" width="786" height="162" rx="28"/><path d="M1015,692.0 H878 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>05</span> Hospedagem</h3><div class="flow-phone"><img src="assets/app/lodging-new-york.png?v=60" alt="Hospedagem Wyndham New Yorker na viagem"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="78" y="611" width="786" height="162" rx="28"/><path d="M1015,692.0 H878 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="3"><h3><span class="call-number">03</span> POST /v1/places/text-search</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;query&quot;: &quot;Wyndham New Yorker Nova Iorque&quot;,
@@ -263,7 +263,7 @@
 <section class="slide app-flow-slide contract-slide preferences-contract" id="slide-9" data-stage="1" data-title="Preferências, transporte e interesses">
 <h2 class="title" data-a="up">Preferências orientam a busca e os deslocamentos</h2>
 <div class="app-flow api-flow">
-<div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png?v=59" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="83" y="1086" width="776" height="143" rx="28"/><path d="M1015,1157.5 H873 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png?v=59" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="556" width="854" height="124" rx="28"/><path d="M1015,618.0 H911 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
+<div class="flow-screens"><article class="flow-step"><h3><span>06</span> Ritmo e transporte</h3><div class="flow-phone"><img src="assets/app/preferences-new-york.png?v=60" alt="Transporte público selecionado"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="83" y="1086" width="776" height="143" rx="28"/><path d="M1015,1157.5 H873 m30,-23 l-30,23 l30,23"/></svg></div></article><article class="flow-step"><h3><span>07</span> Interesses</h3><div class="flow-phone"><img src="assets/app/interests-selected.png?v=60" alt="Categoria Cultura e museus selecionada"><svg class="screen-mark" viewBox="0 0 942 2048" aria-hidden="true"><rect x="43" y="556" width="854" height="124" rx="28"/><path d="M1015,618.0 H911 m30,-23 l-30,23 l30,23"/></svg></div></article></div>
 <aside class="api-panel">
 <div class="api-call" data-contract-call="4"><h3><span class="call-number">04</span> POST /v1/travel-mode/recommend</h3><div class="http-pair"><div><h4>Request</h4><pre class="syntax-block" data-language="json" data-contract-role="request"><code>{
   &quot;city&quot;: &quot;Nova Iorque&quot;
@@ -299,7 +299,7 @@
 <section class="slide contract-slide discovery-merged" id="slide-10" data-title="Descoberta e enriquecimento do Central Park" data-stage="2">
 <h2 class="title" data-a="up">Etapa 2 — Da descoberta ao card da atração</h2>
 <div class="discovery-layout">
-<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png?v=59" alt="Central Park no aplicativo, nota 4,8, 303.282 avaliações, duração de duas horas e descrição" /></div></div>
+<div class="enrich-preview"><div class="phone"><img src="assets/app/poi-recommendation.png?v=60" alt="Central Park no aplicativo, nota 4,8, 303.282 avaliações, duração de duas horas e descrição" /></div></div>
 <div class="discovery-api-panel">
 <div class="api-call"><h3><span class="call-number">05</span> POST /v1/places/discover</h3><h4>Request · recorte de buckets</h4><pre class="syntax-block" data-language="json"><code>{
   &quot;buckets&quot;: [{
@@ -324,7 +324,7 @@
 <p>As duas chamadas montam o card do Central Park. A descoberta recebe os tipos associados aos interesses: neste recorte, nature pede park. A resposta acrescenta places ao grupo e devolve o candidato com identificador, nota, avaliações e tipo principal.</p>
 <p>O enriquecimento recebe esse candidato em places. Na resposta, insight acrescenta a estimativa de cento e vinte minutos e a descrição. As duas horas e o texto do card vêm desses campos. O mesmo placeId permite associar as informações ao lugar encontrado.</p>
 <p>A descoberta já fornece os dados usados na ordenação. A duração estimada será usada para preparar a instância do solver. As fotos carregam em paralelo pelo endpoint próprio, por isso o enriquecimento usa includePhotos false.</p>
-<details class="notes-study"><summary>Recortes dos contratos</summary><p>À esquerda, o primeiro JSON é um recorte da requisição, com apenas buckets. A chamada também recebe location e destinationName. O segundo JSON é um único objeto de buckets[1].places[0], sem as coordenadas e os demais candidatos. O caminho escrito acima identifica exatamente o objeto exibido.</p><p>À direita, places[0] da requisição recebe o candidato completo da descoberta, incluindo coordenadas. A resposta preserva place e acrescenta insight. O JSON mostra apenas insight: o identificador reaparece, averageMinutes acrescenta a duração e description acrescenta a descrição. A descrição foi recortada na primeira frase. Os trechos não representam respostas completas.</p></details>
+<details class="notes-study"><summary>Recortes dos contratos</summary><p>À esquerda, o primeiro JSON é um recorte da requisição, com apenas buckets. A chamada também recebe location e destinationName. O segundo JSON é o primeiro candidato do grupo nature, que ocupa buckets[1] na resposta completa. As coordenadas e os demais candidatos foram omitidos.</p><p>À direita, places[0] da requisição recebe o candidato completo da descoberta, incluindo coordenadas. A resposta preserva place e acrescenta insight. O JSON mostra apenas insight: o identificador reaparece, averageMinutes acrescenta a duração e description acrescenta a descrição. A descrição foi recortada na primeira frase. Os trechos não representam respostas completas.</p></details>
 <details class="notes-support"><summary>Fontes</summary><ul><li><a href="references/aplicativo/mobile/src/application/places-service.ts">Contratos HTTP</a></li><li><a href="references/aplicativo/backend/src/application/discover-places.ts">Descoberta por categoria</a></li><li><a href="references/aplicativo/backend/src/application/enrich-places.ts">Composição de place e insight</a></li><li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Ordenação e enriquecimento em lotes</a></li><li><a href="references/aplicativo/mobile/src/features/places/usePlacePhotos.ts">Fotos em paralelo</a></li></ul></details>
 </template>
 </section>
@@ -380,14 +380,14 @@
 
 <section class="slide" id="slide-12" data-title="Etapa 2 — Comparação da ordenação" data-stage="2" data-scene="bump">
   <h2 class="title" data-a="up">Etapa 2 — Comparação da ordenação</h2>
-  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Três ordenações das doze atrações atuais, com posição e escore calculados sobre o mesmo recorte."></svg></div>
+  <div class="bump"><svg id="bumpChart" viewBox="0 0 1432 640" role="img" aria-label="Comparação de doze atrações selecionadas: produto simples, média bayesiana e escore real normalizado entre os 49 candidatos descobertos."></svg></div>
   <span class="signal" data-build="1"></span><span class="signal" data-build="2"></span>
   <template class="speaker-notes">
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
   <p>As três colunas usam as mesmas doze atrações. A primeira multiplica a nota pelo número de avaliações. Como as notas são próximas, o volume de avaliações domina essa ordem.</p>
   <p>A coluna central aplica a média bayesiana. Com muitas avaliações, os valores permanecem próximos das notas observadas, e os lugares com quatro vírgula oito se concentram no alto.</p>
-  <p>A última coluna acrescenta a popularidade relativa. As atrações bem avaliadas com menor volume de avaliações ganham espaço em relação ao produto simples. Os números e as linhas mostram exatamente a mudança de posição de cada uma. As linhas permitem acompanhar cada lugar; as cores destacam a mudança entre a primeira e a última coluna.</p>
-  <p>Todas estas atrações estão dentro do raio de busca, então não recebem desconto por distância. Este é um recálculo didático sobre as doze selecionadas. O feed real normaliza sobre todos os candidatos descobertos e intercala categorias após os oito primeiros. Por isso a coluna não pretende reproduzir a ordem completa da tela de seleção.</p>
+  <p>A última coluna acrescenta a popularidade relativa, calculada sobre os quarenta e nove candidatos da descoberta real. Exibimos só as doze atrações selecionadas. Em relação ao produto simples, 9/11 Memorial sobe da sétima para a segunda posição, The MET da oitava para a terceira e Brooklyn Bridge da nona para a quarta. As linhas permitem acompanhar cada lugar; as cores destacam a mudança entre a primeira e a última coluna.</p>
+  <p>Todas estas atrações estão dentro do raio de busca de cinquenta quilômetros, então não recebem desconto por distância. Nesta execução, a última coluna coincide com a ordem das doze sugestões aceitas e com a tela de prioridade do próximo slide.</p>
   <details class="notes-study">
     <summary>Estudo do conteúdo exibido</summary>
     <h4>Leitura das três colunas</h4>
@@ -395,10 +395,15 @@
   </details>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
-    <p>Os valores da primeira coluna estão em milhares. Azul indica subida, âmbar indica descida e cinza indica posição mantida entre a primeira e a última coluna. As posições são calculadas sobre as doze atrações exibidas.</p>
+    <p>Os valores da primeira coluna estão em milhares. Azul indica subida, âmbar indica descida e cinza indica posição mantida entre a primeira e a última coluna. Cada coluna compara as doze atrações exibidas, mas a normalização do escore completo usa todos os quarenta e nove candidatos válidos: o menor volume é três avaliações e o maior, 303.282. Recalcular os extremos somente entre as doze mudaria os escores e a ordem.</p>
+    <p>O app fixa as oito primeiras sugestões pelo escore global e intercala as categorias a partir daí. Neste registro, as quatro sugestões seguintes também coincidem com a ordem por escore; isso não vale necessariamente para o restante do feed. O usuário aceitou as doze primeiras sem reordená-las. A comparação usa os valores completos; os escores projetados são arredondados a três casas, o que pode fazer valores diferentes parecerem iguais.</p>
     <h4>Fontes</h4>
     <ul>
 <li><a href="references/aplicativo/mobile/src/features/discover/ranking.ts">createPopularityScore e a justificativa do termo</a></li>
+<li><a href="references/aplicativo/mobile/src/app/trip/attractions.tsx">Composição do feed: oito primeiros e categorias intercaladas</a></li>
+<li><a href="data/descoberta-atual.json">Candidatos reais usados na normalização</a></li>
+<li><a href="data/exemplo-atual.json">Escores e posições desta execução</a></li>
+<li><a href="scripts/gerar_ranking.cjs">Reprodução com o código do aplicativo, sem consultar APIs</a></li>
 </ul>
   </details>
 </template>
@@ -406,7 +411,7 @@
 
 <section class="slide priority-penalty" id="slide-13" data-title="Etapa 3 — Prioridade e penalidade de exclusão" data-stage="3" data-scene="penalty">
 <h2 class="title" data-a="up">Etapa 3 — Prioridade e penalidade de exclusão</h2>
-<div class="priority-penalty-layout"><div class="phone" data-a="phone"><div class="screen-name-layer"><img src="assets/app/poi-priority.png?v=59" alt="Lista de priorização com as sete primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes padronizados: 9/11 Memorial, The MET, Brooklyn Bridge, Brooklyn Bridge Park"><rect x="268" y="787" width="473" height="79" fill="#fff"/><text x="272" y="821">9/11 Memorial</text><rect x="268" y="981" width="473" height="42" fill="#fff"/><text x="272" y="1010">The MET</text><rect x="268" y="1150" width="473" height="41" fill="#fff"/><text x="272" y="1180">Brooklyn Bridge</text><rect x="268" y="1483" width="473" height="42" fill="#fff"/><text x="272" y="1517">Brooklyn Bridge Park</text></svg></div></div><div class="priority-cost">
+<div class="priority-penalty-layout"><div class="phone" data-a="phone"><div class="screen-name-layer"><img src="assets/app/poi-priority.png?v=60" alt="Lista de priorização com as sete primeiras atrações numeradas e com alça de arrastar" /><svg class="screen-name-aliases" viewBox="0 0 942 2048" role="img" aria-label="Nomes padronizados: 9/11 Memorial, The MET, Brooklyn Bridge, Brooklyn Bridge Park"><rect x="268" y="787" width="473" height="79" fill="#fff"/><text x="272" y="821">9/11 Memorial</text><rect x="268" y="981" width="473" height="42" fill="#fff"/><text x="272" y="1010">The MET</text><rect x="268" y="1150" width="473" height="41" fill="#fff"/><text x="272" y="1180">Brooklyn Bridge</text><rect x="268" y="1483" width="473" height="42" fill="#fff"/><text x="272" y="1517">Brooklyn Bridge Park</text></svg></div></div><div class="priority-cost">
 <div class="formula penalty-formula">
     <span class="t">π<sub>i</sub></span><span class="op">=</span>
     <span class="t c1"><span class="up" style="font-style:normal">⌊5.000.000</span></span>
@@ -414,14 +419,14 @@
     <span class="t c3"><span style="font-style:normal">× (1 + 0,5</span>ι<sub>i</sub><span style="font-style:normal">)</span></span>
     <span class="t c4"><span style="font-style:normal">× (0,5 + 0,5</span>σ<sub>i</sub><span style="font-style:normal">)⌋</span></span>
   </div>
-<div class="pen-factor-key"><span>ρ = (N − ordem)/N</span><span>ι = mín(1, log₁₀(1+n)/5)</span><span>σ ∈ {0,6 ou 1}</span></div>
+<div class="pen-factor-key"><span>ρ = (N − p + 1)/N</span><span>ι = mín(1, log₁₀(1+n)/5)</span><span>σ ∈ {0,6 ou 1}</span></div>
 <svg id="penChart" viewBox="0 0 1080 475" role="img" aria-label="Penalidades das doze atrações, com segmentos de base, aumento por posição e aumento por iconicidade"></svg>
 <div class="pen-legend"><span><i class="base"></i>Base</span><span><i class="position"></i>Posição</span><span><i class="iconic"></i>Iconicidade</span><span class="season">Sazonalidade ×1</span></div>
 </div></div>
 <template class="speaker-notes">
 
   <h4>Fala <span class="speaker-name">Bruno</span></h4>
-  <p>O viajante seleciona as atrações e arrasta a lista para indicar prioridades. A ordem da captura define o fator de posição, sem determinar a sequência cronológica das visitas.</p>
+  <p>O viajante seleciona as atrações e pode arrastar a lista para indicar prioridades. Neste exemplo, manteve a ordem das doze sugestões do slide anterior. Essa prioridade define o fator de posição, sem determinar a sequência cronológica das visitas.</p>
   <p>Esta fórmula calcula o custo de deixar uma atração de fora. Partimos da base de cinco milhões e multiplicamos pelos fatores de posição, iconicidade e sazonalidade.</p>
   <p>A posição usa a ordem definida pelo viajante. A iconicidade usa o número de avaliações e pode inverter os custos entre posições próximas. A sazonalidade reduz o custo de exclusão quando o lugar é menos adequado à época da viagem. Nesta entrada, todas as atrações têm esse valor igual a um.</p>
   <p>As cores das barras mostram aumentos sucessivos: a base, o acréscimo após multiplicar pela posição e o acréscimo após multiplicar pela iconicidade. Os segmentos são diferenças entre os produtos sucessivos, e não fatores independentes somados. Para o Central Park, os fatores são cinco, um vírgula cinco e um. O resultado é trinta e sete milhões e meio de unidades de custo.</p>
@@ -431,7 +436,7 @@
     <h4>Penalidade πᵢ (pi) e piso ⌊ ⌋</h4>
     <p>πᵢ (pi) é o custo de excluir a atração i; o índice i identifica a atração. Os sinais ⌊ ⌋ pedem a parte inteira, arredondada para baixo, do produto exibido.</p>
     <h4>Posição ρᵢ (rô)</h4>
-    <p>Leia “ene menos a ordem, dividido por ene”. N é a quantidade de atrações selecionadas e a ordem começa em zero. Assim, a primeira atração tem ρ (rô) igual a um e fator de posição cinco. A última tem fator um mais quatro dividido por N.</p>
+    <p>Leia “ene menos pê mais um, dividido por ene”. N é a quantidade de atrações selecionadas: doze nesta entrada. p é a posição numerada na lista, de um a doze. A primeira tem ρ (rô) igual a um e fator de posição cinco. A última tem ρ (rô) igual a um doze avos e fator um mais quatro dividido por doze. O código enumera a ordem a partir de zero; substituir ordem por p menos um produz exatamente a fórmula do slide.</p>
     <h4>Iconicidade ιᵢ (iota)</h4>
     <p>Leia “ι (iota) índice i é o mínimo entre um e o logaritmo na base dez de um mais ene, dividido por cinco”. n é a quantidade de avaliações, diferente de N, que conta atrações. O fator resultante fica entre um e um vírgula cinco.</p>
     <h4>Sazonalidade σᵢ (sigma)</h4>
@@ -442,11 +447,13 @@
   </details>
   <details class="notes-support">
     <summary>Apoio técnico e fontes</summary>
-    <p>Os valores são unidades da função objetivo. A posição tem a maior amplitude entre os fatores desta fórmula, mas a iconicidade também pode alterar a comparação entre atrações próximas. A popularidade usada aqui tem escala fixa, diferente da normalização entre candidatos da descoberta.</p>
+    <p>Os valores são unidades da função objetivo. A posição tem a maior amplitude entre os fatores desta fórmula, mas a iconicidade também pode alterar a comparação entre atrações próximas. A iconicidade usada aqui tem escala fixa, limitada a um a partir de aproximadamente cem mil avaliações. Na descoberta, o volume é normalizado entre os quarenta e nove candidatos; nesta fórmula, somente N muda com a quantidade selecionada.</p>
+    <p>A resposta inclui todas as doze atrações, então nenhuma destas penalidades de exclusão é cobrada. Os dois itens não alocados da resposta são grupos de pausa automática, tratados em Φ (fi), e não atrações deste gráfico.</p>
     <h4>Fontes</h4>
     <ul>
 <li><a href="references/aplicativo/solver/app/infrastructure/ortools_solver.py">AddDisjunction e constantes de penalidade</a></li>
-<li><a href="data/solver-response.json">Resposta real com unassigned vazio</a></li>
+<li><a href="data/solver-request.json">Ordem, importância e adequação sazonal das doze atrações</a></li>
+<li><a href="data/solver-response.json">Resposta real: doze atrações incluídas e duas pausas automáticas não alocadas</a></li>
 </ul>
   </details>
 
@@ -547,7 +554,7 @@
 <p>Em programação, min pode receber uma coleção pronta de números. Aqui, a notação descreve um problema de otimização: cada combinação viável de decisões produz um valor de C, e procuramos o menor desses valores. O comparativo é entre custos totais de agendas diferentes. Não se escolhe o menor dos três componentes de uma mesma agenda. Também não se aplica min a um único total já fixado: as decisões ainda podem mudar.</p>
 <p>O OR-Tools gera e modifica soluções durante a busca, mantendo a melhor encontrada dentro do prazo. Ele não precisa montar previamente um array com os custos de todas as agendas. A escrita matemática expressa o objetivo; a busca com prazo não fornece uma prova de que o mínimo global foi alcançado.</p>
 <h4>Por que z não aparece em C?</h4>
-<p>O custo só cobra trechos (x) e exclusões (y). z é a decisão que liga as duas parcelas: a regra de entrada e saída transforma uma visita em trechos ativos, que pagam deslocamento; a regra de visitar ou excluir transforma a ausência de visita em y igual a um, que paga π (pi). z também aparece no limite de quatro atrações por dia e nas contagens de Φ (fi). Por isso as regras ficam sob as colunas: cada uma mostra como z chega a uma parcela do custo.</p>
+<p>As duas somas explícitas cobram trechos (x) e exclusões (y). z é a decisão que liga essas parcelas: a regra de entrada e saída transforma uma visita em trechos ativos, que pagam deslocamento; a regra de visitar ou excluir transforma a ausência de visita em y igual a um, que paga π (pi). z também aparece no limite de quatro atrações por dia e nas contagens de Φ (fi). Por isso as regras ficam sob as colunas: cada uma mostra como z chega a uma parcela do custo. Φ (fi) reúne os demais custos da agenda descritos na tabela.</p>
 <h4>Por que há três sinais de somatório no custo?</h4>
 <p>Os dois primeiros são aninhados e formam juntos o custo de deslocamento. Leia primeiro a soma de dentro: para um dia d fixado, percorra as ligações permitidas de i para j e some tᵢⱼ vezes xᵈᵢⱼ. Depois, a soma de fora percorre todos os dias d em D e reúne seus custos. O terceiro somatório percorre as atrações de Vₐ e soma πᵢ (pi) vezes yᵢ. Φ (fi) já é o agregado dos outros custos aplicáveis, mostrado como uma função das mesmas decisões.</p>
 <h4>Por que a exclusão não tem uma soma por dia?</h4>
@@ -832,9 +839,9 @@
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=59"></script>
-<script src="motion.js?v=59"></script>
-<script src="search-demo.js?v=59"></script>
-<script src="scenes.js?v=59"></script>
+<script src="data.js?v=60"></script>
+<script src="motion.js?v=60"></script>
+<script src="search-demo.js?v=60"></script>
+<script src="scenes.js?v=60"></script>
 </body>
 </html>
