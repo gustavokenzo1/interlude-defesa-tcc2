@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interlude — Defesa TCC2 (motion)</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="motion.css?v=57" />
+  <link rel="stylesheet" href="motion.css?v=58" />
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -472,75 +472,81 @@
 <div class="formulation-choice" data-build="1">
   <div class="math"><span class="formulation-min">min</span> <i>C</i></div>
   <div class="formulation-decisions">
-    <span><i>x</i> trechos usados</span><span><i>y</i> atrações excluídas</span><span><i>z</i> visitas por dia</span>
+    <span><i>z</i> visita no dia</span><span><i>y</i> atração excluída</span><span><i>x</i> trecho usado</span>
   </div>
 </div>
-<div class="formulation-objective" data-build="1">
-  <span class="formulation-cost math">C =</span>
-  <div class="objective-part">
-    <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></span></div>
-    <h3>Deslocamentos</h3>
-  </div>
-  <span class="formulation-plus">+</span>
-  <div class="objective-part">
-    <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></span></div>
-    <h3>Exclusões</h3>
-  </div>
-  <span class="formulation-plus">+</span>
-  <div class="objective-part">
-    <div class="math"><span class="objective-expression">Φ</span></div>
-    <h3>Preferências</h3>
-  </div>
-</div>
-<div class="formulation-detail">
-  <div class="formulation-rules" data-build="2">
-    <h3>Sujeito às regras</h3>
-    <div class="formulation-rule"><div>
-      <div><h4>Visitar ou excluir</h4></div>
-      <span class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> + y<sub>i</sub> = 1</span>
-    </div></div>
-    <div class="formulation-rule"><div>
-      <div><h4>Uma entrada e uma saída</h4></div>
+<div class="formulation-columns">
+  <span class="formulation-cost math" data-build="2">C =</span>
+  <div class="formulation-col" data-build="2">
+    <div class="objective-part">
+      <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span><span class="formulation-sum"><span>∑</span><small>(i,j) ∈ E<sup>d</sup></small></span> t<sub>ij</sub>x<span class="ss"><sup>d</sup><sub>ij</sub></span></span></div>
+      <h3>Deslocamentos</h3>
+    </div>
+    <div class="formulation-rule">
+      <h4>Uma entrada e uma saída</h4>
       <span class="math"><span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ji</sub></span> = <span class="formulation-sum"><span>∑</span><small>j</small></span> x<span class="ss"><sup>d</sup><sub>ij</sub></span> = z<span class="ss"><sup>d</sup><sub>i</sub></span></span>
-    </div></div>
-    <div class="formulation-rule"><div>
-      <div><h4>Até 4 atrações/dia</h4></div>
-      <span class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> ≤ 4</span>
-    </div></div>
-    <div class="formulation-example">
-      <h4>Recorte do dia 2</h4>
-      <div class="formulation-route" role="img" aria-label="Recorte do dia 2: almoço, Central Park e hotel. Os dois trechos têm x igual a um. A visita ao Central Park tem z igual a um e exclusão y igual a zero.">
-        <span>Almoço</span><span class="route-link"><small>x = 1</small><span>⟶</span></span>
-        <b class="route-stop">Central Park<small><span><i>z = 1</i> visita no dia</span><span><i>y = 0</i> não excluído</span></small></b>
-        <span class="route-link"><small>x = 1</small><span>⟶</span></span><span>Hotel</span>
-      </div>
     </div>
   </div>
-  <div class="formulation-phi" data-build="3">
-    <h3>Custos de Φ <small>unidades de custo</small></h3>
+  <span class="formulation-plus" data-build="3">+</span>
+  <div class="formulation-col" data-build="3">
+    <div class="objective-part">
+      <div class="math"><span class="objective-expression"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> π<sub>i</sub>y<sub>i</sub></span></div>
+      <h3>Exclusões</h3>
+    </div>
+    <div class="formulation-rule">
+      <h4>Visitar ou excluir</h4>
+      <span class="math"><span class="formulation-sum"><span>∑</span><small>d ∈ D</small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> + y<sub>i</sub> = <span class="up">1</span></span>
+    </div>
+    <div class="formulation-rule">
+      <h4>Até 4 atrações por dia</h4>
+      <span class="math"><span class="formulation-sum"><span>∑</span><small>i ∈ V<sub>A</sub></small></span> z<span class="ss"><sup>d</sup><sub>i</sub></span> ≤ <span class="up">4</span></span>
+    </div>
+  </div>
+  <span class="formulation-plus" data-build="4">+</span>
+  <div class="formulation-col" data-build="4">
+    <div class="objective-part">
+      <div class="math"><span class="objective-expression">Φ</span></div>
+      <h3>Demais custos</h3>
+    </div>
     <table class="phi-costs"><tbody>
-      <tr><th>Duração</th><td><b>1/s</b> (+ <b>40/s</b> após 9 h)</td></tr>
-      <tr><th>Início vs. referência</th><td><b>2/s</b> antes, <b>30/s</b> depois</td></tr>
+      <tr><th>Duração do dia</th><td><b>1/s</b>, <b>+40/s</b> após 9 h</td></tr>
+      <tr><th>Início vs. 9 h</th><td><b>2/s</b> antes, <b>30/s</b> depois</td></tr>
       <tr><th>Atraso na preferência</th><td><b>500/s</b> forte, <b>20/s</b> suave</td></tr>
-      <tr><th>Atrações/dia (meta 2–3)</th><td><b>10 mil</b>/excedente<br><b>20 milhões</b>/faltante</td></tr>
+      <tr><th>Atrações/dia, meta 2–3</th><td><b>10 mil</b>/excedente<br><b>20 milhões</b>/faltante</td></tr>
       <tr><th>Refeição omitida</th><td><b>100 mil</b>/automática<br><b>1 bilhão</b>/escolhida</td></tr>
       <tr><th>Cafés e restaurantes</th><td><b>200 mil</b>/excedente no dia</td></tr>
     </tbody></table>
   </div>
 </div>
+<div class="formulation-example" data-build="5">
+  <h4>Recorte do dia 2</h4>
+  <div class="formulation-route" role="img" aria-label="Recorte do dia 2: do almoço ao Central Park, 9 minutos, e do Central Park ao hotel, 23 minutos, ambos os trechos com x igual a um. O Central Park tem z igual a um e y igual a zero, então sua exclusão custa zero.">
+    <span>Almoço</span>
+    <span class="route-link"><small>x = <span class="up">1</span></small><span>⟶</span><em>9 min</em></span>
+    <b class="route-stop">Central Park<small><span><i>z = <span class="up">1</span></i> visita no dia 2</span><span><i>y = <span class="up">0</span></i> não excluído</span></small></b>
+    <span class="route-link"><small>x = <span class="up">1</span></small><span>⟶</span><em>23 min</em></span>
+    <span>Hotel</span>
+  </div>
+  <dl class="formulation-tally">
+    <div><dt>Deslocamentos</dt><dd>9 + 23 min</dd></div>
+    <div><dt>Exclusão do parque</dt><dd><span class="math">π<sub>i</sub>y<sub>i</sub></span> = 0</dd></div>
+  </dl>
+</div>
 <template class="speaker-notes">
 <h4>Fala <span class="speaker-name">Kenzo</span></h4>
-<p>No alto, min C pede a agenda viável com o menor custo total. A linha seguinte define esse custo. Para apresentar as decisões, leio sempre na mesma ordem: x liga os pontos, y exclui uma atração, z marca a visita em um dia. Cada agenda candidata tem suas próprias escolhas e, portanto, seu próprio valor de C. A relação entre os horários foi mostrada no slide anterior.</p>
-<p>A expressão de C calcula esse valor. A soma interna percorre os trechos de um dia: o tempo t só entra quando x vale um. A soma externa reúne esses resultados de todos os dias. A terceira soma percorre as atrações e cobra π (pi), já calculado na etapa de penalidade de exclusão, quando y vale um. Essa exclusão vale para a viagem inteira e é cobrada uma única vez por atração. Depois acrescentamos Φ (fi), que reúne os custos de preferência da tabela. Os três componentes são somados em um único total por agenda.</p>
-<p>As regras abaixo são o “sujeito a” dessa minimização. A primeira liga z a y: cada atração deve ser visitada uma vez ou excluída. A segunda liga x a z: uma visita ativa precisa de entrada e saída no mesmo dia. A terceira limita a quatro atrações por dia. Uma combinação que descumpra uma dessas regras não é uma solução viável, mesmo que pareça barata.</p>
-<p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero. Há um trecho de entrada vindo do almoço e um de saída para o hotel, ambos com x igual a um. Esses trechos entram no custo de deslocamento; a exclusão do parque custa zero. As janelas e os horários do slide anterior completam as restrições.</p>
-<p>Φ (fi) soma os custos que variam conforme a agenda: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros produzidos. Eles expressam as preferências adotadas no projeto; não foram calibrados formalmente com participantes. A meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro é obrigatório.</p>
+<p>No alto, min C pede a agenda viável com o menor custo total. O solver toma três decisões, que leio nesta ordem: z diz em que dia cada atração é visitada; y marca a atração que ficou fora da viagem; x indica os trechos que ligam as paradas. Cada agenda candidata tem suas próprias escolhas e, portanto, seu próprio valor de C.</p>
+<p>C tem três parcelas, uma por coluna, e cada coluna mostra embaixo a regra que liga sua variável às visitas. Na primeira, a soma interna percorre os trechos de um dia e cobra o tempo t quando x vale um; a externa reúne todos os dias. A regra de baixo liga x a z: uma visita ativa precisa de um trecho de entrada e um de saída no mesmo dia. Então toda visita gera deslocamento.</p>
+<p>Na segunda, cobramos π (pi), calculado na etapa de penalidade de exclusão, de cada atração com y igual a um. A regra visitar ou excluir liga y a z: ou a atração é visitada em exatamente um dia, ou y vale um e o π é cobrado, uma única vez. Não há como deixá-la de fora sem pagar. Abaixo, o limite de quatro atrações por dia também restringe z e é obrigatório.</p>
+<p>A terceira parcela, Φ (fi), reúne os demais custos: duração, início, atrasos na preferência, distribuição de atrações, refeições omitidas e concentração de cafés e restaurantes. Note o contraste com a coluna ao lado: a meta de duas a três atrações pode ser descumprida com custo, enquanto o limite de quatro não pode. Ajustamos esses pesos de forma exploratória durante o desenvolvimento, testando configurações e observando os roteiros; não foram calibrados formalmente com participantes.</p>
+<p>No recorte do segundo dia, o Central Park tem z igual a um e y igual a zero, então sua exclusão custa zero. Os trechos do almoço ao parque e do parque ao hotel têm x igual a um e somam 9 e 23 minutos ao deslocamento. As regras não são parcelas de C: uma combinação que descumpra uma delas não é viável, mesmo que pareça barata. As janelas e os horários do slide anterior completam as restrições.</p>
 <details class="notes-study"><summary>Leitura da minimização, das somas e das regras</summary>
 <h4>O que é C e quais são as variáveis?</h4>
 <p>C é o custo total da agenda, uma função escalar das decisões x, y, z e T. No slide, usamos C e Φ (fi) como abreviações, omitindo a lista de argumentos entre parênteses. A dependência das decisões continua existindo. C é o nome desse custo, não uma decisão adicional. x, y e z são famílias de decisões binárias, com valores zero ou um. T reúne os horários de início. A expressão min C minimiza o custo em relação a essas decisões; a lista de variáveis foi omitida sob min para simplificar a leitura. Os dados, como tempos de deslocamento e pesos, permanecem fixos durante a busca.</p>
 <h4>Como min se relaciona com um array?</h4>
 <p>Em programação, min pode receber uma coleção pronta de números. Aqui, a notação descreve um problema de otimização: cada combinação viável de decisões produz um valor de C, e procuramos o menor desses valores. O comparativo é entre custos totais de agendas diferentes. Não se escolhe o menor dos três componentes de uma mesma agenda. Também não se aplica min a um único total já fixado: as decisões ainda podem mudar.</p>
 <p>O OR-Tools gera e modifica soluções durante a busca, mantendo a melhor encontrada dentro do prazo. Ele não precisa montar previamente um array com os custos de todas as agendas. A escrita matemática expressa o objetivo; a busca com prazo não fornece uma prova de que o mínimo global foi alcançado.</p>
+<h4>Por que z não aparece em C?</h4>
+<p>O custo só cobra trechos (x) e exclusões (y). z é a decisão que liga as duas parcelas: a regra de entrada e saída transforma uma visita em trechos ativos, que pagam deslocamento; a regra de visitar ou excluir transforma a ausência de visita em y igual a um, que paga π (pi). z também aparece no limite de quatro atrações por dia e nas contagens de Φ (fi). Por isso as regras ficam sob as colunas: cada uma mostra como z chega a uma parcela do custo.</p>
 <h4>Por que há três sinais de somatório no custo?</h4>
 <p>Os dois primeiros são aninhados e formam juntos o custo de deslocamento. Leia primeiro a soma de dentro: para um dia d fixado, percorra as ligações permitidas de i para j e some tᵢⱼ vezes xᵈᵢⱼ. Depois, a soma de fora percorre todos os dias d em D e reúne seus custos. O terceiro somatório percorre as atrações de Vₐ e soma πᵢ (pi) vezes yᵢ. Φ (fi) já é o agregado dos outros custos aplicáveis, mostrado como uma função das mesmas decisões.</p>
 <h4>Por que a exclusão não tem uma soma por dia?</h4>
@@ -855,9 +861,9 @@
   <div class="p-notes notes-body" id="pNotes"></div>
 </section>
 
-<script src="data.js?v=57"></script>
-<script src="motion.js?v=57"></script>
-<script src="search-demo.js?v=57"></script>
-<script src="scenes.js?v=57"></script>
+<script src="data.js?v=58"></script>
+<script src="motion.js?v=58"></script>
+<script src="search-demo.js?v=58"></script>
+<script src="scenes.js?v=58"></script>
 </body>
 </html>
